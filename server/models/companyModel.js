@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); 
 
 const companySchema = new mongoose.Schema({
     name: {
@@ -13,6 +13,11 @@ const companySchema = new mongoose.Schema({
     category: {
         type: String,
         required: [true, "Please provide a category"],
+    },
+    status:{
+        type: String,
+        enum: ["active", "hidden", "blocked"],
+        default: "active",
     },
     subCategory: {
         type: [String],
