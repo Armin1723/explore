@@ -18,9 +18,9 @@ const companySchema = new mongoose.Schema({
         type: [String],
         validate: {
             validator: function (v) {
-                return v.length > 0;
+                return v.length > 0 && v.length <= 3;
             },
-            message: "Please provide at least one sub-category",
+            message: "There should be at least 1 and at most 3 sub-categories",
         },
     },
     phone: {
@@ -71,6 +71,6 @@ const companySchema = new mongoose.Schema({
     ],
 });
 
-export const Company = mongoose.model("Company", companySchema);
+const Company = mongoose.model("Company", companySchema);
 
 module.exports = Company;

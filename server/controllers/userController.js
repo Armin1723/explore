@@ -3,8 +3,9 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const { sendMail } = require("../helpers");
-const cloudinary = require("cloudinary").v2;
+const cloudinary = require("../helpers/cloudinaryConfig");
 const crypto = require("crypto");
+const fs = require("fs");
 
 const loginUser = async (req, res) => {
   try {
@@ -90,29 +91,35 @@ const registerUser = async (req, res) => {
       phone,
       password: hashedPassword,
     };
+
     if (role) userData.role = role;
 
+    // Handling ProfilePic Upload to cloudinary
     if (req.files && req.files?.profilePic) {
       const { profilePic } = req.files;
       if (profilePic) {
         try {
           const cloudinaryResponse = await cloudinary.uploader.upload(
-            profilePic.tempFilePath,
+            profilePic[0].path,
             { folder: "User_Profile" }
           );
           if (!cloudinaryResponse || cloudinaryResponse.error) {
-            return next(
-              new ErrorHandler("Failed to upload profile photo to cloud.", 500)
+            return res.status(500).json({ success: false, message: "Failed to upload profilePic to cloud.", error: cloudinaryResponse.error }
             );
           }
           userData.profilePic = cloudinaryResponse.secure_url;
+          fs.unlink(profilePic[0].path, (err) => {
+            if (err) {
+              console.error("Failed to delete temporary profilePic file:", err);
+            }
+          });
         } catch (error) {
-          return next(new ErrorHandler("Failed to upload profilePic", 500));
+            return res.status(500).json({ success: false, message: "Failed to upload profilePic", error: error.message });
         }
       }
     }
     const user = await User.create(userData);
-    const message = `<p>Hi ${user.name} . Kindly use this link to verify your email. <a href="${process.env.BACKEND_URL}//api/user/verify?id=${user._id}">here</a>`;
+    const message = `<p>Hi ${user.name} . Kindly use this link to verify your email. <a href="${process.env.BACKEND_URL}/api/user/verify?id=${user._id}">here</a>`;
 
     sendMail( user.email, message, subject = "Email Verification" );
     res
