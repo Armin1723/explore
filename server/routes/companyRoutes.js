@@ -8,6 +8,7 @@ const {
   searchCompanies,
   addReview,
   getReviews,
+  flagReview,
 } = require("../controllers/companyController");
 const router = require("express").Router();
 const multer = require("multer");
@@ -34,5 +35,6 @@ router.get("/search/:query", isLoggedIn, searchCompanies);
 //Review routes
 router.post("/review/add", isLoggedIn, addReview);
 router.post("/review/all", isLoggedIn, getReviews);
+router.get("/review/flag/:reviewId", isLoggedIn, flagReview);
 
 module.exports = router;

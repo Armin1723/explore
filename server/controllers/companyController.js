@@ -177,11 +177,11 @@ const getCompanyDetails = async (req, res) => {
       })
       .populate("admin", "name email phone prrofiePic");
 
-      if (!company) {
-        return res
-          .status(404)
-          .json({ success: false, message: "Company not found" });
-      }
+    if (!company) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Company not found" });
+    }
 
     const allReviews = await Company.findOne(
       { name: { $regex: new RegExp(name, "i") } },
@@ -199,10 +199,8 @@ const getCompanyDetails = async (req, res) => {
 
     company = company.toObject();
     company.cumulativeRating = cumulativeRating;
-    
-    res
-      .status(200)
-      .json({ success: true, company });
+
+    res.status(200).json({ success: true, company });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -360,24 +358,40 @@ const addReview = async (req, res) => {
     if (!companyName) {
       return res
         .status(400)
-        .json({ success: false, message: "Company ID is required" });
+        .json({ success: false, message: "Company is required" });
     }
     if (!review) {
       return res
         .status(400)
         .json({ success: false, message: "Review is required" });
     }
-    const company = await Company.findOne({ name: companyName });
+    const company = await Company.findOne({ name: companyName }).populate({
+      path: "reviews",
+      select: "user",
+    });
     if (!company) {
       return res
         .status(404)
         .json({ success: false, message: "Company not found" });
     }
 
+    let alreadyReviewed = false;
+    company.reviews.map((rev) => {
+      if (rev.user.toString() === user.id) alreadyReviewed = true;
+    });
+
+    if (alreadyReviewed) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already reviewed this company",
+      });
+    }
+
     const newReview = await Review.create({
       user: user.id,
       rating: review.rating,
       comment: review.comment,
+      company: company._id,
     });
 
     company.reviews.push(newReview._id);
@@ -401,38 +415,103 @@ const getReviews = async (req, res) => {
     if (!companyName) {
       return res
         .status(400)
-        .json({ success: false, message: "Company ID is required" });
+        .json({ success: false, message: "Company is required" });
     }
     const company = await Company.findOne(
       { name: companyName },
       { reviews: 1 }
     ).populate({
       path: "reviews",
-      select: "rating comment user",
+      select: "rating comment user flags createdAt",
       populate: {
         path: "user",
         select: "name profilePic",
       },
       limit: 20,
       skip: (page - 1) * 20,
+      sortBy: { createdAt: -1 },
     });
 
     const totalReviews = await Company.findOne({
       name: companyName,
     }).countDocuments("reviews");
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        reviews: company.reviews,
-        page,
-        totalPages: Math.ceil(totalReviews / 20),
-      });
+    res.status(200).json({
+      success: true,
+      reviews: company.reviews,
+      page,
+      totalPages: Math.ceil(totalReviews / 20),
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+//Flag review
+const flagReview = async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    const { user } = req;
+
+    const review = await Review.findById(reviewId);
+    if (!review) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Review not found" });
+    }
+
+    let alreadyFlagged = false;
+    review.flags.some((flag) => {
+      if (flag.toString() === user.id) {
+        alreadyFlagged = true;
+      }
+    })
+
+    if (alreadyFlagged) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already flagged this review",
+      });
+    }
+
+    review.flags.push(user.id);
+    await review.save();
+
+    res.status(200).json({ success: true, message: "Review flagged" });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// const getReviewsSortedByFlags = async (req, res) =>{
+
+//   try {
+//     const { page } = req.query;
+
+//     const reviews = await Review.aggregate([
+//       {
+//         $addFields: {
+//           flagCount: { $size: "$flags" }
+//         }
+//       },
+//       {
+//         $sort: { flagCount: -1 }
+//       },
+//       {
+//         $skip: page- 1 * 20
+//       },
+//       {
+//         $limit: 20
+//       }
+//     ]);
+
+//     return reviews;
+//   } catch (error) {
+//     console.error("Error fetching reviews:", error);
+//     throw error;
+//   }
+// }
 
 module.exports = {
   registerCompany,
@@ -444,4 +523,5 @@ module.exports = {
   searchCompanies,
   addReview,
   getReviews,
+  flagReview,
 };

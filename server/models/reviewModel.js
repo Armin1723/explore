@@ -6,6 +6,15 @@ const reviewSchema = new mongoose.Schema({
         ref: "User",
         required: [true, "Please provide a user"],
     },
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Company",
+        required: [true, "Please provide a company"],
+    },
+    flags:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
     rating: {
         type: Number,
         required: [true, "Please provide a rating"],
