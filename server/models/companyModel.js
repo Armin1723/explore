@@ -4,6 +4,7 @@ const companySchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please provide a name"],
+        unique: [true, "Company name already exists"],
     },
     email: {
         type: String,
