@@ -3,7 +3,7 @@ const multer = require("multer");
 
 const upload = multer({ dest: "uploads" });
 
-const { loginUser, registerUser, verifyUser, logoutUser, forgotPassword, resetPassword, toggleSavedCompany, fetchUserById, editUser } = require('../controllers/userController');
+const { loginUser, registerUser, verifyUser, logoutUser, forgotPassword, resetPassword, toggleSavedCompany, fetchUserById, editUser, sendEnquiry } = require('../controllers/userController');
 const { isLoggedIn } = require('../middlewares');
 
 //Auth Routes
@@ -21,6 +21,6 @@ router.post('/edit-profile',isLoggedIn, upload.fields([{name: "profilePic"}]), e
 router.post('/toggle-save-company',isLoggedIn, toggleSavedCompany);
 
 //Fetch User
-router.get('/:id', fetchUserById);
+router.get('/id/:id', fetchUserById);
 
 module.exports = router;

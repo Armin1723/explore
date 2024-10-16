@@ -22,8 +22,11 @@ const enquirySchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    response:{
+        type: String,
+    }
 })
 
-export const Enquiry = mongoose.model("Enquiry", enquirySchema);    
+const Enquiry = mongoose.model("Enquiry", enquirySchema);    
 
 module.exports = Enquiry;

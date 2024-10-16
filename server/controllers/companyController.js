@@ -5,7 +5,6 @@ const cloudinary = require("../helpers/cloudinaryConfig");
 
 const { Parser } = require("json2csv");
 const Review = require("../models/reviewModel");
-const path = require("path");
 
 //Add a company
 const registerCompany = async (req, res) => {

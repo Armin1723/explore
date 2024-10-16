@@ -6,17 +6,17 @@ const { sendMail } = require("../helpers");
 const cloudinary = require("../helpers/cloudinaryConfig");
 const crypto = require("crypto");
 const fs = require("fs");
+const Company = require("../models/companyModel");
+const Enquiry = require("../models/enquiryModel");
 
 const loginUser = async (req, res) => {
   try {
     const { email, password, role } = req.body;
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "All fields are required, write again.",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required, write again.",
+      });
     }
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
@@ -35,10 +35,10 @@ const loginUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Please verify your email" });
     }
-    if(user.role=='admin' && user.role !== role){
-        return res
-            .status(400)
-            .json({ success: false, message: "You don't have admin priveleges." });
+    if (user.role == "admin" && user.role !== role) {
+      return res
+        .status(400)
+        .json({ success: false, message: "You don't have admin priveleges." });
     }
     const token = jwt.sign(
       {
@@ -63,12 +63,10 @@ const registerUser = async (req, res) => {
     const { name, email, password, phone, role } = req.body;
 
     if (!name || !email || !password || !phone) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "All fields are required, write again.",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required, write again.",
+      });
     }
 
     const existingUser = await User.findOne({ email });
@@ -104,8 +102,13 @@ const registerUser = async (req, res) => {
             { folder: "User_Profile" }
           );
           if (!cloudinaryResponse || cloudinaryResponse.error) {
-            return res.status(500).json({ success: false, message: "Failed to upload profilePic to cloud.", error: cloudinaryResponse.error }
-            );
+            return res
+              .status(500)
+              .json({
+                success: false,
+                message: "Failed to upload profilePic to cloud.",
+                error: cloudinaryResponse.error,
+              });
           }
           userData.profilePic = cloudinaryResponse.secure_url;
           fs.unlink(profilePic[0].path, (err) => {
@@ -114,14 +117,20 @@ const registerUser = async (req, res) => {
             }
           });
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Failed to upload profilePic", error: error.message });
+          return res
+            .status(500)
+            .json({
+              success: false,
+              message: "Failed to upload profilePic",
+              error: error.message,
+            });
         }
       }
     }
     const user = await User.create(userData);
     const message = `<p>Hi ${user.name} . Kindly use this link to verify your email. <a href="${process.env.BACKEND_URL}/api/user/verify?id=${user._id}">here</a>`;
 
-    sendMail( user.email, message, subject = "Email Verification" );
+    sendMail(user.email, message, (subject = "Email Verification"));
     res
       .status(201)
       .json({ success: true, message: "kindly check your e-mail!" });
@@ -176,36 +185,47 @@ const editUser = async (req, res) => {
       runValidators: true,
     });
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
     res.status(200).json({ success: true, user });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Server error", error: error.message });
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
   }
-}
+};
 
 const fetchUserById = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id, { password: 0 });
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
     res.status(200).json({ success: true, user });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Server error", error: error.message });
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
   }
-}
+};
 
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ email },{
-        name : 1,
-        email : 1,
-        forgotPasswordToken : 1,
-        forgotPasswordExpires : 1
-    })
+    const user = await User.findOne(
+      { email },
+      {
+        name: 1,
+        email: 1,
+        forgotPasswordToken: 1,
+        forgotPasswordExpires: 1,
+      }
+    );
     if (!user) {
       return res
         .status(400)
@@ -217,11 +237,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     const message = `<p>Hi ${user.name} . Kindly use this link to reset your password. <a href="${process.env.FRONTEND_URL}/reset-password?token=${forgotPasswordToken}">here</a>`;
-    sendMail(
-      user.email,
-      message,
-      subject="Password Reset Link"
-    );
+    sendMail(user.email, message, (subject = "Password Reset Link"));
     res
       .status(200)
       .json({ success: true, message: "Password reset email sent" });
@@ -234,15 +250,18 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { forgotPasswordToken, userID, newPassword } = req.body;
-    const user = await User.findOne({
-      _id: userID,
-      forgotPasswordToken,
-      forgotPasswordExpires: { $gt: Date.now() },
-    },{
-        forgotPasswordToken : 1,
-        forgotPasswordExpires : 1,  
-        password : 1
-    })
+    const user = await User.findOne(
+      {
+        _id: userID,
+        forgotPasswordToken,
+        forgotPasswordExpires: { $gt: Date.now() },
+      },
+      {
+        forgotPasswordToken: 1,
+        forgotPasswordExpires: 1,
+        password: 1,
+      }
+    );
 
     if (!user) {
       return res
@@ -272,14 +291,17 @@ const toggleSavedCompany = async (req, res) => {
 
     const savedCompanies = user.savedCompanies;
     if (savedCompanies.includes(companyId)) {
-      user.savedCompanies = savedCompanies.filter((company) => company.toString() !== companyId.toString());
+      user.savedCompanies = savedCompanies.filter(
+        (company) => company.toString() !== companyId.toString()
+      );
     } else {
       user.savedCompanies = [...savedCompanies, companyId];
     }
     await user.save();
-    res.status(200).json({ success: true, message: "Company saved successfully", user });
-  }
-  catch (error) {
+    res
+      .status(200)
+      .json({ success: true, message: "Company saved successfully", user });
+  } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Server error" });
   }
