@@ -5,6 +5,7 @@ const cloudinary = require("../helpers/cloudinaryConfig");
 
 const { Parser } = require("json2csv");
 
+//Add a company
 const registerCompany = async (req, res) => {
   try {
     const {
@@ -116,6 +117,7 @@ const registerCompany = async (req, res) => {
   }
 };
 
+//Edit a company
 const editCompany = async (req, res) => {
   try {
     const { companyData, userId } = req.body;
@@ -156,6 +158,7 @@ const editCompany = async (req, res) => {
   }
 };
 
+//Fetch a single company detail by name
 const getCompanyDetails = async (req, res) => {
   try {
     const { name } = req.params;
@@ -169,6 +172,7 @@ const getCompanyDetails = async (req, res) => {
   }
 };
 
+//Fetch companies (with option of category search) with pagination
 const getCompanies = async (req, res) => {
   try {
     let { category } = req.params;
@@ -188,6 +192,7 @@ const getCompanies = async (req, res) => {
       .status(200)
       .json({
         success: true,
+        user: req.user,
         companies,
         totalCompanies,
         category,
@@ -198,6 +203,7 @@ const getCompanies = async (req, res) => {
   }
 };
 
+//Fetch companies by subcategory with pagination
 const getCompaniesBySubCategory = async (req, res) => {
   try {
     let { subCategory } = req.params;
@@ -227,6 +233,7 @@ const getCompaniesBySubCategory = async (req, res) => {
   }
 };
 
+//Export companies to CSV
 const exportCompanies = async (req, res) => {
   try {
     const companies = await Company.find({});
@@ -264,6 +271,7 @@ const exportCompanies = async (req, res) => {
   }
 };
 
+//Search companies by substring in name or description
 const searchCompanies = async (req, res) => {
   try {
     const { query } = req.params;

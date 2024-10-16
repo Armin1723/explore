@@ -8,7 +8,7 @@ const { loginUser, registerUser, verifyUser, logoutUser, forgotPassword, resetPa
 router.post('/login', loginUser);
 router.post('/register',upload.fields([{name: "profilePic"}]), registerUser);
 router.get('/verify', verifyUser);
-router.post('/logout', logoutUser);
+router.get('/logout', logoutUser);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
 
