@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     profilePic: {
         type: String,
+        default: "https://github.com/shadcn.png"
     },
     password: {
         type: String,

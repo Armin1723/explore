@@ -168,6 +168,35 @@ const logoutUser = async (req, res) => {
   }
 };
 
+const editUser = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const user = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+}
+
+const fetchUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id, { password: 0 });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+}
+
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -235,11 +264,35 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const toggleSavedCompany = async (req, res) => {
+  try {
+    const { companyId } = req.body;
+    const { id } = req.user;
+    const user = await User.findById(id);
+
+    const savedCompanies = user.savedCompanies;
+    if (savedCompanies.includes(companyId)) {
+      user.savedCompanies = savedCompanies.filter((company) => company.toString() !== companyId.toString());
+    } else {
+      user.savedCompanies = [...savedCompanies, companyId];
+    }
+    await user.save();
+    res.status(200).json({ success: true, message: "Company saved successfully", user });
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
 module.exports = {
   loginUser,
   registerUser,
   verifyUser,
   logoutUser,
+  editUser,
+  fetchUserById,
   forgotPassword,
   resetPassword,
+  toggleSavedCompany,
 };

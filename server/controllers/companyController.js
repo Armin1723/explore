@@ -4,6 +4,8 @@ const User = require("../models/userModel");
 const cloudinary = require("../helpers/cloudinaryConfig");
 
 const { Parser } = require("json2csv");
+const Review = require("../models/reviewModel");
+const path = require("path");
 
 //Add a company
 const registerCompany = async (req, res) => {
@@ -40,7 +42,9 @@ const registerCompany = async (req, res) => {
       });
     }
 
-    const alreadyHasCompany = await User.findOne({ company: { $exists: true } });
+    const alreadyHasCompany = await User.findOne({
+      company: { $exists: true },
+    });
     if (alreadyHasCompany) {
       return res.status(400).json({
         success: false,
@@ -95,13 +99,11 @@ const registerCompany = async (req, res) => {
             }
           });
         } catch (error) {
-          return res
-            .status(500)
-            .json({
-              success: false,
-              message: "Failed to upload logo",
-              error: error.message,
-            });
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload logo",
+            error: error.message,
+          });
         }
       }
     }
@@ -137,12 +139,10 @@ const editCompany = async (req, res) => {
     }
 
     if (company.admin.toString() !== userId) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "You are not authorized to edit this company",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to edit this company",
+      });
     }
 
     const updatedCompany = await Company.findOneAndUpdate(
@@ -161,12 +161,49 @@ const editCompany = async (req, res) => {
 //Fetch a single company detail by name
 const getCompanyDetails = async (req, res) => {
   try {
-    const { name } = req.params;
-    const company = await Company.findOne({ name });
-    if (!company) {
-      return res.status(404).json({ success: false, message: "Company not found" });
+    let { name } = req.params;
+    name = name.split("-").join(" ");
+
+    let company = await Company.findOne({
+      name: { $regex: new RegExp(name, "i") },
+    })
+      .populate({
+        path: "reviews",
+        select: "rating comment user",
+        populate: {
+          path: "user",
+          select: "name profilePic",
+        },
+        limit: 5,
+      })
+      .populate("admin", "name email phone prrofiePic");
+
+      if (!company) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Company not found" });
+      }
+
+    const allReviews = await Company.findOne(
+      { name: { $regex: new RegExp(name, "i") } },
+      { reviews: 1 }
+    ).populate("reviews", "rating ");
+
+    let cumulativeRating = 0;
+    allReviews.reviews = allReviews.reviews.map(
+      (review) => (cumulativeRating = cumulativeRating + review.rating)
+    );
+
+    if (allReviews.reviews.length > 0) {
+      allReviews.reviews = cumulativeRating / allReviews.reviews.length;
     }
-    res.status(200).json({ success: true, company });
+
+    company = company.toObject();
+    company.cumulativeRating = cumulativeRating;
+    
+    res
+      .status(200)
+      .json({ success: true, company });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -188,16 +225,14 @@ const getCompanies = async (req, res) => {
       .limit(10)
       .skip((page - 1) * 10);
     const totalCompanies = await Company.countDocuments({ category });
-    res
-      .status(200)
-      .json({
-        success: true,
-        user: req.user,
-        companies,
-        totalCompanies,
-        category,
-        pages: Math.ceil(totalCompanies / 10),
-      });
+    res.status(200).json({
+      success: true,
+      user: req.user,
+      companies,
+      totalCompanies,
+      category,
+      pages: Math.ceil(totalCompanies / 10),
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -236,38 +271,45 @@ const getCompaniesBySubCategory = async (req, res) => {
 //Export companies to CSV
 const exportCompanies = async (req, res) => {
   try {
-    const companies = await Company.find({});
+    let { category } = req.query;
+    if (!category) {
+      category = { $exists: true };
+    }
 
-    const modifiedCompanies = companies.map((company) => ({
-      _id: company._id,
-      name: company.name,
-      email: company.email,
-      address: company.address,
-      phone: company.phone.number,
-      description: company.description,
-    }));
+    const companies = await Company.find({ category });
 
     if (companies.length === 0) {
       return res.status(404).json({ message: "No companies found to export" });
     }
 
-    const fields = ["_id", "name", "email", "address", "phone", "description"];
+    const fields = [
+      "_id",
+      "name",
+      "email",
+      "address",
+      "phone",
+      "description",
+      "logo",
+      "website",
+      "category",
+      "subCategory",
+      "admin",
+      "createdAt",
+    ];
     const opts = { fields };
 
     const parser = new Parser(opts);
-    const csv = parser.parse(modifiedCompanies);
+    const csv = parser.parse(companies);
 
     res.header("Content-Type", "text/csv");
     res.attachment("companies.csv");
 
     res.send(csv);
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        message: "An error occurred while exporting data",
-        error: err.message,
-      });
+    res.status(500).json({
+      message: "An error occurred while exporting data",
+      error: err.message,
+    });
   }
 };
 
@@ -285,10 +327,12 @@ const searchCompanies = async (req, res) => {
 
     const companies = await Company.find({
       $or: [
-      { name: { $regex: query, $options: "i" } },
-      { description: { $regex: query, $options: "i" } },
+        { name: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
       ],
-    }).limit(10).skip((page - 1) * 10);
+    })
+      .limit(10)
+      .skip((page - 1) * 10);
 
     const totalCompanies = await Company.countDocuments({
       $or: [
@@ -304,7 +348,88 @@ const searchCompanies = async (req, res) => {
       query,
       pages: Math.ceil(totalCompanies / 10),
     });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
+//Add a review to a company
+const addReview = async (req, res) => {
+  try {
+    const { companyName, review } = req.body;
+    const { user } = req;
+    if (!companyName) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Company ID is required" });
+    }
+    if (!review) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Review is required" });
+    }
+    const company = await Company.findOne({ name: companyName });
+    if (!company) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Company not found" });
+    }
+
+    const newReview = await Review.create({
+      user: user.id,
+      rating: review.rating,
+      comment: review.comment,
+    });
+
+    company.reviews.push(newReview._id);
+    await company.save();
+    res
+      .status(201)
+      .json({ success: true, message: "Review added successfully", company });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+//Fetch reviews of a company with pagination
+const getReviews = async (req, res) => {
+  try {
+    const { companyName } = req.body;
+    let { page } = req.query;
+
+    if (!page) page = 1;
+
+    if (!companyName) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Company ID is required" });
+    }
+    const company = await Company.findOne(
+      { name: companyName },
+      { reviews: 1 }
+    ).populate({
+      path: "reviews",
+      select: "rating comment user",
+      populate: {
+        path: "user",
+        select: "name profilePic",
+      },
+      limit: 20,
+      skip: (page - 1) * 20,
+    });
+
+    const totalReviews = await Company.findOne({
+      name: companyName,
+    }).countDocuments("reviews");
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        reviews: company.reviews,
+        page,
+        totalPages: Math.ceil(totalReviews / 20),
+      });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -318,4 +443,6 @@ module.exports = {
   getCompaniesBySubCategory,
   exportCompanies,
   searchCompanies,
+  addReview,
+  getReviews,
 };
