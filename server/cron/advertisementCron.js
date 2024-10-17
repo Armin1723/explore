@@ -11,7 +11,6 @@ const advertisementCron = () => {
         { endDate: { $lte: currentDate } },
         { $set: { active: false } }
       );
-
       console.log(`${result.modifiedCount} advertisements marked as inactive.`);
     } catch (error) {
       console.error(

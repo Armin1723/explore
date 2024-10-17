@@ -1,3 +1,4 @@
+const { sendMail } = require("../helpers");
 const Advertisement = require("../models/advertisementModel");
 const Company = require("../models/companyModel");
 
@@ -60,6 +61,13 @@ const confirmAdvertisement = async (req, res) => {
         advertisement.startDate = Date.now();
         advertisement.endDate = Date.now() + 30 * 24 * 60 * 60 * 1000;
         await advertisement.save();
+
+        const company = await Company.findById(advertisement.company).select('email name advertisement');
+
+        company.advertisement = advertisement._id;
+
+        const message = `Your advertisement has been confirmed for ${company.name} . Transaction ID: ${advertisement.transactionId}`;
+        sendMail(company.email, message, "Advertisement Confirmation");
     
         res.status(200).json({
         success: true,
@@ -71,7 +79,21 @@ const confirmAdvertisement = async (req, res) => {
     }
 };
 
+const getBanners = async (req, res) => {
+    try {
+        const company = await Advertisement.find({ active: true },{company : 1}).populate({
+          path: "company",
+          select: "name logo banner",
+        }).sort({ startDate: -1 }).limit(5);
+        res.status(200).json({ success: true, company });
+      }
+      catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+      }
+    };
+
 module.exports = {
   createAdvertisement,
   confirmAdvertisement,
+  getBanners,
 };
