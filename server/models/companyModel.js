@@ -61,6 +61,28 @@ const companySchema = new mongoose.Schema({
             default: null,
         },
     },
+    banner: {
+        public_id: {
+            type: String,
+            default: null,
+        },
+        url: {
+            type: String,
+            default: null,
+        },
+    },
+    gallery: [
+        {
+            public_id: {
+                type: String,
+                default: null,
+            },
+            url: {
+                type: String,
+                default: null,
+            },
+        },
+    ],
     admin: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -81,6 +103,10 @@ const companySchema = new mongoose.Schema({
             ref: "Enquiry",
         },
     ],
+    advertisement: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Advertisement",
+    }
 });
 
 const Company = mongoose.model("Company", companySchema);

@@ -38,7 +38,7 @@ const registerCompany = async (req, res) => {
       });
     }
 
-    const { id : admin } = req.user;
+    const { id: admin } = req.user;
 
     const alreadyHasCompany = await User.findOne({
       _id: admin,
@@ -63,7 +63,7 @@ const registerCompany = async (req, res) => {
       email,
       subCategory,
       description,
-      admin ,
+      admin,
       category,
       address,
       website,
@@ -121,31 +121,132 @@ const registerCompany = async (req, res) => {
 //Edit a company
 const editCompany = async (req, res) => {
   try {
-    const { companyData, userId } = req.body;
 
-    const { name } = userData;
-    if (!name) {
+    const { companyId } = req.params;  
+
+    const { id: userId } = req.user;
+
+    const companyData = req.body;
+
+    if (!companyId) {
       return res.status(400).json({
         success: false,
-        message: "Company name is required",
+        message: "Company Id is required",
       });
     }
-    const company = await Company.findOne({ name });
+    const company = await Company.findOne({ _id: companyId });
     if (!company) {
       return res
         .status(404)
         .json({ success: false, message: "Company not found" });
     }
 
-    if (company.admin.toString() !== userId) {
+    if (company.admin.toString() !== userId.toString()) {
       return res.status(403).json({
         success: false,
         message: "You are not authorized to edit this company",
       });
     }
 
+    // Handling Logo Upload to cloudinary
+    if (req.files && (req.files?.logo || req.files?.banner || req.files?.gallery)) {
+      const { logo, banner, gallery } = req.files;
+      if (logo) {
+        try {
+          const cloudinaryResponse = await cloudinary.uploader.upload(
+            logo[0].path,
+            { folder: "Company_Logo" }
+          );
+          if (!cloudinaryResponse || cloudinaryResponse.error) {
+            return res.status(500).json({
+              success: false,
+              message: "Failed to upload logo to cloud.",
+            });
+          }
+          companyData.logo = {
+            public_id: cloudinaryResponse.public_id,
+            url: cloudinaryResponse.secure_url,
+          };
+          fs.unlink(logo[0].path, (err) => {
+            if (err) {
+              console.error("Failed to delete temporary logo file:", err);
+            }
+          });
+        } catch (error) {
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload logo",
+            error: error.message,
+          });
+        }
+      }
+
+      if (banner) {
+        try {
+          const cloudinaryResponse = await cloudinary.uploader.upload(
+            banner[0].path,
+            { folder: "Company_Banner" }
+          );
+          if (!cloudinaryResponse || cloudinaryResponse.error) {
+            return res.status(500).json({
+              success: false,
+              message: "Failed to upload banner to cloud.",
+            });
+          }
+          companyData.banner = {
+            public_id: cloudinaryResponse.public_id,
+            url: cloudinaryResponse.secure_url,
+          };
+          fs.unlink(banner[0].path, (err) => {
+            if (err) {
+              console.error("Failed to delete temporary logo file:", err);
+            }
+          });
+        } catch (error) {
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload logo",
+            error: error.message,
+          });
+        }
+      }
+
+      if (gallery) {
+        for (let i = 0; i < gallery.length; i++) {
+          try {
+            const cloudinaryResponse = await cloudinary.uploader.upload(
+              gallery[i].path,
+              { folder: "Company_Gallery" }
+            );
+            if (!cloudinaryResponse || cloudinaryResponse.error) {
+              return res.status(500).json({
+                success: false,
+                message: "Failed to upload gallery image to cloud.",
+              });
+            }
+            companyData.gallery.push({
+              public_id: cloudinaryResponse.public_id,
+              url: cloudinaryResponse.secure_url,
+            });
+            fs.unlink(gallery[i].path, (err) => {
+              if (err) {
+                console.error("Failed to delete temporary gallery file:", err);
+              }
+            });
+          } catch (error) {
+            return res.status(500).json({
+              success: false,
+              message: "Failed to upload image",
+              error: error.message,
+            });
+          }
+        }
+      }
+
+    }
+
     const updatedCompany = await Company.findOneAndUpdate(
-      { name },
+      { _id : companyId },
       companyData,
       {
         new: true,
@@ -183,8 +284,10 @@ const getCompanyDetails = async (req, res) => {
         .json({ success: false, message: "Company not found" });
     }
 
-    if(company.status == "suspended"){
-      return res.status(403).json({success: false, message: "This company has been suspended"})
+    if (company.status == "suspended") {
+      return res
+        .status(403)
+        .json({ success: false, message: "This company has been suspended" });
     }
 
     const allReviews = await Company.findOne(
@@ -222,15 +325,20 @@ const getCompanies = async (req, res) => {
       category = { $exists: true };
     }
 
-    const companies = await Company.find({ $and: [{ category }, { status: "active" }] })
+    const companies = await Company.find({
+      $and: [{ category }, { status: "active" }],
+    })
       .limit(10)
       .skip((page - 1) * 10);
-    const totalCompanies = await Company.countDocuments({ $and: [{ category }, { status: "active" }] }) ;
+    const totalCompanies = await Company.countDocuments({
+      $and: [{ category }, { status: "active" }],
+    });
     res.status(200).json({
       success: true,
       companies,
       totalCompanies,
-      category: typeof category === "object" && category.$exists ? "all" : category,
+      category:
+        typeof category === "object" && category.$exists ? "all" : category,
       pages: Math.ceil(totalCompanies / 10),
     });
   } catch (error) {
@@ -255,7 +363,10 @@ const getCompaniesBySubCategory = async (req, res) => {
     const companies = await Company.find({ ...subCategory, status: "active" })
       .limit(10)
       .skip((page - 1) * 10);
-    const totalCompanies = await Company.countDocuments({...subCategory, status: "active" });
+    const totalCompanies = await Company.countDocuments({
+      ...subCategory,
+      status: "active",
+    });
     res.status(200).json({
       success: true,
       companies,
@@ -285,25 +396,25 @@ const searchCompanies = async (req, res) => {
         {
           $or: [
             { name: { $regex: query, $options: "i" } },
-            { description: { $regex: query, $options: "i" } }
-          ]
+            { description: { $regex: query, $options: "i" } },
+          ],
         },
-        { status: "active" }
-      ]
+        { status: "active" },
+      ],
     })
-    .limit(10)
-    .skip((page - 1) * 10)
+      .limit(10)
+      .skip((page - 1) * 10);
 
     const totalCompanies = await Company.countDocuments({
       $and: [
         {
           $or: [
             { name: { $regex: query, $options: "i" } },
-            { description: { $regex: query, $options: "i" } }
-          ]
+            { description: { $regex: query, $options: "i" } },
+          ],
         },
-        { status: "active" }
-      ]
+        { status: "active" },
+      ],
     });
 
     res.status(200).json({
@@ -433,7 +544,7 @@ const flagReview = async (req, res) => {
       if (flag.toString() === user.id) {
         alreadyFlagged = true;
       }
-    })
+    });
 
     if (alreadyFlagged) {
       return res.status(400).json({
@@ -446,7 +557,6 @@ const flagReview = async (req, res) => {
     await review.save();
 
     res.status(200).json({ success: true, message: "Review flagged" });
-
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

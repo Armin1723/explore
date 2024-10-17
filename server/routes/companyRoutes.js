@@ -22,7 +22,12 @@ router.post(
   isLoggedIn,
   registerCompany
 );
-router.post("/edit", isLoggedIn, editCompany);
+router.post(
+  "/:companyId/edit",
+  isLoggedIn,
+  upload.fields([{ name: "logo" }, { name: "banner" }, { name: "gallery" }]),
+  editCompany
+);
 
 //Search and fetch routes
 router.get("/name/:name", getCompanyDetails);
