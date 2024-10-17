@@ -3,7 +3,6 @@ const fs = require("fs");
 const User = require("../models/userModel");
 const cloudinary = require("../helpers/cloudinaryConfig");
 
-const { Parser } = require("json2csv");
 const Review = require("../models/reviewModel");
 
 //Add a company
@@ -14,7 +13,6 @@ const registerCompany = async (req, res) => {
       email,
       subCategory,
       description,
-      admin,
       category,
       address,
       website,
@@ -27,7 +25,6 @@ const registerCompany = async (req, res) => {
     if (!category) missingFields.push("category");
     if (!subCategory.length) missingFields.push("subCategory");
     if (!description) missingFields.push("description");
-    if (!admin) missingFields.push("admin");
     if (!address) missingFields.push("address");
     if (!website) missingFields.push("website");
     if (!number) missingFields.push("number");
@@ -41,7 +38,10 @@ const registerCompany = async (req, res) => {
       });
     }
 
+    const { id : admin } = req.user;
+
     const alreadyHasCompany = await User.findOne({
+      _id: admin,
       company: { $exists: true },
     });
     if (alreadyHasCompany) {
@@ -63,7 +63,7 @@ const registerCompany = async (req, res) => {
       email,
       subCategory,
       description,
-      admin,
+      admin ,
       category,
       address,
       website,
@@ -175,12 +175,16 @@ const getCompanyDetails = async (req, res) => {
         },
         limit: 5,
       })
-      .populate("admin", "name email phone prrofiePic");
+      .populate("admin", "name email phone profiePic");
 
     if (!company) {
       return res
         .status(404)
         .json({ success: false, message: "Company not found" });
+    }
+
+    if(company.status == "suspended"){
+      return res.status(403).json({success: false, message: "This company has been suspended"})
     }
 
     const allReviews = await Company.findOne(
@@ -218,16 +222,15 @@ const getCompanies = async (req, res) => {
       category = { $exists: true };
     }
 
-    const companies = await Company.find({ category })
+    const companies = await Company.find({ $and: [{ category }, { status: "active" }] })
       .limit(10)
       .skip((page - 1) * 10);
-    const totalCompanies = await Company.countDocuments({ category });
+    const totalCompanies = await Company.countDocuments({ $and: [{ category }, { status: "active" }] }) ;
     res.status(200).json({
       success: true,
-      user: req.user,
       companies,
       totalCompanies,
-      category,
+      category: typeof category === "object" && category.$exists ? "all" : category,
       pages: Math.ceil(totalCompanies / 10),
     });
   } catch (error) {
@@ -249,10 +252,10 @@ const getCompaniesBySubCategory = async (req, res) => {
       subCategory = { subCategory: { $in: [subCategory] } };
     }
 
-    const companies = await Company.find(subCategory)
+    const companies = await Company.find({ ...subCategory, status: "active" })
       .limit(10)
       .skip((page - 1) * 10);
-    const totalCompanies = await Company.countDocuments(subCategory);
+    const totalCompanies = await Company.countDocuments({...subCategory, status: "active" });
     res.status(200).json({
       success: true,
       companies,
@@ -262,51 +265,6 @@ const getCompaniesBySubCategory = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-//Export companies to CSV
-const exportCompanies = async (req, res) => {
-  try {
-    let { category } = req.query;
-    if (!category) {
-      category = { $exists: true };
-    }
-
-    const companies = await Company.find({ category });
-
-    if (companies.length === 0) {
-      return res.status(404).json({ message: "No companies found to export" });
-    }
-
-    const fields = [
-      "_id",
-      "name",
-      "email",
-      "address",
-      "phone",
-      "description",
-      "logo",
-      "website",
-      "category",
-      "subCategory",
-      "admin",
-      "createdAt",
-    ];
-    const opts = { fields };
-
-    const parser = new Parser(opts);
-    const csv = parser.parse(companies);
-
-    res.header("Content-Type", "text/csv");
-    res.attachment("companies.csv");
-
-    res.send(csv);
-  } catch (err) {
-    res.status(500).json({
-      message: "An error occurred while exporting data",
-      error: err.message,
-    });
   }
 };
 
@@ -323,19 +281,29 @@ const searchCompanies = async (req, res) => {
     }
 
     const companies = await Company.find({
-      $or: [
-        { name: { $regex: query, $options: "i" } },
-        { description: { $regex: query, $options: "i" } },
-      ],
+      $and: [
+        {
+          $or: [
+            { name: { $regex: query, $options: "i" } },
+            { description: { $regex: query, $options: "i" } }
+          ]
+        },
+        { status: "active" }
+      ]
     })
-      .limit(10)
-      .skip((page - 1) * 10);
+    .limit(10)
+    .skip((page - 1) * 10)
 
     const totalCompanies = await Company.countDocuments({
-      $or: [
-        { name: { $regex: query, $options: "i" } },
-        { description: { $regex: query, $options: "i" } },
-      ],
+      $and: [
+        {
+          $or: [
+            { name: { $regex: query, $options: "i" } },
+            { description: { $regex: query, $options: "i" } }
+          ]
+        },
+        { status: "active" }
+      ]
     });
 
     res.status(200).json({
@@ -484,42 +452,12 @@ const flagReview = async (req, res) => {
   }
 };
 
-// const getReviewsSortedByFlags = async (req, res) =>{
-
-//   try {
-//     const { page } = req.query;
-
-//     const reviews = await Review.aggregate([
-//       {
-//         $addFields: {
-//           flagCount: { $size: "$flags" }
-//         }
-//       },
-//       {
-//         $sort: { flagCount: -1 }
-//       },
-//       {
-//         $skip: page- 1 * 20
-//       },
-//       {
-//         $limit: 20
-//       }
-//     ]);
-
-//     return reviews;
-//   } catch (error) {
-//     console.error("Error fetching reviews:", error);
-//     throw error;
-//   }
-// }
-
 module.exports = {
   registerCompany,
   editCompany,
   getCompanyDetails,
   getCompanies,
   getCompaniesBySubCategory,
-  exportCompanies,
   searchCompanies,
   addReview,
   getReviews,

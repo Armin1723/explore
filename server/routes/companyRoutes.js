@@ -4,7 +4,6 @@ const {
   getCompaniesBySubCategory,
   getCompanyDetails,
   getCompanies,
-  exportCompanies,
   searchCompanies,
   addReview,
   getReviews,
@@ -12,24 +11,23 @@ const {
 } = require("../controllers/companyController");
 const router = require("express").Router();
 const multer = require("multer");
-const { isLoggedIn, isAdmin } = require("../middlewares");
+const { isLoggedIn } = require("../middlewares");
 
 const upload = multer({ dest: "uploads" });
 
-//Lisitng routes
+//Listing routes
 router.post(
   "/register",
   upload.fields([{ name: "logo" }]),
   isLoggedIn,
   registerCompany
 );
-router.post("/edit", isAdmin, editCompany);
+router.post("/edit", isLoggedIn, editCompany);
 
 //Search and fetch routes
 router.get("/name/:name", getCompanyDetails);
 router.get("/category/:category", isLoggedIn, getCompanies);
 router.get("/subcategory/:subCategory", isLoggedIn, getCompaniesBySubCategory);
-router.get("/export/companies", isAdmin, exportCompanies);
 router.get("/search/:query", isLoggedIn, searchCompanies);
 
 //Review routes
