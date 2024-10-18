@@ -16,10 +16,11 @@ const App = () => {
         </Route>
 
         <Route path="/admin" element={<AdminHomepage />}>
-          <Route path="" element={<Outlet />} />
+          <Route path="" element={<AdminUsers/>} />
           <Route path='users' element={<AdminUsers />} />
           <Route path='companies' element={<AdminCompanies />} />
           <Route path='reviews' element={<AdminReviews />} />
+          <Route path='companies/:category' element={<AdminCompanies />} />
         </Route>
 
         <Route path='/admin/login' element={<AdminLogin />} />

@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/features/user/userSlice";
+import { notifications } from "@mantine/notifications";
 
 const AdminLogin = () => {
   const form = useForm({
@@ -41,7 +42,7 @@ const AdminLogin = () => {
         form.setErrors({ email: response.error });
       } else {
         const data = await response.json();
-        console.log(data)
+        notifications.show({ title: "Login successful", message: "Welcome back", color: "teal" });  
         dispatch(setUser(data.user));
         navigate("/admin");
       }
