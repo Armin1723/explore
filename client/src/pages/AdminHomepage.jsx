@@ -47,13 +47,13 @@ const AdminHomepage = () => {
 
   return (
     <div
-      className={`flex h-screen font-['inter'] overflow-y-hidden ${
+      className={`flex h-screen font-['inter'] overflow-y-scroll ${
         colorScheme === "light" && "bg-teal-100/20"
       }`}
     >
       <AdminNav />
-      <div className="flex-1 flex flex-col p-4 overflow-y-scroll">
-        <div className="top-ribbon flex justify-between items-center py-2 px-4 w-full mt-4 rounded-md bg-gray-300/40">
+      <div className="flex-1 flex flex-col p-4 ">
+        <div className="top-ribbon flex justify-between items-center py-2 px-4 w-full  rounded-md bg-gray-400/20">
           <div className="content px-4 flex flex-col gap-2">
             <p>Dashboard</p>
             <div className="flex gap-2 items-center">
@@ -74,7 +74,7 @@ const AdminHomepage = () => {
             Welcome {user?.name} to the Admin Dashboard.
           </p>
 
-          <div className="cards w-full py-8">
+          <div className="cards w-full py-4">
             <CarouselComponent totalSlides={1}>
               {adminCarousels.map((carousel, index) => {
                 return (
@@ -104,12 +104,13 @@ const AdminHomepage = () => {
 
                       <Progress
                         value={carousel.progress}
-                        size="lg"
+                        size="sm"
                         color={carousel.increase ? "teal" : "red"}
                         transitionDuration={500}
                         style={() => ({
-                          boxShadow: "0 0 4px  rgba(0, 0, 0, 0.3)",
+                          boxShadow: "0 0 4px rgba(0, 0, 0, 0.3)",
                           borderRadius: "8px",
+                          margin: "2px 0",
                         })}
                       />
                       <Link
@@ -128,9 +129,9 @@ const AdminHomepage = () => {
               })}
             </CarouselComponent>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 ">
             <Outlet />
-            <div className="trending-company-details w-1/3">
+            <div className="trending-company-details w-1/3 max-lg:hidden">
               <Card shadow="lg" padding="lg" radius="md" withBorder>
               <Group justify="space-between" mt="md" mb="xs">
                   <Text fw={500} size="xl">

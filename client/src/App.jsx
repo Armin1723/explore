@@ -6,6 +6,7 @@ import AdminLogin from "./components/admin/AdminLogin";
 import AdminUsers from "./components/admin/AdminUsers";
 import AdminCompanies from "./components/admin/AdminCompanies";
 import AdminReviews from "./components/admin/AdminReviews";
+import AdminRequests from "./components/admin/AdminRequests";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='companies' element={<AdminCompanies />} />
           <Route path='reviews' element={<AdminReviews />} />
           <Route path='companies/:category' element={<AdminCompanies />} />
+          <Route path="requests" element={<AdminRequests />} />
         </Route>
 
         <Route path='/admin/login' element={<AdminLogin />} />

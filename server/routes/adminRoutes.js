@@ -1,10 +1,11 @@
-const { getUsers, exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin } = require('../controllers/adminController');
+const { getUsers, exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin } = require('../controllers/adminController');
 const { isAdmin } = require('../middlewares');
 
 const router = require('express').Router();
 
 //login as admin
 router.post('/login', loginAdmin)
+router.get('/logout', logoutAdmin);
 
 //Fetch all users and companies
 router.get('/users', isAdmin, getUsers);

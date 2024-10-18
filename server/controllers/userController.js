@@ -11,7 +11,7 @@ const Enquiry = require("../models/enquiryModel");
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -35,11 +35,7 @@ const loginUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Please verify your email" });
     }
-    if (user.role == "admin" && user.role !== role) {
-      return res
-        .status(400)
-        .json({ success: false, message: "You don't have admin priveleges." });
-    }
+    
     const token = jwt.sign(
       {
         id: user._id,
@@ -58,7 +54,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, io) => {
   try {
     const { name, email, password, phone, role } = req.body;
 
@@ -131,9 +127,14 @@ const registerUser = async (req, res) => {
     const message = `<p>Hi ${user.name} . Kindly use this link to verify your email. <a href="${process.env.BACKEND_URL}/api/user/verify?id=${user._id}">here</a>`;
 
     sendMail(user.email, message, (subject = "Email Verification"));
+    io.emit('newUser', user);
+
     res
       .status(201)
       .json({ success: true, message: "kindly check your e-mail!" });
+
+    
+
   } catch (error) {
     console.error(error);
   }

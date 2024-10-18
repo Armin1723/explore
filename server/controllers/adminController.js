@@ -45,7 +45,6 @@ const loginAdmin = async (req, res) => {
     );
     res.cookie("token", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
     });
     user.password = undefined;
     res.status(200).json({ success: true, user });
@@ -54,25 +53,29 @@ const loginAdmin = async (req, res) => {
   }
 };
 
+//Logout as admin
+const logoutAdmin = async (req, res) => {
+  try {
+    res.cookie("token", "", {
+      expires: new Date(0),
+      secure: process.env.NODE_ENV === "production",
+    });
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 //Get all users with pagination
 const getUsers = async (req, res) => {
   try {
-    let { page, category, subCategory } = req.query;
+    let { page} = req.query;
 
     if (!page) page = 1;
 
     let query = { role: "user", isActive: true };
 
-    if (category) {
-      query.category = category;
-    }
-
-    if (subCategory) {
-      query.subCategory = subCategory;
-    }
-
     const users = await User.find(query)
-      .populate("company")
       .sort({ createdAt: -1 })
       .skip((page - 1) * 10)
       .limit(10);
@@ -292,6 +295,7 @@ const getSuspendedCompanies = async (req, res) => {
 
 module.exports = {
   loginAdmin,
+  logoutAdmin,
   getUsers,
   getCompanies,
   getReviewsSortedByFlags,

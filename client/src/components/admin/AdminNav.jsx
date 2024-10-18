@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "@mantine/core";
 import { categories } from "../../utils/index";
 import { FaChevronRight } from "react-icons/fa";
+import { MdPendingActions } from "react-icons/md";
 
 const AdminNav = () => {
   const user = useSelector((state) => state.user);
@@ -67,6 +68,12 @@ const AdminNav = () => {
           label="Reviews"
           leftSection={<CiReceipt className="text-2xl" />}
           active={location.pathname.includes("/admin/reviews")}
+        />
+        <NavLink
+          href="/admin/requests"
+          label="Pending Requests"
+          leftSection={<MdPendingActions className="text-2xl"/>}
+          active={location.pathname.includes("/admin/requests")}
         />
       </div>
 
