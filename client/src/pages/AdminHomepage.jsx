@@ -4,8 +4,9 @@ import { Breadcrumbs, Button, useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, Text } from "@mantine/core";
-import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
+import ThemeToggle from "../components/shared/ThemeToggle";
+import { MdLogout } from "react-icons/md";
 
 const AdminHomepage = () => {
   const { toggleColorScheme, setColorScheme, colorScheme } =
@@ -26,7 +27,7 @@ const AdminHomepage = () => {
       </Link>
     ));
   useEffect(() => {
-    if (!user) {
+    if (!user || !user.role == "admin") {
       navigate("/admin/login");
     }
   }, []);
@@ -43,38 +44,22 @@ const AdminHomepage = () => {
           <div className="content px-4 flex flex-col gap-2">
             <p>Dashboard</p>
             <div className="flex gap-2 items-center">
-                <FaHome className="text-xl" />
-                <p>/</p>
+              <FaHome className="text-xl" />
+              <p>/</p>
               <Breadcrumbs>{items}</Breadcrumbs>
             </div>
           </div>
-          <div className="toggle-theme">
-            <Menu shadow="md" width={200}>
-              <Menu.Target>
-                <Button>Toggle Theme</Button>
-              </Menu.Target>
-
-              <Menu.Dropdown>
-                <Menu.Item
-                  onClick={() => setColorScheme("light")}
-                  leftSection={<MdOutlineLightMode />}
-                >
-                  Light Theme
-                </Menu.Item>
-                <Menu.Item
-                  onClick={() => setColorScheme("dark")}
-                  leftSection={<MdDarkMode />}
-                >
-                  Dark Theme
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-          </div>
+         <div className="flex gap-2">
+         <ThemeToggle />
+          <Button>
+            <MdLogout /> <span className="max-sm:hidden">Logout</span>
+          </Button>
+         </div>
         </div>
         <div className="flex-1 px-8">
-          <Text size="xl" weight={700} mt="xl">
+          <p className="text-2xl title mt-4">
             Welcome {user.name} to the Admin Dashboard.
-          </Text>
+          </p>
           <div className="cards grid max-sm:grid-cols-1"></div>
         </div>
       </div>
