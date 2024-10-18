@@ -1,7 +1,58 @@
 const { Parser } = require("json2csv");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const Company = require("../models/companyModel");
 const Review = require("../models/reviewModel");
+
+//Login as admin
+const loginAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Please provide email and password" });
+    }
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid Password" });
+    }
+    if (user.isVerified === false) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please verify your email" });
+    }
+    if (user.role !== "admin") {
+      return res
+        .status(400)
+        .json({ success: false, message: "You don't have admin priveleges." });
+    }
+    const token = jwt.sign(
+      {
+        id: user._id,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
+    );
+    res.cookie("token", token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    });
+    user.password = undefined;
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 //Get all users with pagination
 const getUsers = async (req, res) => {
@@ -26,9 +77,16 @@ const getUsers = async (req, res) => {
       .skip((page - 1) * 10)
       .limit(10);
 
-      const totalUsers = await User.countDocuments(query);  
+    const totalUsers = await User.countDocuments(query);
 
-    res.status(200).json({ success: true, users, page, totalPages: Math.ceil(totalUsers / 10) });
+    res
+      .status(200)
+      .json({
+        success: true,
+        users,
+        page,
+        totalPages: Math.ceil(totalUsers / 10),
+      });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -41,7 +99,7 @@ const getCompanies = async (req, res) => {
 
     if (!page) page = 1;
 
-    let query = {status: "active"};
+    let query = { status: "active" };
 
     if (category) {
       query.category = category;
@@ -56,9 +114,16 @@ const getCompanies = async (req, res) => {
       .skip((page - 1) * 10)
       .limit(10);
 
-      const totalCompanies = await Company.countDocuments(query);
+    const totalCompanies = await Company.countDocuments(query);
 
-    res.status(200).json({ success:true, companies, page, totalPages: Math.ceil(totalCompanies / 10) });
+    res
+      .status(200)
+      .json({
+        success: true,
+        companies,
+        page,
+        totalPages: Math.ceil(totalCompanies / 10),
+      });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -135,8 +200,14 @@ const getReviewsSortedByFlags = async (req, res) => {
 
     const totalReviews = await Review.find().countDocuments();
 
-    res.status(200).json({ success:true, reviews, page, totalPages: Math.ceil(totalReviews / 20) });
-
+    res
+      .status(200)
+      .json({
+        success: true,
+        reviews,
+        page,
+        totalPages: Math.ceil(totalReviews / 20),
+      });
   } catch (error) {
     console.error("Error fetching reviews:", error);
     throw error;
@@ -156,7 +227,7 @@ const toggleSuspendUser = async (req, res) => {
     user.isActive = !user.isActive;
     await user.save();
     message = user.isActive ? "User activated" : "User deactivated";
-    res.status(200).json({ message , user});
+    res.status(200).json({ message, user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -220,6 +291,7 @@ const getSuspendedCompanies = async (req, res) => {
 };
 
 module.exports = {
+  loginAdmin,
   getUsers,
   getCompanies,
   getReviewsSortedByFlags,

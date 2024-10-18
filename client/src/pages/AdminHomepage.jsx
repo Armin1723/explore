@@ -26,6 +26,7 @@ const AdminHomepage = () => {
         {i}
       </Link>
     ));
+    
   useEffect(() => {
     if (!user || !user.role == "admin") {
       navigate("/admin/login");
@@ -58,7 +59,7 @@ const AdminHomepage = () => {
         </div>
         <div className="flex-1 px-8">
           <p className="text-2xl title mt-4">
-            Welcome {user.name} to the Admin Dashboard.
+            Welcome {user?.name} to the Admin Dashboard.
           </p>
           <div className="cards grid max-sm:grid-cols-1"></div>
         </div>

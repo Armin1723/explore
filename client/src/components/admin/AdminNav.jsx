@@ -50,7 +50,7 @@ const AdminNav = () => {
           to="/admin/profile"
           className="flex items-center gap-4 hover:text-teal-400 transition-all duration-300"
         >
-          <Avatar src={user.profilePic} alt="it's me" className="!hover:color-teal-400"/>
+          <Avatar src={user?.profilePic} alt={user?.name} className="!hover:color-teal-400"/>
           <p>Profile</p>
         </Link>
       </div>
