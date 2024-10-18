@@ -4,10 +4,12 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
+
 const connectToDB = require('./databaseConnection');
 const cookieParser = require('cookie-parser');
 const advertisementCron = require('./cron/advertisementCron.js');
 const userRoutes = require('./routes/userRoutes.js');
+const companyRoutes = require('./routes/companyRoutes.js')
 
 const app = express();
 
@@ -39,7 +41,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/api/user', userRoutes(io))
-app.use('/api/company', require('./routes/companyRoutes.js'))
+app.use('/api/company', companyRoutes(io))
 app.use('/api/enquiries', require('./routes/enquiryRoutes.js'))
 app.use('/api/admin', require('./routes/adminRoutes.js'))
 app.use('/api/advertisement', require('./routes/advertisementRoutes.js'))

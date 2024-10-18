@@ -6,7 +6,7 @@ const cloudinary = require("../helpers/cloudinaryConfig");
 const Review = require("../models/reviewModel");
 
 //Add a company
-const registerCompany = async (req, res) => {
+const registerCompany = async (req, res, io) => {
   try {
     const {
       name,

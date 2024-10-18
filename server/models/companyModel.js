@@ -18,7 +18,7 @@ const companySchema = new mongoose.Schema({
     status:{
         type: String,
         enum: ["active", "hidden", "suspended"],
-        default: "active",
+        default: "suspended",
     },
     subCategory: {
         type: [String],
