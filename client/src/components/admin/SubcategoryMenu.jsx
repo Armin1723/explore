@@ -4,7 +4,7 @@ import React from "react";
 const SubCategoryMenu = ({ choices, setSubCategory, subCategory }) => {
   return (
     <Menu shadow="md">
-      <Menu.Target>
+      <Menu.Target> 
         <Button>
           {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}
         </Button>
