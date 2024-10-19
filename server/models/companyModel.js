@@ -8,8 +8,8 @@ const companySchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, "Please provide an email"],
-        unique: true,
+        required: [true, "Please provide a company email"],
+        unique: [true,'Email already exists'],
     },
     category: {
         type: String,
@@ -17,8 +17,8 @@ const companySchema = new mongoose.Schema({
     },
     status:{
         type: String,
-        enum: ["active", "hidden", "suspended"],
-        default: "suspended",
+        enum: ["active", "pending", "suspended", "incomplete"],
+        default: "incomplete",
     },
     subCategory: {
         type: [String],

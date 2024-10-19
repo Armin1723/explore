@@ -20,7 +20,7 @@ function AutoSlidingCarousel({
 
   return (
     <Carousel
-      slideSize={{ base: "100%", sm: "50%", md: "33.333333%" }}
+      slideSize={{ base: "100%", sm: "50%", md: "50%" }}
       slideGap={{ base: "xl", sm: "md" }}
       slidesToScroll={1}
       loop

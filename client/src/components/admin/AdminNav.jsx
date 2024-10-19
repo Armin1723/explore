@@ -18,7 +18,7 @@ const AdminNav = () => {
     <div
       className={` ${
         colorScheme == "dark" ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900" : "bg-white text-black"
-      } text-gray-400 flex flex-col justify-between items-start px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60 `}
+      } flex flex-col justify-between items-start sticky top-0  px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60 `}
     >
       <div className="nav-top flex gap-4 justify-start items-center ">
         <Link to="/admin">
@@ -26,7 +26,7 @@ const AdminNav = () => {
             <IoIosTrendingUp className="text-2xl font-bold text-white" />
           </div>
         </Link>
-        <p className="text-xl font-extralight">Explore</p>
+        <p className="text-xl font-extralight max-lg:text-sm">Explore</p>
       </div>
 
       <div className="nav-links py-12 flex-col flex-1 items-start w-full">
@@ -51,13 +51,13 @@ const AdminNav = () => {
           active={location.pathname.includes("/admin/companies")}
           rightSection={<FaChevronRight />}
         >
-          {categories.map((category) => {
+          {Object.keys(categories).map((category) => {
             return (
               <NavLink
-              key={category.name}
-              href={`/admin/companies/${category.name}`}
-              active={location.pathname.includes(category.name)}
-              label={category.name}
+              key={category}
+              href={`/admin/companies/${category}`}
+              active={location.pathname.includes(category)}
+              label={category.charAt(0).toUpperCase() + category.slice(1)}
               childrenOffset={14}
               />
             );
@@ -87,7 +87,7 @@ const AdminNav = () => {
             alt={user?.name}
             className="hover:blue-700"
           />
-          <p>Profile</p>
+          <p className="max-lg:text-sm">Profile</p>
         </Link>
       </div>
     </div>

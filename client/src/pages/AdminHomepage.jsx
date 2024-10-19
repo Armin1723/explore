@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import AdminNav from "../components/admin/AdminNav";
 import {
-  Anchor,
   Badge,
   Breadcrumbs,
-  Button,
   Card,
   Group,
   Progress,
@@ -20,6 +18,7 @@ import LogoutButton from "../components/shared/LogoutAdmin";
 import { Carousel } from "@mantine/carousel";
 import { adminCarousels } from "../utils";
 import CountUp from "react-countup";
+import { RecentListing } from "../components/admin/RecentListing";
 
 const AdminHomepage = () => {
   const { colorScheme } = useMantineColorScheme({
@@ -33,11 +32,14 @@ const AdminHomepage = () => {
   const items = location.pathname
     .split("/")
     .filter((item) => item !== "")
-    .map((i) => (
-      <Link to={`${i == "admin" ? "/admin" : `/admin/${i}`}`} key={i}>
-        {i}
-      </Link>
-    ));
+    .map((i, index, arr) => {
+      const path = arr.slice(0, index + 1).join("/");
+      return (
+        <Link to={`/${path}`} key={i}>
+          {i}
+        </Link>
+      );
+    });
 
   useEffect(() => {
     if (!user || !user.role == "admin") {
@@ -69,89 +71,79 @@ const AdminHomepage = () => {
             <LogoutButton />
           </div>
         </div>
-        <div className="hero flex-1 px-8 flex flex-col">
-          <p className="text-2xl title mt-4">
-            Welcome {user?.name} to the Admin Dashboard.
-          </p>
-
-          <div className="cards w-full py-4">
-            <CarouselComponent totalSlides={1}>
-              {adminCarousels.map((carousel, index) => {
-                return (
-                  <Carousel.Slide key={index}>
-                    <Card shadow="lg" padding="lg" radius="md" withBorder>
-                      <Group justify="space-between" mt="md" mb="xs">
-                        <Text fw={500} size="xl">
-                          {carousel.name}
-                        </Text>
-                      </Group>
-
-                      <Group justify="space-between" my="md" mb="xs">
-                        <Group justify="start">
-                          {carousel.increase ? (
-                            <FaArrowUp color="green" size={24} />
-                          ) : (
-                            <FaArrowDown color="red" size={24} />
-                          )}
-                          <div className="text-2xl font-bold">
-                            <CountUp end={carousel.value} duration={2} />
-                          </div>
+        <p className="text-2xl title mt-4">
+          Welcome {user?.name} to the Admin Dashboard.
+        </p>
+        <div className="hero flex-1 px-2 flex max-sm:flex-col gap-4">
+          <div className="right max-sm:w-full w-2/3 flex flex-col">
+            <div className="cards  py-4">
+              <CarouselComponent totalSlides={2}>
+                {adminCarousels.map((carousel, index) => {
+                  return (
+                    <Carousel.Slide key={index}>
+                      <Card shadow="lg" padding="lg" radius="md" withBorder>
+                        <Group justify="space-between" mt="md" mb="xs">
+                          <Text fw={500} size="xl">
+                            {carousel.name}
+                          </Text>
                         </Group>
-                        <Badge color={carousel.increase ? "green.8" : "red.6"}>
-                          {carousel.progress} %
-                        </Badge>
-                      </Group>
 
-                      <Progress
-                        value={carousel.progress}
-                        size="sm"
-                        color={carousel.increase ? "teal" : "red"}
-                        transitionDuration={500}
-                        style={() => ({
-                          boxShadow: "0 0 4px rgba(0, 0, 0, 0.3)",
-                          borderRadius: "8px",
-                          margin: "2px 0",
-                        })}
-                      />
-                      <Link
-                        to={`/admin/${carousel.name
-                          .split(" ")[1]
-                          .toLowerCase()}`}
-                        my="lg"
-                        color="blue.3"
-                        className={`w-full bg-blue-300 rounded-md my-2 text-center p-2 text-white hover:bg-blue-400 ${colorScheme === "dark" && "bg-gray-800 hover:bg-gray-900"}`}
-                      >
-                        Recent {carousel.name.split(" ")[1]}
-                      </Link>
-                    </Card>
-                  </Carousel.Slide>
-                );
-              })}
-            </CarouselComponent>
-          </div>
-          <div className="flex gap-4 ">
-            <Outlet />
-            <div className="trending-company-details w-1/3 max-lg:hidden">
-              <Card shadow="lg" padding="lg" radius="md" withBorder>
-              <Group justify="space-between" mt="md" mb="xs">
-                  <Text fw={500} size="xl">
-                    Trending Company
-                  </Text>
-                </Group>
-                <img src='' alt="stock" className="w-full" />
-                
-                <div className="flex flex-col">
-                  <Text>Name: ABC Corp</Text>
-                  <Text>Sales: 500</Text>
-                  <Text>Revenue: $1,000,000</Text>
-                  <Text>Employees: 150</Text>
-                </div>
+                        <Group justify="space-between" my="md" mb="xs">
+                          <Group justify="start">
+                            {carousel.increase ? (
+                              <FaArrowUp color="green" size={24} />
+                            ) : (
+                              <FaArrowDown color="red" size={24} />
+                            )}
+                            <div className="text-2xl font-bold">
+                              <CountUp end={carousel.value} duration={2} />
+                            </div>
+                          </Group>
+                          <Badge
+                            color={carousel.increase ? "green.8" : "red.6"}
+                          >
+                            {carousel.progress} %
+                          </Badge>
+                        </Group>
 
-                <Button href="/admin/company-details" my="lg" color="blue.3">
-                  View More
-                </Button>
-              </Card>
+                        <Progress
+                          value={carousel.progress}
+                          size="sm"
+                          color={carousel.increase ? "teal" : "red"}
+                          transitionDuration={500}
+                          style={() => ({
+                            boxShadow: "0 0 4px rgba(0, 0, 0, 0.3)",
+                            borderRadius: "8px",
+                            margin: "2px 0",
+                          })}
+                        />
+                        <Link
+                          to={`/admin/${carousel.name
+                            .split(" ")[1]
+                            .toLowerCase()}`}
+                          my="lg"
+                          color="blue.3"
+                          className={`w-full bg-blue-300 rounded-md my-2 text-center p-2 text-white hover:bg-blue-400 ${
+                            colorScheme === "dark" &&
+                            "bg-gray-800 hover:bg-gray-900"
+                          }`}
+                        >
+                          Recent {carousel.name.split(" ")[1]}
+                        </Link>
+                      </Card>
+                    </Carousel.Slide>
+                  );
+                })}
+              </CarouselComponent>
             </div>
+            <Outlet />
+          </div>
+
+          <div className="trending-company-details w-1/3 max-lg:w-1/2 p-2 pt-4 max-sm:w-full max-sm:p-0">
+            <Card withBorder className="h-full flex flex-col justify-between">
+              <p className="text-2xl py-2 tracking wider">Recent Listing</p>
+              <RecentListing />
+            </Card>
           </div>
         </div>
       </div>

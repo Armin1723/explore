@@ -104,12 +104,12 @@ const getCompanies = async (req, res) => {
 
     let query = { status: "active" };
 
-    if (category) {
-      query.category = category;
+    if (category && category !== "all") {
+      query.category = category.toLowerCase();
     }
 
-    if (subCategory) {
-      query.subCategory = subCategory;
+    if (subCategory && subCategory !== "all") {
+      query.subCategory = subCategory.toLowerCase();
     }
 
     const companies = await Company.find(query)
@@ -293,6 +293,62 @@ const getSuspendedCompanies = async (req, res) => {
   }
 };
 
+//Handle requests
+const handleRequest = async (req, res) => {
+  try {
+    const { action, companyId } = req.body;
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+    if (action === "approve") {
+      company.status = "active";
+    }
+    if (action === "reject") {
+      company.status = "suspended";
+    }
+    await company.save();
+    res.status(200).json({ success: true, company });
+  }
+  catch (error) {
+    res.status(500).json({ success:false, message: error.message });
+  }
+};
+
+//Get recent company
+const getRecentCompany = async (req, res) => {
+  try {
+    const company = await Company.findOne({ status: "pending" }).sort({ createdAt: -1 });
+    if (!company) {
+      return res.status(200).json({success:true, message: "No pending company found"});
+    }
+    res.status(200).json({ success: true, company });
+  }
+  catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+}
+
+//Get All Requests with pagination
+const getRequests = async (req, res) => {
+
+  try {
+    let { page } = req.query;
+
+    if (!page) page = 1;
+
+
+    const companies = await Company.find({ status: "pending" }).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10);
+
+    const totalRequests = await Company.countDocuments({ status: "pending" });
+
+    res.status(200).json({ success: true, companies, page, totalPages: Math.ceil(totalRequests / 10) });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
 module.exports = {
   loginAdmin,
   logoutAdmin,
@@ -304,4 +360,7 @@ module.exports = {
   toggleSuspendCompany,
   getSuspendedUsers,
   getSuspendedCompanies,
+  getRecentCompany,
+  handleRequest,
+  getRequests,
 };

@@ -1,0 +1,19 @@
+
+.carousel:hover .carouselControls {
+    opacity: 1;
+}
+
+.carouselControls {
+    transition: opacity 150ms ease;
+    opacity: 0;
+}
+
+.carouselIndicator {
+    width: 4px;
+    height: 4px;
+    transition: width 250ms ease;
+}
+
+.carouselIndicator[data-active] {
+    width: 16px;
+}

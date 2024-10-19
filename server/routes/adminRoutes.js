@@ -1,4 +1,4 @@
-const { getUsers, exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin } = require('../controllers/adminController');
+const { getUsers, exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin, handleRequest, getRecentCompany } = require('../controllers/adminController');
 const { isAdmin } = require('../middlewares');
 
 const router = require('express').Router();
@@ -24,5 +24,9 @@ router.get('/suspended/companies', isAdmin, getSuspendedCompanies);
 
 //Fetch reviews sorted by flags
 router.get('/reviews', isAdmin, getReviewsSortedByFlags);
+
+//Handle requests
+router.post('/requests/handle', isAdmin, handleRequest);
+router.get('/recent-request', isAdmin, getRecentCompany);
 
 module.exports = router;

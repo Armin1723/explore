@@ -74,7 +74,7 @@ const registerCompany = async (req, res, io) => {
     };
 
     // Handling Logo Upload to cloudinary
-    if (req.files && req.files?.logo) {
+    if (req.files && req.files.logo) {
       const { logo } = req.files;
       if (logo) {
         try {
@@ -233,6 +233,7 @@ const editCompany = async (req, res) => {
                 console.error("Failed to delete temporary gallery file:", err);
               }
             });
+            companyData.status = "pending";
           } catch (error) {
             return res.status(500).json({
               success: false,
