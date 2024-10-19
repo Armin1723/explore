@@ -16,7 +16,6 @@ const { isLoggedIn } = require("../middlewares");
 const upload = multer({ dest: "uploads" });
 
 const companyRoutes = (io) => {
-  
   //Listing routes
   router.post(
     "/register",
@@ -28,7 +27,7 @@ const companyRoutes = (io) => {
     "/:companyId/edit",
     isLoggedIn,
     upload.fields([{ name: "logo" }, { name: "banner" }, { name: "gallery" }]),
-    editCompany
+    (req, res) => editCompany(req, res, io)
   );
 
   //Search and fetch routes

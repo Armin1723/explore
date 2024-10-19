@@ -1,12 +1,12 @@
 import { Button, Menu } from "@mantine/core";
 import React from "react";
 
-const SubcategoryMenu = ({ choices, setSubcategory, subcategory }) => {
+const SubCategoryMenu = ({ choices, setSubCategory, subCategory }) => {
   return (
     <Menu shadow="md">
       <Menu.Target>
         <Button>
-          {subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}
+          {subCategory.charAt(0).toUpperCase() + subCategory.slice(1)}
         </Button>
       </Menu.Target>
 
@@ -14,12 +14,12 @@ const SubcategoryMenu = ({ choices, setSubcategory, subcategory }) => {
         {choices &&
           choices.map((choice) => {
             return (
-              <Menu.Item key={choice} onClick={() => setSubcategory(choice)}>
+              <Menu.Item key={choice} onClick={() => setSubCategory(choice)}>
                 {choice.charAt(0).toUpperCase() + choice.slice(1)}
               </Menu.Item>
             );
           })}
-        <Menu.Item onClick={() => setSubcategory("all")}>
+        <Menu.Item onClick={() => setSubCategory("all")}>
             All
         </Menu.Item>
       </Menu.Dropdown>
@@ -27,4 +27,4 @@ const SubcategoryMenu = ({ choices, setSubcategory, subcategory }) => {
   );
 };
 
-export default SubcategoryMenu;
+export default SubCategoryMenu;

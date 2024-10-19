@@ -117,6 +117,7 @@ const getCompanies = async (req, res) => {
       .skip((page - 1) * 10)
       .limit(10);
 
+
     const totalCompanies = await Company.countDocuments(query);
 
     res
@@ -135,12 +136,19 @@ const getCompanies = async (req, res) => {
 //Export companies to CSV
 const exportCompanies = async (req, res) => {
   try {
-    let { category } = req.query;
-    if (!category) {
-      category = { $exists: true };
+    let { category, subCategory } = req.query;
+
+    let query = { status: "active" };
+
+    if (category && category !== "all") {
+      query.category = category.toLowerCase();
     }
 
-    const companies = await Company.find({ category });
+    if (subCategory && subCategory !== "all") {
+      query.subCategory = subCategory.toLowerCase();
+    }
+
+    const companies = await Company.find(query).sort({ createdAt: -1 });
 
     if (companies.length === 0) {
       return res.status(404).json({ message: "No companies found to export" });
@@ -166,7 +174,7 @@ const exportCompanies = async (req, res) => {
     const csv = parser.parse(companies);
 
     res.header("Content-Type", "text/csv");
-    res.attachment("companies.csv");
+    res.attachment(`companies-${req.query.category}.csv`);
 
     res.send(csv);
   } catch (err) {
@@ -186,18 +194,40 @@ const getReviewsSortedByFlags = async (req, res) => {
 
     const reviews = await Review.aggregate([
       {
-        $addFields: {
-          flagCount: { $size: "$flags" },
-        },
+      $addFields: {
+        flagCount: { $size: "$flags" },
+      },
       },
       {
-        $sort: { flagCount: -1 },
+      $sort: { flagCount: -1 },
       },
       {
-        $skip: (page - 1) * 20,
+      $skip: (page - 1) * 20,
       },
       {
-        $limit: 20,
+      $limit: 20,
+      },
+      {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
+      },
+      },
+      {
+      $unwind: "$user",
+      },
+      {
+      $lookup: {
+        from: "companies",
+        localField: "company",
+        foreignField: "_id",
+        as: "company",
+      },
+      },
+      {
+      $unwind: "$company",
       },
     ]);
 
@@ -214,6 +244,30 @@ const getReviewsSortedByFlags = async (req, res) => {
   } catch (error) {
     console.error("Error fetching reviews:", error);
     throw error;
+  }
+};
+
+//Delete a review
+const deleteReview = async (req, res) => {
+  try {
+    const { reviewId } = req.params; 
+    const review = await Review.findById(reviewId.toString())
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+    const company = await Company.findById(review.company);
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+    company.reviews = company.reviews.filter((id) => id.toString() !== reviewId);
+    await company.save();
+
+    await review.deleteOne();
+
+    res.status(200).json({ message: "Review deleted successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -355,6 +409,7 @@ module.exports = {
   getUsers,
   getCompanies,
   getReviewsSortedByFlags,
+  deleteReview,
   exportCompanies,
   toggleSuspendUser,
   toggleSuspendCompany,

@@ -7,6 +7,9 @@ import AdminUsers from "./components/admin/AdminUsers";
 import AdminCompanies from "./components/admin/AdminCompanies";
 import AdminReviews from "./components/admin/AdminReviews";
 import AdminRequests from "./components/admin/AdminRequests";
+import CompanyHomepage from "./pages/CompanyHomepage";
+import CompanyDetail from "./components/company/CompanyDetail";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -14,6 +17,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Outlet />}>
           <Route path="" element={<Home />} />
+        </Route>
+
+        <Route path='/companies' element={<CompanyHomepage/>} >
+          <Route path=':name' element={<CompanyDetail />} />
         </Route>
 
         <Route path="/admin" element={<AdminHomepage />}>
@@ -27,7 +34,7 @@ const App = () => {
 
         <Route path='/admin/login' element={<AdminLogin />} />
 
-        <Route path="*" element={<div>404</div>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

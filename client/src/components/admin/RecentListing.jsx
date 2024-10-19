@@ -8,6 +8,11 @@ import { TiTick } from "react-icons/ti";
 import { RxCross1 } from "react-icons/rx";
 import { useEffect, useState } from "react";
 
+import { io } from "socket.io-client";
+import { notifications } from "@mantine/notifications";
+
+const socket = io(import.meta.env.VITE_BACKEND_URL, { withCredentials: true });
+
 export const RecentListing = () => {
   const [refetch, setRefetch] = useState(false);
   const [listing, setListing] = useState(null);
@@ -32,8 +37,9 @@ export const RecentListing = () => {
         throw new Error("An error occurred while handling request");
       }
       const data = await response.json();
-      setListing(data.company);
-      setRefetch((prev) => !prev);
+      setListing(null);
+      setRefetch(refetch);
+
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +49,8 @@ export const RecentListing = () => {
     const fetchListing = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/admin/recent-request`,{
+          `${import.meta.env.VITE_BACKEND_URL}/api/admin/recent-request`,
+          {
             credentials: "include",
           }
         );
@@ -51,19 +58,32 @@ export const RecentListing = () => {
           throw new Error(response.statusText);
         }
         const data = await response.json();
-        if(!data.company){
-            return
-        } 
+        if (!data.company) {
+          return;
+        }
         setListing(data.company);
       } catch (error) {
         console.error(error);
       }
     };
     fetchListing();
+
+    socket.on("newRequest", (company) => {
+      notifications.clean();
+      notifications.show({
+        title: "New Request",
+        message: `${company.name} has requested approval`,
+      });
+      setRefetch((prev) => !prev);
+    });
+
+    return () => {
+      socket.off("newRequest");
+    };
   }, [refetch]);
 
   return (
-    <Card radius="md" withBorder padding="xl">
+    <Card radius="md" withBorder padding="xl" className="flex-1">
       <Card.Section>
         <Carousel
           withIndicators
@@ -75,7 +95,7 @@ export const RecentListing = () => {
             indicator: classes.carouselIndicator,
           }}
         >
-          {listing ? (
+          {listing && listing.gallery.length > 0 ? (
             listing?.gallery?.map((image) => (
               <Carousel.Slide key={image}>
                 <Image src={image} height={220} className="aspect-video" />
@@ -94,21 +114,21 @@ export const RecentListing = () => {
       </Card.Section>
 
       <Group justify="space-between" mt="lg">
-        <Link to="/">
+        <Link to={listing && `/companies/${listing.name.split(" ").join("-")}`}>
           <Text fw={500} fz="lg">
             {listing?.name || "Company Name"}
           </Text>
         </Link>
 
-        <Group gap={5} align="center">
+        <Group gap={5} align="center" >
           <FaStar color="gold" />
           <Text fz="sm" fw={600}>
-            {listing && listing?.rating || 4.5}
+            {(listing && listing?.rating) || 4.5}
           </Text>
         </Group>
       </Group>
 
-      <Text fz="sm" c="dimmed" mt="sm">
+      <Text fz="sm" c="dimmed" mt="sm" className="flex-1">
         {listing ? (
           listing.description.split(" ").slice(0, 20).join(" ")
         ) : (
@@ -120,7 +140,7 @@ export const RecentListing = () => {
         ...
       </Text>
 
-      <Group justify="space-around" mt="lg" >
+      <Group justify="space-around" mt="lg">
         <Button
           size="sm"
           color="green.7"
@@ -133,7 +153,7 @@ export const RecentListing = () => {
           size="sm"
           color="red"
           radius="md"
-          onClick={() => handleRequest("approve")}
+          onClick={() => handleRequest("reject")}
         >
           <RxCross1 size={18} className="font-bold" />{" "}
           <p className=" pl-2">Reject</p>

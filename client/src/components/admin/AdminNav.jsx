@@ -17,7 +17,9 @@ const AdminNav = () => {
   return (
     <div
       className={` ${
-        colorScheme == "dark" ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900" : "bg-white text-black"
+        colorScheme == "dark"
+          ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900"
+          : "bg-white text-black"
       } flex flex-col justify-between items-start sticky top-0  px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60 `}
     >
       <div className="nav-top flex gap-4 justify-start items-center ">
@@ -34,14 +36,17 @@ const AdminNav = () => {
           href="/admin/users"
           label="Users"
           style={(theme) => ({
-              root:{
-                '&:hover': {
+            root: {
+              "&:hover": {
                 backgroundColor: theme.colors.teal[1],
                 color: theme.colors.teal[9],
               },
-              }
+            },
           })}
-          active={location.pathname == "/admin" || location.pathname.includes("/admin/users") }
+          active={
+            location.pathname == "/admin" ||
+            location.pathname.includes("/admin/users")
+          }
           leftSection={<CiUser className="text-2xl" />}
         />
         <NavLink
@@ -51,14 +56,20 @@ const AdminNav = () => {
           active={location.pathname.includes("/admin/companies")}
           rightSection={<FaChevronRight />}
         >
+          <NavLink
+            href={`/admin/companies/all`}
+            active={location.pathname.includes('all')}
+            label='All'
+            childrenOffset={14}
+          />
           {Object.keys(categories).map((category) => {
             return (
               <NavLink
-              key={category}
-              href={`/admin/companies/${category}`}
-              active={location.pathname.includes(category)}
-              label={category.charAt(0).toUpperCase() + category.slice(1)}
-              childrenOffset={14}
+                key={category}
+                href={`/admin/companies/${category}`}
+                active={location.pathname.includes(category)}
+                label={category.charAt(0).toUpperCase() + category.slice(1)}
+                childrenOffset={14}
               />
             );
           })}
@@ -72,7 +83,7 @@ const AdminNav = () => {
         <NavLink
           href="/admin/requests"
           label="Pending Requests"
-          leftSection={<MdPendingActions className="text-2xl"/>}
+          leftSection={<MdPendingActions className="text-2xl" />}
           active={location.pathname.includes("/admin/requests")}
         />
       </div>

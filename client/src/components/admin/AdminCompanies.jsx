@@ -1,7 +1,7 @@
-import { Avatar, Card, ScrollArea } from "@mantine/core";
+import { Avatar, Button, Card, ScrollArea } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import SubcategoryMenu from "./SubcategoryMenu";
+import SubCategoryMenu from "./SubCategoryMenu";
 import { categories } from "../../utils";
 
 const AdminCompanies = () => {
@@ -11,13 +11,39 @@ const AdminCompanies = () => {
 
   const { category = "all" } = useParams();
 
-  const [subcategory, setSubcategory] = useState("all");
+  const [subCategory, setSubCategory] = useState("all");
+
+  const exportData = async () => {
+    try {
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/admin/companies/export?category=${category}&subCategory=${subCategory}`,
+        {
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("An error occurred while exporting data");
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `companies-${category}.csv`;
+      a.click();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/admin/companies?page=${page}&category=${category}&subcategory=${subcategory}`,
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/admin/companies?page=${page}&category=${category}&subCategory=${subCategory}`,
           {
             credentials: "include",
           }
@@ -32,17 +58,24 @@ const AdminCompanies = () => {
       }
     };
     fetchCompanies();
-  }, [refetch, category, subcategory, page]);
+  }, [refetch, category, subCategory, page]);
 
   return (
     <Card className="flex flex-col flex-1 max-h-[44vh]" withBorder>
       <ScrollArea h={400}>
         <div className="heading w-full border-l-8 border-teal-300 my-4 flex justify-between">
-          <p className="w-full pl-6 text-xl tracking-wide">Companies</p>
-          <SubcategoryMenu subcategory={subcategory} setSubcategory={setSubcategory} choices={categories[category.toLowerCase()]}/>
+          <p className="w-full pl-6 text-xl tracking-wide">Companies ({category.charAt(0).toUpperCase() + category.slice(1)})</p>
+          <div className="actions flex gap-2">
+            <SubCategoryMenu
+              subCategory={subCategory}
+              setSubCategory={setSubCategory}
+              choices={categories[category.toLowerCase()]}
+            />
+            <Button color="green.8" onClick={exportData}>Export</Button>
+          </div>
         </div>
 
-        {(results && results.companies.length >0) ? (
+        {results && results.companies.length > 0 ? (
           results.companies.map((company, index) => {
             return (
               <Link
@@ -57,7 +90,10 @@ const AdminCompanies = () => {
                   <p className="capitalize font-semibold">{company.name}</p>
                 </div>
                 <div className="flex items-center">
-                  <p>Registered: {new Date(company.createdAt).toLocaleDateString()}</p>
+                  <p>
+                    Registered:{" "}
+                    {new Date(company.createdAt).toLocaleDateString()}
+                  </p>
                 </div>
               </Link>
             );

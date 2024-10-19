@@ -140,7 +140,7 @@ const AdminHomepage = () => {
           </div>
 
           <div className="trending-company-details w-1/3 max-lg:w-1/2 p-2 pt-4 max-sm:w-full max-sm:p-0">
-            <Card withBorder className="h-full flex flex-col justify-between">
+            <Card withBorder className="h-full flex flex-col justify-start">
               <p className="text-2xl py-2 tracking wider">Recent Listing</p>
               <RecentListing />
             </Card>

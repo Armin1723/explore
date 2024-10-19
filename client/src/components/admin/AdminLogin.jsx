@@ -1,4 +1,11 @@
-import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
+import {
+  Button,
+  Container,
+  Group,
+  Paper,
+  PasswordInput,
+  TextInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +32,11 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user);
+  if (user && user.role === "admin") {
+    navigate("/admin");
+  }
+
   const handleAdminLogin = async (values) => {
     try {
       const { email, password } = values;
@@ -38,12 +50,16 @@ const AdminLogin = () => {
           body: JSON.stringify({ email, password }),
           credentials: "include",
         }
-      )
+      );
       if (!response.ok) {
         form.setErrors({ email: response.error });
       } else {
         const data = await response.json();
-        notifications.show({ title: "Login successful", message: "Welcome back", color: "teal" });  
+        notifications.show({
+          title: "Login successful",
+          message: "Welcome back",
+          color: "teal",
+        });
         dispatch(setUser(data.user));
         navigate("/admin");
       }
@@ -53,33 +69,39 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="container flex items-center justify-center max-w-screen h-screen">
-      <form
-        onSubmit={form.onSubmit(handleAdminLogin)}
-        className="px-8 min-w-[35vw] flex flex-col gap-4 border border-teal-300 rounded-xl py-8 backdrop-bg-blur"
+    <Container className="w-full h-screen flex items-center justify-center">
+      <Paper
+        withBorder
+        shadow="md"
+        p={30}
+        mt={30}
+        className="w-full max-w-md"
+        radius="md"
       >
-        <h1 className="text-3xl font-semibold py-8">Admin Login</h1>
-        <TextInput
-          withAsterisk
-          label="Email"
-          placeholder="your@email.com"
-          key={form.key("email")}
-          {...form.getInputProps("email")}
-        />
+        <form onSubmit={form.onSubmit(handleAdminLogin)}>
+          <h1 className="text-3xl font-semibold py-8">Admin Login</h1>
+          <TextInput
+            withAsterisk
+            label="Email"
+            placeholder="your@email.com"
+            key={form.key("email")}
+            {...form.getInputProps("email")}
+          />
 
-        <PasswordInput
-          withAsterisk
-          label="Password"
-          placeholder="Your password"
-          key={form.key("password")}
-          {...form.getInputProps("password")}
-        />
+          <PasswordInput
+            withAsterisk
+            label="Password"
+            placeholder="Your password"
+            key={form.key("password")}
+            {...form.getInputProps("password")}
+          />
 
-        <Group justify="flex-end" mt="md">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </div>
+          <Group justify="flex-end" mt="md">
+            <Button type="submit">Submit</Button>
+          </Group>
+        </form>
+      </Paper>
+    </Container>
   );
 };
 

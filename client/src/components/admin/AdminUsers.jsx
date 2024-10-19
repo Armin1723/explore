@@ -33,7 +33,6 @@ const AdminUsers = () => {
     fetchAdminUsers();
 
     socket.on('newUser', (newUser) => {
-      console.log('New user registered:', newUser);
       setResults((prevResults) => {
         return {
           ...prevResults,

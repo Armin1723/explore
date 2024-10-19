@@ -6,7 +6,7 @@ const cloudinary = require("../helpers/cloudinaryConfig");
 const Review = require("../models/reviewModel");
 
 //Add a company
-const registerCompany = async (req, res, io) => {
+const registerCompany = async (req, res) => {
   try {
     const {
       name,
@@ -119,7 +119,7 @@ const registerCompany = async (req, res, io) => {
 };
 
 //Edit a company
-const editCompany = async (req, res) => {
+const editCompany = async (req, res, io) => {
   try {
 
     const { companyId } = req.params;  
@@ -234,6 +234,8 @@ const editCompany = async (req, res) => {
               }
             });
             companyData.status = "pending";
+
+            // io.emit("rewRequest", companyData);
           } catch (error) {
             return res.status(500).json({
               success: false,
@@ -253,6 +255,12 @@ const editCompany = async (req, res) => {
         new: true,
       }
     );
+    
+    
+    updatedCompany.status = "pending"
+    await updatedCompany.save();
+    io.emit("newRequest", updatedCompany);
+
     res.status(200).json({ success: true, company: updatedCompany });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
