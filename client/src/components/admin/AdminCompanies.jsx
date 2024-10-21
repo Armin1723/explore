@@ -1,7 +1,7 @@
 import { Avatar, Badge, Button, Card, ScrollArea, Select } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import SubCategoryMenu from "./abcd";
+import SubCategoryMenu from "./SubCategoryMenu";
 import { categories } from "../../utils";
 
 const AdminCompanies = () => {
