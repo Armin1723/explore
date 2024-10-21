@@ -4,15 +4,15 @@ import {
   Group,
   Paper,
   PasswordInput,
-  Text,
   TextInput,
+  Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/features/user/userSlice";
 import { notifications } from "@mantine/notifications";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const AdminLogin = () => {
 
@@ -38,10 +38,10 @@ const AdminLogin = () => {
   const user = useSelector((state) => state.user);
   
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user")) || null;
     if (user && user.role === "admin") {
       navigate("/admin");
     }
+    localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   const handleAdminLogin = async (values) => {
@@ -61,6 +61,7 @@ const AdminLogin = () => {
       if (!response.ok) {
         const data = await response.json();
         form.setErrors(data.errors);
+        throw new Error(data.message);
       } else {
         const data = await response.json();
         notifications.show({
@@ -72,44 +73,49 @@ const AdminLogin = () => {
         navigate("/admin");
       }
     } catch (error) {
-      console.log(error.message);
+      notifications.show({
+        title: "Error",
+        message: error.message,
+        color: "red",
+      });
     }
   };
 
   return (
-    <Container className="w-full h-screen flex items-center justify-center">
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        mt={30}
-        className="w-full max-w-md"
-        radius="md"
-      >
-        <form onSubmit={form.onSubmit(handleAdminLogin)}>
-          <h1 className="text-3xl font-semibold py-8">Admin Login</h1>
-          <TextInput
-            withAsterisk
-            label="Email"
-            placeholder="your@email.com"
-            key={form.key("email")}
-            {...form.getInputProps("email")}
-          />
+    <Container size={420} my={40} className="flex flex-col items-center h-screen justify-center">
+    <Title ta="center">Welcome back!</Title>
 
-          <PasswordInput
-            withAsterisk
-            label="Password"
-            placeholder="Your password"
-            key={form.key("password")}
-            {...form.getInputProps("password")}
-          />
+    <Paper
+      withBorder
+      shadow="md"
+      p={30}
+      mt={30}
+      radius="md"
+      className="lg:min-w-[30vw] w-full px-4"
+    >
+      <form onSubmit={form.onSubmit(handleAdminLogin)}>
+        <TextInput
+          withAsterisk
+          label="Email"
+          placeholder="your@email.com"
+          key={form.key("email")}
+          {...form.getInputProps("email")}
+        />
 
-          <Group justify="flex-end" mt="md">
-            <Button type="submit">Submit</Button>
-          </Group>
-        </form>
-      </Paper>
-    </Container>
+        <PasswordInput
+          withAsterisk
+          label="Password"
+          placeholder="Your password"
+          key={form.key("password")}
+          {...form.getInputProps("password")}
+        />
+
+        <Button type="submit" fullWidth mt="xl">
+          Sign in
+        </Button>
+      </form>
+    </Paper>
+  </Container>
   );
 };
 

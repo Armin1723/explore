@@ -132,6 +132,8 @@ const AdminRequests = ({refetch, setRefetch}) => {
           <div>No Requests found</div>
         )}
 
+        {(!results || !results.length) && <div>No Requests found</div>}
+
         {results?.totalPages > 1 && (
           <Pagination
             totalPages={results.totalPages}

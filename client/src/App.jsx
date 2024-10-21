@@ -10,6 +10,13 @@ import AdminRequests from "./components/admin/AdminRequests";
 import CompanyHomepage from "./pages/CompanyHomepage";
 import CompanyDetail from "./components/company/CompanyDetail";
 import NotFound from "./pages/NotFound";
+import Register from "./components/auth/Register";
+import { Login } from "./components/auth/Login";
+import { ForgotPassword } from "./components/auth/ForgotPassword";
+import AuthPage from "./pages/AuthPage";
+import UserPage from "./pages/UserPage";
+import UserDetail from "./components/user/UserDetail";
+import ResetPassword from "./components/auth/ResetPassword";
 
 const App = () => {
 
@@ -25,6 +32,19 @@ const App = () => {
         <Route path='/companies' element={<CompanyHomepage/>} >
           <Route path=':name' element={<CompanyDetail />} />
         </Route>
+
+        <Route path='/auth' element={<AuthPage/>} >
+          <Route path="" element={<Login />} />
+          <Route path='login' element={<Login />} />
+          <Route path='register' element={<Register />} />
+          <Route path='forgot-password' element={<ForgotPassword />} />
+          <Route path='reset-password' element={<ResetPassword />} />
+        </Route>
+
+        <Route path='/users' element={<UserPage />}>
+          <Route path=':id' element={<UserDetail />} />
+        </Route>
+
 
         <Route path="/admin" element={<AdminHomepage refetch={refetch} setRefetch={setRefetch}/>}>
           <Route path="" element={<AdminUsers/>} />

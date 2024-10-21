@@ -42,7 +42,7 @@ const userRoutes = (io) => {
   router.post("/toggle-save-company", isLoggedIn, toggleSavedCompany);
 
   //Fetch User
-  router.get("/id/:id", fetchUserById);
+  router.get("/:id", fetchUserById);
 
   return router;
 };

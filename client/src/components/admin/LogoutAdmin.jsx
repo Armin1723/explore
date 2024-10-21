@@ -11,13 +11,19 @@ const LogoutAdmin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  },[user]);
+
     const handleLogout = async () => {
         try {
             const response = await fetch(`${import.meta.env.BACKEND_URL}/api/admin/logout`)
             if (!response.ok) {
                 throw new Error("An error occurred while logging out");
             }
-            dispatch(setUser(null));
+            dispatch(setUser({}));
             navigate("/admin/login");
             notifications.show({ title: "Logout successful", message: "See you soon.", color: "teal" });
         } catch (error) {

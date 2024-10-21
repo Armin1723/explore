@@ -7,21 +7,28 @@ import {
   rem,
   useMantineTheme,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaHeart, FaStar, FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./UserProfile.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TiThListOutline } from "react-icons/ti";
 import { notifications } from "@mantine/notifications";
 import { setUser } from "../../redux/features/user/userSlice";
 
 const UserProfile = () => {
-  const user = useSelector((state) => state.user) || null;
+  const user = useSelector((state) => state.user);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+
   const theme = useMantineTheme();
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+    }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -38,7 +45,8 @@ const UserProfile = () => {
           message: "Logged out successfully.",
           color: "green",
         });
-        dispatch(setUser(null));
+        dispatch(setUser());
+        navigate("/");
       } else {
         notifications.show({
           title: "Error",

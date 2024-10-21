@@ -29,11 +29,10 @@ import {
   FaChevronDown,
 } from "react-icons/fa";
 import classes from "./Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosTrendingUp } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { setUser } from "../../redux/features/user/userSlice";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import UserProfile from "./UserProfile";
 import ThemeToggle from "./ThemeToggle";
 
@@ -73,13 +72,10 @@ const categoryData = [
 
 export const Header = () => {
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user")) || null;
-    if (userData) {
-      dispatch(setUser(userData));
-    }
+    const userData = localStorage.getItem("user");
   }, [user]);
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -119,7 +115,7 @@ export const Header = () => {
       className={`sticky top-0 bg-inherit !z-[99] backdrop-blur-lg ${
         colorScheme == "dark"
           ? "bg-zinc-900/90 text-white"
-          : "bg-gray-300/20 text-black"
+          : "bg-gray-300/40 text-black"
       }`}
     >
       <header className={classes.header}>
@@ -128,7 +124,7 @@ export const Header = () => {
             <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
               <IoIosTrendingUp className="text-2xl font-bold text-white" />
             </div>
-            <p className="font-bold text-lg">Explore</p>
+            <p className="font-bold text-lg">Explore </p>
           </Link>
 
           <Group h="100%" gap={0} visibleFrom="sm">
@@ -204,7 +200,9 @@ export const Header = () => {
 
           <Group visibleFrom="sm" justify="space-between">
             <ThemeToggle />
-            {!user ? (
+            {(user && user?.name) ? (
+              <UserProfile />
+            ) : (
               <>
                 <Button variant="default">
                   <Link to="/auth/login">Log in</Link>
@@ -213,8 +211,6 @@ export const Header = () => {
                   <Link to="/auth/signup">Sign Up</Link>
                 </Button>
               </>
-            ) : (
-              <UserProfile />
             )}
           </Group>
 
@@ -274,7 +270,9 @@ export const Header = () => {
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
-            {!user ? (
+          {(user && user?.name) ? (
+              <UserProfile />
+            ) : (
               <>
                 <Button variant="default">
                   <Link to="/auth/login">Log in</Link>
@@ -283,8 +281,6 @@ export const Header = () => {
                   <Link to="/auth/signup">Sign Up</Link>
                 </Button>
               </>
-            ) : (
-              <UserProfile />
             )}
           </Group>
         </ScrollArea>

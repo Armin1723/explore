@@ -6,8 +6,6 @@ const { sendMail } = require("../helpers");
 const cloudinary = require("../helpers/cloudinaryConfig");
 const crypto = require("crypto");
 const fs = require("fs");
-const Company = require("../models/companyModel");
-const Enquiry = require("../models/enquiryModel");
 
 const loginUser = async (req, res) => {
   try {
@@ -15,27 +13,34 @@ const loginUser = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required, write again.",
+        errors: {
+          email: "Email is required",
+          password: "Password is required",
+        },
       });
     }
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "User not found" });
+        .json({ success: false, errors: { email: "User not found" } });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res
         .status(400)
-        .json({ success: false, message: "Invalid Password" });
+        .json({ success: false, errors: { password: "Invalid password" } });
     }
     if (user.isVerified === false) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Please verify your email" });
+      return res.status(400).json({
+        success: false,
+        message: "Please verify your email",
+        errors: {
+          email: "Please verify your email",
+        },
+      });
     }
-    
+
     const token = jwt.sign(
       {
         id: user._id,
@@ -56,7 +61,7 @@ const loginUser = async (req, res) => {
 
 const registerUser = async (req, res, io) => {
   try {
-    const { name, email, password, phone, role } = req.body;
+    const { name, email, password, phone } = req.body;
 
     if (!name || !email || !password || !phone) {
       return res.status(400).json({
@@ -69,13 +74,13 @@ const registerUser = async (req, res, io) => {
     if (existingUser) {
       return res
         .status(400)
-        .json({ success: false, message: "User already exists" });
+        .json({ success: false, message: "User already exists", errors: { email: "Email already exists" } });
     }
     const mobileUsed = await User.findOne({ phone });
     if (mobileUsed) {
       return res
         .status(400)
-        .json({ success: false, message: "Mobile number already in use" });
+        .json({ success: false, message: "Mobile number already in use", errors: { phone: "Mobile number already in use" } });
     }
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -85,8 +90,6 @@ const registerUser = async (req, res, io) => {
       phone,
       password: hashedPassword,
     };
-
-    if (role) userData.role = role;
 
     // Handling ProfilePic Upload to cloudinary
     if (req.files && req.files?.profilePic) {
@@ -98,13 +101,11 @@ const registerUser = async (req, res, io) => {
             { folder: "User_Profile" }
           );
           if (!cloudinaryResponse || cloudinaryResponse.error) {
-            return res
-              .status(500)
-              .json({
-                success: false,
-                message: "Failed to upload profilePic to cloud.",
-                error: cloudinaryResponse.error,
-              });
+            return res.status(500).json({
+              success: false,
+              message: "Failed to upload profilePic to cloud.",
+              error: cloudinaryResponse.error,
+            });
           }
           userData.profilePic = cloudinaryResponse.secure_url;
           fs.unlink(profilePic[0].path, (err) => {
@@ -113,13 +114,11 @@ const registerUser = async (req, res, io) => {
             }
           });
         } catch (error) {
-          return res
-            .status(500)
-            .json({
-              success: false,
-              message: "Failed to upload profilePic",
-              error: error.message,
-            });
+          return res.status(500).json({
+            success: false,
+            message: "Failed to upload profilePic",
+            error: error.message,
+          });
         }
       }
     }
@@ -127,14 +126,11 @@ const registerUser = async (req, res, io) => {
     const message = `<p>Hi ${user.name} . Kindly use this link to verify your email. <a href="${process.env.BACKEND_URL}/api/user/verify?id=${user._id}">here</a>`;
 
     sendMail(user.email, message, (subject = "Email Verification"));
-    io.emit('newUser', user);
+    io.emit("newUser", user);
 
     res
       .status(201)
       .json({ success: true, message: "kindly check your e-mail!" });
-
-    
-
   } catch (error) {
     console.error(error);
   }
@@ -232,12 +228,22 @@ const forgotPassword = async (req, res) => {
         .status(400)
         .json({ success: false, message: "User not found" });
     }
+    if (user.isVerified === false) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please verify your email" });
+    }
+
+    if(user.forgotPasswordToken && user.forgotPasswordExpires > Date.now()){
+      return res.status(400).json({ success: false, message: "Password reset link already sent" });
+    }
+
     const forgotPasswordToken = crypto.randomBytes(32).toString("hex");
     user.forgotPasswordToken = forgotPasswordToken;
     user.forgotPasswordExpires = Date.now() + 30 * 60 * 1000;
     await user.save();
 
-    const message = `<p>Hi ${user.name} . Kindly use this link to reset your password. <a href="${process.env.FRONTEND_URL}/reset-password?token=${forgotPasswordToken}">here</a>`;
+    const message = `<p>Hi ${user.name} . Kindly use this link to reset your password. <a href="${process.env.FRONTEND_URL}/auth/reset-password?token=${forgotPasswordToken}">here</a>`;
     sendMail(user.email, message, (subject = "Password Reset Link"));
     res
       .status(200)
@@ -250,12 +256,10 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    const { forgotPasswordToken, userID, newPassword } = req.body;
+    const { forgotPasswordToken, newPassword } = req.body;
     const user = await User.findOne(
       {
-        _id: userID,
         forgotPasswordToken,
-        forgotPasswordExpires: { $gt: Date.now() },
       },
       {
         forgotPasswordToken: 1,
@@ -267,7 +271,11 @@ const resetPassword = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "User not found or invalid token" });
+        .json({ success: false, message: "User not found" });
+    }
+
+    if(user.forgotPasswordExpires < Date.now()){
+      return res.status(400).json({ success: false, message: "Token expired" });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 12);

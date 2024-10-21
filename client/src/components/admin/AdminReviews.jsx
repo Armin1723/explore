@@ -22,7 +22,7 @@ const AdminReviews = () => {
         throw new Error("An error occurred while deleting review");
       }
       const data = await response.json();
-      setRefetch(prev => !prev);
+      setRefetch((prev) => !prev);
       notifications.clean();
       notifications.show({
         title: "Review Deleted",
@@ -31,7 +31,7 @@ const AdminReviews = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -77,13 +77,17 @@ const AdminReviews = () => {
                       .split(" ")
                       .join("-")}?reviewId:${review._id}`}
                   >
-                    <span className="font-semibold">Review:</span> {review.comment.split(" ").slice(0, 10).join(" ")}
+                    <span className="font-semibold">Review:</span>{" "}
+                    {review.comment.split(" ").slice(0, 10).join(" ")}
                     ...
                   </Link>
                   <div className="flex items-center">
                     <MdOutlineOutlinedFlag /> : {review.flags.length}
                     <Button className="!px-1 mx-2" color="red.7">
-                      <MdDelete size={24} onClick={() => deleteReview(review._id)}/>
+                      <MdDelete
+                        size={24}
+                        onClick={() => deleteReview(review._id)}
+                      />
                     </Button>
                   </div>
                 </div>
@@ -113,6 +117,8 @@ const AdminReviews = () => {
         ) : (
           <div>No Reviews found</div>
         )}
+
+        {(!results || !results.length) && <div>No Reviews found</div>}
 
         {results?.totalPages > 1 && (
           <Pagination
