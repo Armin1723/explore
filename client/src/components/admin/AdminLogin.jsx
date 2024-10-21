@@ -4,6 +4,7 @@ import {
   Group,
   Paper,
   PasswordInput,
+  Text,
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -11,8 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/features/user/userSlice";
 import { notifications } from "@mantine/notifications";
+import { useEffect, useState } from "react";
 
 const AdminLogin = () => {
+
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -33,9 +36,13 @@ const AdminLogin = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  if (user && user.role === "admin") {
-    navigate("/admin");
-  }
+  
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user")) || null;
+    if (user && user.role === "admin") {
+      navigate("/admin");
+    }
+  }, [user]);
 
   const handleAdminLogin = async (values) => {
     try {
@@ -52,7 +59,8 @@ const AdminLogin = () => {
         }
       );
       if (!response.ok) {
-        form.setErrors({ email: response.error });
+        const data = await response.json();
+        form.setErrors(data.errors);
       } else {
         const data = await response.json();
         notifications.show({
@@ -64,7 +72,7 @@ const AdminLogin = () => {
         navigate("/admin");
       }
     } catch (error) {
-      form.setErrors({ email: "An error occurred. Please try again" });
+      console.log(error.message);
     }
   };
 

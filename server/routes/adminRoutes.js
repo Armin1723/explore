@@ -1,4 +1,4 @@
-const { getUsers, exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin, handleRequest, getRecentCompany, deleteReview } = require('../controllers/adminController');
+const { getUsers, exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin, handleRequest, getRecentCompany, deleteReview, getRequests } = require('../controllers/adminController');
 const { isAdmin } = require('../middlewares');
 
 const router = require('express').Router();
@@ -29,5 +29,6 @@ router.delete('/reviews/:reviewId', isAdmin, deleteReview);
 //Handle requests
 router.post('/requests/handle', isAdmin, handleRequest);
 router.get('/recent-request', isAdmin, getRecentCompany);
+router.get('/requests', isAdmin, getRequests);
 
 module.exports = router;

@@ -12,6 +12,9 @@ import CompanyDetail from "./components/company/CompanyDetail";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
+
+  const [refetch, setRefetch] = React.useState(false);
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -23,13 +26,13 @@ const App = () => {
           <Route path=':name' element={<CompanyDetail />} />
         </Route>
 
-        <Route path="/admin" element={<AdminHomepage />}>
+        <Route path="/admin" element={<AdminHomepage refetch={refetch} setRefetch={setRefetch}/>}>
           <Route path="" element={<AdminUsers/>} />
           <Route path='users' element={<AdminUsers />} />
           <Route path='companies' element={<AdminCompanies />} />
           <Route path='reviews' element={<AdminReviews />} />
           <Route path='companies/:category' element={<AdminCompanies />} />
-          <Route path="requests" element={<AdminRequests />} />
+          <Route path="requests" element={<AdminRequests refetch={refetch} setRefetch={setRefetch}  />} />
         </Route>
 
         <Route path='/admin/login' element={<AdminLogin />} />

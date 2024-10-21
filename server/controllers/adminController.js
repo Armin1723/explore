@@ -12,19 +12,26 @@ const loginAdmin = async (req, res) => {
     if (!email || !password) {
       return res
         .status(400)
-        .json({ message: "Please provide email and password" });
+        .json({ message: "Please provide email and password", errors:{
+          email: "Please provide email",
+          password: "Please provide password"
+        } });
     }
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "User not found" });
+        .json({ success: false, message: "User not found" , errors:{
+          email: "User not found"
+        }});
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res
         .status(400)
-        .json({ success: false, message: "Invalid Password" });
+        .json({ success: false, message: "Invalid Password" , errors:{
+          password: "Invalid Password"
+        }});
     }
     if (user.isVerified === false) {
       return res

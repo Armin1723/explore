@@ -1,6 +1,6 @@
-import { Avatar, Button, Card, ScrollArea } from "@mantine/core";
+import { Avatar, Badge, Button, Card, ScrollArea, Select } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import SubCategoryMenu from "./SubCategoryMenu";
 import { categories } from "../../utils";
 
@@ -9,9 +9,12 @@ const AdminCompanies = () => {
   const [page, setPage] = useState(1);
   const [refetch, setRefetch] = useState(false);
 
-  const { category = "all" } = useParams();
+  const { category: initialCategory = "all" } = useParams();
+  const [category, setCategory] = useState(initialCategory);
 
   const [subCategory, setSubCategory] = useState("all");
+
+  const navigate = useNavigate();
 
   const exportData = async () => {
     try {
@@ -64,7 +67,15 @@ const AdminCompanies = () => {
     <Card className="flex flex-col flex-1 max-h-[44vh]" withBorder>
       <ScrollArea h={400}>
         <div className="heading w-full border-l-8 border-teal-300 my-4 flex justify-between">
-          <p className="w-full pl-6 text-xl tracking-wide">Companies ({category.charAt(0).toUpperCase() + category.slice(1)})</p>
+          <div className="flex items-center gap-2 w-full pl-6 text-xl tracking-wide">
+            <p>Companies</p>
+            <Select
+              data={['all', ...Object.keys(categories)]}
+              value={category}
+              placeholder={category}
+              onChange={(value) => {setCategory(value); navigate(`/admin/companies/${value}`)}}
+            />
+             </div>
           <div className="actions flex gap-2">
             <SubCategoryMenu
               subCategory={subCategory}
@@ -88,6 +99,7 @@ const AdminCompanies = () => {
                 <div className="flex items-center gap-8">
                   <Avatar src={company?.logo} alt={company.name} />
                   <p className="capitalize font-semibold">{company.name}</p>
+                  <Badge color={company.status == 'active' ? 'green' : 'red'} variant="filled"> {company.status == 'active' ? 'Live' : 'Suspended'} </Badge>
                 </div>
                 <div className="flex items-center">
                   <p>

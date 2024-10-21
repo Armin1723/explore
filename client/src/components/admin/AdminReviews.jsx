@@ -22,14 +22,6 @@ const AdminReviews = () => {
         throw new Error("An error occurred while deleting review");
       }
       const data = await response.json();
-      // setResults((prevResults) => {
-      //   return {
-      //     ...prevResults,
-      //     reviews: prevResults.reviews.filter(
-      //       (review) => review._id !== reviewId
-      //     ),
-      //   };
-      // });
       setRefetch(prev => !prev);
       notifications.clean();
       notifications.show({
@@ -63,7 +55,7 @@ const AdminReviews = () => {
   }, [page, refetch]);
 
   return (
-    <Card className="flex flex-col flex-1 max-h-[40vh]" withBorder>
+    <Card className="flex flex-col flex-1 max-h-[44vh]" withBorder>
       <ScrollArea h={400}>
         <div className="heading w-full border-l-8 border-teal-300 my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">

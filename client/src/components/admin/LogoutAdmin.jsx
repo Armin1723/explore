@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { MdLogout } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
