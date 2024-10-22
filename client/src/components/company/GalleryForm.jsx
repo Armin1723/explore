@@ -74,7 +74,7 @@ const GalleryForm = ({ nextStep }) => {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/company/${
           user.company._id
-        }/edit`,
+        }/edit?edit=true`,
         {
           method: "POST",
           body: formData,

@@ -113,7 +113,7 @@ export const RecentListing = ({refetch, setRefetch}) => {
             {listing && listing.gallery.length > 0 ? (
               listing?.gallery?.map((image) => (
                 <Carousel.Slide key={image}>
-                  <Image src={image} height={220} className="aspect-video" />
+                  <Image src={image.url} height={220} className="aspect-video" />
                 </Carousel.Slide>
               ))
             ) : (
@@ -140,14 +140,14 @@ export const RecentListing = ({refetch, setRefetch}) => {
           <Group gap={5} align="center">
             <FaStar color="gold" />
             <Text fz="sm" fw={600}>
-              {(listing && listing?.rating) || 'N/A'}
+              {(listing && listing?.cumulativeRating) || 'N/A'}
             </Text>
           </Group>
         </Group>
 
         <Text fz="sm" c="dimmed" mt="sm" className="flex-1">
           {listing ? (
-            listing.description.split(" ").slice(0, 40).join(" ")
+            <div dangerouslySetInnerHTML={{__html: listing.description}}></div>
           ) : (
             <>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima

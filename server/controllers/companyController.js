@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const cloudinary = require("../helpers/cloudinaryConfig");
 
 const Review = require("../models/reviewModel");
+const { sendMail } = require("../helpers");
 
 //Add a company
 const registerCompany = async (req, res) => {
@@ -117,6 +118,8 @@ const registerCompany = async (req, res) => {
 const editCompany = async (req, res, io) => {
   try {
     const { companyId } = req.params;
+
+    const { edit } = req.query;
 
     const { id: userId } = req.user;
 
@@ -240,11 +243,6 @@ const editCompany = async (req, res, io) => {
                 new: true,
               }
             );
-
-            updatedCompany.status = "pending";
-            //TODO: send mail
-            await updatedCompany.save();
-            io.emit("newRequest", updatedCompany);
           } catch (error) {
             return res.status(500).json({
               success: false,
@@ -264,9 +262,22 @@ const editCompany = async (req, res, io) => {
       }
     );
 
+    if (edit && edit === "true") {
+      updatedCompany.status = "pending";
+
+      //send mail
+      const message = `Your company ${updatedCompany.name} has been updated successfully. Please wait while we verify your changes. You'll be notified once your company is approved.`;
+      sendMail(updatedCompany.email, message, "Company Update");
+
+      await updatedCompany.save();
+      io.emit("newRequest", updatedCompany);
+    }
+
     await updatedCompany.save();
 
-    const user = await User.findById(userId, { password: 0 }).populate("company");
+    const user = await User.findById(userId, { password: 0 }).populate(
+      "company"
+    );
 
     res.status(200).json({ success: true, company: updatedCompany, user });
   } catch (error) {
@@ -285,7 +296,7 @@ const getCompanyDetails = async (req, res) => {
     })
       .populate({
         path: "reviews",
-        select: "rating comment user",
+        select: "rating comment user createdAt flags",
         populate: {
           path: "user",
           select: "name profilePic",
@@ -309,7 +320,10 @@ const getCompanyDetails = async (req, res) => {
     const allReviews = await Company.findOne(
       { name: { $regex: new RegExp(name, "i") } },
       { reviews: 1 }
-    ).populate("reviews", "rating ");
+    ).populate({
+      path: "reviews",
+      select: "rating",
+    });
 
     let cumulativeRating = 0;
     allReviews.reviews = allReviews.reviews.map(

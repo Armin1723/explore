@@ -97,7 +97,7 @@ const AdminRequests = ({refetch, setRefetch}) => {
                   to={`/companies/${company.name.split(" ").join("-")}`}
                   className="flex items-center gap-2"
                 >
-                  <Avatar src={company?.logo} alt={company.name} />
+                  <Avatar src={company?.logo.url} alt={company.name} />
                   <p className="capitalize font-semibold">{company.name}</p>
                 </Link>
                 <div className="flex items-center">

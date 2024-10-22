@@ -4,34 +4,42 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const Company = require("../models/companyModel");
 const Review = require("../models/reviewModel");
+const { sendMail } = require("../helpers");
 
 //Login as admin
 const loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Please provide email and password", errors:{
+      return res.status(400).json({
+        message: "Please provide email and password",
+        errors: {
           email: "Please provide email",
-          password: "Please provide password"
-        } });
+          password: "Please provide password",
+        },
+      });
     }
-    const user = await User.findOne({ email }).select("+password").populate('company');
+    const user = await User.findOne({ email })
+      .select("+password")
+      .populate("company");
     if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User not found" , errors:{
-          email: "User not found"
-        }});
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+        errors: {
+          email: "User not found",
+        },
+      });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid Password" , errors:{
-          password: "Invalid Password"
-        }});
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Password",
+        errors: {
+          password: "Invalid Password",
+        },
+      });
     }
     if (user.isVerified === false) {
       return res
@@ -76,7 +84,7 @@ const logoutAdmin = async (req, res) => {
 //Get all users with pagination
 const getUsers = async (req, res) => {
   try {
-    let { page} = req.query;
+    let { page } = req.query;
 
     if (!page) page = 1;
 
@@ -89,14 +97,12 @@ const getUsers = async (req, res) => {
 
     const totalUsers = await User.countDocuments(query);
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        users,
-        page,
-        totalPages: Math.ceil(totalUsers / 10),
-      });
+    res.status(200).json({
+      success: true,
+      users,
+      page,
+      totalPages: Math.ceil(totalUsers / 10),
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -124,17 +130,14 @@ const getCompanies = async (req, res) => {
       .skip((page - 1) * 10)
       .limit(10);
 
-
     const totalCompanies = await Company.countDocuments(query);
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        companies,
-        page,
-        totalPages: Math.ceil(totalCompanies / 10),
-      });
+    res.status(200).json({
+      success: true,
+      companies,
+      page,
+      totalPages: Math.ceil(totalCompanies / 10),
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -201,53 +204,51 @@ const getReviewsSortedByFlags = async (req, res) => {
 
     const reviews = await Review.aggregate([
       {
-      $addFields: {
-        flagCount: { $size: "$flags" },
-      },
-      },
-      {
-      $sort: { flagCount: -1 },
+        $addFields: {
+          flagCount: { $size: "$flags" },
+        },
       },
       {
-      $skip: (page - 1) * 20,
+        $sort: { flagCount: -1 },
       },
       {
-      $limit: 20,
+        $skip: (page - 1) * 20,
       },
       {
-      $lookup: {
-        from: "users",
-        localField: "user",
-        foreignField: "_id",
-        as: "user",
-      },
+        $limit: 20,
       },
       {
-      $unwind: "$user",
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
+        },
       },
       {
-      $lookup: {
-        from: "companies",
-        localField: "company",
-        foreignField: "_id",
-        as: "company",
-      },
+        $unwind: "$user",
       },
       {
-      $unwind: "$company",
+        $lookup: {
+          from: "companies",
+          localField: "company",
+          foreignField: "_id",
+          as: "company",
+        },
+      },
+      {
+        $unwind: "$company",
       },
     ]);
 
     const totalReviews = await Review.find().countDocuments();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        reviews,
-        page,
-        totalPages: Math.ceil(totalReviews / 20),
-      });
+    res.status(200).json({
+      success: true,
+      reviews,
+      page,
+      totalPages: Math.ceil(totalReviews / 20),
+    });
   } catch (error) {
     console.error("Error fetching reviews:", error);
     throw error;
@@ -257,8 +258,8 @@ const getReviewsSortedByFlags = async (req, res) => {
 //Delete a review
 const deleteReview = async (req, res) => {
   try {
-    const { reviewId } = req.params; 
-    const review = await Review.findById(reviewId.toString())
+    const { reviewId } = req.params;
+    const review = await Review.findById(reviewId.toString());
     if (!review) {
       return res.status(404).json({ message: "Review not found" });
     }
@@ -266,13 +267,14 @@ const deleteReview = async (req, res) => {
     if (!company) {
       return res.status(404).json({ message: "Company not found" });
     }
-    company.reviews = company.reviews.filter((id) => id.toString() !== reviewId);
+    company.reviews = company.reviews.filter(
+      (id) => id.toString() !== reviewId
+    );
     await company.save();
 
     await review.deleteOne();
 
     res.status(200).json({ message: "Review deleted successfully" });
-
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -369,46 +371,65 @@ const handleRequest = async (req, res) => {
       company.status = "suspended";
     }
     await company.save();
+
+    //send mail to company
+    const subject =
+      action === "approve" ? "Company approved" : "Company rejected";
+    const message =
+      action === "approve"
+        ? `Dear ${company.name},\n\nWe are pleased to inform you that your company has been approved and is now active on our platform. You can now access all the features and start engaging with users.\n\nBest regards,\nThe Team`
+        : `Dear ${company.name},\n\nWe regret to inform you that your company has been rejected. Please review the submission guidelines and make the necessary changes before resubmitting.\n\nBest regards,\nThe Team`;
+    sendMail(company.email, message, subject);
+
     res.status(200).json({ success: true, company });
-  }
-  catch (error) {
-    res.status(500).json({ success:false, message: error.message });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
 //Get recent company
 const getRecentCompany = async (req, res) => {
   try {
-    const company = await Company.findOne({ status: "pending" }).sort({ createdAt: -1 });
+    const company = await Company.findOne({ status: "pending" }).sort({
+      createdAt: -1,
+    });
     if (!company) {
-      return res.status(200).json({success:true, message: "No pending company found"});
+      return res
+        .status(200)
+        .json({ success: true, message: "No pending company found" });
     }
     res.status(200).json({ success: true, company });
-  }
-  catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-}
-
-//Get All Requests with pagination
-const getRequests = async (req, res) => {
-
-  try {
-    let { page } = req.query;
-
-    if (!page) page = 1;
-
-
-    const companies = await Company.find({ status: "pending" }).sort({ createdAt: -1 }).skip((page - 1) * 10).limit(10);
-
-    const totalRequests = await Company.countDocuments({ status: "pending" });
-
-    res.status(200).json({ success: true, companies, page, totalPages: Math.ceil(totalRequests / 10) });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
+//Get All Requests with pagination
+const getRequests = async (req, res) => {
+  try {
+    let { page } = req.query;
+
+    if (!page) page = 1;
+
+    const companies = await Company.find({ status: "pending" })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * 10)
+      .limit(10);
+
+    const totalRequests = await Company.countDocuments({ status: "pending" });
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        companies,
+        page,
+        totalPages: Math.ceil(totalRequests / 10),
+      });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 module.exports = {
   loginAdmin,
