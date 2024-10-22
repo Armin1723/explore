@@ -17,6 +17,7 @@ import AuthPage from "./pages/AuthPage";
 import UserPage from "./pages/UserPage";
 import UserDetail from "./components/user/UserDetail";
 import ResetPassword from "./components/auth/ResetPassword";
+import CompanyListing from "./pages/CompanyListing";
 
 const App = () => {
 
@@ -31,7 +32,12 @@ const App = () => {
 
         <Route path='/companies' element={<CompanyHomepage/>} >
           <Route path=':name' element={<CompanyDetail />} />
+          <Route path=':category' element={<CompanyDetail />} />
+          <Route path=':category/:subcategory' element={<CompanyDetail />} />
+          <Route path='search/:query' element={<CompanyDetail />} />
         </Route>
+
+        <Route path='/companies/add' element={<CompanyListing />} />
 
         <Route path='/auth' element={<AuthPage/>} >
           <Route path="" element={<Login />} />

@@ -61,6 +61,16 @@ const Register = () => {
   // Form submit handler
   const handleSubmit = async (values) => {
 
+    const id = notifications.show({
+      id: 'Register',
+      title: "Registering Your details.",
+      loading: true,
+      message:"Please wait while we verify your details.",
+      color: 'teal',     
+      autoClose: false,
+      withCloseButton: false
+    })
+
     const formData = new FormData();
 
     // Append form values to FormData object
@@ -80,15 +90,24 @@ const Register = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        notifications.show({
+        notifications.update({
+          id,
           title: "Registration successful",
           message: data.message,
           color: "teal",
+          autoClose: 2000
         });
         navigate("/auth/login");
       } else {
         const data = await response.json();
         form.setErrors(data.errors);
+        notifications.update({
+          id,
+          title: "Registration Unsuccessful.",
+          message: data.message,
+          color: "red",
+          autoClose: 2000,
+        });
       }
     }
     catch (error) {

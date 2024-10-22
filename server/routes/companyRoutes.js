@@ -26,7 +26,11 @@ const companyRoutes = (io) => {
   router.post(
     "/:companyId/edit",
     isLoggedIn,
-    upload.fields([{ name: "logo" }, { name: "banner" }, { name: "gallery" }]),
+    upload.fields([
+      { name: "logo" },
+      { name: "banner" },
+      { name: "gallery", maxCount: 5 }
+    ]),
     (req, res) => editCompany(req, res, io)
   );
 

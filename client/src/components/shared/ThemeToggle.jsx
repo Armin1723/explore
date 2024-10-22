@@ -10,7 +10,7 @@ const ThemeToggle = () => {
     <div className="toggle-theme">
       <Menu shadow="md" width={200}>
         <Menu.Target>
-          <Button color={`${colorScheme == 'dark' ? 'gray.9' : 'blue.3'}`}>
+          <Button color={`${colorScheme == 'dark' ? 'gray.9' : 'blue.3'}`} >
             <MdDarkMode />
             <p>/</p>
             <MdOutlineLightMode />

@@ -5,11 +5,12 @@ import {
   Text,
   UnstyledButton,
   rem,
+  useMantineColorScheme,
   useMantineTheme,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaHeart, FaStar, FaUser } from "react-icons/fa";
-import { MdLogout } from "react-icons/md";
+import { MdLogout, MdToggleOff } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./UserProfile.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,9 +27,13 @@ const UserProfile = () => {
 
   const navigate = useNavigate();
 
+  const { toggleColorScheme } = useMantineColorScheme({
+    keepTransitions: true,
+  })
+
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
-    }, [user]);
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -99,6 +104,7 @@ const UserProfile = () => {
           </Group>
         </UnstyledButton>
       </Menu.Target>
+
       <Menu.Dropdown>
         <Link to={`/users/${user._id}/saved`}>
           <Menu.Item
@@ -112,6 +118,7 @@ const UserProfile = () => {
             Saved.
           </Menu.Item>
         </Link>
+
         <Link to={`/users/${user._id}/reviewed`}>
           <Menu.Item
             leftSection={
@@ -150,6 +157,12 @@ const UserProfile = () => {
         >
           Logout
         </Menu.Item>
+          <Menu.Item onClick={()=>toggleColorScheme()}
+          leftSection={
+            <MdToggleOff style={{ width: rem(16), height: rem(16) }}
+            stroke={1.5}
+            />
+          }>Toggle Theme</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );

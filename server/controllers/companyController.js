@@ -8,25 +8,15 @@ const Review = require("../models/reviewModel");
 //Add a company
 const registerCompany = async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      subCategory,
-      description,
-      category,
-      address,
-      website,
-      number,
-    } = req.body;
+    const { name, email, subCategory, category, website, address, number } =
+      req.body;
 
     const missingFields = [];
     if (!name) missingFields.push("name");
     if (!email) missingFields.push("email");
     if (!category) missingFields.push("category");
     if (!subCategory.length) missingFields.push("subCategory");
-    if (!description) missingFields.push("description");
     if (!address) missingFields.push("address");
-    if (!website) missingFields.push("website");
     if (!number) missingFields.push("number");
 
     if (missingFields.length > 0) {
@@ -53,16 +43,19 @@ const registerCompany = async (req, res) => {
 
     const existingCompany = await Company.findOne({ name });
     if (existingCompany) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Company already exists" });
+      return res.status(400).json({
+        success: false,
+        message: "Company already exists",
+        errors: {
+          name: "Company already exists.",
+        },
+      });
     }
 
     const companyData = {
       name,
       email,
       subCategory,
-      description,
       admin,
       category,
       address,
@@ -72,6 +65,8 @@ const registerCompany = async (req, res) => {
         isVisible: false,
       },
     };
+
+    if (website) companyData.website = website;
 
     // Handling Logo Upload to cloudinary
     if (req.files && req.files.logo) {
@@ -111,7 +106,7 @@ const registerCompany = async (req, res) => {
     await User.findByIdAndUpdate(admin, { company: company._id });
     const updatedUser = await User.findById(admin, {
       password: 0,
-    });
+    }).populate("company");
     res.status(201).json({ success: true, user: updatedUser, company });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -121,13 +116,11 @@ const registerCompany = async (req, res) => {
 //Edit a company
 const editCompany = async (req, res, io) => {
   try {
-
-    const { companyId } = req.params;  
+    const { companyId } = req.params;
 
     const { id: userId } = req.user;
 
     const companyData = req.body;
-
     if (!companyId) {
       return res.status(400).json({
         success: false,
@@ -149,7 +142,10 @@ const editCompany = async (req, res, io) => {
     }
 
     // Handling Logo Upload to cloudinary
-    if (req.files && (req.files?.logo || req.files?.banner || req.files?.gallery)) {
+    if (
+      req.files &&
+      (req.files?.logo || req.files?.banner || req.files?.gallery)
+    ) {
       const { logo, banner, gallery } = req.files;
       if (logo) {
         try {
@@ -221,8 +217,11 @@ const editCompany = async (req, res, io) => {
             if (!cloudinaryResponse || cloudinaryResponse.error) {
               return res.status(500).json({
                 success: false,
-                message: "Failed to upload gallery image to cloud.",
+                message: cloudinaryResponse.error.message,
               });
+            }
+            if (!companyData.gallery) {
+              companyData.gallery = [];
             }
             companyData.gallery.push({
               public_id: cloudinaryResponse.public_id,
@@ -233,9 +232,19 @@ const editCompany = async (req, res, io) => {
                 console.error("Failed to delete temporary gallery file:", err);
               }
             });
-            companyData.status = "pending";
 
-            // io.emit("rewRequest", companyData);
+            const updatedCompany = await Company.findOneAndUpdate(
+              { _id: companyId },
+              companyData,
+              {
+                new: true,
+              }
+            );
+
+            updatedCompany.status = "pending";
+            //TODO: send mail
+            await updatedCompany.save();
+            io.emit("newRequest", updatedCompany);
           } catch (error) {
             return res.status(500).json({
               success: false,
@@ -245,23 +254,21 @@ const editCompany = async (req, res, io) => {
           }
         }
       }
-
     }
 
     const updatedCompany = await Company.findOneAndUpdate(
-      { _id : companyId },
+      { _id: companyId },
       companyData,
       {
         new: true,
       }
     );
-    
-    
-    updatedCompany.status = "pending"
-    await updatedCompany.save();
-    io.emit("newRequest", updatedCompany);
 
-    res.status(200).json({ success: true, company: updatedCompany });
+    await updatedCompany.save();
+
+    const user = await User.findById(userId, { password: 0 }).populate("company");
+
+    res.status(200).json({ success: true, company: updatedCompany, user });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

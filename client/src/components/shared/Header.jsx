@@ -199,7 +199,6 @@ export const Header = () => {
           </Group>
 
           <Group visibleFrom="sm" justify="space-between">
-            <ThemeToggle />
             {(user && user?.name) ? (
               <UserProfile />
             ) : (
@@ -208,7 +207,7 @@ export const Header = () => {
                   <Link to="/auth/login">Log in</Link>
                 </Button>
                 <Button>
-                  <Link to="/auth/signup">Sign Up</Link>
+                  <Link to="/auth/register">Sign Up</Link>
                 </Button>
               </>
             )}
@@ -278,7 +277,7 @@ export const Header = () => {
                   <Link to="/auth/login">Log in</Link>
                 </Button>
                 <Button>
-                  <Link to="/auth/signup">Sign Up</Link>
+                  <Link to="/auth/register">Sign Up</Link>
                 </Button>
               </>
             )}

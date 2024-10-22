@@ -45,11 +45,9 @@ const companySchema = new mongoose.Schema({
     },
     website: {
         type: String,
-        required: [true, "Please provide a website"],
     },
     description: {
         type: String,
-        required: [true, "Please provide a description"],
     },
     logo: {
         public_id: {
