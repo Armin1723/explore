@@ -63,7 +63,7 @@ const CategorySection = () => {
                   color={theme.colors.blue[6]}
                 />
               </ThemeIcon>
-              <p className="text-sm">{category.title}</p>
+              <p className="text-sm">{category?.title}</p>
             </Link>
           );
         })}
