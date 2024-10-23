@@ -11,8 +11,8 @@ body {
     @apply font-["inter"]
 }
 
-*{
-    transition: all 0.3s;
+*::selection{
+    @apply bg-teal-300 text-white dark:bg-teal-800 dark:text-gray-800
 }
 
 /* Custom ScrollBar */
@@ -24,3 +24,4 @@ body {
     background-color: #4B5563;
     border-radius: 10px;
 }
+

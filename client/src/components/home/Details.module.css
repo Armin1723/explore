@@ -1,0 +1,50 @@
+.inner {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 4rem; 
+    padding-bottom: 4rem;
+  }
+  
+  .content {
+    max-width: 100vw; 
+    margin-right: 3rem; 
+  
+    @media (max-width: 768px) { 
+      max-width: 100%;
+      margin-right: 0;
+    }
+  }
+  
+  .title {
+    font-family: 'Greycliff CF', sans-serif;
+    font-size: 2.75rem; 
+    line-height: 1.2;
+    font-weight: 900;
+  
+    @media (max-width: 480px) { 
+      font-size: 1.75rem; 
+    }
+  }
+  
+  .control {
+    @media (max-width: 480px) { 
+      flex: 1;
+    }
+  }
+  
+  .image {
+    width: 23.5rem; 
+    height: 22.25rem; 
+  
+    @media (max-width: 768px) { 
+      display: none;
+    }
+  }
+  
+  .highlight {
+    position: relative;
+    background-color: var(--mantine-color-blue-light);
+    border-radius: var(--mantine-radius-sm);
+    padding: 0.25rem 0.75rem; 
+  }
+  

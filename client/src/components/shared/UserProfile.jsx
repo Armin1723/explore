@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaHeart, FaStar, FaUser } from "react-icons/fa";
-import { MdLogout, MdToggleOff } from "react-icons/md";
+import { MdBusiness, MdLogout, MdToggleOff } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./UserProfile.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -106,6 +106,19 @@ const UserProfile = () => {
       </Menu.Target>
 
       <Menu.Dropdown>
+        <Link to={`/companies/${user?.company?.name.split(' ').join('-')}`}>
+          <Menu.Item
+          disabled={!user?.company || !user?.company?.status=='incomplete'}
+            leftSection={
+              <MdBusiness
+                style={{ width: rem(16), height: rem(16) }}
+                color={theme.colors.yellow[6]}
+              />
+            }
+          >
+            Your Listing.
+          </Menu.Item>
+        </Link>
         <Link to={`/users/${user._id}/saved`}>
           <Menu.Item
             leftSection={

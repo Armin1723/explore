@@ -32,7 +32,7 @@ import classes from "./Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosTrendingUp } from "react-icons/io";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 import ThemeToggle from "./ThemeToggle";
 
@@ -84,7 +84,7 @@ export const Header = () => {
   const theme = useMantineTheme();
 
   const links = categoryData.map((item) => (
-    <Link to={`/companies/${item.title.toLowerCase()}`} key={item.title}>
+    <Link to={`/companies/categories?category=${item.title.toLowerCase()}`} key={item.title}>
       <UnstyledButton className={classes.subLink}>
         <Group wrap="nowrap" align="flex-start">
           <ThemeIcon size={34} variant="default" radius="md">
