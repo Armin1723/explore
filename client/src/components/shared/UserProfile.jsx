@@ -106,7 +106,7 @@ const UserProfile = () => {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Link to={`/companies/${user?.company?.name.split(' ').join('-') || ''}`}>
+        <Link to={`/companies/${ user && user.company && user.company.name && user?.company?.name.split(' ').join('-') }`}>
           <Menu.Item
           disabled={!user?.company || !user?.company?.status=='incomplete'}
             leftSection={
