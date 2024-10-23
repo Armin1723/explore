@@ -75,7 +75,7 @@ export const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
+    localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -111,7 +111,7 @@ export const Header = () => {
   return (
     <Box
       w="100vw"
-      p="lg"
+      p="md"
       className={`sticky top-0 bg-inherit !z-[99] backdrop-blur-lg ${
         colorScheme == "dark"
           ? "bg-zinc-900/90 text-white"

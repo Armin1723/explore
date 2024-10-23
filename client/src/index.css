@@ -11,6 +11,10 @@ body {
     @apply font-["inter"]
 }
 
+*{
+    transition: all 0.3s;
+}
+
 /* Custom ScrollBar */
 *::-webkit-scrollbar {
     width: 3px;

@@ -13,3 +13,4 @@ export const adminCarousels = [
   { id: 1, name: "Total Users", value: 500, increase: true, progress: 50 },
   { id: 2, name: "Total Companies", value: 100, increase: false, progress: 30 },
 ];
+

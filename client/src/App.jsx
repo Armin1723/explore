@@ -32,9 +32,8 @@ const App = () => {
 
         <Route path='/companies' element={<CompanyHomepage/>} >
           <Route path=':name' element={<CompanyDetail />} />
-          <Route path=':category' element={<CompanyDetail />} />
-          <Route path=':category/:subcategory' element={<CompanyDetail />} />
-          <Route path='search/:query' element={<CompanyDetail />} />
+          <Route path='categories' element={<CompanyDetail />} /> 
+          <Route path='search' element={<CompanyDetail />} />
         </Route>
 
         <Route path='/companies/add' element={<CompanyListing />} />
