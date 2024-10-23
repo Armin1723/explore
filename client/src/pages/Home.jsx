@@ -25,8 +25,8 @@ const Home = () => {
         className="content flex flex-col w-[90vw] gap-8 bg-opacity-50 backdrop-blur-lg rounded-md min-h-[200vh]"
       >
         <Info />
-        <DetailsSection/>
 
+        <DetailsSection/>
 
         <CarouselSection />
 
