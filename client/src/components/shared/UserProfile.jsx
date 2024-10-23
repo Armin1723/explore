@@ -106,7 +106,7 @@ const UserProfile = () => {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Link to={`/companies/${user?.company?.name.split(' ').join('-')}`}>
+        <Link to={`/companies/${user?.company?.name.split(' ').join('-') || ''}`}>
           <Menu.Item
           disabled={!user?.company || !user?.company?.status=='incomplete'}
             leftSection={
@@ -119,7 +119,7 @@ const UserProfile = () => {
             Your Listing.
           </Menu.Item>
         </Link>
-        <Link to={`/users/${user._id}/saved`}>
+        <Link to={`/users/${user?._id}/saved`}>
           <Menu.Item
             leftSection={
               <FaStar
@@ -132,7 +132,7 @@ const UserProfile = () => {
           </Menu.Item>
         </Link>
 
-        <Link to={`/users/${user._id}/reviewed`}>
+        <Link to={`/users/${user?._id}/reviewed`}>
           <Menu.Item
             leftSection={
               <TiThListOutline
@@ -147,7 +147,7 @@ const UserProfile = () => {
 
         <Menu.Label>Profile</Menu.Label>
 
-        <Link to={`/users/${user._id}`}>
+        <Link to={`/users/${user?._id}`}>
           <Menu.Item
             leftSection={
               <FaUser
