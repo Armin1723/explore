@@ -35,7 +35,6 @@ const ContactForm = () => {
         x: "-100%",
         opacity: 0,
         duration: 1,
-        scrub: 2,
         scrollTrigger: {
           trigger: contactContainer.current,
           start: "top 30%",
@@ -45,7 +44,6 @@ const ContactForm = () => {
         x: "100%",
         opacity: 0,
         duration: 1,
-        scrub: 2,
         delay: 1,
         scrollTrigger: {
           trigger: contactContainer.current,
