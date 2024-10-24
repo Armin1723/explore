@@ -45,17 +45,17 @@ const CategorySection = () => {
   const theme = useMantineTheme();
 
   return (
-    <div className="category-container w-[90vw]">
-      <p className="pl-12 my-6 text-2xl border-l-4 border-teal-400">
+    <div className="category-container w-[90vw] py-4">
+      <p className="pl-12 my-6 text-2xl border-l-4 border-teal-400 font-dm-serif font-[500] ">
         Categories
       </p>
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-1 place-items-center">
+      {/* <div className="grid grid-cols-4 md:grid-cols-8 gap-1 place-items-center">
         {categoryData.map((category, index) => {
           return (
             <Link
               to={`/companies/categories?category=${category?.title?.toLowerCase()}`}
               key={index}
-              className="flex flex-col items-center justify-center gap-2 p-4 rounded-lg border-white/30 hover:scale-105 w-24 max-lg:scale-75 hover:border-blue-800/60 hover:bg-gray-500/40 transition-all duration-500 mx-0"
+              className="flex flex-col items-center justify-center gap-2 p-4 rounded-lg border-white/30 hover:scale-105 w-24 max-lg:scale-75 hover:border-blue-800/60 hover:bg-gradient-to-br from-blue-800/50 via-transparent to-blue-500/80 transition-all duration-500 mx-0"
             >
               <ThemeIcon size={34} variant="default" radius="md">
                 <category.icon
@@ -67,6 +67,9 @@ const CategorySection = () => {
             </Link>
           );
         })}
+      </div> */}
+      <div className="grid grid-cols-2 md:grid-cols-4">
+        
       </div>
     </div>
   );

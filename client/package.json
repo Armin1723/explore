@@ -27,6 +27,7 @@
     "@tiptap/react": "^2.8.0",
     "@tiptap/starter-kit": "^2.8.0",
     "embla-carousel-react": "^7.1.0",
+    "framer-motion": "^11.11.9",
     "gsap": "^3.12.5",
     "query-string": "^9.1.1",
     "react": "^18.3.1",

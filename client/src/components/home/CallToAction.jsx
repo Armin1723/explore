@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "gsap/all";
 import { useState } from "react";
 import { Stepper, Button, Group } from "@mantine/core";
 import { PiListThin } from "react-icons/pi";
@@ -22,39 +22,36 @@ const CallToAction = () => {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
       gsap.from(".action", {
         x: "-100%",
         opacity: 0,
         duration: 1,
         scrollTrigger: {
-          trigger: ".action",
-          start: "top 80%",
-          end: "top 30%",
+          trigger: container.current,
+          start: "top 50%",
         },
       });
       gsap.from(".timeline", {
         x: "100%",
         opacity: 0,
         duration: 1,
-        delay: 1,
+        delay: 0.3,
         scrollTrigger: {
-          trigger: ".timeline",
-          start: "top 80%",
-          end: "top 30%",
+          trigger: container.current,
+          start: "top 30%",
         },
       });
     },
     { scope: container }
   );
   return (
-    <div className="bg-gradient-to-r from-transparent via-teal-200/10 to-transparent w-[90vw]">
-      <p className="text-2xl max-sm:text-xl pl-6 md:pl-12 border-l-4 border-teal-400 mt-4">
+    <div className="flex flex-col items-center bg-gradient-to-br from-blue-800/50 via-transparent to-blue-500/80 w-full">
+      <p className="text-2xl max-sm:text-xl pl-6 md:pl-12 border-l-4 border-teal-400 my-6 w-[90vw] font-dm-serif font-[500]">
         Get Started
       </p>
       <div
         ref={container}
-        className="flex max-lg:flex-col-reverse items-center min-h-[60vh] max-sm:gap-4"
+        className="flex max-lg:flex-col-reverse items-center min-h-[60vh] max-sm:gap-4 w-[90vw]"
       >
         <div className="action flex flex-col items-center justify-center h-full max-lg:w-full max-lg:my-6 w-1/2">
           <img
@@ -103,12 +100,7 @@ const CallToAction = () => {
             </Stepper.Completed>
           </Stepper>
 
-          <Group justify="center" mt="xl">
-            <Button variant="default" onClick={prevStep}>
-              Back
-            </Button>
-            <Button onClick={nextStep}>Next step</Button>
-          </Group><Link to="/companies/add">
+          <Link to="/companies/add">
             <button className="my-6 relative inline-block p-px font-semibold leading-6 text-white bg-blue-800 shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95">
               <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 

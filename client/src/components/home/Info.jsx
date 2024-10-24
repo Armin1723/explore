@@ -13,9 +13,9 @@ const Info = () => {
   }
   
   return (
-    <div className="info flex flex-col gap-4 mt-4 w-[90vw]">
-      <div className="flex text-3xl max-sm:text-xl font-semibold tracking-tight pl-6 border-l-4 border-teal-400">
-        Search Across &nbsp;
+    <div className="info flex flex-col items-center bg-white px-4 gap-4 w-[90vw] py-4">
+      <div className="flex text-3xl max-sm:text-xl font-semibold tracking-tight ">
+        <p>Search Across &nbsp;</p>
         <span className="text-blue-800 !font-extrabold">
           <Typewriter
             options={{

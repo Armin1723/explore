@@ -5,7 +5,6 @@ import { FaGreaterThan } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const CarouselSection = () => {
-
   const autoplayInterval = useInterval(() => embla && embla.scrollNext(), 3000);
   const [embla, setEmbla] = useState(null);
 
@@ -18,8 +17,8 @@ const CarouselSection = () => {
   return (
     <div className="carousels grid grid-cols-1 md:grid-cols-2 gap-4 w-[90vw]">
       <Carousel
-        slideSize='100%'
-        slideGap='md'
+        slideSize="100%"
+        slideGap="md"
         getEmblaApi={setEmbla}
         align="center"
         loop
@@ -58,7 +57,10 @@ const CarouselSection = () => {
           },
         ].map((item, index) => {
           return (
-            <div key={index} className="card flex flex-col hover:scale-[1.05] group transition-all duration-300 rounded-xl bg-gradient-to-br from-blue-800/50 to-blue-500/80 pt-6 px-4 pb-0 mb-0 cursor-pointer relative overflow-hidden">
+            <div
+              key={index}
+              className="card flex flex-col hover:scale-[1.05] group transition-all duration-300 rounded-xl bg-gradient-to-br from-blue-800/50 to-blue-500/80 pt-6 px-4 pb-0 mb-0 cursor-pointer relative overflow-hidden"
+            >
               <div className="card-content group-hover:opacity-25 transition-all duration-300">
                 <div className="card-title font-semibold text-lg capitalize">
                   {item.title}

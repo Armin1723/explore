@@ -26,6 +26,8 @@ import {
   FaTshirt,
   FaBook,
   FaChevronDown,
+  FaSun,
+  FaMoon,
 } from "react-icons/fa";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
@@ -109,7 +111,9 @@ export const Header = () => {
     </Link>
   ));
 
-  const { colorScheme } = useMantineColorScheme();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme({
+    keepTransitions: true,
+  });
 
   return (
     <div
@@ -205,20 +209,17 @@ export const Header = () => {
               {user && user?.name ? (
                 <UserProfile />
               ) : (
-                <>
                   <Button variant="default">
                     <Link to="/auth/login">Log in</Link>
                   </Button>
-                  <Button>
-                    <Link to="/auth/register">Sign Up</Link>
-                  </Button>
-                </>
               )}
             </Group>
           </div>
 
           <Group justify="center" hiddenFrom="sm">
-            <ThemeToggle />
+            {colorScheme == "dark" ? (
+              <FaSun className="text-yellow-500" onClick={toggleColorScheme}/>
+            ) : (<FaMoon className="" onClick={toggleColorScheme}/>)}
 
             <Burger
               opened={drawerOpened}

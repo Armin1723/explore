@@ -13,7 +13,7 @@ const Hero = () => {
   }, [embla]);
 
   return (
-    <div className="w-full -mt-16">
+    <div className="w-screen -mt-16">
       <Carousel
         slideSize="100%"
         slideGap="md"
@@ -27,8 +27,8 @@ const Hero = () => {
             <Carousel.Slide key={index}>
               <img
                 key={index}
-                src={`src/assets/hero-image-${index + 1}.webp`}
-                className="aspect-video w-full h-[80vh] object-fill !rounded-none"
+                src={`../../assets/hero-image-${index + 1}.webp`}
+                className="aspect-video w-full max-h-[80vh] max-sm:h-[40vh] object-fill !rounded-none"
               />
             </Carousel.Slide>
           );

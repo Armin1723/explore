@@ -1,19 +1,56 @@
 import { Image, Accordion, Grid, Container, Title } from "@mantine/core";
 import image from "../../assets/faq.svg";
 import classes from "./FAQ.module.css";
+import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 export const FAQ = () => {
+  const faqContainer = useRef(null);
+  gsap.registerPlugin(useGSAP);
+  gsap.registerPlugin(ScrollTrigger);
+
+  useGSAP(
+    () => {
+      gsap.from(".faq", {
+        x: "-100%",
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: faqContainer.current,
+          start: "top 30%",
+        },
+      });
+      gsap.from(".graphic", {
+        x: "100%",
+        opacity: 0,
+        duration: 1,
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: faqContainer.current,
+          start: "top 30%",
+          end: "bottom 30%",
+        },
+      });
+    },
+    {
+      scope: faqContainer,
+    }
+  );
   return (
-    <div id='faq' className={classes.wrapper}>
-      <Container size="lg" >
-        <Grid id="faq-grid" gutter={50} justify="center" align="center">
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            <Image src={image} alt="Frequently Asked Questions" />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            <Title order={2} ta="left" className={classes.title}>
-              Frequently Asked Questions
-            </Title>
+    <div id="faq" className='flex flex-col w-full items-center bg-gradient-r from-transparent from-40% via-blue-800 to-70% to-transparent py-4'>
+      <p className="w-[90vw] font-dm-serif text-2xl max-sm:text-xl font-[500] my-6 pl-12 max-sm:pl-6 border-l-4 border-teal-400">Frequently Asked Questions.</p>
+      <Container size="lg">
+        <Grid
+          id="faq-grid"
+          gutter={50}
+          justify="center"
+          align="center"
+          className="min-w-[70vw]"
+          ref={faqContainer}
+        >
+          <Grid.Col span={{ base: 12, md: 6 }} className="faq min-w-1/2">
 
             <Accordion
               chevronPosition="right"
@@ -35,7 +72,10 @@ export const FAQ = () => {
                 <Accordion.Control>
                   Can I create more that one account?
                 </Accordion.Control>
-                <Accordion.Panel>You can create as many accounts as you have email.However, you can only create one listing with each account.</Accordion.Panel>
+                <Accordion.Panel>
+                  You can create as many accounts as you have email.However, you
+                  can only create one listing with each account.
+                </Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="add-business">
@@ -92,6 +132,9 @@ export const FAQ = () => {
                 </Accordion.Panel>
               </Accordion.Item>
             </Accordion>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, md: 6 }} className="graphic">
+            <Image src={image} alt="Frequently Asked Questions" />
           </Grid.Col>
         </Grid>
       </Container>

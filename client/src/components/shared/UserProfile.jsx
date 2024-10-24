@@ -93,9 +93,6 @@ const UserProfile = () => {
                 radius="xl"
                 size={20}
               />
-              <Text fw={500} size="sm" lh={1} mr={3}>
-                {user.name}
-              </Text>
             </Link>
             <FaChevronDown
               style={{ width: rem(12), height: rem(12) }}

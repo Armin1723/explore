@@ -70,8 +70,8 @@ const contact = {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#202842] w-screen">
-      <div className="mx-auto max-w-7xl px-4">
+    <footer className="bg-[#202842] w-screen ">
+      <div className=" max-w-7xl px-4">
         <div className="grid gap-6 py-16 sm:grid-cols-[40fr_30fr_30fr] md:grid-cols-[40fr_30fr_30fr_30fr]">
           <div className="">
             <a href="/" className="mb-8 flex items-center gap-5 text-white">

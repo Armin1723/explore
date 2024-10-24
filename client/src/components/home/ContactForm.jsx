@@ -1,3 +1,4 @@
+import { useGSAP } from "@gsap/react";
 import {
   Button,
   Group,
@@ -5,13 +6,11 @@ import {
   Text,
   Textarea,
   TextInput,
+  Title,
 } from "@mantine/core";
+import { ScrollTrigger } from "gsap/all";
 import React from "react";
-import { FaWhatsapp } from "react-icons/fa";
-import { IoIosTrendingUp } from "react-icons/io";
-import { MdEmail } from "react-icons/md";
-import { PiNavigationArrow } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import gsap from "gsap";
 
 const ContactForm = () => {
   const handleContact = (e) => {
@@ -25,48 +24,60 @@ const ContactForm = () => {
     console.log(data);
   };
 
+  gsap.registerPlugin(useGSAP);
+  gsap.registerPlugin(ScrollTrigger);
+
+  const contactContainer = React.useRef(null);
+
+  useGSAP(
+    () => {
+      gsap.from(".graphic", {
+        x: "-100%",
+        opacity: 0,
+        duration: 1,
+        scrub: 2,
+        scrollTrigger: {
+          trigger: contactContainer.current,
+          start: "top 30%",
+        },
+      });
+      gsap.from(".form", {
+        x: "100%",
+        opacity: 0,
+        duration: 1,
+        scrub: 2,
+        delay: 1,
+        scrollTrigger: {
+          trigger: contactContainer.current,
+          start: "top 30%",
+        },
+      });
+    },
+    {
+      scope: contactContainer,
+    }
+  );
+
   return (
-    <div id="contact" className="w-full pb-16 flex justify-center items-center">
-      <div className="w-[90%] max-w-6xl rounded-lg p-8">
-        <p className="text-3xl font-bold mb-8 ">Contact Us</p>
-
-        <div className="form flex items-center justify-between flex-col lg:flex-row gap-12">
+    <div
+      id="contact"
+      className="w-full flex-col flex justify-center items-center bg-gradient-to-br from-blue-800/50 via-transparent to-blue-500/80 py-4"
+    >
+      <p className="w-[90vw] text-2xl pl-12 max-sm:pl-6 border-l-4 border-teal-400 mt-6 font-dm-serif">Contact Us</p>
+      <div className="w-[90%] max-w-6xl rounded-lg py-8" ref={contactContainer}>
+        <div className="flex items-center justify-between flex-col lg:flex-row gap-12">
           {/* Contact Information Section */}
-          <div className="details w-full lg:w-1/2 flex flex-col items-center gap-6 py-6 px-4 rounded-md ">
-            <p className="text-xl font-semibold ">Contact Information</p>
-
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-4">
-                <FaWhatsapp className="text-3xl text-green-500" />
-                <div>
-                  <p className="font-semibold ">Whatsapp</p>
-                  <p className="text-gray-500">+91 1234567890</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <MdEmail className="text-3xl text-blue-500" />
-                <div>
-                  <p className="font-semibold ">Email</p>
-                  <p className="text-gray-500">abc.d@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <PiNavigationArrow className="text-3xl text-red-500" />
-                <div>
-                  <p className="font-semibold ">Address</p>
-                  <p className="text-gray-500">
-                    123, xyz street, abc city, India
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="graphic w-full lg:w-1/2 flex flex-col items-center justify-center gap-6 py-6 px-4 rounded-md ">
+            <img
+              src="src/assets/contact.png"
+              alt="phone"
+              className="object-cover"
+            />
           </div>
 
           {/* Contact Form Section */}
           <form
-            className="w-full lg:w-1/2 bg-gray-50/10 p-6 rounded-lg shadow-md"
+            className="form w-full lg:w-1/2 bg-gray-50/10 p-6 rounded-lg shadow-[0_0_25px_blue] shadow-blue-800/50"
             onSubmit={handleContact}
           >
             <Text fz="lg" fw={700} className="mb-6 text-gray-800">
