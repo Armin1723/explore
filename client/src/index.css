@@ -11,8 +11,8 @@ body {
     @apply font-["inter"]
 }
 
-*::selection{
-    @apply bg-teal-300 text-white dark:bg-teal-800 dark:text-gray-800
+html {
+    scroll-behavior: smooth;
 }
 
 /* Custom ScrollBar */

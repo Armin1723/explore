@@ -6,7 +6,6 @@ import {
   Text,
   SimpleGrid,
   ThemeIcon,
-  Anchor,
   Divider,
   Center,
   Box,
@@ -28,6 +27,7 @@ import {
   FaBook,
   FaChevronDown,
 } from "react-icons/fa";
+import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosTrendingUp } from "react-icons/io";
@@ -84,7 +84,10 @@ export const Header = () => {
   const theme = useMantineTheme();
 
   const links = categoryData.map((item) => (
-    <Link to={`/companies/categories?category=${item.title.toLowerCase()}`} key={item.title}>
+    <Link
+      to={`/companies/categories?category=${item.title.toLowerCase()}`}
+      key={item.title}
+    >
       <UnstyledButton className={classes.subLink}>
         <Group wrap="nowrap" align="flex-start">
           <ThemeIcon size={34} variant="default" radius="md">
@@ -109,17 +112,17 @@ export const Header = () => {
   const { colorScheme } = useMantineColorScheme();
 
   return (
-    <Box
+    <div
       w="100vw"
-      p="md"
-      className={`sticky top-0 bg-inherit !z-[99] backdrop-blur-lg ${
+      align="center"
+      className={`sticky top-0 w-screen bg-inherit !z-[98] backdrop-blur-xl border-b border-gray-500/50 ${
         colorScheme == "dark"
-          ? "bg-zinc-900/90 text-white"
-          : "bg-gray-300/40 text-black"
+          ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-800/30"
+          : "bg-white text-black"
       }`}
     >
-      <header className={classes.header}>
-        <Group justify="space-between" h="100%" w="100%">
+      <header className={`${classes.header} py-4`}>
+        <Group justify="space-between" h="100%" w="80%">
           <Link to="/" className="flex items-center gap-2">
             <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
               <IoIosTrendingUp className="text-2xl font-bold text-white" />
@@ -127,91 +130,92 @@ export const Header = () => {
             <p className="font-bold text-lg">Explore </p>
           </Link>
 
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <Link to="/" className={classes.link}>
-              Home
-            </Link>
-            <HoverCard
-              width={600}
-              position="bottom"
-              radius="md"
-              shadow="md"
-              withinPortal
-            >
-              <HoverCard.Target>
-                <Link to="/companies" className={classes.link}>
-                  <Center inline>
-                    <Box component="span" mr={5}>
-                      Categories
-                    </Box>
-                    <FaChevronDown
-                      style={{ width: rem(16), height: rem(16) }}
-                    />
-                  </Center>
-                </Link>
-              </HoverCard.Target>
+          <div className="nav-right flex">
+            <Group h="100%" gap={0} visibleFrom="sm">
+              <Link to="/" className={classes.link}>
+                Home
+              </Link>
+              <HoverCard
+                width={600}
+                position="bottom"
+                radius="md"
+                shadow="md"
+                withinPortal
+              >
+                <HoverCard.Target>
+                  <div className={classes.link}>
+                    <Center inline>
+                      <Box component="span" mr={5}>
+                        Categories
+                      </Box>
+                      <GoChevronDown
+                        style={{ width: rem(16), height: rem(16) }}
+                      />
+                    </Center>
+                  </div>
+                </HoverCard.Target>
 
-              <HoverCard.Dropdown style={{ overflow: "hidden" }}>
-                <Group justify="space-between" px="md">
-                  <Text fw={500}>Categories</Text>
-                  <Link
-                    to="/companies"
-                    className="text-xs text-blue-700 hover:underline"
-                  >
-                    View all
-                  </Link>
-                </Group>
-
-                <Divider my="sm" />
-
-                <SimpleGrid cols={2} spacing={0}>
-                  {links}
-                </SimpleGrid>
-
-                <div className={classes.dropdownFooter}>
-                  <Group justify="space-between">
-                    <div>
-                      <Text fw={500} fz="sm">
-                        Get started
-                      </Text>
-                      <Text size="xs" c="dimmed">
-                        A one stop destination for all your needs.
-                      </Text>
-                    </div>
-                    <Link to="/companies">
-                      <Button variant="default">Get started</Button>
+                <HoverCard.Dropdown style={{ overflow: "hidden" }}>
+                  <Group justify="space-between" px="md">
+                    <Text fw={500}>Categories</Text>
+                    <Link
+                      to="/companies"
+                      className="text-xs text-blue-700 hover:underline"
+                    >
+                      View all
                     </Link>
                   </Group>
-                </div>
-              </HoverCard.Dropdown>
-            </HoverCard>
-            <Link to="/companies/add" className={classes.link}>
-              Add Company
-            </Link>
-            <Anchor
-              href="/companies/advertise"
-              bg="blue"
-              py="xs"
-              className={classes.link}
-            >
-              Advertise
-            </Anchor>
-          </Group>
 
-          <Group visibleFrom="sm" justify="space-between">
-            {(user && user?.name) ? (
-              <UserProfile />
-            ) : (
-              <>
-                <Button variant="default">
-                  <Link to="/auth/login">Log in</Link>
-                </Button>
-                <Button>
-                  <Link to="/auth/register">Sign Up</Link>
-                </Button>
-              </>
-            )}
-          </Group>
+                  <Divider my="sm" />
+
+                  <SimpleGrid cols={2} spacing={0}>
+                    {links}
+                  </SimpleGrid>
+
+                  <div className={classes.dropdownFooter}>
+                    <Group justify="space-between">
+                      <div>
+                        <Text fw={500} fz="sm">
+                          Get started
+                        </Text>
+                        <Text size="xs" c="dimmed">
+                          A one stop destination for all your needs.
+                        </Text>
+                      </div>
+                      <Link to="/companies">
+                        <Button variant="default">Get started</Button>
+                      </Link>
+                    </Group>
+                  </div>
+                </HoverCard.Dropdown>
+              </HoverCard>
+              <Link to="/companies/add" className={classes.link}>
+                Add Company
+              </Link>
+              <Link
+                href="/companies/advertise"
+                py="xs"
+                className={`${classes.link} `}
+              >
+                Advertise
+              </Link>
+            </Group>
+
+            <Group visibleFrom="sm" justify="space-between">
+              {user && user?.name ? (
+                <UserProfile />
+              ) : (
+                <>
+                  <Button variant="default">
+                    <Link to="/auth/login">Log in</Link>
+                  </Button>
+                  <Button>
+                    <Link to="/auth/register">Sign Up</Link>
+                  </Button>
+                </>
+              )}
+            </Group>
+          </div>
 
           <Group justify="center" hiddenFrom="sm">
             <ThemeToggle />
@@ -269,7 +273,7 @@ export const Header = () => {
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
-          {(user && user?.name) ? (
+            {user && user?.name ? (
               <UserProfile />
             ) : (
               <>
@@ -284,6 +288,6 @@ export const Header = () => {
           </Group>
         </ScrollArea>
       </Drawer>
-    </Box>
+    </div>
   );
 };

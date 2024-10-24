@@ -45,7 +45,7 @@ const CategorySection = () => {
   const theme = useMantineTheme();
 
   return (
-    <div className="category-container">
+    <div className="category-container w-[90vw]">
       <p className="pl-12 my-6 text-2xl border-l-4 border-teal-400">
         Categories
       </p>
@@ -55,7 +55,7 @@ const CategorySection = () => {
             <Link
               to={`/companies/categories?category=${category?.title?.toLowerCase()}`}
               key={index}
-              className="flex flex-col items-center justify-center gap-2 p-4 rounded-lg border-white/30 hover:scale-105 w-24 max-lg:scale-75 hover:border-blue-800/60 hover:bg-gray-100 dark:hover:bg-zinc-800/30 transition-all duration-500 mx-0"
+              className="flex flex-col items-center justify-center gap-2 p-4 rounded-lg border-white/30 hover:scale-105 w-24 max-lg:scale-75 hover:border-blue-800/60 hover:bg-gray-500/40 transition-all duration-500 mx-0"
             >
               <ThemeIcon size={34} variant="default" radius="md">
                 <category.icon

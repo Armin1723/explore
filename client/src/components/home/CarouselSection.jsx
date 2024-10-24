@@ -16,7 +16,7 @@ const CarouselSection = () => {
   }, [embla]);
 
   return (
-    <div className="carousels grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="carousels grid grid-cols-1 md:grid-cols-2 gap-4 w-[90vw]">
       <Carousel
         slideSize='100%'
         slideGap='md'

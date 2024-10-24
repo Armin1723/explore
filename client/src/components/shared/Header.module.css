@@ -1,5 +1,4 @@
 .header {
-    /* height: rem(20px); */
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
     border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
@@ -10,16 +9,12 @@
     align-items: center;
     height: 100%;
     margin-right: var(--mantine-spacing-xs);
-    padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
     border-radius: var(--mantine-radius-md);
     text-decoration: none;
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     font-weight: 400;
     font-size: var(--mantine-font-size-md);
-    
-    &:hover {
-      background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-    }
     
     @media (max-width: $mantine-breakpoint-sm ) {
       height: rem(42px);
@@ -27,6 +22,10 @@
       padding: var(--mantine-spacing-md);
     }
   
+  }
+
+  .link:hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
   }
   
   .subLink {
@@ -47,3 +46,5 @@
     padding-bottom: var(--mantine-spacing-xl);
     border-top: rem(1px) solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
   }
+
+  

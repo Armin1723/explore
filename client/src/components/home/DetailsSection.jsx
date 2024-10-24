@@ -1,6 +1,5 @@
 import {
   Image,
-  Container,
   Title,
   Button,
   Group,
@@ -13,11 +12,18 @@ import image from "../../assets/details.svg";
 import classes from "./Details.module.css";
 import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import './DetailsSection.css'; // Import custom CSS for blob animation
 
 const DetailsSection = () => {
   return (
-    <Container size="lg" >
-      <div className={`${classes.inner} flex w-full`}>
+    <div id="home" className="relative w-full flex justify-center items-center py-16 overflow-hidden">
+      {/* Blob Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="blob bg-gradient-to-r from-teal-400 via-blue-400 to-purple-400 opacity-20 dark:opacity-30"></div>
+      </div>
+
+      {/* Main Content */}
+      <div className={`${classes.inner} flex max-w-screen-lg relative z-10`}>
         <div className={classes.content}>
           <Title className={classes.title}>
             A <span className={classes.highlight}>Robust</span> Exploration
@@ -43,16 +49,13 @@ const DetailsSection = () => {
             }
           >
             <List.Item>
-              <b>Varied Listings</b> – explore a wide range of companies and
-              their services
+              <b>Varied Listings</b> – explore a wide range of companies and their services
             </List.Item>
             <List.Item>
-              <b>Free Listing for your business</b> – list your business for
-              free and reach out to more customers
+              <b>Free Listing for your business</b> – list your business for free and reach out to more customers
             </List.Item>
             <List.Item>
-              <b>Advertise for growth</b> – Advertise your business to reach out
-              to more customers and endless possibilities.
+              <b>Advertise for growth</b> – Advertise your business to reach out to more customers and endless possibilities.
             </List.Item>
           </List>
 
@@ -62,7 +65,7 @@ const DetailsSection = () => {
                 Get started
               </Button>
             </Link>
-            <Link to='/auth'>
+            <Link to="/auth">
               <Button
                 variant="default"
                 radius="xl"
@@ -76,7 +79,7 @@ const DetailsSection = () => {
         </div>
         <Image src={image} className={`${classes.image} md:w-1/2`} />
       </div>
-    </Container>
+    </div>
   );
 };
 

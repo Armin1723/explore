@@ -8,25 +8,30 @@ import CallToAction from "../components/home/CallToAction";
 import Footer from "../components/shared/Footer";
 import { FAQ } from "../components/home/FAQ";
 import DetailsSection from "../components/home/DetailsSection";
+import ContactForm from "../components/home/ContactForm";
+import Hero from "../components/home/Hero";
 
 const Home = () => {
   const { colorScheme } = useMantineColorScheme();
 
   return (
     <div
-      className={`flex flex-col items-center justify-start ${
+      className={`flex flex-col items-center min-h-screen ${
         colorScheme == "light" &&
-        "bg-gradient-to-br from-transparent min-h-screen to-teal-200/40"
+        " "
       } `}
     >
-      <Header />
-      <Card
+      <div
         rounded="lg"
-        className="content flex flex-col w-[90vw] gap-8 bg-opacity-50 backdrop-blur-lg rounded-md min-h-[200vh]"
+        className="content flex flex-col items-center gap-8 bg-opacity-50 backdrop-blur-lg rounded-md min-h-[200vh]"
       >
+
+        <Header />
+        <Hero/ >
+        <DetailsSection/>
+
         <Info />
 
-        <DetailsSection/>
 
         <CarouselSection />
 
@@ -35,7 +40,9 @@ const Home = () => {
         <CallToAction />
 
         <FAQ />
-      </Card>
+        <ContactForm />
+
+      </div>
 
       <Footer />
 
