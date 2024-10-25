@@ -26,9 +26,9 @@ body {
     @apply font-["inter"]
 }
 
-html {
+/* html {
     scroll-behavior: smooth;
-}
+} */
 
 /* Custom ScrollBar */
 *::-webkit-scrollbar {

@@ -8,20 +8,6 @@ const Testimonials = () => {
   const [embla, setEmbla] = useState(null);
   const autoplayInterval = useInterval(() => embla && embla.scrollNext(), 6000);
 
-  const getScreenSize = () => {
-    if (window.innerWidth < 640) {
-      return "sm";
-    } else if (window.innerWidth < 1024) {
-      return "md";
-    } else {
-      return "lg";
-    }
-  };
-
-  useEffect(() => {
-    getScreenSize()
-  }, [window.innerWidth])
-
   useEffect(() => {
     autoplayInterval.start();
 

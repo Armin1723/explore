@@ -1,43 +1,9 @@
 import { Image, Accordion, Grid, Container, Title } from "@mantine/core";
 import image from "../../assets/faq.svg";
 import classes from "./FAQ.module.css";
-import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
 
 export const FAQ = () => {
-  const faqContainer = useRef(null);
-  gsap.registerPlugin(useGSAP);
-  gsap.registerPlugin(ScrollTrigger);
-
-  useGSAP(
-    () => {
-      gsap.from(".faq", {
-        x: "-100%",
-        opacity: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: faqContainer.current,
-          start: "top 30%",
-        },
-      });
-      gsap.from(".graphic", {
-        x: "100%",
-        opacity: 0,
-        duration: 1,
-        delay: 0.3,
-        scrollTrigger: {
-          trigger: faqContainer.current,
-          start: "top 30%",
-          end: "bottom 30%",
-        },
-      });
-    },
-    {
-      scope: faqContainer,
-    }
-  );
+ 
   return (
     <div id="faq" className='flex flex-col w-full items-center bg-gradient-r from-transparent from-40% via-blue-800 to-70% to-transparent py-4'>
       <p className="w-[90vw] font-dm-serif text-2xl max-sm:text-xl font-[500] my-6 pl-12 max-sm:pl-6 border-l-4 border-teal-400">Frequently Asked Questions.</p>

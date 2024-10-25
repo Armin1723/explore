@@ -12,7 +12,7 @@ import image from "../../assets/details.svg";
 import classes from "./Details.module.css";
 import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import './DetailsSection.css'; // Import custom CSS for blob animation
+import './DetailsSection.css'; 
 
 const DetailsSection = () => {
   return (

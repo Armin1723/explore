@@ -1,38 +1,7 @@
 import React from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
-import { ScrollTrigger } from "gsap/all";
 
 const About = () => {
-    const aboutContainer = useRef(null);
-    gsap.registerPlugin(useGSAP);
-    gsap.registerPlugin(ScrollTrigger);
-
-    useGSAP(()=>{
-        gsap.from(".aboutText",{
-            x: "-100%", 
-            opacity: 0,
-            duration: 1,
-            scrollTrigger:{
-                trigger: aboutContainer.current,
-                start:"top 50%",
-            }
-        })
-        gsap.from(".graphics",{
-            x: "100%", 
-            opacity: 0,
-            duration: 1,
-            delay: 0.5,
-            scrollTrigger:{
-                trigger: aboutContainer.current,
-                start:"top 50%",
-            }
-        })
-    },{
-        scope:aboutContainer
-    })
-
+   
   return (
     <div className="w-screen py-6 flex flex-col items-center">
       <p className="my-4 pl-12 md:pl-6 border-teal-400 border-l-4 font-dm-serif font-[500] text-2xl max-sm:text-xl w-[90%]">

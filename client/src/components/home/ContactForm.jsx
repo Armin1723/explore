@@ -1,4 +1,3 @@
-import { useGSAP } from "@gsap/react";
 import {
   Button,
   Group,
@@ -7,9 +6,7 @@ import {
   Textarea,
   TextInput,
 } from "@mantine/core";
-import { ScrollTrigger } from "gsap/all";
 import React from "react";
-import gsap from "gsap";
 import contactImage from '../../assets/contact.svg'
 
 const ContactForm = () => {
@@ -23,38 +20,6 @@ const ContactForm = () => {
     };
     console.log(data);
   };
-
-  gsap.registerPlugin(useGSAP);
-  gsap.registerPlugin(ScrollTrigger);
-
-  const contactContainer = React.useRef(null);
-
-  useGSAP(
-    () => {
-      gsap.from(".graphic", {
-        x: "-100%",
-        opacity: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: contactContainer.current,
-          start: "top 30%",
-        },
-      });
-      gsap.from(".form", {
-        x: "100%",
-        opacity: 0,
-        duration: 1,
-        delay: 1,
-        scrollTrigger: {
-          trigger: contactContainer.current,
-          start: "top 30%",
-        },
-      });
-    },
-    {
-      scope: contactContainer,
-    }
-  );
 
   return (
     <div

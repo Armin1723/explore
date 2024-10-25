@@ -20,7 +20,6 @@ const Hero = () => {
             key={index}
             src={`/assets/hero-image-${index + 1}.webp`}
             alt='hero'
-            fill
             className={`aspect-video object-fill !rounded-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ${index === curr && 'opacity-100'}`}
           />
         );

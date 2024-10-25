@@ -4,15 +4,15 @@ import { Header } from "../components/shared/Header";
 import Info from "../components/home/Info";
 // import CarouselSection from "../components/home/CarouselSection";
 import CategorySection from "../components/home/CategorySection";
-import CallToAction from "../components/home/CallToAction";
+// import CallToAction from "../components/home/CallToAction";
 import Footer from "../components/shared/Footer";
-import { FAQ } from "../components/home/FAQ";
+// import { FAQ } from "../components/home/FAQ";
 // import DetailsSection from "../components/home/DetailsSection";
-import ContactForm from "../components/home/ContactForm";
+// import ContactForm from "../components/home/ContactForm";
 import Hero from "../components/home/Hero";
-import About from "../components/home/About";
+// import About from "../components/home/About";
 import Testimonials from "../components/home/Testimonials";
-// import Marquee from "../components/home/Marquee";
+import Marquee from "../components/home/Marquee";
 
 const Home = () => {
   const { colorScheme } = useMantineColorScheme();
@@ -38,16 +38,17 @@ const Home = () => {
 
         {/* <CarouselSection /> */}
 
-        <CategorySection />
-
         {/* <Marquee /> */}
 
-        <CallToAction />
+        <CategorySection />
 
-        <FAQ />
-        <ContactForm />
 
-        <About />
+        {/* <CallToAction /> */}
+
+        {/* <FAQ /> */}
+        {/* <ContactForm /> */}
+
+        {/* <About /> */}
 
         <Testimonials />
 
