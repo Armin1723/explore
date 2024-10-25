@@ -79,9 +79,9 @@ const Footer = () => {
                 <IoIosTrendingUp className="text-2xl font-bold text-white" />
               </div>
               <h6 className="text-3xl font-semibold tracking-wider">
-                <Link to="/" className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
                   <p className="font-bold text-lg">Explore </p>
-                </Link>
+                </div>
               </h6>
             </a>
             <address className="mt-3 text-base font-normal text-[#767E94]">

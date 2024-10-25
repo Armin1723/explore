@@ -47,7 +47,7 @@ const About = () => {
         </div>
         <div className="graphics w-full md:w-1/2 flex items-center justify-center">
           <img
-            src="src/assets/about.png"
+            src="src/assets/about.svg"
             alt="about"
             className="object-cover"
           />

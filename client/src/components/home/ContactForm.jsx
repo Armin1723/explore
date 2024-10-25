@@ -6,11 +6,11 @@ import {
   Text,
   Textarea,
   TextInput,
-  Title,
 } from "@mantine/core";
 import { ScrollTrigger } from "gsap/all";
 import React from "react";
 import gsap from "gsap";
+import contactImage from '../../assets/contact.svg'
 
 const ContactForm = () => {
   const handleContact = (e) => {
@@ -67,7 +67,7 @@ const ContactForm = () => {
           {/* Contact Information Section */}
           <div className="graphic w-full lg:w-1/2 flex flex-col items-center justify-center gap-6 py-6 px-4 rounded-md ">
             <img
-              src="src/assets/contact.png"
+              src={contactImage}
               alt="phone"
               className="object-cover"
             />
