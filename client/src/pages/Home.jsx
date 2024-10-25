@@ -6,35 +6,37 @@ import Info from "../components/home/Info";
 import CategorySection from "../components/home/CategorySection";
 // import CallToAction from "../components/home/CallToAction";
 import Footer from "../components/shared/Footer";
-// import { FAQ } from "../components/home/FAQ";
+import { FAQ } from "../components/home/FAQ";
 // import DetailsSection from "../components/home/DetailsSection";
 // import ContactForm from "../components/home/ContactForm";
 import Hero from "../components/home/Hero";
-// import About from "../components/home/About";
+import About from "../components/home/About";
 import Testimonials from "../components/home/Testimonials";
-import Marquee from "../components/home/Marquee";
+import TrendingStores from "../components/home/TrendingStores";
 
 const Home = () => {
   const { colorScheme } = useMantineColorScheme();
 
   return (
     <div
-      className={`flex flex-col items-center min-h-screen max-sm:min-w-screen ${
+      className={`flex flex-col relative items-center min-h-screen max-sm:min-w-screen home ${
         colorScheme == "light" &&
         " "
       } `}
     >
       <div
         rounded="lg"
-        className="content flex flex-col items-center gap- w-full bg-opacity-50 backdrop-blur-lg rounded-md"
+        className="content relative flex flex-col items-center gap- w-full bg-opacity-50 backdrop-blur-lg rounded-md"
       >
 
         <Header />
-        <Hero/ >
+        <Hero />
+
         {/* <DetailsSection/> */}
 
         <Info />
 
+        <About />
 
         {/* <CarouselSection /> */}
 
@@ -45,10 +47,9 @@ const Home = () => {
 
         {/* <CallToAction /> */}
 
-        {/* <FAQ /> */}
-        {/* <ContactForm /> */}
+        <FAQ />
 
-        {/* <About /> */}
+        <TrendingStores />
 
         <Testimonials />
 

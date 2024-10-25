@@ -11,22 +11,22 @@ import { Link } from "react-router-dom";
 const socialLinks = [
   {
     name: "Github",
-    link: "/",
+    href: "/",
     icon: <FaGithub className="size-6" />,
   },
   {
     name: "X",
-    link: "/",
+    href: "/",
     icon: <FaTwitter className="size-6" />,
   },
   {
     name: "LinkedIn",
-    link: "/",
+    href: "/",
     icon: <FaFacebook className="size-6" />,
   },
   {
     name: "Whatsapp",
-    link: "/",
+    href: "/",
     icon: <FaWhatsapp className="size-6" />,
   },
 ];
@@ -44,12 +44,12 @@ const support = {
 const quickLinks = {
   title: "Socials",
   items: [
-    { label: "Whatsapp", href: "/", icon: <FaWhatsapp className="size-6" /> },
-    { label: "Facebook", href: "/", icon: <FaFacebook className="size-6" /> },
-    { label: "Github", href: "/", icon: <FaGithub className="size-6" /> },
-    { label: "Twitter", href: "/", icon: <FaTwitter className="size-6" /> },
-    { label: "LinkedIn", href: "/", icon: <FaLinkedin className="size-6" /> },
-  ],
+    { label: "Whatsapp", color: "#25D366", href: "/", icon: <FaWhatsapp className="size-6 text-[#25D366]"/> },
+    { label: "Facebook", color: "#1877F2", href: "/", icon: <FaFacebook className="size-6" /> },
+    { label: "Github", color: "#181717", href: "/", icon: <FaGithub className="size-6" /> },
+    { label: "Twitter", color: "#1DA1F2", href: "/", icon: <FaTwitter className="size-6" /> },
+    { label: "LinkedIn", color: "#0A66C2", href: "/", icon: <FaLinkedin className="size-6" /> },
+  ],  
 };
 
 const category = {
@@ -70,90 +70,78 @@ const contact = {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#202842] w-screen ">
-      <div className=" max-w-7xl px-4">
-        <div className="grid gap-6 py-16 sm:grid-cols-[40fr_30fr_30fr] md:grid-cols-[40fr_30fr_30fr_30fr]">
-          <div className="">
-            <a href="/" className="mb-8 flex items-center gap-5 text-white">
-              <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
-                <IoIosTrendingUp className="text-2xl font-bold text-white" />
-              </div>
-              <h6 className="text-3xl font-semibold tracking-wider">
-                <div className="flex items-center gap-2">
-                  <p className="font-bold text-lg">Explore </p>
-                </div>
-              </h6>
-            </a>
-            <address className="mt-3 text-base font-normal text-[#767E94]">
-              <p className="mt-3 max-w-64">{contact.address}</p>
-              <p className="mt-3">{contact.phone}</p>
-              <p className="mt-3">Mail: {contact.email}</p>
-            </address>
-          </div>
-          <div>
-            <h6 className="mb-7 text-xl text-white">{support.title}</h6>
-            <ul>
-              {support.items.map(({ label, href }) => (
-                <li
-                  key={label}
-                  className="mt-3 text-base font-normal text-[#767E94] hover:text-white"
-                >
-                  <a href={href}>{label}</a>
-                </li>
-              ))}
-            </ul>
+    <footer className="bg-primary w-screen h-fit text-secondary mt-8">
+      <div className="footer-container flex max-sm:flex-col flex-1">
+        <div className="about-footer mx-12 max-sm:mx-4 w-1/4 max-sm:w-full flex flex-col h-full items-start justify-end md:pt-24">
+          <Link to="/" className="flex items-center justify-start gap-2 my-4">
+            <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
+              <IoIosTrendingUp className="text-2xl font-bold text-white" />
+            </div>
+            <p className="font-bold heading text-lg !my-0">Explore </p>
+          </Link>
+          <p className="text-sm">
+            {contact.address}
+            <br />
+            {contact.phone}
+            <br />
+            {contact.email}
+          </p>
+        </div>
+        <div className="links flex flex-row justify-start gap-20 flex-grow items-end">
+          <div className="support-links flex flex-col">
+            <p className="sub-heading text-lg">{support.title}</p>
+            {support.items.map((item, index) => {
+              return (
+                <Link to={item.href} key={index} className="text-sm">
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
 
-          <div>
-            <h6 className="mb-7 text-xl text-white">{category.title}</h6>
-            <ul>
-              {category.items.map(({ label, href }) => (
-                <li
-                  key={label}
-                  className="mt-3 text-base font-normal text-[#767E94] hover:text-white"
-                >
-                  <a href={href}>{label}</a>
-                </li>
-              ))}
-            </ul>
+          <div className="category-links flex flex-col">
+            <p className="sub-heading text-lg">{category.title}</p>
+            {category.items.map((item, index) => {
+              return (
+                <Link to={item.href} key={index} className="text-sm">
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
-          <div>
-            <h6 className="mb-7 text-xl text-white">{quickLinks.title}</h6>
-            <ul>
-              {quickLinks.items.map(({ label, href, icon }) => (
-                <li
-                  key={label}
-                  className="mt-3 text-base font-normal text-[#767E94] hover:text-white"
-                >
-                  <div className="flex items-center gap-2">
-                    {icon}
-                    <a href={href}>{label}</a>
-                  </div>
-                </li>
-              ))}
-            </ul>
+
+          <div className="social-links flex flex-col">
+            <p className="sub-heading text-lg gap-1">Socials</p>
+            {socialLinks.map((item, index) => {
+              return (
+                <Link to={item.href} key={index} className="text-sm">
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
+
         </div>
       </div>
-      <div className="bg-[#2E3447]">
+
+      <div className="bg-primary max-h-[5v]">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-4 py-5 md:flex-row md:justify-between">
-          <p className="text-center text-[#767E94]">
+          <p className="text-center text-gray-200">
             Digicrowd Solutions © 2024.
           </p>
           <ul className="flex items-center gap-6">
-            {socialLinks.map(({ name, icon, link }) => (
-              <li key={name}>
-                <a
-                  href={link}
-                  title={name}
-                  className="text-[#767E94] hover:text-white"
+            {quickLinks.items.map(({ item }) => (
+                <Link
+                key={item.label}
+                  to={item.href}
+                  title={item.label}
+                  className={`!text-[${item.color}] hover:text-white`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {icon}
-                </a>
-                <span className="sr-only">{name} account</span>
-              </li>
+                  <span className="sr-only">{item.label} account</span>
+                </Link>
             ))}
           </ul>
         </div>

@@ -13,10 +13,10 @@ const Info = () => {
   }
   
   return (
-    <div className="info flex flex-col items-center bg-white px-4 gap-4 w-[90vw] py-4">
-      <div className="flex text-3xl max-sm:text-xl font-semibold tracking-tight ">
-        <p>Search Across &nbsp;</p>
-        <span className="text-blue-800 !font-extrabold">
+    <div className="info flex flex-col items-center bg-white px-4 gap-4 w-[90vw] py-4 my-12 max-lg:my-6 max-sm:y-2">
+      <div className="flex heading">
+        <p className="heading !my-0">Search Across &nbsp;</p>
+        <span className="text-primary heading !my-0">
           <Typewriter
             options={{
               strings: ["500+ Companies", "10+ Categories", "1000+ Products"],
@@ -32,15 +32,16 @@ const Info = () => {
         radius="md"
         size="md"
         placeholder="Search query"
+        color="green.9"
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.currentTarget.value)}
-        className="w-full md:w-[40vw] shadow-[0_0_8px_blue] shadow-blue-600/20"
+        className="w-full md:w-[40vw] shadow-[0_0_18px_primary] shadow-primary/30 ring-primary"
         rightSectionWidth={42}
         leftSection={
           <FaSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
         }
         rightSection={
-          <ActionIcon size={32} radius="xl" variant="filled" onClick={handleSearch}>
+          <ActionIcon size={32} radius="md" variant="filled" color="primary.1" onClick={handleSearch}>
             <FaArrowRight
               style={{ AAwidth: rem(18), height: rem(18) }}
               stroke={1.5}

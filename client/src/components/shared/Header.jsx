@@ -31,12 +31,11 @@ import {
 } from "react-icons/fa";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoIosTrendingUp } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import UserProfile from "./UserProfile";
-import ThemeToggle from "./ThemeToggle";
 
 const categoryData = [
   {
@@ -74,7 +73,6 @@ const categoryData = [
 
 export const Header = () => {
   const user = useSelector((state) => state.user);
-  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -88,6 +86,7 @@ export const Header = () => {
   const links = categoryData.map((item) => (
     <Link
       to={`/companies/categories?category=${item.title.toLowerCase()}`}
+      className="font-['poppins'] "
       key={item.title}
     >
       <UnstyledButton className={classes.subLink}>
@@ -95,7 +94,7 @@ export const Header = () => {
           <ThemeIcon size={34} variant="default" radius="md">
             <item.icon
               style={{ width: rem(22), height: rem(22) }}
-              color={theme.colors.blue[6]}
+              color={theme.colors.primary[2]}
             />
           </ThemeIcon>
           <div>
@@ -119,7 +118,7 @@ export const Header = () => {
     <div
       w="100vw"
       align="center"
-      className={`sticky top-0 w-screen bg-inherit !z-[98] backdrop-blur-xl border-b border-gray-500/50 ${
+      className={`absolute top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98] backdrop-blur-xl border-b border-gray-500/50 ${
         colorScheme == "dark"
           ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-800/30"
           : "bg-white text-black"
@@ -209,7 +208,7 @@ export const Header = () => {
               {user && user?.name ? (
                 <UserProfile />
               ) : (
-                  <Button variant="default">
+                  <Button variant="filled" color="primary.3">
                     <Link to="/auth/login">Log in</Link>
                   </Button>
               )}
@@ -277,14 +276,9 @@ export const Header = () => {
             {user && user?.name ? (
               <UserProfile />
             ) : (
-              <>
-                <Button variant="default">
+                <Button variant="default" color="primary.3">
                   <Link to="/auth/login">Log in</Link>
                 </Button>
-                <Button>
-                  <Link to="/auth/register">Sign Up</Link>
-                </Button>
-              </>
             )}
           </Group>
         </ScrollArea>

@@ -42,7 +42,7 @@ const Testimonials = () => {
 
   return (
     <div className="flex flex-col items-center p-6 md:px-12 relative bg-primary overflow-x-hidden text-white mx-8 my-4 rounded-lg w-[90vw]">
-      <p className="text-2xl max:sm:text-xl font-dm-serif mt-4 max-sm:mt-0 text-center relative py-8 max-sm:py-4">
+      <p className="heading mt-4 max-sm:mt-0 text-center py-8 max-sm:py-2">
         Hear what our customers have to say.
       </p>
 
@@ -62,7 +62,7 @@ const Testimonials = () => {
         {testimonials.map((testimonial, index) => {
           return (
             <Carousel.Slide key={index}>
-              <div className={`slide group relative flex py-6 px-4 gap-6 bg-white rounded-xl text-black my-[8vh] max-sm:scale-x-[0.40] max-sm:scale-y-50 max-w[80vw] max-sm:my-0`}>
+              <div className={`slide group relative flex py-6 px-4 gap-6 bg-white rounded-xl text-black my-[8vh] max-sm:scale-x-[0.8] max-sm:scale-y-50 max-w-[80vw] max-sm:my-0`}>
                 <div className='bg-gray-400 min-h-60 max-h-60 min-w-40 max-w-40 max-sm:min-w-1/2 overflow-hidden rounded-lg'>
 
                 <img src={testimonial.image} alt={testimonial.name} className="group-hover:scale-110 h-60 w-40 object-cover rounded-lg transition-all duration-300" />

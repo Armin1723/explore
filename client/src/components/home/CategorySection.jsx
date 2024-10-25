@@ -11,7 +11,7 @@ const CategorySection = () => {
     },
     {
       title: "Electronics",
-      description: "Get the latest gadgets at the best prices",
+      description: "Get the latest gadgets and all the electronics at the best prices",
       image: "electronics.webp",
     },
     {
@@ -26,7 +26,7 @@ const CategorySection = () => {
     },
     {
       title: "Beauty",
-      description: "Get the best beauty products for your skin",
+      description: "Get the best beauty products for your skin and hair",
       image: "beauty.webp",
     },
     {
@@ -37,21 +37,21 @@ const CategorySection = () => {
   ];
 
   return (
-    <div className="w-[90%] flex flex-col items-center">
-      <div className="w-full text-2xl max-sm:text-xl text-center text-wrap py-6 font-bold">
+    <div className="w-full flex flex-col items-center py-12 max-sm:py-4 max-lg:py-6 bg-gradient-to-b from-secondary">
+      <div className="w-full heading text-center md:my-8 max-lg:px-8">
         Explore through different Categories
       </div>
-      <div className="categoryCards-container grid place-items-center gap-6 max-sm:grid-cols-1 max-lg:grid-cols-2 md:grid-cols-3 max-lg:w-full max-lg:gap-6 w-3/4">
+      <div className="categoryCards-container grid place-items-center gap-6 max-sm:grid-cols-1 max-lg:grid-cols-2 md:grid-cols-3 max-lg:w-full max-lg:gap-2 max-lg:m-8 w-[70%]">
         {categoryData.map((category, index) => {
           return (
             <Link
               to={`/companies/categories?category=${category.title.toLocaleLowerCase()}`}
               key={index}
-              className="group items-stretch rounded-lg flex flex-col justify-between p-3 min-w-1/3 max-lg:scale-75 max-lg:maxh-[35vh] max-lg:m-1 bg-secondary hover:bg-primary transition-colors duration-300"
+              className="group items-stretch rounded-lg flex flex-col justify-between p-3 max-lg:m-4 bg-secondary hover:bg-primary transition-colors duration-300"
             >
               <div className="details flex flex-col group-hover:text-white transition-all duration-300 px-2 pt-4">
                 <div className="pb-2 flex justify-between w-full">
-                  <p className="font-semibold text-xl ">{category?.title}</p>
+                  <p className="sub-heading">{category?.title}</p>
                   <div className="icon p-2 rounded-full border border-gray-500/50 group-hover:-rotate-45 group-hover:bg-accent transition-all duration-300">
                     <MdArrowRightAlt size={24} />
                   </div>
@@ -62,11 +62,12 @@ const CategorySection = () => {
                     : category?.description}
                 </p>
               </div>
-              <div className="w-full aspect-video overflow-hidden mt-4 rounded-lg ">
+              <div className="w-full aspect-[19/20] overflow-hidden mt-4 rounded-lg ">
                 <img
-                  src={`categories/${category?.image}`}
+                  // src={`categories/${category?.image}`}
+                  src={`https://picsum.photos/200/300/?${category.title.toLocaleLowerCase()}`}
                   alt={category.title}
-                  className="w-full aspect-video rounded-lg object-cover group-hover:scale-110 transition-all duration-300"
+                  className="w-full aspect-[9/16] rounded-lg object-cover group-hover:scale-110 transition-all duration-300"
                 />
               </div>
             </Link>
