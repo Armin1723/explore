@@ -87,7 +87,7 @@ const Footer = () => {
             {contact.email}
           </p>
         </div>
-        <div className="links flex flex-row justify-start gap-20 flex-grow items-end">
+        <div className="links flex flex-row max-sm:flex-col max-sm:items-start max-sm:m-6 max-sm:gap-4 justify-start gap-20 flex-grow items-end">
           <div className="support-links flex flex-col">
             <p className="sub-heading text-lg">{support.title}</p>
             {support.items.map((item, index) => {
@@ -130,17 +130,17 @@ const Footer = () => {
             Digicrowd Solutions © 2024.
           </p>
           <ul className="flex items-center gap-6">
-            {quickLinks.items.map(({ item }) => (
+            {quickLinks && quickLinks.items.map(({ item }) => (
                 <Link
-                key={item.label}
-                  to={item.href}
-                  title={item.label}
-                  className={`!text-[${item.color}] hover:text-white`}
+                key={item?.label}
+                  to={item?.href}
+                  title={item?.label}
+                  className={`!text-[${item?.color}] hover:text-white`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {icon}
-                  <span className="sr-only">{item.label} account</span>
+                  {item?.icon}
+                  <span className="sr-only">{item?.label} account</span>
                 </Link>
             ))}
           </ul>

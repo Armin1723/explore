@@ -13,7 +13,7 @@ const Info = () => {
   }
   
   return (
-    <div className="info flex flex-col items-center bg-white px-4 gap-4 w-[90vw] py-4 my-12 max-lg:my-6 max-sm:y-2">
+    <div className="info flex flex-col items-center px-4 gap-4 w-[90vw] py-4 my-12 max-lg:my-6 max-sm:y-2">
       <div className="flex heading">
         <p className="heading !my-0">Search Across &nbsp;</p>
         <span className="text-primary heading !my-0">

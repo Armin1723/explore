@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <div className="w-screen py-6 flex flex-col items-center bg-gradient-to-b from-secondary">
+    <div className="w-screen py-6 flex flex-col items-center bg-gradient-to-b from-secondary to-white">
       <Marquee />
       <div className="flex max-lg:flex-col items-center justify-center rounded-xl bg-primary w-[90%] md:w-[80%] my-6 text-secondary py-12">
         <div className="aboutText flex flex-col items-start max-lg:items-center w-full md:w-1/3 h-1/2 md:h-full justify-between gap-6">

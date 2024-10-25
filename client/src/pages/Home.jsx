@@ -2,17 +2,15 @@ import { useMantineColorScheme } from "@mantine/core";
 import React from "react";
 import { Header } from "../components/shared/Header";
 import Info from "../components/home/Info";
-// import CarouselSection from "../components/home/CarouselSection";
 import CategorySection from "../components/home/CategorySection";
-// import CallToAction from "../components/home/CallToAction";
 import Footer from "../components/shared/Footer";
-import { FAQ } from "../components/home/FAQ";
-// import DetailsSection from "../components/home/DetailsSection";
-// import ContactForm from "../components/home/ContactForm";
+// import { FAQ } from "../components/home/FAQ";
 import Hero from "../components/home/Hero";
 import About from "../components/home/About";
 import Testimonials from "../components/home/Testimonials";
 import TrendingStores from "../components/home/TrendingStores";
+import ContactCard from "../components/home/ContactCard";
+import PopularStores from "../components/home/PopularStores";
 
 const Home = () => {
   const { colorScheme } = useMantineColorScheme();
@@ -21,7 +19,7 @@ const Home = () => {
     <div
       className={`flex flex-col relative items-center min-h-screen max-sm:min-w-screen home ${
         colorScheme == "light" &&
-        " "
+        "bg-secondary "
       } `}
     >
       <div
@@ -30,28 +28,25 @@ const Home = () => {
       >
 
         <Header />
+
         <Hero />
-
-        {/* <DetailsSection/> */}
-
-        <Info />
-
-        <About />
-
-        {/* <CarouselSection /> */}
-
-        {/* <Marquee /> */}
 
         <CategorySection />
 
+        <Info />
 
-        {/* <CallToAction /> */}
+        <PopularStores />
 
-        <FAQ />
+        <About />
+
+
+        {/* <FAQ /> */}
 
         <TrendingStores />
 
         <Testimonials />
+
+        <ContactCard />
 
       </div>
 

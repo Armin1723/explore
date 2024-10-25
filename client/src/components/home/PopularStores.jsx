@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { MdArrowRightAlt } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const TrendingStores = () => {
+const PopularStores = () => {
   const autoplayInterval = useInterval(() => embla && embla.scrollNext(), 3000);
   const [embla, setEmbla] = useState(null);
 
@@ -69,7 +69,7 @@ const TrendingStores = () => {
 
   return (
     <div className="w-screen py-6 flex flex-col items-center">
-      <p className="heading py-6">Trending Stores</p>
+      <p className="heading py-6">Popular Stores</p>
       <div className="carousel-container mask md:w-[80%] w-[90%]">
         <Carousel
           slideSize={{ base: "50%", sm: "50%", md: "20%" }}
@@ -118,4 +118,4 @@ const TrendingStores = () => {
   );
 };
 
-export default TrendingStores;
+export default PopularStores;

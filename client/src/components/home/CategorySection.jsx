@@ -34,14 +34,59 @@ const CategorySection = () => {
       description: "Stay stylish with our collection of fashionable clothes",
       image: "fashion.webp",
     },
+    {
+      title: "Toys",
+      description: "Get the best toys for your kids and keep them entertained",
+      image: "toys.webp",
+    },
+    {
+      title: "Sports",
+      description: "Get the best sports equipment and stay fit",
+      image: "sports.webp",
+    },
+    {
+      title: "Automobile",
+      description: "Get the best deals on automobiles",
+      image: "automobile.webp",
+    },
+    {
+      title: "Furniture",
+      description: "Get the best furniture for your home and office",
+      image: "furniture.webp",
+    },
+    {
+      title: "Jewellery",
+      description: "Get the best jewellery for yourself and your loved ones",
+      image: "jewellery.webp",
+    },
+    {
+      title: "Travel",
+      description: "Plan your next trip with our travel packages",
+      image: "travel.webp",
+    },
+    {
+      title: "Fitness",
+      description: "Stay fit and healthy with our fitness equipment",
+      image: "fitness.webp",
+    },
+    {
+      title: "Pets",
+      description: "Get the best products for your pets",
+      image: "pets.webp",
+    },
+    {
+      title: "Health",
+      description: "Get the best health products for yourself",
+      image: "health.webp",
+    }
   ];
 
   return (
-    <div className="w-full flex flex-col items-center py-12 max-sm:py-4 max-lg:py-6 bg-gradient-to-b from-secondary">
+    <div className="w-full flex flex-col items-center py-12 max-sm:py-4 max-lg:py-6 bg-gradient-to-b from-secondary to-white">
       <div className="w-full heading text-center md:my-8 max-lg:px-8">
         Explore through different Categories
       </div>
-      <div className="categoryCards-container grid place-items-center gap-6 max-sm:grid-cols-1 max-lg:grid-cols-2 md:grid-cols-3 max-lg:w-full max-lg:gap-2 max-lg:m-8 w-[70%]">
+      <div className="categoryCards-container grid place-items-center gap-6 max-sm:grid-cols-2 max-lg:grid-cols-3 md:grid-cols-5 max-lg:w-full max-lg:gap-2 max-lg:m-8 w-[90%]">
         {categoryData.map((category, index) => {
           return (
             <Link
@@ -62,7 +107,7 @@ const CategorySection = () => {
                     : category?.description}
                 </p>
               </div>
-              <div className="w-full aspect-[19/20] overflow-hidden mt-4 rounded-lg ">
+              <div className="w-full aspect-[4/3] overflow-hidden mt-4 rounded-lg ">
                 <img
                   // src={`categories/${category?.image}`}
                   src={`https://picsum.photos/200/300/?${category.title.toLocaleLowerCase()}`}
