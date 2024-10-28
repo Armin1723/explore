@@ -3,7 +3,7 @@
     height: 8px;
     transition: width 250ms ease;
     border: 2px solid var(--color-accent);
-    background-color: transparent;
+    background-color: transparent; 
 }
 
 .carouselIndicator[data-active] {
