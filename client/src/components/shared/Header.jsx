@@ -2,9 +2,7 @@ import {
   HoverCard,
   Group,
   Button,
-  UnstyledButton,
   Text,
-  SimpleGrid,
   ThemeIcon,
   Divider,
   Center,
@@ -25,33 +23,33 @@ import UserProfile from "./UserProfile";
 
 const categoryData = [
   {
-    icon: "icon/grocery.png",
+    icon: "/icon/grocery.png",
     title: "Grocery",
     description: "Find a wide range of groceries to shop from.",
   },
   {
-    icon: "icon/sports.png",
+    icon: "/icon/sports.png",
     title: "Sports",
     description: "Shop for sports equipment and accessories tailored to you.",
   },
   {
-    icon: "icon/electronics.png",
+    icon: "/icon/electronics.png",
     title: "Electronics",
     description: "Discover the latest gadgets and electronic devices.",
   },
   {
-    icon: "icon/fashion.png",
+    icon: "/icon/fashion.png",
     title: "Fashion",
     description: "Shop for stylish and trendy clothing for all.",
   },
   {
-    icon: "icon/books.png",
+    icon: "/icon/books.png",
     title: "Books",
     description:
       "Browse through a collection of fiction, non-fiction, and more.",
   },
   {
-    icon: "icon/home.png",
+    icon: "/icon/home.png",
     title: "Home",
     description: "Find products for all your home essentials and décor.",
   },
@@ -84,10 +82,10 @@ export const Header = () => {
   const links = categoryData.map((item) => (
     <Link
       to={`/companies/categories?category=${item.title.toLowerCase()}`}
-      className="font-['poppins'] "
+      className=""
       key={item.title}
     >
-      <div className="w-[100%] px-2 max-sm:pl-0 max-sm:py-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-primary/90 group flex items-center justify-start gap-2 font-['poppins'] ">
+      <div className="w-[100%] px-2 max-sm:py-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-primary/90 group flex items-center justify-start gap-2 font-['poppins'] ">
         <ThemeIcon size={34} variant="default" radius="md">
           <img style={{ width: rem(22), height: rem(22) }} src={item.icon} />
         </ThemeIcon>
@@ -105,7 +103,7 @@ export const Header = () => {
 
   return (
     <div
-      className={`fixed header transition-all duration-200 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98] backdrop-blur7xl border- border-gray-500/50 `}
+      className={`fixed header transition-all duration-200 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[15vw] px-6 py-2 max-sm:py-1 flex justify-between items-center`}
@@ -118,7 +116,7 @@ export const Header = () => {
         </Link>
 
         <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end">
-          <div className="links max-sm:hidden flex gap-4">
+          <div className="links max-sm:hidden flex md:gap-6 gap-2">
             <Link to="/" className="transition-colors duration-200">
               Home
             </Link>
@@ -184,7 +182,6 @@ export const Header = () => {
 
             <Link
               href="/companies/advertise"
-              py="xs"
               className={` transition-colors duration-200`}
             >
               Advertise
@@ -219,13 +216,11 @@ export const Header = () => {
         opened={drawerOpened}
         onClose={closeDrawer}
         size="80%"
-        padding="md"
         title="Explore"
         hiddenFrom="sm"
         zIndex={1000000}
       >
-        <ScrollArea h={"80vh"}>
-          <Divider my="sm" />
+        <ScrollArea h={"80vh"} w='100%'>
 
           <div className=" links text-sm gap-4 px-4 flex flex-col justify-start">
             <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>

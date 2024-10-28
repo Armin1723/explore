@@ -36,15 +36,15 @@ const Hero = () => {
         );
       })}
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[99] w-screen flex items-center justify-center max-sm:scale-75">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[97] flex items-center justify-center">
         <TextInput
           radius="md"
-          size="md"
+          size="sm"
           placeholder="Search query"
           color="green.9"
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.currentTarget.value)}
-          className=" md:w-[30vw] shadow-[0_0_18px_primary] placeholder:text-black"
+          className="w-[50vw] md:w-[30vw] shadow-[0_0_18px_primary] placeholder:text-black"
           rightSectionWidth={42}
           leftSection={
             <FaSearch
@@ -54,14 +54,14 @@ const Hero = () => {
           } 
           rightSection={
             <ActionIcon
-              size={32}
+              size={28}
               radius="md"
               variant="filled"
               color="primary.1"
               onClick={handleSearch}
             >
               <FaArrowRight
-                style={{ AAwidth: rem(18), height: rem(18) }}
+                style={{ width: rem(22), height: rem(18) }}
                 stroke={1.5}
               />
             </ActionIcon>
@@ -69,15 +69,15 @@ const Hero = () => {
         />
       </div>
 
-      <div className="absolute w-full top-1/2 px-8 max-sm:px-4 -translate-y-1/2 z-[99] flex justify-between items-center">
+      <div className="absolute w-full top-1/2 px-8 max-sm:px-4 -translate-y-1/2 flex justify-between items-center">
         <div
-          className="prev p-2 hover:shadow-[0_0_15px_gray] shadow-gray-300/50 rounded-full border border-gray-500/50 transition-all duration-100 cursor-pointer"
+          className="prev p-2 hover:shadow-[0_0_15px_gray] shadow-gray-300/50 rounded-full border border-gray-500/50 transition-all duration-100 cursor-pointer max-sm:scale-75"
           onClick={() => setCurr((prev) => (prev === 0 ? 3 : prev - 1))}
         >
           <GoChevronLeft />
         </div>
         <div
-          className="prev p-2 hover:shadow-[0_0_15px_gray] shadow-gray-300/50 rounded-full border border-gray-500/50 transition-all duration-100 cursor-pointer"
+          className="prev p-2 hover:shadow-[0_0_15px_gray] shadow-gray-300/50 rounded-full border border-gray-500/50 transition-all duration-100 cursor-pointer max-sm:scale-75"
           onClick={() => setCurr((prev) => (prev + 1) % 4)}
         >
           <GoChevronRight />

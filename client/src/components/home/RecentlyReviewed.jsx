@@ -3,7 +3,7 @@ import React from "react";
 import { MdArrowRightAlt } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const TrendingStores = () => {
+const RecentlyReviewed = () => {
   const stores = [
     {
       name: "Store 1",
@@ -59,16 +59,15 @@ const TrendingStores = () => {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <p className="heading w-[90%] pb-6 max-lg:py-2 ">Trending Stores</p>
+      <p className="heading w-[90%] pb-6 max-lg:py-2 ">Recently Reviewed</p>
 
-      <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center">
+      <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center ">
         <div className="carousel-container mask max-sm:no-mask md:w-[80%] w-[90%]">
           <Carousel
             slideSize={{ base: "50%", sm: "50%", md: "20%" }}
-            slideGap={{ base: 'xl', sm: "xl", md: "xl" }}
+            slideGap={{ base: "xl", sm: "xl", md: "xl" }}
             loop
             align="start"
-            className="!py-2"
           >
             {stores.map((store, index) => {
               return (
@@ -95,10 +94,12 @@ const TrendingStores = () => {
                         />
                       )}
                     </div>
-                    
-                    <div className="details flex flex-col justify-around p-4 max-sm:p-2">
+
+                    <div className="details flex flex-col justify-around p-2">
                       <div className="flex justify-between items-center w-full pb-2 max-sm:pb-1">
-                        <p className="sub-heading">{store.name}</p>
+                        <p className="sub-heading !max-lg:text-md">
+                          {store.name}
+                        </p>
                         <div className="icon p-2 flex aspect-square rounded-full border border-gray-500/50 group-hover:-rotate-45 group-hover:bg-accent transition-all duration-300">
                           <MdArrowRightAlt size={14} />
                         </div>
@@ -118,4 +119,4 @@ const TrendingStores = () => {
   );
 };
 
-export default TrendingStores;
+export default RecentlyReviewed;

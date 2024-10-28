@@ -63,7 +63,7 @@ const CompanyDetail = () => {
     fetchCompany();
   }, []);
 
-  if (!company) return <div>Loading...</div>;
+  if (!company) return <div className="w-full h-screen flex items-center justify-center"><div className="loader"></div></div>;
 
   const addReview = async () => {
     try {
