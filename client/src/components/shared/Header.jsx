@@ -14,58 +14,44 @@ import {
   Collapse,
   ScrollArea,
   rem,
-  useMantineTheme,
-  useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  FaHome,
-  FaShoppingBasket,
-  FaUtensils,
-  FaLaptop,
-  FaTshirt,
-  FaBook,
-  FaChevronDown,
-  FaSun,
-  FaMoon,
-} from "react-icons/fa";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
 import { Link } from "react-router-dom";
-import { IoIosTrendingUp } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 
 const categoryData = [
   {
-    icon: FaShoppingBasket,
+    icon: "icon/grocery.png",
     title: "Grocery",
     description: "Find a wide range of groceries to shop from.",
   },
   {
-    icon: FaUtensils,
-    title: "Food",
-    description: "Explore various food options available for delivery.",
+    icon: "icon/sports.png",
+    title: "Sports",
+    description: "Shop for sports equipment and accessories tailored to you.",
   },
   {
-    icon: FaLaptop,
+    icon: "icon/electronics.png",
     title: "Electronics",
     description: "Discover the latest gadgets and electronic devices.",
   },
   {
-    icon: FaTshirt,
+    icon: "icon/fashion.png",
     title: "Fashion",
     description: "Shop for stylish and trendy clothing for all.",
   },
   {
-    icon: FaBook,
+    icon: "icon/books.png",
     title: "Books",
     description:
       "Browse through a collection of fiction, non-fiction, and more.",
   },
   {
-    icon: FaHome,
+    icon: "icon/home.png",
     title: "Home",
     description: "Find products for all your home essentials and décor.",
   },
@@ -78,10 +64,22 @@ export const Header = () => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      const header = document.querySelector(".header");
+      if (window.scrollY > 100) {
+        header.classList.add("bg-white");
+        header.classList.add("border-b");
+      } else {
+        header.classList.remove("bg-white");
+        header.classList.remove("border-b");
+      }
+    });
+  }, []);
+
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const theme = useMantineTheme();
 
   const links = categoryData.map((item) => (
     <Link
@@ -89,144 +87,132 @@ export const Header = () => {
       className="font-['poppins'] "
       key={item.title}
     >
-      <UnstyledButton className={classes.subLink}>
-        <Group wrap="nowrap" align="flex-start">
-          <ThemeIcon size={34} variant="default" radius="md">
-            <item.icon
-              style={{ width: rem(22), height: rem(22) }}
-              color={theme.colors.primary[2]}
-            />
-          </ThemeIcon>
-          <div>
-            <Text size="sm" fw={500}>
-              {item.title}
-            </Text>
-            <Text size="xs" c="dimmed">
-              {item.description}
-            </Text>
+      <div className="w-[100%] px-2 max-sm:pl-0 max-sm:py-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-primary/90 group flex items-center justify-start gap-2 font-['poppins'] ">
+        <ThemeIcon size={34} variant="default" radius="md">
+          <img style={{ width: rem(22), height: rem(22) }} src={item.icon} />
+        </ThemeIcon>
+        <div>
+          <div className="text-sm font-['poppins'] font-[400] max-sm:text-sm group-hover:text-secondary transition-colors duration-150">
+            {item.title}
           </div>
-        </Group>
-      </UnstyledButton>
+          <div className="text-sm max-sm:text-xs font-light font-['inter'] group-hover:text-white/70 transition-colors duration-150">
+            {item.description}
+          </div>
+        </div>
+      </div>
     </Link>
   ));
 
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme({
-    keepTransitions: true,
-  });
-
   return (
     <div
-      w="100vw"
-      align="center"
-      className={`absolute top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98] backdrop-blur-xl border-b border-gray-500/50 ${
-        colorScheme == "dark"
-          ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-800/30"
-          : "bg-white text-black"
-      }`}
+      className={`fixed header transition-all duration-200 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98] backdrop-blur7xl border- border-gray-500/50 `}
     >
-      <header className={`${classes.header} py-4`}>
-        <Group justify="space-between" h="100%" w="80%">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
-              <IoIosTrendingUp className="text-2xl font-bold text-white" />
-            </div>
-            <p className="font-bold text-lg">Explore </p>
-          </Link>
+      <header
+        className={`md:px-[15vw] px-6 py-2 max-sm:py-1 flex justify-between items-center`}
+      >
+        <Link to="/" className="flex items-center gap-2">
+          {/* <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
+            <IoIosTrendingUp className="text-2xl font-bold text-white" />
+          </div> */}
+          <p className="heading !my-0">Explore </p>
+        </Link>
 
-          <div className="nav-right flex">
-            <Group h="100%" gap={0} visibleFrom="sm">
-              <Link to="/" className={classes.link}>
-                Home
-              </Link>
-              <HoverCard
-                width={600}
-                position="bottom"
-                radius="md"
-                shadow="md"
-                withinPortal
-              >
-                <HoverCard.Target>
-                  <div className={classes.link}>
-                    <Center inline>
-                      <Box component="span" mr={5}>
-                        Categories
-                      </Box>
-                      <GoChevronDown
-                        style={{ width: rem(16), height: rem(16) }}
-                      />
-                    </Center>
-                  </div>
-                </HoverCard.Target>
+        <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end">
+          <div className="links max-sm:hidden flex gap-4">
+            <Link to="/" className="transition-colors duration-200">
+              Home
+            </Link>
+            <HoverCard
+              width={600}
+              position="bottom"
+              radius="md"
+              shadow="md"
+              withinPortal
+            >
+              <HoverCard.Target>
+                <div className=" transition-colors duration-200">
+                  <Center inline>
+                    <Box component="span" mr={4}>
+                      Categories
+                    </Box>
+                    <GoChevronDown
+                      style={{ width: rem(16), height: rem(16) }}
+                    />
+                  </Center>
+                </div>
+              </HoverCard.Target>
 
-                <HoverCard.Dropdown style={{ overflow: "hidden" }}>
-                  <Group justify="space-between" px="md">
-                    <Text fw={500}>Categories</Text>
-                    <Link
-                      to="/companies"
-                      className="text-xs text-blue-700 hover:underline"
-                    >
-                      View all
+              <HoverCard.Dropdown style={{ overflow: "hidden" }}>
+                <Group justify="space-between" px="md">
+                  <Text fw={500}>Categories</Text>
+                  <Link
+                    to="/companies"
+                    className="text-xs text-blue-700 hover:underline"
+                  >
+                    View all
+                  </Link>
+                </Group>
+
+                <Divider my="sm" />
+
+                <div className="grid grid-cols-2 gap-2">{links}</div>
+
+                <div className={classes.dropdownFooter}>
+                  <Group justify="space-between">
+                    <div>
+                      <Text fw={500} fz="sm">
+                        Get started
+                      </Text>
+                      <Text size="xs" c="dimmed">
+                        A one stop destination for all your needs.
+                      </Text>
+                    </div>
+                    <Link to="/companies">
+                      <Button variant="default">Get started</Button>
                     </Link>
                   </Group>
+                </div>
+              </HoverCard.Dropdown>
+            </HoverCard>
 
-                  <Divider my="sm" />
+            <Link
+              to="/companies/add"
+              className=" transition-colors duration-200"
+            >
+              Add Company
+            </Link>
 
-                  <SimpleGrid cols={2} spacing={0}>
-                    {links}
-                  </SimpleGrid>
-
-                  <div className={classes.dropdownFooter}>
-                    <Group justify="space-between">
-                      <div>
-                        <Text fw={500} fz="sm">
-                          Get started
-                        </Text>
-                        <Text size="xs" c="dimmed">
-                          A one stop destination for all your needs.
-                        </Text>
-                      </div>
-                      <Link to="/companies">
-                        <Button variant="default">Get started</Button>
-                      </Link>
-                    </Group>
-                  </div>
-                </HoverCard.Dropdown>
-              </HoverCard>
-              <Link to="/companies/add" className={classes.link}>
-                Add Company
-              </Link>
-              <Link
-                href="/companies/advertise"
-                py="xs"
-                className={`${classes.link} `}
-              >
-                Advertise
-              </Link>
-            </Group>
-
-            <Group visibleFrom="sm" justify="space-between">
-              {user && user?.name ? (
-                <UserProfile />
-              ) : (
-                  <Button variant="filled" color="primary.3">
-                    <Link to="/auth/login">Log in</Link>
-                  </Button>
-              )}
-            </Group>
+            <Link
+              href="/companies/advertise"
+              py="xs"
+              className={` transition-colors duration-200`}
+            >
+              Advertise
+            </Link>
           </div>
 
-          <Group justify="center" hiddenFrom="sm">
-            {colorScheme == "dark" ? (
-              <FaSun className="text-yellow-500" onClick={toggleColorScheme}/>
-            ) : (<FaMoon className="" onClick={toggleColorScheme}/>)}
+          <div className="m-2">
+            {user && user?.name ? (
+              <UserProfile />
+            ) : (
+              <Link
+                className="fancy w-44 max-sm:hidden !py-2 "
+                to="/auth"
+              >
+                <span className="top-key"></span>
+                <span className="text">Join Now</span>
+                <span className="bottom-key-1"></span>
+                <span className="bottom-key-2"></span>
+              </Link>
+            )}
+          </div>
 
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              hiddenFrom="sm"
-            />
-          </Group>
-        </Group>
+          <Burger
+            opened={drawerOpened}
+            onClick={toggleDrawer}
+            hiddenFrom="sm"
+          />
+        </div>
       </header>
 
       <Drawer
@@ -234,54 +220,56 @@ export const Header = () => {
         onClose={closeDrawer}
         size="80%"
         padding="md"
-        fz={"h2"}
         title="Explore"
         hiddenFrom="sm"
         zIndex={1000000}
       >
-        <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
+        <ScrollArea h={"80vh"}>
           <Divider my="sm" />
 
-          <Link to="/" className={classes.link} onClick={closeDrawer}>
-            Home
-          </Link>
-          <UnstyledButton className={classes.link} onClick={toggleLinks}>
-            <Center inline>
-              <Box component="span" mr={5}>
-                Categories
-              </Box>
-              <FaChevronDown style={{ width: rem(16), height: rem(16) }} />
-            </Center>
-          </UnstyledButton>
-          <Collapse in={linksOpened}>{links}</Collapse>
-          <Link
-            to="/companies/add"
-            className={classes.link}
-            onClick={closeDrawer}
-          >
-            Add Company
-          </Link>
-          <Link
-            to="/companies/advertise"
-            py="xs"
-            className={classes.link}
-            onClick={closeDrawer}
-          >
-            Advertise
-          </Link>
-
-          <Divider my="sm" />
-
-          <Group justify="center" grow pb="xl" px="md">
-            {user && user?.name ? (
-              <UserProfile />
-            ) : (
-                <Button variant="default" color="primary.3">
-                  <Link to="/auth/login">Log in</Link>
-                </Button>
-            )}
-          </Group>
+          <div className=" links text-sm gap-4 px-4 flex flex-col justify-start">
+            <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
+              Home
+            </Link>
+            <div className="font-['poppins'] " onClick={toggleLinks}>
+              <Center inline>
+                <p className="font-['poppins'] ">Categories</p>
+                <GoChevronDown
+                  style={{ width: rem(16), height: rem(16) }}
+                  className=""
+                />
+              </Center>
+            </div>
+            <Collapse in={linksOpened}>{links}</Collapse>
+            <Link
+              to="/companies/add"
+              className="font-['poppins']"
+              onClick={closeDrawer}
+            >
+              Add Company
+            </Link>
+            <Link
+              to="/companies/advertise"
+              className="font-['poppins'] "
+              onClick={closeDrawer}
+            >
+              Advertise
+            </Link>
+          </div>
         </ScrollArea>
+
+        <div className="">
+          {user && user?.name ? (
+            <UserProfile />
+          ) : (
+            <Link className="fancy !my-4 w-48 max-sm:scale-75" to="/auth">
+              <span className="top-key"></span>
+              <span className="text !text-black">Join Now</span>
+              <span className="bottom-key-1"></span>
+              <span className="bottom-key-2"></span>
+            </Link>
+          )}
+        </div>
       </Drawer>
     </div>
   );

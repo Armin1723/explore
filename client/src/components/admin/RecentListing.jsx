@@ -13,14 +13,15 @@ import { Link } from "react-router-dom";
 
 import { TiTick } from "react-icons/ti";
 import { RxCross1 } from "react-icons/rx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { io } from "socket.io-client";
 import { notifications } from "@mantine/notifications";
 
-const socket = io(import.meta.env.VITE_BACKEND_URL, { withCredentials: true });
+const socket = io(import.meta.env.VITE_BACKEND_URL, {withCredentials: true});
 
-export const RecentListing = ({refetch, setRefetch}) => {
+export const RecentListing = ({ refetch, setRefetch }) => {
+
 
   const [listing, setListing] = useState(null);
 
@@ -113,7 +114,11 @@ export const RecentListing = ({refetch, setRefetch}) => {
             {listing && listing.gallery.length > 0 ? (
               listing?.gallery?.map((image) => (
                 <Carousel.Slide key={image}>
-                  <Image src={image.url} height={220} className="aspect-video" />
+                  <Image
+                    src={image.url}
+                    height={220}
+                    className="aspect-video"
+                  />
                 </Carousel.Slide>
               ))
             ) : (
@@ -140,21 +145,24 @@ export const RecentListing = ({refetch, setRefetch}) => {
           <Group gap={5} align="center">
             <FaStar color="gold" />
             <Text fz="sm" fw={600}>
-              {(listing && listing?.cumulativeRating) || 'N/A'}
+              {(listing && listing?.cumulativeRating) || "N/A"}
             </Text>
           </Group>
         </Group>
 
         <Text fz="sm" c="dimmed" mt="sm" className="flex-1">
           {listing ? (
-            <div dangerouslySetInnerHTML={{__html: listing.description}}></div>
+            <div
+              dangerouslySetInnerHTML={{ __html: listing.description }}
+            ></div>
           ) : (
             <>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
               molestias natus earum dolore asperiores! Repudiandae
               exercitationem inventore iste, tempora corrupti dolorum laboriosam
               laudantium natus ipsum fuga esse obcaecati perferendis aperiam
-              nobis, ut nesciunt? Deleniti fugiat exercitationem, nam quibusdam! rbduentim.
+              nobis, ut nesciunt? Deleniti fugiat exercitationem, nam quibusdam!
+              rbduentim.
             </>
           )}
           ...

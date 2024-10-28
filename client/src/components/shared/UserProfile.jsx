@@ -2,15 +2,14 @@ import {
   Avatar,
   Group,
   Menu,
-  Text,
   UnstyledButton,
   rem,
   useMantineColorScheme,
   useMantineTheme,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { FaChevronDown, FaHeart, FaStar, FaUser } from "react-icons/fa";
-import { MdBusiness, MdLogout, MdToggleOff } from "react-icons/md";
+import { FaChevronDown, FaStar, FaUser } from "react-icons/fa";
+import { MdBusiness, MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./UserProfile.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -167,12 +166,6 @@ const UserProfile = () => {
         >
           Logout
         </Menu.Item>
-          <Menu.Item onClick={()=>toggleColorScheme()}
-          leftSection={
-            <MdToggleOff style={{ width: rem(16), height: rem(16) }}
-            stroke={1.5}
-            />
-          }>Toggle Theme</Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
