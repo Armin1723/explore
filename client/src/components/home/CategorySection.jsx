@@ -1,5 +1,4 @@
 import React from "react";
-import { MdArrowRightAlt } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const CategorySection = () => {
@@ -113,10 +112,10 @@ const CategorySection = () => {
     // </div>
 
     <div className="w-full flex flex-col items-center bg-gradient-to-b from-secondary border-t border-black">
-      <p className="heading w-[90%] py-6 max-lg:py-2">
+      <p className="heading w-[90%] py-6 max-lg:py-2 ">
         Categories
       </p>
-      <div className="icons-container grid max-lg:grid-cols-5 grid-cols-8 items-center gap-4 w-4/5 my-8 max-lg:my-6 max-sm:m-2 max-sm:w-[90%]">
+      <div className="icons-container grid max-lg:grid-cols-5 grid-cols-8 items-center gap-4 w-4/5 my-8 max-lg:my-6 max-sm:my-2 max-sm:w-[90%]">
         {categoryData.map((category, index) => {
           return(
             <Link

@@ -1,14 +1,21 @@
 export const categories = {
-    fashion: ["men", "women", "kids"],
-    electronics: ["mobiles", "laptops", "cameras"],
-    books: ["fiction", "non-fiction", "comics"],
-    beauty: ["skincare", "makeup", "haircare"],
-    home: ["furniture", "decor", "kitchen"],
-    toys: ["action figures", "dolls", "puzzles"],
-    sports: ["outdoor", "indoor", "fitness"],
-    food: ["groceries", "snacks", "beverages"],
-  };
-
+  grocery: ["vegetables", "fruits", "dairy"],
+  electronics: ["mobiles", "laptops", "cameras"],
+  books: ["fiction", "non-fiction", "comics"],
+  home: ["furniture", "decor", "kitchen"],
+  beauty: ["skincare", "makeup", "haircare"],
+  fashion: ["men", "women", "kids"],
+  toys: ["action figures", "dolls", "puzzles"],
+  sports: ["outdoor", "indoor", "fitness"],
+  automobile: ["cars", "motorbikes", "accessories"],
+  furniture: ["sofas", "tables", "beds"],
+  jewellery: ["rings", "necklaces", "bracelets"],
+  travel: ["flights", "hotels", "tours"],
+  fitness: ["gym equipment", "supplements", "clothing"],
+  pets: ["food", "toys", "accessories"],
+  health: ["medicines", "wellness", "personal care"],
+  kitchen: ["appliances", "cookware", "utensils"]
+};
   export const upperMarquee = [
     "/01.svg",
     "/02.svg",

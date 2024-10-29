@@ -54,7 +54,7 @@ const Testimonials = () => {
           Hear what our customers have to say.
         </p>
 
-        <div className="w-full flex justify-center md:justify-start">
+        <div className="w-[98%] overflow-x-hidden flex justify-center md:justify-start">
         <Carousel
           slideSize={{ base: "70%", md: "50%" }}
           slideGap={{ base: "md", md: "2vw" }}

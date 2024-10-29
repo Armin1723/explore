@@ -1,11 +1,8 @@
 import {
   TextInput,
   PasswordInput,
-  Anchor,
   Paper,
-  Title,
   Text,
-  Container,
   Group,
   Button,
 } from "@mantine/core";
@@ -15,9 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
-import { Header } from "../shared/Header";
+import { motion } from "framer-motion";
 
-export const Login = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -45,6 +42,13 @@ export const Login = () => {
 
   const handleLogin = async (values) => {
     try {
+      const id = notifications.show({
+        title: "Logging in...",
+        message: "Please wait",
+        loading: true,
+        autoClose: false,
+        withCloseButton: false,
+      });
       const { email, password } = values;
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/user/login`,
@@ -59,28 +63,74 @@ export const Login = () => {
       );
       if (!response.ok) {
         const data = await response.json();
+        notifications.update({
+          id,
+          title: "Error in Credentials",
+          message: "Please check your email and password",
+          color: "red",
+          loading: false,
+          autoClose: 3000,
+        });
         form.setErrors(data.errors);
       } else {
         const data = await response.json();
-        notifications.show({
+        notifications.update({
+          id,
           title: "Login successful",
           message: "Welcome back",
           color: "teal",
+          loading: false,
+          autoClose: 3000,
         });
         dispatch(setUser(data.user));
         navigate("/");
       }
     } catch (error) {
+      notifications.update({
+        id,
+        title: "An error occurred",
+        message: "Please try again",
+        color: "red",
+        loading: false,
+        autoClose: 3000,
+      });
       console.log(error.message);
     }
   };
-
   return (
-    <div className="flex flex-col items-center relative overflow-hidden w-screen h-screen">
-      <div className="absolute graphics ball-1 -top-8 -left-1/4 rounded-full w-[55vw] z-[-10] aspect-square bg-gradient-to-r from-secondary to-primary"></div>
-      <div className="absolute graphics ball-1 -top-8 -left-1/4 rounded-full w-[54vw] z-[-10] aspect-square bg-white "></div>
-      <Header />
-      <div className="form-container flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center relative overflow-hidden w-screen h-[100dvh]">
+      <motion.img
+        initial={{
+          opacity: 0,
+          y: 100,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 1,
+          ease: "linear",
+        }}
+        src="/backgrounds/login-bg.svg"
+        alt="ok"
+        className="absolute bottom-0 left-0 min-h-[100dvh] w-screen z-[-2] object-cover max-sm:aspect-[1/1.4] "
+      />
+      <motion.div
+        initial={{
+          opacity: 0,
+          scale: 0.5,
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+        }}
+        transition={{
+          duration: 0.5,
+          delay: 0.5,
+        }}
+        className="form-container flex flex-col items-center justify-center h-full"
+      >
         <p className="heading">Welcome back!</p>
         <Text c="dimmed" size="sm" ta="center" mt={5}>
           Do not have an account yet?{" "}
@@ -98,7 +148,7 @@ export const Login = () => {
           p={30}
           mt={30}
           radius="md"
-          className="min-w-[30vw] px-4 max-lg:min-w-[60vw] max-sm:min-w-[80vw] py-8"
+          className="min-w-[30vw] px-4 max-lg:min-w-[60vw] max-sm:min-w-[80vw] py-8 border-2 border-accent"
         >
           <form onSubmit={form.onSubmit(handleLogin)}>
             <TextInput
@@ -119,15 +169,14 @@ export const Login = () => {
             <Group justify="space-between" mt="lg">
               <Link
                 to="/auth/register"
-                size="sm"
-                className="relative overflow-x-hidden pb-[3px] before:absolute before:bottom-0 before:left-0 before:h-[1px] transition-all duration-300 hover:text-primary before:w-0 before:bg-primary hover:before:w-full before:transition-all before:duration-300"
+                className="relative text-sm text-gray-500 overflow-x-hidden pb-[3px] before:absolute before:bottom-0 before:left-0 before:h-[1px] transition-all duration-300 hover:text-primary before:w-0 before:bg-primary hover:before:w-full before:transition-all before:duration-300"
               >
                 Sign up
               </Link>
               <Link
                 to="/auth/forgot-password"
                 size="sm"
-                className="relative overflow-x-hidden pb-[3px] before:absolute before:bottom-0 before:left-0 before:h-[1px] transition-all duration-300 hover:text-primary before:w-0 before:bg-primary hover:before:w-full before:transition-all before:duration-300"
+                className="relative text-sm text-gray-500 overflow-x-hidden pb-[3px] before:absolute before:bottom-0 before:left-0 before:h-[1px] transition-all duration-300 hover:text-primary before:w-0 before:bg-primary hover:before:w-full before:transition-all before:duration-300"
               >
                 Forgot password?
               </Link>
@@ -138,7 +187,9 @@ export const Login = () => {
             </Button>
           </form>
         </Paper>
-      </div>
+      </motion.div>
     </div>
   );
 };
+
+export default Login;

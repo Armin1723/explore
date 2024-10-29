@@ -11,18 +11,19 @@ import CompanyHomepage from "./pages/CompanyHomepage";
 import CompanyDetail from "./components/company/CompanyDetail";
 import NotFound from "./pages/NotFound";
 import Register from "./components/auth/Register";
-import { Login } from "./components/auth/Login";
+import Login from "./components/auth/Login";
 import { ForgotPassword } from "./components/auth/ForgotPassword";
 import AuthPage from "./pages/AuthPage";
 import UserPage from "./pages/UserPage";
 import UserDetail from "./components/user/UserDetail";
 import ResetPassword from "./components/auth/ResetPassword";
 import CompanyListing from "./pages/CompanyListing";
+import Categories from "./components/company/Categories";
+import Search from "./components/company/Search";
 
 const App = () => {
-
   const [refetch, setRefetch] = React.useState(false);
-  
+
   return (
     <BrowserRouter>
       <Routes>
@@ -30,37 +31,43 @@ const App = () => {
           <Route path="" element={<Home />} />
         </Route>
 
-        <Route path='/companies' element={<CompanyHomepage/>} >
-          <Route path=':name' element={<CompanyDetail />} />
-          <Route path='categories' element={<CompanyDetail />} /> 
-          <Route path='search' element={<CompanyDetail />} />
+        <Route path="/companies" element={<CompanyHomepage />}>
+          <Route path=":name" element={<CompanyDetail />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="search" element={<Search />} />
+          <Route path="add" element={<CompanyListing />} />
         </Route>
 
-        <Route path='/companies/add' element={<CompanyListing />} />
-
-        <Route path='/auth' element={<AuthPage/>} >
+        <Route path="/auth" element={<AuthPage />}>
           <Route path="" element={<Login />} />
-          <Route path='login' element={<Login />} />
-          <Route path='register' element={<Register />} />
-          <Route path='forgot-password' element={<ForgotPassword />} />
-          <Route path='reset-password' element={<ResetPassword />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
         </Route>
 
-        <Route path='/users' element={<UserPage />}>
-          <Route path=':id' element={<UserDetail />} />
+        <Route path="/users" element={<UserPage />}>
+          <Route path=":id" element={<UserDetail />} />
         </Route>
 
-
-        <Route path="/admin" element={<AdminHomepage refetch={refetch} setRefetch={setRefetch}/>}>
-          <Route path="" element={<AdminUsers/>} />
-          <Route path='users' element={<AdminUsers />} />
-          <Route path='companies' element={<AdminCompanies />} />
-          <Route path='reviews' element={<AdminReviews />} />
-          <Route path='companies/:category' element={<AdminCompanies />} />
-          <Route path="requests" element={<AdminRequests refetch={refetch} setRefetch={setRefetch}  />} />
+        <Route
+          path="/admin"
+          element={<AdminHomepage refetch={refetch} setRefetch={setRefetch} />}
+        >
+          <Route path="" element={<AdminUsers />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="companies" element={<AdminCompanies />} />
+          <Route path="reviews" element={<AdminReviews />} />
+          <Route path="companies/:category" element={<AdminCompanies />} />
+          <Route
+            path="requests"
+            element={
+              <AdminRequests refetch={refetch} setRefetch={setRefetch} />
+            }
+          />
         </Route>
 
-        <Route path='/admin/login' element={<AdminLogin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

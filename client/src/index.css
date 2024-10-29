@@ -201,7 +201,7 @@ body,
 
 /* Heading Text */
 .heading {
-    @apply text-2xl max-sm:text-xl font-['poppins'] font-bold mt-12;
+    @apply text-2xl max-sm:text-xl font-['poppins'] font-bold mt-6 max-sm:mt-4;
 }
 
 /* Sub Heading Text */

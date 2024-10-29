@@ -1,7 +1,11 @@
 import { ActionIcon, rem, TextInput } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { FaArrowRight, FaSearch } from "react-icons/fa";
-import { GoChevronLeft, GoChevronRight } from "react-icons/go";
+import {
+  FaArrowRight,
+  FaChevronCircleLeft,
+  FaChevronCircleRight,
+  FaSearch,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
@@ -10,9 +14,9 @@ const Hero = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const navigate = useNavigate();
 
-  const handleSearch = () => {  
+  const handleSearch = () => {
     navigate(`/companies/search?query=${searchQuery}`);
-  }
+  };
 
   useEffect(() => {
     const autoSlide = setInterval(() => {
@@ -51,7 +55,7 @@ const Hero = () => {
               style={{ width: rem(18), height: rem(18) }}
               stroke={1.5}
             />
-          } 
+          }
           rightSection={
             <ActionIcon
               size={28}
@@ -69,19 +73,19 @@ const Hero = () => {
         />
       </div>
 
-      <div className="absolute w-full top-1/2 px-8 max-sm:px-4 -translate-y-1/2 flex justify-between items-center">
-        <div
-          className="prev p-2 hover:shadow-[0_0_15px_gray] shadow-gray-300/50 rounded-full border border-gray-500/50 transition-all duration-100 cursor-pointer max-sm:scale-75"
-          onClick={() => setCurr((prev) => (prev === 0 ? 3 : prev - 1))}
+      <div className="absolute w-full top-1/2 -translate-y-1/2 flex justify-between items-center">
+        <button
+          className={`p-2 rounded-e-lg bg-white/40 `}
+          onClick={() => setCurr((prev) => (prev - 1 >= 0 ? prev - 1 : 3))}
         >
-          <GoChevronLeft />
-        </div>
-        <div
-          className="prev p-2 hover:shadow-[0_0_15px_gray] shadow-gray-300/50 rounded-full border border-gray-500/50 transition-all duration-100 cursor-pointer max-sm:scale-75"
-          onClick={() => setCurr((prev) => (prev + 1) % 4)}
+          <FaChevronCircleLeft color="black" className="text-2xl" />
+        </button>
+        <button
+          className={`p-2 rounded-s-lg bg-white/70`}
+          onClick={() => setCurr((prev) => prev + (1 % 4))}
         >
-          <GoChevronRight />
-        </div>
+          <FaChevronCircleRight color="black" className="text-2xl" />
+        </button>
       </div>
     </div>
   );

@@ -66,10 +66,10 @@ const Suggestions = () => {
                 className={`rounded-xl border group/parent border-black/70 hover:bg-primary hover:border-accent hover:shadow-[0_0_50px_orange] shadow-accent/50 transition-all duration-300 ${index > 1 && "max-sm:hidden"}`}
                 key={index}
               >
-                <p className="sub-heading p-6 group-hover/parent:text-white">
+                <p className="sub-heading p-6 pb-2 group-hover/parent:text-white">
                   {suggestion.title}
                 </p>
-                <div className="links-container flex items-center justify-center py-4">
+                <div className="links-container flex items-center justify-center p-4 max-sm:p-1 max-sm:pb-2">
                   {suggestion.subCategories.map((subCategory, index) => {
                     return (
                       <Link

@@ -106,7 +106,7 @@ export const Header = () => {
       className={`fixed header transition-all duration-200 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
-        className={`md:px-[15vw] max-lg:px-20 px-6 py-2 max-sm:py-1 flex justify-between items-center`}
+        className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-2 flex justify-between items-center`}
       >
         <Link to="/" className="flex items-center gap-2">
           {/* <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
@@ -117,7 +117,7 @@ export const Header = () => {
 
         <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end">
           <div className="links max-lg:hidden flex md:gap-6 gap-2">
-            <Link to="/" className="transition-colors duration-200">
+            <Link to="/" className="link text-sm transition-colors duration-200">
               Home
             </Link>
             <HoverCard
@@ -128,7 +128,7 @@ export const Header = () => {
               withinPortal
             >
               <HoverCard.Target>
-                <div className=" transition-colors duration-200">
+                <div className="link text-sm  transition-colors duration-200">
                   <Center inline>
                     <Box component="span" mr={4}>
                       Categories
@@ -144,7 +144,7 @@ export const Header = () => {
                 <Group justify="space-between" px="md">
                   <Text fw={500}>Categories</Text>
                   <Link
-                    to="/companies"
+                    to="/companies/categories"
                     className="text-xs text-blue-700 hover:underline"
                   >
                     View all
@@ -165,7 +165,7 @@ export const Header = () => {
                         A one stop destination for all your needs.
                       </Text>
                     </div>
-                    <Link to="/companies">
+                    <Link to="/companies/add">
                       <Button variant="default">Get started</Button>
                     </Link>
                   </Group>
@@ -175,14 +175,14 @@ export const Header = () => {
 
             <Link
               to="/companies/add"
-              className=" transition-colors duration-200"
+              className="link text-sm  transition-colors duration-200"
             >
               Add Company
             </Link>
 
             <Link
               href="/companies/advertise"
-              className={` transition-colors duration-200`}
+              className={`link text-sm  transition-colors duration-200`}
             >
               Advertise
             </Link>
@@ -201,7 +201,7 @@ export const Header = () => {
             )}
           </div>
           <div className="max-lg:flex hidden">
-            <Burger opened={drawerOpened} onClick={toggleDrawer} />
+            <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm"/>
           </div>
         </div>
       </header>
@@ -213,8 +213,8 @@ export const Header = () => {
         title="Explore"
         zIndex={1000000}
       >
-        <ScrollArea h={"80vh"} w="100%">
-          <div className=" links text-sm gap-4 px-4 flex flex-col justify-start">
+        <ScrollArea h={"80dvh"} w="100%">
+          <div className="links text-sm gap-4 px-4 flex flex-col justify-start">
             <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
               Home
             </Link>
