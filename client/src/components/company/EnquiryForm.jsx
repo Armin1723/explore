@@ -1,27 +1,28 @@
-import {
-  TextInput,
-  PasswordInput,
-  Paper,
-  Button,
-} from "@mantine/core";
-import { useNavigate } from "react-router-dom";
-import { setUser } from "../../redux/features/user/userSlice";
+import { Paper, Text, Button, Textarea } from "@mantine/core";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { setUser } from "../../redux/features/user/userSlice";
 
-const AdminLogin = () => {
-
-  const navigate = useNavigate();
+const EnquiryForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
-  
+
+  const companyName = useParams().name;
+
   useEffect(() => {
-    if (user && user.role === "admin") {
-      navigate("/admin");
+    if (!user || !user.name) {
+      notifications.show({
+        title: "Error",
+        message: "You must be logged in to send an enquiry.",
+        color: "red",
+      });
+      navigate("/auth");
     }
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
@@ -29,74 +30,62 @@ const AdminLogin = () => {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      email: "",
-      password: "",
+      enquiry: "",
     },
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) =>
-        value.length > 8
-          ? null
-          : "Password should contain at least 8 characters",
+      enquiry: (value) => (value.length > 0 ? null : "Enquiry is required"),
     },
   });
 
-  const handleLogin = async (values) => {
+  const sendEnquiry = async (values) => {
+    const id = notifications.show({
+      title: "Sending enquiry...",
+      message: "Please wait",
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    });
     try {
-      const id = notifications.show({
-        title: "Logging in...",
-        message: "Please wait",
-        loading: true,
-        autoClose: false,
-        withCloseButton: false,
-      });
-      const { email, password } = values;
+      const { enquiry } = values;
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/enquiries/send`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({
+            message: enquiry,
+            companyName: companyName.split("-").join(" "),
+          }),
           credentials: "include",
         }
       );
       if (!response.ok) {
         const data = await response.json();
-        notifications.update({
-          id,
-          title: "Error in Credentials",
-          message: data.message,
-          color: "red",
-          loading: false,
-          autoClose: 3000,
-        });
-        form.setErrors(data.errors);
-      } else {
-        const data = await response.json();
-        notifications.update({
-          id,
-          title: "Login successful",
-          message: "Welcome back",
-          color: "teal",
-          loading: false,
-          autoClose: 3000,
-        });
-        dispatch(setUser(data.user));
-        navigate("/");
+        throw new Error(data.message);
       }
+      const data = await response.json();
+      notifications.update({
+        id,
+        title: "Enquiry sent",
+        message: data.message,
+        color: "teal",
+        loading: false,
+        autoClose: 2000,
+      });
+      dispatch(setUser(data.user));
+      navigate(`/companies/${companyName}`);
     } catch (error) {
       notifications.update({
         id,
-        title: "An error occurred",
-        message: "Please try again",
+        title: "Error",
+        message: error.message,
         color: "red",
         loading: false,
         autoClose: 3000,
       });
-      console.log(error.message);
     }
   };
   return (
@@ -133,8 +122,11 @@ const AdminLogin = () => {
         }}
         className="form-container flex flex-col items-center justify-center h-full"
       >
-        <p className="heading">Admin Login!</p>
-      
+        <p className="heading">Send Enquiry</p>
+        <Text c="dimmed" size="sm" ta="center" mt={5}>
+          Write a brief enquiry to the company.
+        </Text>
+
         <Paper
           withBorder
           shadow="md"
@@ -143,25 +135,18 @@ const AdminLogin = () => {
           radius="md"
           className="min-w-[30vw] px-4 max-lg:min-w-[60vw] max-sm:min-w-[80vw] py-8 border-2 border-accent"
         >
-          <form onSubmit={form.onSubmit(handleLogin)}>
-            <TextInput
+          <form onSubmit={form.onSubmit(sendEnquiry)}>
+            <Textarea
+              rows={5}
               withAsterisk
-              label="Email"
-              placeholder="your@email.com"
-              key={form.key("email")}
-              {...form.getInputProps("email")}
+              label="Enquiry"
+              placeholder="Write an enquiry."
+              key={form.key("enquiry")}
+              {...form.getInputProps("enquiry")}
             />
 
-            <PasswordInput
-              withAsterisk
-              label="Password"
-              placeholder="Your password"
-              key={form.key("password")}
-              {...form.getInputProps("password")}
-            />
-           
             <Button type="submit" fullWidth mt="xl">
-              Log In
+              Send Enquiry
             </Button>
           </form>
         </Paper>
@@ -170,4 +155,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default EnquiryForm;

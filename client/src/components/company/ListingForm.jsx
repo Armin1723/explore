@@ -130,10 +130,10 @@ const ListingForm = ({ nextStep }) => {
 
   return (
     <Card withBorder rounded="md" shadow="xl">
-      <p className="text-2xl font-bold">Enter Basic Details.</p>
+      <p className="heading">Enter Basic Details of your company.</p>
       <form
         onSubmit={form.onSubmit(handleListing)}
-        className="grid grid-cols-2 max-lg:grid-cols-1 gap-6 w-[90vw] md:w-[60vw]"
+        className="grid grid-cols-2 max-lg:grid-cols-1 items-center gap-6 max-sm:gap-2 w-[90vw] md:w-[60vw]"
       >
         <TextInput
           withAsterisk
@@ -188,13 +188,13 @@ const ListingForm = ({ nextStep }) => {
           label="Address"
           placeholder="Enter Your Address"
           {...form.getInputProps("address")}
-          rows={5}
+          rows={3}
         />
 
-        <div xs={12} md={6} className="flex items-start gap-4">
+        <div className="flex items-start gap-4">
           {logoUrl && (
             <Box mt="md" style={{ display: "flex", justifyContent: "start" }}>
-              <Avatar src={logoUrl} size={40} radius="50%" alt="Logo Preview" />
+              <Avatar src={logoUrl} size={48} radius="50%" alt="Logo Preview" className="border border-black"/>
             </Box>
           )}
           <FileInput
@@ -210,7 +210,7 @@ const ListingForm = ({ nextStep }) => {
           />
         </div>
 
-        <Button type="submit">Register Company</Button>
+        <Button type="submit" className="col-span-1 lg:col-span-2 md:col-span-2" fullWidth>Register Company</Button>
       </form>
     </Card>
   );

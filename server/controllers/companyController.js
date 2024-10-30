@@ -144,7 +144,7 @@ const editCompany = async (req, res, io) => {
       });
     }
 
-    // Handling Logo Upload to cloudinary
+    // Handling files Upload to cloudinary
     if (
       req.files &&
       (req.files?.logo || req.files?.banner || req.files?.gallery)
@@ -184,7 +184,11 @@ const editCompany = async (req, res, io) => {
         try {
           const cloudinaryResponse = await cloudinary.uploader.upload(
             banner[0].path,
-            { folder: "Company_Banner" }
+            {
+              // quality: "auto:best",
+              // format: "auto",
+              folder: "Company_Banner",
+            }
           );
           if (!cloudinaryResponse || cloudinaryResponse.error) {
             return res.status(500).json({
@@ -215,7 +219,11 @@ const editCompany = async (req, res, io) => {
           try {
             const cloudinaryResponse = await cloudinary.uploader.upload(
               gallery[i].path,
-              { folder: "Company_Gallery" }
+              {
+                // quality: "auto:best",
+                // format: "auto",
+                folder: "Company_Gallery",
+              }
             );
             if (!cloudinaryResponse || cloudinaryResponse.error) {
               return res.status(500).json({
@@ -346,33 +354,57 @@ const getCompanyDetails = async (req, res) => {
 //Fetch companies (with option of category search) with pagination
 const getCompanies = async (req, res) => {
   try {
-    let { category } = req.params;
-    let { page } = req.query;
+    let { page, category, subCategory, sort } = req.query;
 
     if (!page) page = 1;
 
-    if (category === "all") {
-      category = { $exists: true };
+    let query = { status: "active" };
+
+    if (category && category !== "all") {
+      query.category = category.toLowerCase();
     }
 
-    const companies = await Company.find({
-      $and: [{ category }, { status: "active" }],
-    })
-      .limit(10)
-      .skip((page - 1) * 10);
-    const totalCompanies = await Company.countDocuments({
-      $and: [{ category }, { status: "active" }],
+    if (subCategory && subCategory !== "all") {
+      query.subCategory = subCategory.toLowerCase();
+    }
+
+    let sortQuery = { rating: -1 };
+    if (sort) {
+      if (sort === "Rating") {
+        sortQuery = { rating: -1 };
+      }
+      if (sort === "createdAt") {
+        sortQuery = { createdAt: -1 };
+      }
+      if (sort === "Name") {
+        sortQuery = { name: -1 };
+      }
+    }
+
+    const companies = await Company.find(query)
+      .sort(sortQuery)
+      .select("name rating address phone createdAt website reviews gallery")
+      .populate("reviews", "rating")
+      .skip((page - 1) * 10)
+      .limit(10);
+
+    // Only include the first item from the gallery
+    companies.forEach((company) => {
+      if (company.gallery && company.gallery.length > 0) {
+        company.gallery = company.gallery[0];
+      }
     });
+
+    const totalCompanies = await Company.countDocuments(query);
+
     res.status(200).json({
       success: true,
       companies,
-      totalCompanies,
-      category:
-        typeof category === "object" && category.$exists ? "all" : category,
-      pages: Math.ceil(totalCompanies / 10),
+      page,
+      totalPages: Math.ceil(totalCompanies / 10),
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -412,14 +444,32 @@ const getCompaniesBySubCategory = async (req, res) => {
 //Search companies by substring in name or description
 const searchCompanies = async (req, res) => {
   try {
-    const { query } = req.params;
-    let { page } = req.query;
+    let { page, category, sort, query } = req.query;
 
     if (!page) page = 1;
 
-    if (!query) {
-      return res.status(400).json({ message: "Search query is required" });
+    let queryData = { status: "active" };
+
+    if (category && category !== "all") {
+      queryData.category = category.toLowerCase();
     }
+
+    let sortQuery = { rating: -1 };
+    if (sort) {
+      if (sort === "Rating") {
+        sortQuery = { rating: -1 };
+      }
+      if (sort === "createdAt") {
+        sortQuery = { createdAt: -1 };
+      }
+      if (sort === "Name") {
+        sortQuery = { name: -1 };
+      }
+    }
+
+    // if (!query) {
+    //   return res.status(400).json({ message: "Search query is required" });
+    // }
 
     const companies = await Company.find({
       $and: [
@@ -430,8 +480,10 @@ const searchCompanies = async (req, res) => {
           ],
         },
         { status: "active" },
+        ...(category && category !== "all" ? [{ category: category.toLowerCase() }] : []),...(category && category !== "all" ? [{ category: category.toLowerCase() }] : []),
       ],
     })
+      .sort(sortQuery)
       .limit(10)
       .skip((page - 1) * 10);
 
@@ -444,6 +496,7 @@ const searchCompanies = async (req, res) => {
           ],
         },
         { status: "active" },
+        ...(category && category !== "all" ? [{ category: category.toLowerCase() }] : []),
       ],
     });
 
@@ -504,6 +557,16 @@ const addReview = async (req, res) => {
     });
 
     company.reviews.push(newReview._id);
+
+    // Calculate new rating
+    if (company.reviews.length > 0) {
+      company.rating =
+        (company.rating * (company.reviews.length - 1) + review.rating) /
+        company.reviews.length;
+    } else {
+      company.rating = review.rating;
+    }
+
     await company.save();
     res
       .status(201)

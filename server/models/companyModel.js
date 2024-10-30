@@ -91,6 +91,10 @@ const companySchema = new mongoose.Schema({
             ref: "Review",
         },
     ],
+    rating: {
+        type: Number,
+        default: 0,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

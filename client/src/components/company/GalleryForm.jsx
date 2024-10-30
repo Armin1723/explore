@@ -110,18 +110,18 @@ const GalleryForm = ({ nextStep }) => {
   };
 
 return (
-    <Card withBorder rounded="md" shadow="xl">
+    <div className="w-fit p-20 max-lg:p-10 max-sm:p-2 flex flex-col gap-4 rounded-lg border bg-white">
         <p className="text-2xl font-bold">Upload Gallery Images</p>
         <form
             onSubmit={form.onSubmit(handleSubmit)}
-            className="flex flex-col gap-6 w-[90vw] md:w-[60vw] items-center"
+            className="flex flex-col gap-6 items-center max-sm:w-[80vw]"
         >
             <Dropzone
                 onDrop={(files) => handleDrop(files)}
                 onReject={(files) => console.log("rejected files", files)}
                 maxSize={5 * 1024 ** 2}
                 accept={IMAGE_MIME_TYPE}
-                className="flex flex-col items-center justify-center gap-4 w-full p-10 border-2 border-dashed border-gray-300 rounded-lg"
+                className="flex flex-col items-center justify-center gap-4 w-full md:p-10 border-2 border-dashed border-gray-300 rounded-lg"
             >
                 <Dropzone.Accept>
                     <FaUpload
@@ -129,6 +129,8 @@ return (
                             width: rem(52),
                             height: rem(52),
                             color: "var(--mantine-color-blue-6)",
+                            alignSelf: "center",
+                            width: '100%'
                         }}
                         stroke={1.5}
                     />
@@ -139,6 +141,8 @@ return (
                             width: rem(52),
                             height: rem(52),
                             color: "var(--mantine-color-red-6)",
+                            alignSelf: "center",
+                            width: '100%'
                         }}
                         stroke={1.5}
                     />
@@ -149,12 +153,14 @@ return (
                             width: rem(52),
                             height: rem(52),
                             color: "var(--mantine-color-dimmed)",
+                            alignSelf: "center",
+                            width: '100%'
                         }}
                         stroke={1.5}
                     />
                 </Dropzone.Idle>
 
-                <div>
+                <div className='flex flex-col items-center text-center'>
                     <Text size="xl" inline>
                         Drag images here or click to select files
                     </Text>
@@ -189,11 +195,11 @@ return (
                 </Carousel>
             )}
 
-            <Button type="submit" color="blue" w="50%" disabled={files.length === 0}>
+            <Button type="submit" color="blue" fullWidth disabled={files.length === 0}>
                 Finish
             </Button>
         </form>
-    </Card>
+    </div>
 );
 };
 

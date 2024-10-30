@@ -32,8 +32,13 @@ const getEnquiries = async (req, res) => {
         .json({ success: false, message: "Company not found" });
     }
 
-    if(company.user.toString() !== user.id ){
-        return res.status(403).json({success: false, message: "You are not authorized to view this page"})
+    if (company.user.toString() !== user.id) {
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "You are not authorized to view this page",
+        });
     }
 
     const totalEnquiries = await Company.findOne({
@@ -100,25 +105,34 @@ const sendResponse = async (req, res) => {
 //Send an enquiry
 const sendEnquiry = async (req, res) => {
   try {
-    const { companyId, message } = req.body;
+    const { companyName, message } = req.body;
     const { id } = req.user;
     const user = await User.findById(id);
-    const company = await Company.findById(companyId);
+    const company = await Company.findOne({ name: companyName });
     if (!company) {
       return res
         .status(404)
         .json({ success: false, message: "Company not found" });
     }
     const enquiry = await Enquiry.create({
-      company: companyId,
+      company: company._id,
       user: id,
       message,
     });
 
-    company.enquiries = [...company.enquiries, enquiry._id];
+    if (company.enquiries) {
+      company.enquiries = [...company.enquiries, enquiry._id];
+    } else {
+      company.enquiries = [enquiry._id];
+    }
+
     await company.save();
 
-    user.enquiries = [...user.enquiries, enquiry._id];
+    if (!user.enquiries) {
+      user.enquiries = [enquiry._id];
+    } else {
+      user.enquiries = [...user.enquiries, enquiry._id];
+    }
     await user.save();
     res.status(200).json({
       success: true,
@@ -129,7 +143,11 @@ const sendEnquiry = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ success: false, message: "Server error", error: error.message });
+      .json({
+        success: false,
+        message: "Some Error Occured.",
+        error: error.message,
+      });
   }
 };
 

@@ -206,7 +206,7 @@ body,
 
 /* Sub Heading Text */
 .sub-heading {
-    @apply text-xl max-sm:text-lg font-['poppins'] font-semibold;
+    @apply max-sm:text-sm font-['poppins'] font-semibold;
 }
 
 /* Mask Images */

@@ -20,6 +20,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import CompanyListing from "./pages/CompanyListing";
 import Categories from "./components/company/Categories";
 import Search from "./components/company/Search";
+import EnquiryForm from "./components/company/EnquiryForm";
 
 const App = () => {
   const [refetch, setRefetch] = React.useState(false);
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="categories" element={<Categories />} />
           <Route path="search" element={<Search />} />
           <Route path="add" element={<CompanyListing />} />
+          <Route path=':name/enquiries/add' element={<EnquiryForm />} />
         </Route>
 
         <Route path="/auth" element={<AuthPage />}>

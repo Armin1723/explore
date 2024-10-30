@@ -49,3 +49,14 @@ export const adminCarousels = [
   { id: 2, name: "Total Companies", value: 100, increase: false, progress: 30 },
 ];
 
+export const getRatingColor = (rating) => {
+  
+  const darkRed = 50;   
+  const darkGreen = 90; 
+
+  const red = Math.round((1 - rating / 5) * (255 - darkRed) + darkRed);
+  const green = Math.round((rating / 5) * (255 - darkGreen) + darkGreen);
+  
+  return `rgb(${red}, ${green}, 0)`;
+};
+

@@ -52,7 +52,7 @@ const AdminUsers = () => {
   }, [page, refetch]);
 
   return (
-    <Card className="flex flex-col flex-1 max-h-[44vh]" withBorder>
+    <Card className="flex flex-col flex-1" withBorder>
       <ScrollArea h={400}>
         <div className="heading w-full border-l-8 border-teal-300 my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">Recent Users</p>
@@ -62,14 +62,14 @@ const AdminUsers = () => {
             return (
               <Link
                 to={`/users/${user._id}`}
-                className={`userCard flex justify-between py-3 px-12 border-b border-gray-400 hover:bg-teal-100/20 ${
+                className={`userCard flex justify-between py-3 border-b border-gray-400 hover:bg-teal-100/20 ${
                   index === 0 && "border-t"
                 }`}
                 key={index}
               >
                 <div className="flex items-center gap-8">
                   <Avatar src={user?.profilePic} alt={user.name} />
-                  <p className="capitalize font-semibold">{user.name}</p>
+                  <p className="capitalize sub-heading">{user.name}</p>
                 </div>
                 <div className="flex items-center">
                   <p>Joined: {new Date(user.createdAt).toLocaleDateString()}</p>

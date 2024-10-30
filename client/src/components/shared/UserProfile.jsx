@@ -8,12 +8,11 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { FaChevronDown, FaStar, FaUser } from "react-icons/fa";
+import { FaChevronDown, FaUser } from "react-icons/fa";
 import { MdBusiness, MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./UserProfile.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { TiThListOutline } from "react-icons/ti";
 import { notifications } from "@mantine/notifications";
 import { setUser } from "../../redux/features/user/userSlice";
 
@@ -113,31 +112,6 @@ const UserProfile = () => {
             }
           >
             Your Listing.
-          </Menu.Item>
-        </Link>
-        <Link to={`/users/${user?._id}/saved`}>
-          <Menu.Item
-            leftSection={
-              <FaStar
-                style={{ width: rem(16), height: rem(16) }}
-                color={theme.colors.yellow[6]}
-              />
-            }
-          >
-            Saved.
-          </Menu.Item>
-        </Link>
-
-        <Link to={`/users/${user?._id}/reviewed`}>
-          <Menu.Item
-            leftSection={
-              <TiThListOutline
-                style={{ width: rem(16), height: rem(16) }}
-                color={theme.colors.yellow[6]}
-              />
-            }
-          >
-            Reviewed.
           </Menu.Item>
         </Link>
 

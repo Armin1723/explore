@@ -10,6 +10,6 @@ router.get("/enquiry/:id", isAdmin, getSingleEnquiry);
 router.post("/send-response", isAdmin, sendResponse);
 
 //Send Enquiries
-router.post('/send-enquiry',isLoggedIn, sendEnquiry);
+router.post('/send',isLoggedIn, sendEnquiry);
 
 module.exports = router;

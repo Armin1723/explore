@@ -331,7 +331,7 @@ const CompanyDetail = () => {
             >
               <Group position="apart" justify="space-between">
                 <Group>
-                  <Avatar src={review.user.profilePic} alt={review.user.name} />
+                  <Avatar src={review?.user?.profilePic} alt={review.user.name} />
                   <div>
                     <Title order={5}>{review.user.name}</Title>
                     <Rating value={review.rating} readOnly size="sm" />

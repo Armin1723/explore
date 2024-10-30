@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { IoIosTrendingUp } from "react-icons/io";
 import { CiReceipt, CiUser } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
-import { Avatar, useMantineColorScheme } from "@mantine/core";
+import { Avatar, ScrollArea, useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { NavLink } from "@mantine/core";
 import { categories } from "../../utils/index";
@@ -20,7 +20,7 @@ const AdminNav = () => {
         colorScheme == "dark"
           ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900"
           : "bg-white text-black"
-      } flex flex-col justify-between items-start sticky top-0  px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60 `}
+      } flex flex-col justify-between items-start sticky top-0 px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60 `}
     >
       <div className="nav-top flex gap-4 justify-start items-center ">
         <Link to="/admin">
@@ -56,23 +56,25 @@ const AdminNav = () => {
           active={location.pathname.includes("/admin/companies")}
           rightSection={<FaChevronRight />}
         >
-          <NavLink
-            href={`/admin/companies/all`}
-            active={location.pathname.includes('all')}
-            label='All'
-            childrenOffset={14}
-          />
-          {Object.keys(categories).map((category) => {
-            return (
-              <NavLink
-                key={category}
-                href={`/admin/companies/${category}`}
-                active={location.pathname.includes(category)}
-                label={category.charAt(0).toUpperCase() + category.slice(1)}
-                childrenOffset={14}
-              />
-            );
-          })}
+          <ScrollArea h={400} className="w-full">
+            <NavLink
+              href={`/admin/companies/all`}
+              active={location.pathname.includes("all")}
+              label="All"
+              childrenOffset={14}
+            />
+            {Object.keys(categories).map((category) => {
+              return (
+                <NavLink
+                  key={category}
+                  href={`/admin/companies/${category}`}
+                  active={location.pathname.includes(category)}
+                  label={category.charAt(0).toUpperCase() + category.slice(1)}
+                  childrenOffset={14}
+                />
+              );
+            })}
+          </ScrollArea>
         </NavLink>
         <NavLink
           href="/admin/reviews"
@@ -90,7 +92,7 @@ const AdminNav = () => {
 
       <div className="nav-bottom">
         <Link
-          to="/admin/profile"
+          to={`/users/${user?._id}`}
           className="flex items-center gap-4 hover:text-teal-400 transition-all duration-300"
         >
           <Avatar

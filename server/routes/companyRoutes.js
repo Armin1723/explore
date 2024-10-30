@@ -36,13 +36,14 @@ const companyRoutes = (io) => {
 
   //Search and fetch routes
   router.get("/name/:name", getCompanyDetails);
-  router.get("/category/:category", isLoggedIn, getCompanies);
+  router.get('/', getCompanies);
+  // router.get("/category/:category", isLoggedIn, getCompanies);
   router.get(
     "/subcategory/:subCategory",
     isLoggedIn,
     getCompaniesBySubCategory
   );
-  router.get("/search/:query", isLoggedIn, searchCompanies);
+  router.get("/search", searchCompanies);
 
   //Review routes
   router.post("/review/add", isLoggedIn, addReview);

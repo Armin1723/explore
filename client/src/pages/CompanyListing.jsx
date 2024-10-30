@@ -49,14 +49,15 @@ const CompanyListing = () => {
     }
   }, [user]);
   return (
-    <div className="flex flex-col h-screen w-screen ">
-      <Header />
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 mx-2 mb-20">
-        <Title className="my-4">List a company</Title>
+    <div className="flex flex-col min-h-screen w-screen items-center relative">
+      <img src='/backgrounds/register-bg.svg' className="absolute bottom-0 left-0 min-h-[100dvh] w-full z-[-2] object-cover max-sm:aspect-[1/1.4]"/>
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 mx-2 mb-20 max-lg:max-w-[80%] ">
+        <div className="heading">List a company</div>
         <Stepper
           active={active}
           allowNextStepsSelect={false}
           completedIcon={<TiTick size={24} />}
+          className="max-w-[80%] flex flex-col items-center"
         >
           <Stepper.Step
             label="First step"
@@ -79,9 +80,9 @@ const CompanyListing = () => {
           >
             <GalleryForm nextStep={nextStep} />
           </Stepper.Step>
-          <Stepper.Completed className="min-h-[40vh] w-[80vw] md:w-[30vw] flex flex-col items-center justify-start !my-[10vh]">
+          <Stepper.Completed className="min-h-[40vh] w-[80vw] md:w-[30vw] flex flex-col items-center justify-start !my-[10vh] bg-white rounded-md">
             Completed, now await request approval or see how your 
-            <Link to={`/companies/${user?.company?.name.split(" ").join("-")}`} className="cursor-pointer text-blue-600"> listing</Link> looks.
+            <Link to={`/companies/${user?.company?.name.split(" ").join("-")}`} className="cursor-pointer text-blue-900 font-bold"> listing</Link> looks.
             A mail will be sent to you on {user.email} once your listing is approved.
           </Stepper.Completed>
         </Stepper>

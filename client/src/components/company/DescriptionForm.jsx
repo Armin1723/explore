@@ -1,15 +1,20 @@
 import { Button, Card } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/features/user/userSlice";
+
 import { RichTextEditor, Link } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Highlight from '@tiptap/extension-highlight';
+import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
-import { setUser } from "../../redux/features/user/userSlice";
+
 
 const DescriptionForm = ({ nextStep }) => {
   const user = useSelector((state) => state.user);
@@ -35,6 +40,8 @@ const DescriptionForm = ({ nextStep }) => {
       Link,
       Superscript,
       SubScript,
+      Highlight,
+      Underline,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: form.values.description,

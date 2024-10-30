@@ -62,7 +62,7 @@ const AdminReviews = () => {
             Most Flagged Reviews
           </p>
         </div>
-        {results ? (
+        {results && (
           results.reviews.map((review, index) => {
             return (
               <div
@@ -114,11 +114,9 @@ const AdminReviews = () => {
               </div>
             );
           })
-        ) : (
-          <div>No Reviews found</div>
         )}
 
-        {(!results || !results.length) && <div>No Reviews found</div>}
+        {(!results || results.length == 0) && <div>No Reviews found</div>}
 
         {results?.totalPages > 1 && (
           <Pagination
