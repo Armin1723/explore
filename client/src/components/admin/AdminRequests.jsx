@@ -72,7 +72,7 @@ const AdminRequests = ({refetch, setRefetch}) => {
   }, [page, refetch]);
 
   return (
-    <Card className="flex flex-col flex-1 max-h-[44vh]" withBorder>
+    <Card className="flex flex-col flex-1" withBorder>
       <ScrollArea h={400}>
         <div className="heading w-full border-l-8 border-teal-300 my-4 flex items-center">
           <div className="w-full pl-6 text-xl tracking-wide flex items-center gap-2">

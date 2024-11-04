@@ -25,10 +25,6 @@ const UserProfile = () => {
 
   const navigate = useNavigate();
 
-  const { toggleColorScheme } = useMantineColorScheme({
-    keepTransitions: true,
-  })
-
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);

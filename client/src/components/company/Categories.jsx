@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import BreadCrumbNav from "../shared/BreadCrumbNav";
-import { categories } from "../../utils";
+import BreadCrumbNav from "../shared/BreadCrumbNav"
 import { ScrollArea, Select } from "@mantine/core";
 import CompanyCardSmall from "./CompanyCardSmall";
 import Pagination from "../shared/Pagination";
+import AdvertisementCard from "../shared/AdvertisementCard";
+import { useSelector } from "react-redux";
+import { getSubCategories } from "../../utils";
 
 const Categories = () => {
   const [searchParams] = useSearchParams();
@@ -22,22 +24,26 @@ const Categories = () => {
 
   const navigate = useNavigate();
 
-  const reset = () => { 
+  const reset = () => {
     navigate("/companies/categories?category=all");
     setCategory("");
     setSubCategory("");
     setSort("");
     setPage(1);
-  }
+  };
+
+  const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/company?category=${category}&subCategory=${subCategory}&sort=${sort}&page=${page}`
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/company?category=${category}&subCategory=${subCategory}&sort=${sort}&page=${page}`
         );
-        if(!response.ok) {
+        if (!response.ok) {
           throw new Error("An error occurred while fetching companies");
         }
         const data = await response.json();
@@ -49,7 +55,15 @@ const Categories = () => {
       }
     };
     fetchResults();
-  }, [category, subCategory, sort, page, categoryParam, subCategoryParam, pageParam]);
+  }, [
+    category,
+    subCategory,
+    sort,
+    page,
+    categoryParam,
+    subCategoryParam,
+    pageParam,
+  ]);
 
   return (
     <div className="page flex flex-col w-[90%] py-4 overflow-x-hidden">
@@ -61,11 +75,11 @@ const Categories = () => {
         <p className="text-sm">All filters</p>
         <div className="max-sm:w-[150px] w-fit">
           <Select
-            data={["all", ...Object.keys(categories)]}
+            data={["all", ...Object.values(categories).map((cat) => cat.name)]}
             value={category}
             placeholder="Chose Category"
             clearable
-            onClear={()=>setCategory('')}
+            onClear={() => setCategory("")}
             onChange={(value) => {
               setCategory(value);
               setSubCategory("");
@@ -75,56 +89,65 @@ const Categories = () => {
         </div>
         <div className="max-sm:w-[150px] w-fit">
           <Select
-            data={categories[category]}
+            data={getSubCategories(category) || ["all"]}
             value={subCategory}
             placeholder="Chose Sub Category"
             onChange={setSubCategory}
-            onClear={()=>setSubCategory('')}
+            onClear={() => setSubCategory("")}
             clearable
           />
         </div>
         <div className="max-sm:w-[150px] w-fit">
           <Select
-            data={['Rating', 'Name', 'createdAt']}
+            data={["Rating", "Name", "createdAt"]}
             value={sort}
             placeholder="Sort By"
             onChange={setSort}
             clearable
           />
         </div>
-        <p className="text-xs italic text-blue-400 cursor-pointer" onClick={reset}>Clear all filters</p>
+        <p
+          className="text-xs italic text-blue-400 cursor-pointer"
+          onClick={reset}
+        >
+          Clear all filters
+        </p>
       </div>
 
       <div className="cards-container w-full flex max-lg:flex-col gap-4 overflow-x-hidden">
-        <ScrollArea
-          h={600}
-          className="w-full "
-        >
+        <ScrollArea h={600} className="w-full ">
           <div className="cards max-lg:w-full overflow-y-scroll p-4 max-sm:p-1 overflow-x-hidden flex flex-col gap-4">
-          {results?.companies?.length ? (
-            results.companies.map((company, index) => (
-              <CompanyCardSmall company={company} key={index} />
-            ))
-          ) : loading ? (
-            <div className="w-full min-h-screen rounded-xl border p-2 boder-black/70 flex items-center justify-center">
-              <div className="loader"></div>
-            </div>
-          ) : (
-            <div className="w-full p-2 boder-black/70 flex flex-col items-start justify-start">
-              <p className="heading p-4">No companies found</p>
-              <p className="px-4 text-sm text-gray-500 cursor-pointer hover:text-gray-700 transition-all duration-200 font-['inter']" onClick={reset}>Search for all??</p>
-            </div>
-          )}
-          {results?.totalPages > 1 && <Pagination  totalPages={results.totalPages} page={page} setPage={setPage}/>
-            }
+            {results?.companies?.length ? (
+              results.companies.map((company, index) => (
+                <CompanyCardSmall company={company} key={index} />
+              ))
+            ) : loading ? (
+              <div className="w-full min-h-screen rounded-xl border p-2 boder-black/70 flex items-center justify-center">
+                <div className="loader"></div>
+              </div>
+            ) : (
+              <div className="w-full p-2 boder-black/70 flex flex-col items-start justify-start">
+                <p className="heading p-4">No companies found</p>
+                <p
+                  className="px-4 text-sm text-gray-500 cursor-pointer hover:text-gray-700 transition-all duration-200 font-['inter']"
+                  onClick={reset}
+                >
+                  Search for all??
+                </p>
+              </div>
+            )}
+            {results?.totalPages > 1 && (
+              <Pagination
+                totalPages={results.totalPages}
+                page={page}
+                setPage={setPage}
+              />
+            )}
           </div>
         </ScrollArea>
+
         <div className="sidebar w-1/3 max-lg:w-full">
-          {
-            <p className="w-full min-h-screen rounded-xl border m-4 p-2 boder-black/70">
-              No advertisement right now.
-            </p>
-          }
+          <AdvertisementCard />
         </div>
       </div>
     </div>

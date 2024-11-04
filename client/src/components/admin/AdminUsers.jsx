@@ -58,21 +58,21 @@ const AdminUsers = () => {
           <p className="w-full pl-6 text-xl tracking-wide">Recent Users</p>
         </div>
         {results ? (
-          results.users.map((user, index) => {
+          results?.users.map((user, index) => {
             return (
               <Link
-                to={`/users/${user._id}`}
+                to={`/users/${user?._id}`}
                 className={`userCard flex justify-between py-3 border-b border-gray-400 hover:bg-teal-100/20 ${
                   index === 0 && "border-t"
                 }`}
                 key={index}
               >
                 <div className="flex items-center gap-8">
-                  <Avatar src={user?.profilePic} alt={user.name} />
-                  <p className="capitalize sub-heading">{user.name}</p>
+                  <Avatar src={user?.profilePic} alt={user?.name} className="border border-black"/>
+                  <p className="capitalize !font-['inter'] sub-heading">{user?.name}</p>
                 </div>
                 <div className="flex items-center">
-                  <p>Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
+                  <p>Joined: {new Date(user?.createdAt).toLocaleDateString()}</p>
                 </div>
               </Link>
             );

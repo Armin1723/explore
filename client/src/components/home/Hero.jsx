@@ -82,7 +82,7 @@ const Hero = () => {
         </button>
         <button
           className={`p-2 rounded-s-lg bg-white/70`}
-          onClick={() => setCurr((prev) => prev + (1 % 4))}
+          onClick={() => setCurr((prev) => (prev + 1) % 4)}
         >
           <FaChevronCircleRight color="black" className="text-2xl" />
         </button>

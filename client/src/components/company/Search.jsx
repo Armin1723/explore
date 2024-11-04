@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import BreadCrumbNav from "../shared/BreadCrumbNav";
-import { categories } from "../../utils";
 import { rem, ScrollArea, Select, TextInput } from "@mantine/core";
 import CompanyCardSmall from "./CompanyCardSmall";
 import Pagination from "../shared/Pagination";
 import { FaSearch } from "react-icons/fa";
+import AdvertisementCard from "../shared/AdvertisementCard";
+import { useSelector } from "react-redux";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -21,6 +22,8 @@ const Search = () => {
 
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const categories = useSelector((state) => state.categories);
 
   const navigate = useNavigate();
 
@@ -81,7 +84,7 @@ const Search = () => {
         </div>
         <div className="max-sm:w-[150px] w-fit">
           <Select
-            data={["all", ...Object.keys(categories)]}
+            data={["All", ...Object.values(categories).map(cat => cat.name)]}
             value={category}
             placeholder="Chose Category"
             clearable
@@ -141,11 +144,7 @@ const Search = () => {
           </div>
         </ScrollArea>
         <div className="sidebar w-1/3 max-lg:w-full">
-          {
-            <p className="w-full min-h-screen rounded-xl border m-4 p-2 boder-black/70">
-              No advertisement right now.
-            </p>
-          }
+           <AdvertisementCard />
         </div>
       </div>
     </div>

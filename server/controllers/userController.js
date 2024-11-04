@@ -197,7 +197,7 @@ const editUser = async (req, res) => {
 const fetchUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id, { password: 0 });
+    const user = await User.findById(id, { password: 0 }).populate('company');
     if (!user) {
       return res
         .status(404)
@@ -296,7 +296,7 @@ const toggleSavedCompany = async (req, res) => {
   try {
     const { companyId } = req.body;
     const { id } = req.user;
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate('company'); 
 
     const savedCompanies = user.savedCompanies;
     if (savedCompanies.includes(companyId)) {
@@ -309,7 +309,7 @@ const toggleSavedCompany = async (req, res) => {
     await user.save();
     res
       .status(200)
-      .json({ success: true, message: "Company saved successfully", user });
+      .json({ success: true, message: "Company save toggled successfully", user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Server error" });

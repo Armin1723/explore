@@ -55,7 +55,7 @@ const AdminReviews = () => {
   }, [page, refetch]);
 
   return (
-    <Card className="flex flex-col flex-1 max-h-[44vh]" withBorder>
+    <Card className="flex flex-col flex-1 " withBorder>
       <ScrollArea h={400}>
         <div className="heading w-full border-l-8 border-teal-300 my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">
@@ -71,7 +71,7 @@ const AdminReviews = () => {
                   index === 0 && "border-t"
                 }`}
               >
-                <div className="flex justify-between items-center capitalize py-2 text-lg bg-gray-100/40 px-2 rounded-md my-2">
+                <div className="flex justify-between items-center capitalize py-2 text-lg max-sm:text-sm bg-gray-100/40 px-2 rounded-md my-2 w-full">
                   <Link
                     to={`/companies/${review.company.name
                       .split(" ")
@@ -93,9 +93,9 @@ const AdminReviews = () => {
                 </div>
                 <Link
                   to={`/users/${review.user._id}`}
-                  className="userCard flex justify-between  "
+                  className="userCard flex justify-between w-full"
                 >
-                  <div className="flex items-center gap-8">
+                  <div className="flex items-center gap-8 max-sm:gap-4">
                     <Avatar
                       src={review.user?.profilePic}
                       alt={review.user.name}
@@ -106,7 +106,7 @@ const AdminReviews = () => {
                   </div>
                   <div className="flex items-center">
                     <p>
-                      Reviewed at:{" "}
+                      <span className="max-sm:hidden">Reviewed at:{" "}</span>
                       {new Date(review.createdAt).toLocaleDateString()}
                     </p>
                   </div>

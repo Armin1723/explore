@@ -6,14 +6,16 @@ import { CiViewList } from "react-icons/ci";
 import { Avatar, ScrollArea, useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { NavLink } from "@mantine/core";
-import { categories } from "../../utils/index";
 import { FaChevronRight } from "react-icons/fa";
-import { MdPendingActions } from "react-icons/md";
+import { MdCategory, MdPendingActions } from "react-icons/md";
 
 const AdminNav = () => {
   const user = useSelector((state) => state.user);
   const { colorScheme } = useMantineColorScheme();
   const location = useLocation();
+
+  const categories = useSelector((state) => state.categories);
+
   return (
     <div
       className={` ${
@@ -63,13 +65,13 @@ const AdminNav = () => {
               label="All"
               childrenOffset={14}
             />
-            {Object.keys(categories).map((category) => {
+            {Object.values(categories).map((category) => {
               return (
                 <NavLink
-                  key={category}
-                  href={`/admin/companies/${category}`}
-                  active={location.pathname.includes(category)}
-                  label={category.charAt(0).toUpperCase() + category.slice(1)}
+                  key={category?.name}
+                  href={`/admin/companies/${category?.name}`}
+                  active={location.pathname.includes(category?.name)}
+                  label={category?.name.charAt(0).toUpperCase() + category?.name.slice(1)}
                   childrenOffset={14}
                 />
               );
@@ -87,6 +89,12 @@ const AdminNav = () => {
           label="Pending Requests"
           leftSection={<MdPendingActions className="text-2xl" />}
           active={location.pathname.includes("/admin/requests")}
+        />
+        <NavLink
+          href="/admin/categories"
+          label="Categories"
+          leftSection={<MdCategory className="text-2xl" />}
+          active={location.pathname.includes("/admin/categories")}
         />
       </div>
 

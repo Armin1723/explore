@@ -1,5 +1,5 @@
 import { Button } from "@mantine/core";
-import React, { useState } from "react";
+import React from "react";
 import {
   FaBookmark,
   FaChevronCircleLeft,
@@ -11,27 +11,23 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import Bookmark from "./Bookmark";
 
-const CompanyCardSmall = ({ company = {}, self = false }) => {
+const CompanyCardSmall = ({ company, self = false }) => {
   const user = useSelector((state) => state.user);
 
-  const [bookmark, setBookmark] = useState(false);
-
-  if (user && user.bookmarks && user.bookmarks.includes(company._id)) {
-    setBookmark(true);
-  }
   const encodedAddress = encodeURI(company?.address);
 
   return (
     <div className='max-w-[70vw] max-sm:max-w-[85vw] max-sm:flex-col max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-accent/70 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200'>
-      <div className=' left max-sm:w-full max-sm:aspect-video aspect-[1/1.1] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500'>
+      <div className=' left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500'>
         <img
-          src={company?.gallery[0]?.url}
-          alt={company?.name}
+          src={(company.gallery && company?.gallery[0]?.url) || "/utility/placeholder-card.png"}
+          alt={company && company?.name}
           className="w-full h-full aspect-square object-cover group-hover:scale-110 transition-all duration-200 bg-gray-400"
         />
         <Link
-          to={`/companies/${company?.name.split(" ").join("-")}`}
+          to={`/companies/${company && company.name && company?.name.split(" ").join("-")}`}
           className="link absolute right-0 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/40 transition-all duration-300 flex items-center justify-center rounded-s-md p-2"
         >
           <FaChevronCircleLeft />
@@ -46,11 +42,7 @@ const CompanyCardSmall = ({ company = {}, self = false }) => {
             {company?.name}
           </Link>
           <div>
-            {bookmark ? (
-              <FaBookmark className="text-xl" />
-            ) : (
-              <FaRegBookmark className="text-xl" />
-            )}
+            <Bookmark companyId={company?._id} />
           </div>
         </div>
         <div className="ratings flex gap-2 items-center ">

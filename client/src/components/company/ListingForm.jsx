@@ -6,19 +6,22 @@ import {
   FileInput,
   NumberInput,
   Select,
+  TagsInput,
   Textarea,
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useState } from "react";
-import { categories } from "../../utils";
 import { notifications } from "@mantine/notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/features/user/userSlice";
+import { getSubCategories } from "../../utils";
 
 const ListingForm = ({ nextStep }) => {
   const user = useSelector((state) => state.user);
+  const categories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
+
 
   const form = useForm({
     initialValues: {
@@ -37,7 +40,7 @@ const ListingForm = ({ nextStep }) => {
         value.length < 2 ? "Name must have at least 2 characters" : null,
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       category: (value) => (value ? null : "Category is required"),
-      subCategory: (value) => (value ? null : "Sub Category is required"),
+      subCategory: (value) => (value.length > 0 ? null : "Sub Category is required"),
       address: (value) =>
         value.length < 5 ? "Address must have at least 5 characters" : null,
       website: (value) =>
@@ -153,7 +156,7 @@ const ListingForm = ({ nextStep }) => {
           withAsterisk
           label="Category"
           placeholder="Choose a category"
-          data={Object.keys(categories)}
+          data={Object.values(categories).map((cat) => cat.name)}
           {...form.getInputProps("category")}
           onChange={(value) => {
             form.setFieldValue("category", value);
@@ -165,7 +168,7 @@ const ListingForm = ({ nextStep }) => {
           withAsterisk
           label="Sub Category"
           placeholder="Choose a sub category"
-          data={categories[form.values.category] || []}
+          data={getSubCategories(form.values.category) || []}
           disabled={!form.values.category}
           {...form.getInputProps("subCategory")}
         />
@@ -194,7 +197,13 @@ const ListingForm = ({ nextStep }) => {
         <div className="flex items-start gap-4">
           {logoUrl && (
             <Box mt="md" style={{ display: "flex", justifyContent: "start" }}>
-              <Avatar src={logoUrl} size={48} radius="50%" alt="Logo Preview" className="border border-black"/>
+              <Avatar
+                src={logoUrl}
+                size={48}
+                radius="50%"
+                alt="Logo Preview"
+                className="border border-black"
+              />
             </Box>
           )}
           <FileInput
@@ -210,7 +219,13 @@ const ListingForm = ({ nextStep }) => {
           />
         </div>
 
-        <Button type="submit" className="col-span-1 lg:col-span-2 md:col-span-2" fullWidth>Register Company</Button>
+        <Button
+          type="submit"
+          className="col-span-1 lg:col-span-2 md:col-span-2"
+          fullWidth
+        >
+          Register Company
+        </Button>
       </form>
     </Card>
   );

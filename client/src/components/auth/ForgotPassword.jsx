@@ -1,11 +1,9 @@
 import {
   Paper,
-  Title,
   Text,
   TextInput,
   Button,
   Group,
-  Anchor,
   Center,
   Box,
   rem,
@@ -17,7 +15,7 @@ import { Link } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import { motion } from "framer-motion";
 
-export function ForgotPassword() {
+const ForgotPassword = () => {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
 
@@ -114,17 +112,17 @@ export function ForgotPassword() {
             )}
           </Group>
           <Group justify="space-between" mt="lg" className={classes.controls}>
-            <Anchor c="dimmed" size="sm" className={classes.control}>
+            <Link to="/auth/login" c="dimmed" size="sm" className={classes.control}>
               <Center inline>
-                <Link to="/auth/login" className="flex items-center">
+                <div className="flex items-center">
                   <FaArrowLeft
                     style={{ width: rem(12), height: rem(12) }}
                     stroke={1.5}
                   />
                   <Box ml={5}>Back to the login page</Box>
-                </Link>
+                </div>
               </Center>
-            </Anchor>
+            </Link>
             <Button className={classes.control} onClick={handlePasswordReset}>
               Reset password
             </Button>
@@ -134,3 +132,5 @@ export function ForgotPassword() {
     </div>
   );
 }
+
+export default ForgotPassword;

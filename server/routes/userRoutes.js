@@ -13,7 +13,6 @@ const {
   toggleSavedCompany,
   fetchUserById,
   editUser,
-  sendEnquiry,
 } = require("../controllers/userController");
 const { isLoggedIn } = require("../middlewares");
 
@@ -39,7 +38,7 @@ const userRoutes = (io) => {
   );
 
   //Wishlist Routes
-  router.post("/toggle-save-company", isLoggedIn, toggleSavedCompany);
+  router.post("/toggle-bookmark", isLoggedIn, toggleSavedCompany);
 
   //Fetch User
   router.get("/:id", fetchUserById);

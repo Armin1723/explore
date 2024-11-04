@@ -325,26 +325,6 @@ const getCompanyDetails = async (req, res) => {
         .json({ success: false, message: "This company has been suspended" });
     }
 
-    const allReviews = await Company.findOne(
-      { name: { $regex: new RegExp(name, "i") } },
-      { reviews: 1 }
-    ).populate({
-      path: "reviews",
-      select: "rating",
-    });
-
-    let cumulativeRating = 0;
-    allReviews.reviews = allReviews.reviews.map(
-      (review) => (cumulativeRating = cumulativeRating + review.rating)
-    );
-
-    if (allReviews.reviews.length > 0) {
-      allReviews.reviews = cumulativeRating / allReviews.reviews.length;
-    }
-
-    company = company.toObject();
-    company.cumulativeRating = cumulativeRating;
-
     res.status(200).json({ success: true, company });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -360,12 +340,12 @@ const getCompanies = async (req, res) => {
 
     let query = { status: "active" };
 
-    if (category && category !== "all") {
+    if (category && category.toLowerCase() !== "all" ) {
       query.category = category.toLowerCase();
     }
 
-    if (subCategory && subCategory !== "all") {
-      query.subCategory = subCategory.toLowerCase();
+    if (subCategory && subCategory.toLowerCase() !== "all" ) {
+      query.subCategory = { $in: [subCategory.toLowerCase()] };
     }
 
     let sortQuery = { rating: -1 };

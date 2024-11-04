@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "../components/shared/Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { notifications } from "@mantine/notifications";
 
 const UserPage = () => {
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user || !user.name) {
+      notifications.show({
+        title: "Error",
+        message: "You must be logged in to view this page.",
+        color: "red",
+      });
+      navigate("/auth");
+    }
+  }, [user]);
   return (
     <div className="flex flex-col h-screen w-screen items-center justify-between relative">
       <motion.img

@@ -1,5 +1,4 @@
 import { Avatar, Badge, ScrollArea } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -10,18 +9,19 @@ import ReviewedListings from "./ReviewedListings";
 
 const UserDetail = () => {
   const { id } = useParams();
-
+  
   const user = useSelector((state) => state.user);
 
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [self, setSelf] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        if (user && user._id == id) {
+        if (user && user._id === id) {
           setUserData(user);
+          // console.log(userData)
           setLoading(false);
           setSelf(true);
         } else {
@@ -32,17 +32,19 @@ const UserDetail = () => {
             }
           );
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            const data = await response.json();
+            throw new Error(data.message);
           }
           const data = await response.json();
           setUserData(data.user);
+          setLoading(false);
         }
       } catch (error) {
         console.log(error.message);
       }
     };
     fetchUser();
-  }, []);
+  }, [user, id]);
 
   if (loading) {
     return (
@@ -87,7 +89,7 @@ const UserDetail = () => {
             {userData?.name}'s Listing:
           </p>
           {userData?.company ? (
-            <CompanyCardSmall company={userData.company} self={true} />
+            <CompanyCardSmall company={userData?.company} self={self} />
           ) : (
             <p>No company listed as of now .</p>
           )}

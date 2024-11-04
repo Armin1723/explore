@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 
 import { Header } from "../components/shared/Header";
-// import Info from "../components/home/Info";
 import CategorySection from "../components/home/CategorySection";
 import Footer from "../components/shared/Footer";
 import Hero from "../components/home/Hero";
-// import About from "../components/home/About";
 import Testimonials from "../components/home/Testimonials";
 import TrendingStores from "../components/home/TrendingStores";
 import ContactCard from "../components/home/ContactCard";
@@ -28,10 +26,11 @@ const Home = () => {
       className={`flex flex-col items-center min-h-screen max-sm:min-w-screen home `}
     >
       <Header />
+        
 
       <div
         rounded="lg"
-        className="content relative flex flex-col items-center w-full "
+        className="content relative flex flex-col items-center w-full"
       >
         <Hero />
 
@@ -44,10 +43,6 @@ const Home = () => {
         <PopularStores />
 
         <RecentlyReviewed />
-
-        {/* <About /> */}
-
-        {/* <FAQ /> */}
 
         <Testimonials />
 

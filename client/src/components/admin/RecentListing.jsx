@@ -99,7 +99,7 @@ export const RecentListing = ({ refetch, setRefetch }) => {
 
   return (
     <ScrollAreaAutosize>
-      <Card radius="md" className="flex-1 overflow-y-scroll ">
+      <Card radius="md" className="flex-1 overflow-y-scroll border border-black">
         <Card.Section>
           <Carousel
             withIndicators

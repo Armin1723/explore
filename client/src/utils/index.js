@@ -1,21 +1,24 @@
-export const categories = {
-  grocery: ["vegetables", "fruits", "dairy"],
-  electronics: ["mobiles", "laptops", "cameras"],
-  books: ["fiction", "non-fiction", "comics"],
-  home: ["furniture", "decor", "kitchen"],
-  beauty: ["skincare", "makeup", "haircare"],
-  fashion: ["men", "women", "kids"],
-  toys: ["action figures", "dolls", "puzzles"],
-  sports: ["outdoor", "indoor", "fitness"],
-  automobile: ["cars", "motorbikes", "accessories"],
-  furniture: ["sofas", "tables", "beds"],
-  jewellery: ["rings", "necklaces", "bracelets"],
-  travel: ["flights", "hotels", "tours"],
-  fitness: ["gym equipment", "supplements", "clothing"],
-  pets: ["food", "toys", "accessories"],
-  health: ["medicines", "wellness", "personal care"],
-  kitchen: ["appliances", "cookware", "utensils"]
-};
+import { useSelector } from "react-redux";
+
+export const categoriesBackup = [
+  {name: 'Grocery', subCategories: ["vegetables", "fruits", "dairy"]},
+  {name: 'Electronics', subCategories: ["mobiles", "laptops", "cameras"]},
+  {name: 'Books', subCategories: ["fiction", "non-fiction", "comics"]},
+  {name: 'Home', subCategories: ["furniture", "decor", "kitchen"]},
+  {name: 'Beauty', subCategories: ["skincare", "makeup", "haircare"]},
+  {name: 'Fashion', subCategories: ["men", "women", "kids"]},
+  {name: 'Toys', subCategories: ["action figures", "dolls", "puzzles"]},
+  {name: 'Sports', subCategories: ["outdoor", "indoor", "fitness"]},
+  {name: 'Automobile', subCategories: ["cars", "motorbikes", "accessories"]},
+  {name: 'Furniture', subCategories: ["sofas", "tables", "beds"]},
+  {name: 'Jewellery', subCategories: ["rings", "necklaces", "bracelets"]},
+  {name: 'Travel', subCategories: ["flights", "hotels", "tours"]},
+  {name: 'Fitness', subCategories: ["gym equipment", "supplements", "clothing"]},
+  {name: 'Pets', subCategories: ["food", "toys", "accessories"]},
+  {name: 'Health', subCategories: ["medicines", "wellness", "personal care"]},
+  {name: 'Kitchen', subCategories: ["appliances", "cookware", "utensils"]}
+];
+
   export const upperMarquee = [
     "/01.svg",
     "/02.svg",
@@ -44,11 +47,6 @@ export const categories = {
     "/22.svg",
   ];
 
-export const adminCarousels = [
-  { id: 1, name: "Total Users", value: 500, increase: true, progress: 50 },
-  { id: 2, name: "Total Companies", value: 100, increase: false, progress: 30 },
-];
-
 export const getRatingColor = (rating) => {
   
   const darkRed = 50;   
@@ -59,4 +57,11 @@ export const getRatingColor = (rating) => {
   
   return `rgb(${red}, ${green}, 0)`;
 };
+
+export const getSubCategories = (categoryName) => {
+  const categories = useSelector((state) => state.categories);
+  const category = Object.values(categories).find(cat => cat.name === categoryName);
+  return category ? category.subCategories : null; 
+};
+
 

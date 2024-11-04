@@ -65,7 +65,7 @@ export const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const header = document.querySelector(".header");
-      if (window.scrollY > 100) {
+      if (window.scrollY > 30) {
         header.classList.add("bg-white");
         header.classList.add("border-b");
       } else {
@@ -103,7 +103,7 @@ export const Header = () => {
 
   return (
     <div
-      className={`fixed header transition-all duration-200 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
+      className={`fixed header transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-2 flex justify-between items-center`}
