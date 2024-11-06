@@ -84,7 +84,7 @@ const Search = () => {
         </div>
         <div className="max-sm:w-[150px] w-fit">
           <Select
-            data={["All", ...Object.values(categories).map(cat => cat.name)]}
+            data={["all", ...Object.values(categories).map(cat => cat.name)]}
             value={category}
             placeholder="Chose Category"
             clearable

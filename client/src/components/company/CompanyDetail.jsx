@@ -47,7 +47,7 @@ const CompanyDetail = () => {
 
   const navigate = useNavigate();
 
-  const isSelf = company?.user?._id === user?._id;
+  const isSelf = company?.admin?._id === user?._id;
   const isAdmin = user && user?.role === "admin";
 
   const [review, setReview] = React.useState({ rating: 0, comment: "" });
@@ -176,7 +176,7 @@ const CompanyDetail = () => {
         title: "Review Deleted",
         message: "Review has been successfully deleted",
       });
-      window.location.reload(); 
+      window.location.reload();
     } catch (error) {
       notifications.show({
         title: "Error",
@@ -201,7 +201,7 @@ const CompanyDetail = () => {
           {company.gallery.map((image, index) => (
             <img
               key={index}
-              src={image.url}
+              src={image?.url}
               alt={company?.name}
               className="object-cover aspect-video h-96 max-sm:h-60 border border-gray"
             />
@@ -241,6 +241,17 @@ const CompanyDetail = () => {
           {isAdmin && (
             <AdminActions company={company} setCompany={setCompany} />
           )}
+          {isSelf && (
+             <Link
+             to={`/companies/${company?.name
+               .split(" ")
+               .join("-")}/enquiries`}
+           >
+             <Button color="primary.3">
+               <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries
+             </Button>
+           </Link>
+          )}
         </div>
 
         <div
@@ -265,8 +276,13 @@ const CompanyDetail = () => {
               <FaStar />
             </div>
           </div>
-          <div className="text-md text-gray-600">
-            {company.reviews.length} reviews{" "}
+          <div className="text-gray-600 flex items-center gap-2">
+            <p>{company?.reviews?.length} review{company?.reviews?.length > 1 && 's'}{"."}</p>
+          <div className="joined">
+              <span className="text-xs italic text-gray-500">
+                {'('}Joined on {new Date(company.createdAt).toLocaleDateString()}{')'}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -294,17 +310,32 @@ const CompanyDetail = () => {
 
         <div
           id="address"
-          className="address flex justify-start items-center gap-4"
+          className="address flex justify-start items-start flex-col"
         >
-          <p className="text-sm flex items-center gap-2 font-['inter']">
+          <Link
+            className="my-1 text-sm flex items-center gap-2 font-['inter']"
+            target="blank"
+            to={`https://www.google.com/maps/search/?api=1&query=${encodeURI(
+              company?.address
+            )}`}
+          >
             <FaMapMarkerAlt />
             {company.address}
-          </p>
-          <div className="joined">
-            <span className="text-sm text-gray-500">
-              Joined on {new Date(company.createdAt).toLocaleDateString()}
-            </span>
-          </div>
+          </Link>
+            <Link
+              to={`${
+                company?.website.includes("https")
+                  ? company?.website
+                  : `https://${company.website}`
+              } `}
+              target="blank"
+              className="text-xs"
+            >
+              <p className="website text-blue-800 hover:text-blue-900 transition-all duration-200 my-1">
+                {company.website}
+              </p>
+            </Link>
+            
         </div>
 
         <div id="contact" className="contact my-4">
@@ -352,7 +383,7 @@ const CompanyDetail = () => {
               <FaShare className="mx-2" />
               Share
             </Button>
-            <Link
+            {!isSelf && <Link
               to={`/companies/${company?.name
                 .split(" ")
                 .join("-")}/enquiries/add`}
@@ -360,7 +391,7 @@ const CompanyDetail = () => {
               <Button color="primary.3">
                 <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiry
               </Button>
-            </Link>
+            </Link>}
           </Group>
         </div>
 
@@ -397,7 +428,12 @@ const CompanyDetail = () => {
                       setReview({ ...review, comment: e.target.value })
                     }
                   ></Textarea>
-                  <Button variant="filled" color="blue" disabled={!review?.comment} onClick={addReview}>
+                  <Button
+                    variant="filled"
+                    color="blue"
+                    disabled={!review?.comment}
+                    onClick={addReview}
+                  >
                     Submit Review
                   </Button>
                 </Group>
@@ -449,12 +485,14 @@ const CompanyDetail = () => {
                     >
                       Flag Review
                     </Menu.Item>
-                    {isAdmin && <Menu.Item
-                      onClick={() => deleteReview(review._id)}
-                      leftSection={<MdDelete />}
-                    >
-                      Delete Review
-                    </Menu.Item>}
+                    {isAdmin && (
+                      <Menu.Item
+                        onClick={() => deleteReview(review._id)}
+                        leftSection={<MdDelete />}
+                      >
+                        Delete Review
+                      </Menu.Item>
+                    )}
                   </Menu.Dropdown>
                 </Menu>
               </Group>

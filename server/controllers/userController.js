@@ -28,6 +28,11 @@ const loginUser = async (req, res) => {
         .status(400)
         .json({ success: false, errors: { email: "User not found" } });
     }
+
+    if(!user.isActive){
+      return res.status(400).json({ success: false, errors: { email: "Your account has been suspended." } });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res

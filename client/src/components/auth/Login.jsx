@@ -69,7 +69,7 @@ const Login = () => {
         notifications.update({
           id,
           title: "Error in Credentials",
-          message: "Please check your email and password",
+          message: data.errors.email || data.errors.password || "Some error occurred",
           color: "red",
           loading: false,
           autoClose: 3000,
@@ -99,7 +99,7 @@ const Login = () => {
       notifications.update({
         id,
         title: "An error occurred",
-        message: "Please try again",
+        message: data.errors.email || data.errors.password || "Please try again",
         color: "red",
         loading: false,
         autoClose: 3000,

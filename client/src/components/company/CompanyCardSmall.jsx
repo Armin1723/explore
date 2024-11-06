@@ -1,13 +1,6 @@
 import { Button } from "@mantine/core";
 import React from "react";
-import {
-  FaBookmark,
-  FaChevronCircleLeft,
-  FaMapPin,
-  FaPhone,
-  FaRegBookmark,
-  FaStar,
-} from "react-icons/fa";
+import { FaChevronCircleLeft, FaMapPin, FaPhone, FaStar } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
@@ -19,21 +12,26 @@ const CompanyCardSmall = ({ company, self = false }) => {
   const encodedAddress = encodeURI(company?.address);
 
   return (
-    <div className='max-w-[70vw] max-sm:max-w-[85vw] max-sm:flex-col max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-accent/70 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200'>
-      <div className=' left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500'>
+    <div className="max-w-[70vw] max-sm:max-w-[85vw] max-sm:flex-col max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-accent/70 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200">
+      <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
         <img
-          src={(company.gallery && company?.gallery[0]?.url) || "/utility/placeholder-card.png"}
+          src={
+            (company.gallery && company?.gallery[0]?.url) ||
+            "/utility/placeholder-card.png"
+          }
           alt={company && company?.name}
           className="w-full h-full aspect-square object-cover group-hover:scale-110 transition-all duration-200 bg-gray-400"
         />
         <Link
-          to={`/companies/${company && company.name && company?.name.split(" ").join("-")}`}
+          to={`/companies/${
+            company && company.name && company?.name.split(" ").join("-")
+          }`}
           className="link absolute right-0 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/40 transition-all duration-300 flex items-center justify-center rounded-s-md p-2"
         >
           <FaChevronCircleLeft />
         </Link>
       </div>
-      <div className='details max-sm:w-full max-sm:pl-4 max-sm:py-2 flex flex-col items-start justify-start h-full flex-1 py-2 gap-2'>
+      <div className="details max-sm:w-full max-sm:pl-4 max-sm:py-2 flex flex-col items-start justify-start h-full flex-1 py-2 gap-2">
         <div className="title flex w-full items-center justify-between pr-4">
           <Link
             to={`/companies/${company?.name.split(" ").join("-")}`}
@@ -77,14 +75,17 @@ const CompanyCardSmall = ({ company, self = false }) => {
         </Link>
 
         {company?.website && (
-          <a
-            href={`/${company?.website}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={`${
+              company?.website.includes("https")
+                ? company?.website
+                : `https://${company.website}`
+            } `}
+            target="blank"
             className="website text-md text-blue-800 hover:text-blue-900 transition-all duration-200 my-1"
           >
             {company?.website}
-          </a>
+          </Link>
         )}
 
         <div className="action-buttons flex gap-2 flex-grow">
@@ -95,9 +96,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
           </Link>
           {self ? (
             <Link
-              to={`/companies/${company?.name
-                .split(" ")
-                .join("-")}/enquiries/`}
+              to={`/companies/${company?.name.split(" ").join("-")}/enquiries/`}
             >
               <Button color="primary.6">
                 <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries

@@ -25,8 +25,8 @@ const Categories = () => {
   const navigate = useNavigate();
 
   const reset = () => {
-    setCategory("");
-    setSubCategory("");
+    setCategory("all");
+    setSubCategory("all");
     setSort("");
     navigate("/companies/categories?category=all");
     setPage(1);
@@ -95,6 +95,7 @@ const Categories = () => {
             onChange={setSubCategory}
             onClear={() => setSubCategory("")}
             clearable
+            disabled={!category || category === "all"}
           />
         </div>
         <div className="max-sm:w-[150px] w-fit">

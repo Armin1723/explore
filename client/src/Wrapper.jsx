@@ -1,4 +1,4 @@
-import { MantineProvider } from "@mantine/core";
+import { Affix, Button, MantineProvider, rem, Transition } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
@@ -8,9 +8,14 @@ import "@mantine/tiptap/styles.css";
 import App from "./App";
 import { useSelector } from "react-redux";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { FaArrowUp } from "react-icons/fa";
+import { useWindowScroll } from "@mantine/hooks";
 
 const Wrapper = () => {
-  const theme = useSelector((state) => state.theme.value);
+
+  const theme = useSelector((state) => state.theme);
+
+  const [scroll, scrollTo] = useWindowScroll();
 
   const initialOptions = {
     "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
@@ -80,6 +85,22 @@ const Wrapper = () => {
     >
       <PayPalScriptProvider options={initialOptions}>
         <Notifications />
+        <Affix position={{ bottom: 20, right: 20 }}>
+          <Transition transition="slide-up" mounted={scroll.y > 0}>
+            {(transitionStyles) => (
+              <Button
+                color="primary.1"
+                leftSection={
+                  <FaArrowUp style={{ width: rem(16), height: rem(16) }} />
+                }
+                style={transitionStyles}
+                onClick={() => scrollTo({ y: 0 })}
+              >
+                Top
+              </Button>
+            )}
+          </Transition>
+        </Affix>
         <App />
       </PayPalScriptProvider>
     </MantineProvider>
