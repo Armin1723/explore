@@ -25,10 +25,10 @@ const Categories = () => {
   const navigate = useNavigate();
 
   const reset = () => {
-    navigate("/companies/categories?category=all");
     setCategory("");
     setSubCategory("");
     setSort("");
+    navigate("/companies/categories?category=all");
     setPage(1);
   };
 

@@ -35,8 +35,8 @@ const support = {
   title: "Support",
   items: [
     { label: "Home", href: "#home" },
-    { label: "Contact", href: "#contact" },
-    { label: "FAQs", href: "#faq" },
+    { label: "About Us", href: "/about" },
+    { label: "Companies", href: "/companies" },
     { label: "Get Started", href: "/companies/add" },
   ],
 };

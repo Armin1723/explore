@@ -181,8 +181,13 @@ export const Header = () => {
             </Link>
 
             <Link
-              href="/companies/advertise"
-              className={`link text-sm  transition-colors duration-200`}
+              to={`${user && user?.name ? "/companies/advertise" : "/"}`}
+              onClick={(event) => {
+                if (!user || !user.name) {
+                  event.preventDefault(); 
+                }
+              }}
+              className={`link text-sm  transition-colors duration-200 ${(!user || !user.name) && "text-gray-700 cursor-not-allowed"}`}
             >
               Advertise
             </Link>
@@ -236,8 +241,8 @@ export const Header = () => {
               Add Company
             </Link>
             <Link
-              to="/companies/advertise"
-              className="font-['poppins'] "
+              to={`${user && user?.name && "/companies/advertise" }`}
+              className={` font-['poppins']  transition-colors duration-200 ${(!user || !user.name) && "text-gray-700 cursor-not-allowed"}`}
               onClick={closeDrawer}
             >
               Advertise

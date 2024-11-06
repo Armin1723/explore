@@ -7,9 +7,17 @@ import "@mantine/tiptap/styles.css";
 
 import App from "./App";
 import { useSelector } from "react-redux";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const Wrapper = () => {
   const theme = useSelector((state) => state.theme.value);
+
+  const initialOptions = {
+    "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
+    currency: "USD",
+    intent: "capture",
+  };
+
   return (
     <MantineProvider
       defaultColorScheme={theme}
@@ -70,8 +78,10 @@ const Wrapper = () => {
         primaryColor: "accent",
       }}
     >
-      <Notifications />
-      <App />
+      <PayPalScriptProvider options={initialOptions}>
+        <Notifications />
+        <App />
+      </PayPalScriptProvider>
     </MantineProvider>
   );
 };

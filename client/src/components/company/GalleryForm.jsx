@@ -130,7 +130,6 @@ return (
                             height: rem(52),
                             color: "var(--mantine-color-blue-6)",
                             alignSelf: "center",
-                            width: '100%'
                         }}
                         stroke={1.5}
                     />

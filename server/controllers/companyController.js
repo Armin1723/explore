@@ -297,6 +297,7 @@ const editCompany = async (req, res, io) => {
 const getCompanyDetails = async (req, res) => {
   try {
     let { name } = req.params;
+    const isAdmin = req.query.isAdmin === "true";
     name = name.split("-").join(" ");
 
     let company = await Company.findOne({
@@ -318,8 +319,7 @@ const getCompanyDetails = async (req, res) => {
         .status(404)
         .json({ success: false, message: "Company not found" });
     }
-
-    if (company.status == "suspended") {
+    if (!isAdmin && company.status == "suspended") {
       return res
         .status(403)
         .json({ success: false, message: "This company has been suspended" });
@@ -507,10 +507,12 @@ const addReview = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Review is required" });
     }
-    const company = await Company.findOne({ name: companyName }).populate({
-      path: "reviews",
-      select: "user",
-    });
+
+    let company = await Company.findOne({
+      name: { $regex: new RegExp(companyName, "i") },
+    }).populate("reviews");
+      
+
     if (!company) {
       return res
         .status(404)
@@ -548,9 +550,21 @@ const addReview = async (req, res) => {
     }
 
     await company.save();
+
+    const updatedCompany = await Company.findOne({name: companyName}).populate({
+      path: "reviews",
+      select: "rating comment user createdAt flags",
+      populate: {
+        path: "user",
+        select: "name profilePic",
+      },
+      limit: 5,
+    })
+    .populate("admin", "name email phone profiePic");
+
     res
       .status(201)
-      .json({ success: true, message: "Review added successfully", company });
+      .json({ success: true, message: "Review added successfully", company: updatedCompany });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

@@ -13,6 +13,10 @@ const {
   toggleSavedCompany,
   fetchUserById,
   editUser,
+  fetchSavedCompanies,
+  fetchReviewedCompanies,
+  resendOtp,
+  verifyOtp,
 } = require("../controllers/userController");
 const { isLoggedIn } = require("../middlewares");
 
@@ -25,6 +29,8 @@ const userRoutes = (io) => {
     (req,res) => registerUser(req,res,io)
   );
   router.get("/verify", verifyUser);
+  router.post("/verify-otp", verifyOtp);
+  router.post("/resend-otp", resendOtp);
   router.get("/logout", logoutUser);
 
   //Account Management Routes
@@ -42,6 +48,12 @@ const userRoutes = (io) => {
 
   //Fetch User
   router.get("/:id", fetchUserById);
+
+  //Fetch Saved Companies
+  router.get("/:id/saved",isLoggedIn, fetchSavedCompanies);
+
+  //Fetch Reviewed Companies
+  router.get("/:id/reviewed-companies",isLoggedIn, fetchReviewedCompanies);
 
   return router;
 };

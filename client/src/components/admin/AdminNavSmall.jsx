@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { IoIosTrendingUp } from "react-icons/io";
 import { CiReceipt, CiUser } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
 import { Avatar, ScrollArea, useMantineColorScheme } from "@mantine/core";
@@ -23,17 +22,8 @@ const AdminNavSmall = () => {
           : "bg-white text-black"
       } flex flex-col justify-between items-start h-[90dvh]`}
     >
-      <div className="nav-top flex gap-4 justify-start items-center ">
-        <Link to="/admin">
-          <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
-            <IoIosTrendingUp className="text-2xl font-bold text-white" />
-          </div>
-        </Link>
-        <p className="text-xl font-extralight max-lg:text-sm">Explore</p>
-      </div>
 
-      {/* <ScrollArea h={600} className="w-full"> */}
-        <div className="nav-links py-12 flex-col flex-1 items-start w-full">
+        <div className="nav-links flex-col flex-1 items-start w-full">
           <NavLink
             href="/admin/users"
             label="Users"

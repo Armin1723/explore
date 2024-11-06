@@ -22,6 +22,7 @@ const CompanyDetail = React.lazy(() =>
 );
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const Register = React.lazy(() => import("./components/auth/Register"));
+const VerifyOtp = React.lazy(() => import("./components/auth/VerifyOtp"));
 const Login = React.lazy(() => import("./components/auth/Login"));
 const ForgotPassword = React.lazy(() =>
   import("./components/auth/ForgotPassword")
@@ -35,9 +36,12 @@ const ResetPassword = React.lazy(() =>
 const CompanyListing = React.lazy(() => import("./pages/CompanyListing"));
 const Categories = React.lazy(() => import("./components/company/Categories"));
 const Search = React.lazy(() => import("./components/company/Search"));
+const AdvertiseForm = React.lazy(() =>import("./components/company/AdvertiseForm"));
 const EnquiryForm = React.lazy(() =>
   import("./components/company/EnquiryForm")
 );
+
+const AboutUs = React.lazy(() => import("./pages/AboutUs"));
 
 const App = () => {
   const [refetch, setRefetch] = React.useState(false);
@@ -62,6 +66,7 @@ const App = () => {
             <Route path="categories" element={<Categories />} />
             <Route path="search" element={<Search />} />
             <Route path="add" element={<CompanyListing />} />
+            <Route path="advertise" element={<AdvertiseForm />} />
             <Route path=":name/enquiries/add" element={<EnquiryForm />} />
           </Route>
 
@@ -69,6 +74,7 @@ const App = () => {
             <Route path="" element={<Login />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="verify" element={<VerifyOtp />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="reset-password" element={<ResetPassword />} />
           </Route>
@@ -99,6 +105,8 @@ const App = () => {
           </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />
+
+          <Route path='/about' element={<AboutUs />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

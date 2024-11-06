@@ -301,7 +301,7 @@ const deleteReview = async (req, res) => {
 const toggleSuspendUser = async (req, res) => {
   try {
     const { userId } = req.body;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("company");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -320,7 +320,11 @@ const toggleSuspendUser = async (req, res) => {
 const toggleSuspendCompany = async (req, res) => {
   try {
     const { companyId } = req.body;
-    const company = await Company.findById(companyId);
+    const company = await Company.findById(companyId).populate({
+      path: "reviews",
+      populate: { path: "user" },
+      limit: 5,
+    });
 
     if (!company) {
       return res.status(404).json({ message: "Company not found" });

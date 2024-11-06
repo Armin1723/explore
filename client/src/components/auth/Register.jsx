@@ -99,7 +99,7 @@ const Register = () => {
           loading: false,
           autoClose: 2000,
         });
-        navigate("/auth/login");
+        navigate(`/auth/verify?email=${values.email}`);
       } else {
         const data = await response.json();
         form.setErrors(data.errors);
@@ -169,7 +169,7 @@ const Register = () => {
             width: "100%",
             margin: "0 auto",
           }}
-          className=" py-8 border-2 border-accent"
+          className=" py-8 border-2 border-accent md:max-w-[60vw]"
         >
           <form
             onSubmit={form.onSubmit(handleSubmit)}
@@ -234,7 +234,7 @@ const Register = () => {
               <FileInput
                 label="Profile Photo"
                 placeholder="Upload your profile photo"
-                className="flex-1"
+                className="flex-1 md:max-w-[20vw] max-w-[60vw]"
                 withAsterisk
                 accept="image/*"
                 {...form.getInputProps("profilePhoto")}

@@ -24,7 +24,7 @@ const AdminCompanies = () => {
       const response = await fetch(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/api/admin/companies/export?category=${category}&subCategory=${subCategory}`,
+        }/api/admin/companies/export?category=${category?.toLowerCase()}&subCategory=${subCategory?.toLowerCase()}`,
         {
           credentials: "include",
         }

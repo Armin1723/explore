@@ -2,10 +2,6 @@ import { Avatar, Card, ScrollArea } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../shared/Pagination";
-import { notifications } from "@mantine/notifications";
-import { io } from 'socket.io-client';
-
-const socket = io(import.meta.env.VITE_BACKEND_URL, {withCredentials: true});
 
 const AdminUsers = () => {
   const [refetch, setRefetch] = useState(false);
@@ -31,24 +27,6 @@ const AdminUsers = () => {
       }
     };
     fetchAdminUsers();
-
-    socket.on('newUser', (newUser) => {
-      setResults((prevResults) => {
-        return {
-          ...prevResults,
-          users: [newUser, ...prevResults.users],
-        };
-      });
-      notifications.show({
-        title: 'New User',
-        message: `${newUser.name} has registered`,
-      })
-      setRefetch(prev => !prev);
-    });
-
-    return () => {
-      socket.off('newUser');
-    };
   }, [page, refetch]);
 
   return (
@@ -68,21 +46,34 @@ const AdminUsers = () => {
                 key={index}
               >
                 <div className="flex items-center gap-8">
-                  <Avatar src={user?.profilePic} alt={user?.name} className="border border-black"/>
-                  <p className="capitalize !font-['inter'] sub-heading">{user?.name}</p>
+                  <Avatar
+                    src={user?.profilePic}
+                    alt={user?.name}
+                    className="border border-black"
+                  />
+                  <p className="capitalize !font-['inter'] sub-heading">
+                    {user?.name}
+                  </p>
                 </div>
                 <div className="flex items-center">
-                  <p>Joined: {new Date(user?.createdAt).toLocaleDateString()}</p>
+                  <p>
+                    Joined: {new Date(user?.createdAt).toLocaleDateString()}
+                  </p>
                 </div>
               </Link>
             );
           })
         ) : (
           <div>No users found</div>
-        )}   
+        )}
 
-        {(results?.totalPages > 1 ) && <Pagination totalPages={results.totalPages} page={page} setPage={setPage}/>}
-    
+        {results?.totalPages > 1 && (
+          <Pagination
+            totalPages={results.totalPages}
+            page={page}
+            setPage={setPage}
+          />
+        )}
       </ScrollArea>
     </Card>
   );

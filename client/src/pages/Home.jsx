@@ -14,11 +14,9 @@ import RecentlyReviewed from "../components/home/RecentlyReviewed";
 import { useMantineColorScheme } from "@mantine/core";
 
 const Home = () => {
-  const { colorSceme, toggleColorScheme } = useMantineColorScheme();
+  const { setColorScheme } = useMantineColorScheme();
   useEffect(() => {
-    if (colorSceme === "dark") {
-      toggleColorScheme();
-    }
+    setColorScheme("light");
   }, []);
 
   return (

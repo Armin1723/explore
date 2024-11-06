@@ -4,8 +4,15 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
+import { useMantineColorScheme } from "@mantine/core";
 
 const UserPage = () => {
+
+  const { setColorScheme } = useMantineColorScheme();
+  useEffect(() => {
+    setColorScheme("light");
+  }, []);
+
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {

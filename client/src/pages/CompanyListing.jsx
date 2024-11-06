@@ -1,19 +1,27 @@
 import { notifications } from "@mantine/notifications";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Header } from "../components/shared/Header";
-import { Stepper, Title } from "@mantine/core";
+import { Stepper, Title, useMantineColorScheme } from "@mantine/core";
 import { TiTick } from "react-icons/ti";
 import { FaList } from "react-icons/fa";
 import { MdDescription, MdPhoto } from "react-icons/md";
 import ListingForm from "../components/company/ListingForm";
 import DescriptionForm from "../components/company/DescriptionForm";
 import GalleryForm from "../components/company/GalleryForm";
+import { toggleRedirectFlag } from "../redux/features/redirectFlag/redirectFlagSlice";
 
 const CompanyListing = () => {
+
+  const { setColorScheme } = useMantineColorScheme();
+  useEffect(() => {
+    setColorScheme("light");
+  }, []);
+
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [active, setActive] = useState(0);
   const nextStep = () =>
@@ -28,6 +36,7 @@ const CompanyListing = () => {
         message: "You need to login to perform this action.",
         color: "red",
       });
+      dispatch(toggleRedirectFlag());
       navigate("/auth/login");
     }
     if (user && user.company && user.company.status=='active') {

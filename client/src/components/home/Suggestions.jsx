@@ -5,6 +5,7 @@ const Suggestions = () => {
   const suggestions = [
     {
       title: "All About Fashion",
+      category: "fashion",
       subCategories: [
         {
           image: "mens-fashion",
@@ -18,19 +19,21 @@ const Suggestions = () => {
     },
     {
       title: "Daily Needs",
+      category: "Grocery",
       subCategories: [
         {
           image: "grocery-daily",
-          title: "Grocery",
+          title: "Vegetables",
         },
         {
           image: "home-daily",
-          title: "Home",
+          title: "Fruits",
         },
       ],
     },
     {
       title: "Electronics",
+      category: "electronics",
       subCategories: [
         {
           image: "mobiles",
@@ -44,6 +47,7 @@ const Suggestions = () => {
     },
     {
       title: "Books",
+      category: "books",
       subCategories: [
         {
           image: "fiction-books",
@@ -73,7 +77,7 @@ const Suggestions = () => {
                   {suggestion.subCategories.map((subCategory, index) => {
                     return (
                       <Link
-                        to={`/companies/categories?category=${subCategory.title.toLowerCase()}`}
+                        to={`/companies/categories?category=${suggestion.category}&subCategory=${subCategory.title.toLowerCase()}`}
                         className={`link flex flex-col items-center justify-center gap-4 group/child `}
                         key={index}
                       >

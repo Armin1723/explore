@@ -13,12 +13,15 @@ import { notifications } from "@mantine/notifications";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { toggleRedirectFlag } from "../../redux/features/redirectFlag/redirectFlagSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
+
+  const redirectFlag = useSelector((state) => state.redirectFlag);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -83,7 +86,14 @@ const Login = () => {
           autoClose: 3000,
         });
         dispatch(setUser(data.user));
-        navigate("/");
+
+        // Whether needs to redirect to add company or homepage
+        if (redirectFlag) {
+          dispatch(toggleRedirectFlag());
+          navigate("/companies/add");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       notifications.update({

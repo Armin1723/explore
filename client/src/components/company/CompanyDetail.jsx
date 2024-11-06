@@ -1,6 +1,6 @@
 import { notifications } from "@mantine/notifications";
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Carousel } from "@mantine/carousel";
 import {
   Paper,
@@ -33,6 +33,8 @@ import EnquirySmall from "./EnquirySmall";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import SimilarStores from "./SimilarStores";
 import Bookmark from "./Bookmark";
+import AdminActions from "./AdminActions";
+import { MdDelete } from "react-icons/md";
 
 const CompanyDetail = () => {
   let { name } = useParams();
@@ -43,13 +45,20 @@ const CompanyDetail = () => {
 
   const user = useSelector((state) => state.user);
 
+  const navigate = useNavigate();
+
+  const isSelf = company?.user?._id === user?._id;
+  const isAdmin = user && user?.role === "admin";
+
   const [review, setReview] = React.useState({ rating: 0, comment: "" });
 
   useEffect(() => {
     const fetchCompany = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/company/name/${name}`,
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/company/name/${name}?isAdmin=${isAdmin}`,
           {
             method: "GET",
             headers: {
@@ -71,6 +80,7 @@ const CompanyDetail = () => {
           message: error.message,
           color: "red",
         });
+        navigate("/");
       }
     };
     fetchCompany();
@@ -83,9 +93,6 @@ const CompanyDetail = () => {
       </div>
     );
 
-  const isSelf = company?.user?._id === user?._id;
-  const isAdmin = user?.role === "admin";
-
   const addReview = async () => {
     try {
       const response = await fetch(
@@ -95,7 +102,7 @@ const CompanyDetail = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ review, companyName: company.name }),
+          body: JSON.stringify({ review, companyName: company?.name }),
           credentials: "include",
         }
       );
@@ -109,7 +116,7 @@ const CompanyDetail = () => {
         message: data.message,
         color: "teal",
       });
-      setCompany(data.company);
+      setCompany(JSON.parse(JSON.stringify(data.company)));
     } catch (error) {
       notifications.show({
         title: "Error",
@@ -152,8 +159,35 @@ const CompanyDetail = () => {
     }
   };
 
+  const deleteReview = async (reviewId) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/reviews/${reviewId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("An error occurred while deleting review");
+      }
+      const data = await response.json();
+      notifications.show({
+        title: "Review Deleted",
+        message: "Review has been successfully deleted",
+      });
+      window.location.reload(); 
+    } catch (error) {
+      notifications.show({
+        title: "Error",
+        message: error.message,
+        color: "red",
+      });
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 w-full items-center px-4 my-8 p-6">
+    <div className="flex flex-col flex-1 w-full items-center px-4 p-6">
       <div className="carousel-container relative">
         <Carousel
           slideSize={{ base: "100%", sm: "50%", md: "50%" }}
@@ -168,7 +202,7 @@ const CompanyDetail = () => {
             <img
               key={index}
               src={image.url}
-              alt={company.name}
+              alt={company?.name}
               className="object-cover aspect-video h-96 max-sm:h-60 border border-gray"
             />
           ))}
@@ -203,10 +237,10 @@ const CompanyDetail = () => {
               Pending
             </Badge>
           )}
-          {company?.status !== "pending" && isSelf && (
-            <Badge color="green.9">{company?.status}</Badge>
+          <Bookmark companyId={company._id} />
+          {isAdmin && (
+            <AdminActions company={company} setCompany={setCompany} />
           )}
-          <Bookmark companyId={company._id}/>
         </div>
 
         <div
@@ -307,8 +341,8 @@ const CompanyDetail = () => {
             <Button
               onClick={() => {
                 navigator.share({
-                  title: company.name,
-                  text: `Check out ${company.name}`,
+                  title: company?.name,
+                  text: `Check out ${company?.name}`,
                   url: window.location.href,
                 });
               }}
@@ -363,7 +397,7 @@ const CompanyDetail = () => {
                       setReview({ ...review, comment: e.target.value })
                     }
                   ></Textarea>
-                  <Button variant="filled" color="blue" onClick={addReview}>
+                  <Button variant="filled" color="blue" disabled={!review?.comment} onClick={addReview}>
                     Submit Review
                   </Button>
                 </Group>
@@ -391,10 +425,10 @@ const CompanyDetail = () => {
                 <Group>
                   <Avatar
                     src={review?.user?.profilePic}
-                    alt={review.user.name}
+                    alt={review?.user?.name}
                   />
                   <div>
-                    <Title order={5}>{review.user.name}</Title>
+                    <Title order={5}>{review?.user?.name}</Title>
                     <Rating value={review.rating} readOnly size="sm" />
                   </div>
                   <span className="text-sm ">
@@ -415,6 +449,12 @@ const CompanyDetail = () => {
                     >
                       Flag Review
                     </Menu.Item>
+                    {isAdmin && <Menu.Item
+                      onClick={() => deleteReview(review._id)}
+                      leftSection={<MdDelete />}
+                    >
+                      Delete Review
+                    </Menu.Item>}
                   </Menu.Dropdown>
                 </Menu>
               </Group>
