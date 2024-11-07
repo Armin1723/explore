@@ -13,12 +13,15 @@ import Suggestions from "../components/home/Suggestions";
 import RecentlyReviewed from "../components/home/RecentlyReviewed";
 
 import { useMantineColorScheme } from "@mantine/core";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const { setColorScheme } = useMantineColorScheme();
   useEffect(() => {
     setColorScheme("light");
   }, []);
+
+  const user = useSelector((state) => state.user);
 
   return (
     <div
@@ -41,7 +44,7 @@ const Home = () => {
 
         <PopularStores />
 
-        <RecentlyReviewed />
+        {user && user?.name && <RecentlyReviewed />}
 
         <Testimonials />
 

@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaUser } from "react-icons/fa";
-import { MdBusiness, MdLogout } from "react-icons/md";
+import { MdAddBusiness, MdBusiness, MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./UserProfile.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -97,6 +97,22 @@ const UserProfile = () => {
       </Menu.Target>
 
       <Menu.Dropdown>
+
+      {user && user?.role == 'admin' && (
+          <Link to="/admin">
+            <Menu.Item
+              leftSection={
+                <MdAddBusiness
+                  style={{ width: rem(16), height: rem(16) }}
+                  color={theme.colors.yellow[6]}
+                />
+              }
+            >
+              Admin Panel
+            </Menu.Item>
+          </Link>
+        )}
+        
         <Link to={`/companies/${ user && user.company && user.company.name && user?.company?.name.split(' ').join('-') }`}>
           <Menu.Item
           disabled={!user?.company || !user?.company?.status=='incomplete'}

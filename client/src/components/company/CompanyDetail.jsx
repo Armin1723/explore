@@ -1,6 +1,11 @@
 import { notifications } from "@mantine/notifications";
 import React, { Suspense, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { Carousel } from "@mantine/carousel";
 import {
   Avatar,
@@ -10,6 +15,7 @@ import {
   Textarea,
   ScrollArea,
   Indicator,
+  Modal,
 } from "@mantine/core";
 
 import {
@@ -31,6 +37,8 @@ import SimilarStores from "./SimilarStores";
 import Bookmark from "./Bookmark";
 import AdminActions from "./AdminActions";
 import CompanyReviews from "./CompanyReviews";
+import { useDisclosure } from "@mantine/hooks";
+import AuthModal from "../shared/AuthModal";
 
 const CompanyDetail = () => {
   let { name } = useParams();
@@ -42,12 +50,17 @@ const CompanyDetail = () => {
 
   const navigate = useNavigate();
 
-  const isSelf = company?.admin?._id === user?._id;
+  const isSelf = company?.admin?._id === user?._id || false;
   const isAdmin = user && user?.role === "admin";
 
   const [review, setReview] = React.useState({ rating: 0, comment: "" });
 
   const [tabState, setTabState] = useState("contact");
+
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const [searchParams] = useSearchParams();
+  const reviewId = searchParams.get("reviewId");
 
   // UseEffect to handle scroll tracking
   useEffect(() => {
@@ -111,6 +124,37 @@ const CompanyDetail = () => {
       }
     };
     fetchCompany();
+
+    //fetch review in case of redirect
+    if (reviewId) {
+      const fetchReview = async () => {
+        // try {
+        //   const response = await fetch(
+        //     `${
+        //       import.meta.env.VITE_BACKEND_URL
+        //     }/api/company/review/${reviewId}`,
+        //     {
+        //       method: "GET",
+        //       credentials: "include",
+        //     }
+        //   );
+        //   if (!response.ok) {
+        //     const data = await response.json();
+        //     throw new Error(data.message);
+        //   }
+        //   const data = await response.json();
+        //   setCompany((prev) => {
+        //     return {
+        //       ...prev,
+        //       reviews: [data.review],
+        //     };
+        //   });
+        // } catch (error) {
+        //   console.log(error.message);
+        // }
+      };
+      fetchReview();
+    }
   }, [name]);
 
   if (!company)
@@ -135,7 +179,13 @@ const CompanyDetail = () => {
       );
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message);
+        if (response.status == 401) {
+          open();
+          throw new Error("Kindly Login");
+        } else {
+          setReview({ rating: 0, comment: "" });
+          throw new Error(data.message);
+        }
       }
       const data = await response.json();
       notifications.show({
@@ -151,7 +201,6 @@ const CompanyDetail = () => {
         message: error.message,
         color: "red",
       });
-      setReview({ rating: 0, comment: "" });
     }
   };
 
@@ -175,7 +224,10 @@ const CompanyDetail = () => {
                 }
               >
                 <img
-                  src={image?.url.replace("/upload/", "/upload/w_1080/h_720/c_fill/")}
+                  src={image?.url.replace(
+                    "/upload/",
+                    "/upload/w_1080/h_720/c_fill/"
+                  )}
                   alt={company?.name}
                   className="object-cover aspect-video w-full border border-gray"
                 />
@@ -217,7 +269,7 @@ const CompanyDetail = () => {
           {isAdmin && (
             <AdminActions company={company} setCompany={setCompany} />
           )}
-          {isSelf && (
+          {user && user?.name && isSelf && (
             <Indicator
               inline
               color="red.9"
@@ -465,6 +517,11 @@ const CompanyDetail = () => {
           <SimilarStores />
         </div>
       </div>
+
+      {/* Auth Modal */}
+      <Modal opened={opened} onClose={close} size="auto" centered>
+        <AuthModal close={close} />
+      </Modal>
     </div>
   );
 };

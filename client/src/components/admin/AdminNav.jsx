@@ -24,14 +24,13 @@ const AdminNav = () => {
           : "bg-white text-black"
       } flex flex-col justify-between items-start sticky top-0 px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60 `}
     >
-      <div className="nav-top flex gap-4 justify-start items-center ">
-        <Link to="/admin">
+
+        <Link to="/" className="nav-top flex gap-4 justify-start items-center mt-2">
           <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
             <IoIosTrendingUp className="text-2xl font-bold text-white" />
           </div>
+          <p className="text-xl font-extralight max-lg:text-sm">Explore</p>
         </Link>
-        <p className="text-xl font-extralight max-lg:text-sm">Explore</p>
-      </div>
 
       <div className="nav-links py-12 flex-col flex-1 items-start w-full">
         <NavLink
@@ -71,7 +70,10 @@ const AdminNav = () => {
                   key={category?.name}
                   href={`/admin/companies/${category?.name}`}
                   active={location.pathname.includes(category?.name)}
-                  label={category?.name.charAt(0).toUpperCase() + category?.name.slice(1)}
+                  label={
+                    category?.name.charAt(0).toUpperCase() +
+                    category?.name.slice(1)
+                  }
                   childrenOffset={14}
                 />
               );

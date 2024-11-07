@@ -75,7 +75,7 @@ const AdminReviews = () => {
                   <Link
                     to={`/companies/${review.company.name
                       .split(" ")
-                      .join("-")}?reviewId:${review._id}`}
+                      .join("-")}?reviewId=${review._id}`}
                   >
                     <span className="font-semibold">Review:</span>{" "}
                     {review.comment.split(" ").slice(0, 10).join(" ")}

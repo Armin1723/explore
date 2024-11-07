@@ -10,12 +10,12 @@ import {
 import { useSelector } from "react-redux";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import ThemeToggle from "../components/shared/ThemeToggle";
-import LogoutButton from "../components/admin/LogoutAdmin";
 import { RecentListing } from "../components/admin/RecentListing";
 import AdminCards from "../components/admin/AdminCards";
 import { useDisclosure } from "@mantine/hooks";
 import AdminNavSmall from "../components/admin/AdminNavSmall";
+import UserProfile from "../components/shared/UserProfile";
+import ThemeToggle from "../components/shared/ThemeToggle";
 
 const AdminHomepage = ({ refetch, setRefetch }) => {
   const { colorScheme } = useMantineColorScheme({
@@ -71,7 +71,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
               </div>
               <div className="flex gap-2">
                 <ThemeToggle />
-                <LogoutButton />
+                <UserProfile />
               </div>
             </div>
             <div className="ribbon-left flex gap-2 items-center">

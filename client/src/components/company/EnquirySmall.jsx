@@ -1,9 +1,11 @@
-import { Button, Textarea } from "@mantine/core";
+import { Button, Modal, Textarea } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import React, { useState } from "react";
 import { setUser } from "../../redux/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
+import AuthModal from "../shared/AuthModal";
 
 const EnquirySmall = () => {
   const dispatch = useDispatch();
@@ -12,6 +14,8 @@ const EnquirySmall = () => {
   const [error, setError] = useState(null);
   const [enquiry, setEnquiry] = useState("");
 
+  const [opened, {open, close}] = useDisclosure();
+ 
   const companyName = useParams().name;
 
   const sendEnquiry = async () => {
@@ -44,6 +48,18 @@ const EnquirySmall = () => {
       );
       if (!response.ok) {
         const data = await response.json();
+        if(response.status === 401) {
+          notifications.update({
+            id,
+            title: "Unauthorized",
+            message: data.message,
+            color: "red",
+            loading: false,
+            autoClose: 2000,
+          });
+          open();
+          return;
+        }
         throw new Error(data.message);
       }
       const data = await response.json();
@@ -80,9 +96,15 @@ const EnquirySmall = () => {
           className={`${error && 'border-red-500 text-red-500'} w-full`}
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <Button color="blue.9" disabled={!enquiry} fullWidth onClick={sendEnquiry}>
+        <Button color="primary.3" disabled={!enquiry} fullWidth onClick={sendEnquiry}>
           Send Enquiry
         </Button>
+
+        {/* Auth Modal */}
+        <Modal opened={opened} onClose={close} centered size="auto">
+          <AuthModal close={close} />
+        </Modal>
+
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ const {
   flagReview,
   getTrendingCompanies,
   getSimilarCompanies,
+  getReview,
 } = require("../controllers/companyController");
 const router = require("express").Router();
 const multer = require("multer");
@@ -52,6 +53,7 @@ const companyRoutes = (io) => {
   router.post("/review/add", isLoggedIn, addReview);
   router.post("/review/all", isLoggedIn, getReviews);
   router.get("/review/flag/:reviewId", isLoggedIn, flagReview);
+  router.get('/review/:id', getReview);
 
   return router;
 };

@@ -665,6 +665,23 @@ const getReviews = async (req, res) => {
   }
 };
 
+//Fetch a single review by id
+const getReview = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const review = await Review.findById(id).populate("user", "name profilePic");
+    if (!review) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Review not found" });
+    }
+    res.status(200).json({ success: true, review });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 //Flag review
 const flagReview = async (req, res) => {
   try {
@@ -712,5 +729,6 @@ module.exports = {
   getSimilarCompanies,
   addReview,
   getReviews,
+  getReview,
   flagReview,
 };
