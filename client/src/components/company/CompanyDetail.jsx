@@ -1,5 +1,5 @@
 import { notifications } from "@mantine/notifications";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Carousel } from "@mantine/carousel";
 import {
@@ -35,7 +35,6 @@ import CompanyReviews from "./CompanyReviews";
 const CompanyDetail = () => {
   let { name } = useParams();
   const [company, setCompany] = React.useState(null);
-  const [tabState, setTabState] = React.useState("contact");
 
   const [embla, setEmbla] = React.useState(null);
 
@@ -47,6 +46,38 @@ const CompanyDetail = () => {
   const isAdmin = user && user?.role === "admin";
 
   const [review, setReview] = React.useState({ rating: 0, comment: "" });
+
+  const [tabState, setTabState] = useState("contact");
+
+  // UseEffect to handle scroll tracking
+  useEffect(() => {
+    const sections = ["contact", "description", "reviews", "similars"];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTabState(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => {
+      sections.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) observer.unobserve(element);
+      });
+    };
+  }, []);
 
   useEffect(() => {
     const fetchCompany = async () => {
@@ -113,34 +144,43 @@ const CompanyDetail = () => {
         color: "teal",
       });
       setCompany(JSON.parse(JSON.stringify(data.company)));
+      setReview({ rating: 0, comment: "" });
     } catch (error) {
       notifications.show({
         title: "Error",
         message: error.message,
         color: "red",
       });
+      setReview({ rating: 0, comment: "" });
     }
   };
 
   return (
     <div className="flex flex-col flex-1 w-full items-center px-4 p-6">
-      <div className="carousel-container relative">
+      <div className="carousel-container relative w-full" id="contact">
         <Carousel
-          slideSize={{ base: "100%", sm: "50%", md: "50%" }}
-          slideGap={{ base: "lg", sm: "md" }}
+          slideSize={{ base: "100%", sm: "100%", md: "50%", lg: "50%" }}
+          slideGap={0}
           align="start"
           withControls={false}
           getEmblaApi={setEmbla}
           loop
-          className="w-full !rounded-lg"
+          className=""
         >
           {company.gallery.map((image, index) => (
-            <img
-              key={index}
-              src={image?.url}
-              alt={company?.name}
-              className="object-cover aspect-video h-96 max-sm:h-60 border border-gray"
-            />
+            <Carousel.Slide key={index}>
+              <Suspense
+                fallback={
+                  <div className="object-cover aspect-video w-full border bg-gray-600 animate-pulse"></div>
+                }
+              >
+                <img
+                  src={image?.url.replace("/upload/", "/upload/w_1080/h_720/c_fill/")}
+                  alt={company?.name}
+                  className="object-cover aspect-video w-full border border-gray"
+                />
+              </Suspense>
+            </Carousel.Slide>
           ))}
         </Carousel>
         <div className="absolute controls flex justify-between w-full top-1/2 left-0 -translate-y-1/2">
@@ -159,8 +199,8 @@ const CompanyDetail = () => {
         </div>
       </div>
 
-      <div className="company-detail-container flex flex-col w-full px-12 max-lg:px-8 max-sm:px-4">
-        <div className="title flex gap-4 items-center justify-start mt-6">
+      <div className="company-detail-container flex flex-col w-full px-12 max-lg:px-8 max-sm:px-2">
+        <div className="title flex flex-wrap gap-4 items-center justify-start mt-6">
           <Avatar
             src={company?.logo.url}
             alt={company?.name}
@@ -206,7 +246,7 @@ const CompanyDetail = () => {
           className="ratings flex flex-col items-start gap-2 my-4"
         >
           <div className="flex items-center gap-2">
-            <Rating value={company?.rating}fractions={4} readOnly size="lg" />
+            <Rating value={company?.rating} fractions={4} readOnly size="lg" />
             <div
               className="px-4 py-1 rounded-lg flex items-center font-semibold text-sm gap-1"
               style={{
@@ -241,14 +281,14 @@ const CompanyDetail = () => {
           </div>
         </div>
 
-        <div className="tabs w-full max-sm:text-xs flex">
-          {["contact", "address", "description", "reviews"].map((item, idx) => {
-            return (
+        <div className="tabs w-full max-sm:text-xs flex ">
+          {["contact", "description", "reviews", "similars"].map(
+            (item, idx) => (
               <div
                 key={idx}
-                className={`px-4 my-2 py-2 cursor-pointer rounded-lg ${
+                className={`px-4 my-2 py-1 cursor-pointer rounded-lg ${
                   item === tabState &&
-                  "border-b-2 border-blue-500 font-semibold"
+                  "border-b-4 border border-primary-500/20 border-b-primary font-semibold"
                 }`}
                 onClick={() => {
                   document.getElementById(item).scrollIntoView({
@@ -259,8 +299,8 @@ const CompanyDetail = () => {
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </div>
-            );
-          })}
+            )
+          )}
         </div>
 
         <div
@@ -352,9 +392,9 @@ const CompanyDetail = () => {
         </div>
 
         <div className="variable flex max-sm:flex-col justify-between w-full gap-2">
-          <div className="left flex flex-col w-2/3 max-sm:w-full border rounded-lg p-4">
+          <div className="left flex flex-col w-2/3 max-sm:w-full border rounded-lg p-4 max-sm:p-2">
             <ScrollArea h={800} className="w-full">
-              <div id="description">
+              <div id="description" className="">
                 <div className="heading !my-4 pl-8 max-sm:pl-4 border-l-4 border-primary">
                   Description
                 </div>
@@ -397,15 +437,31 @@ const CompanyDetail = () => {
             </ScrollArea>
           </div>
 
-          <div className="right w-1/3 flex flex-col max-lg:w-[90%] max-sm:w-full px-4 gap-4">
+          <div className="right w-1/3 flex flex-col max-lg:w-[90%] max-sm:w-full px-4 max-sm:px-0 gap-4">
             <AdvertisementCard />
-            {isSelf ? <Link to="enquiries" className="w-full flex flex-col items-start gap-4 justify-center min-h-[10vh] rounded-md border p-4 "><p className="sub-heading !my-0">View Your Enquiries.</p><Button fullwidth mx='' color="primary.1">View Enquiries</Button></Link> : <EnquirySmall />}
+            {isSelf ? (
+              <Link
+                to="enquiries"
+                className="w-full flex flex-col items-start gap-4 justify-center min-h-[10vh] rounded-md border p-4 relative"
+              >
+                <p className="sub-heading !my-0">View Your Enquiries.</p>
+                <Button fullwidth mx="" color="primary.1">
+                  View Enquiries
+                </Button>
+              </Link>
+            ) : (
+              <EnquirySmall />
+            )}
           </div>
         </div>
 
-        <CompanyReviews company={company} setCompany={setCompany} isAdmin={isAdmin}/>
+        <CompanyReviews
+          company={company}
+          setCompany={setCompany}
+          isAdmin={isAdmin}
+        />
 
-        <div className="similar">
+        <div className="similar" id="similars">
           <SimilarStores />
         </div>
       </div>

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-import { PayPalButtons } from "@paypal/react-paypal-js";
 
 const AdvertiseForm = () => {
   const user = useSelector((state) => state.user);
@@ -182,22 +181,6 @@ const AdvertiseForm = () => {
                 />
               )}
             </div>
-
-            <PayPalButtons
-            //   createOrder={handleCreateOrder}
-            //   onApprove={handleApprove}
-            createOrder={(data, actions) => {
-                return actions.order.create({
-                  purchase_units: [{ amount: { value: "1.00" } }],
-                });
-              }}
-              onApprove={(data, actions) => {
-                return actions.order.capture().then((details) => {
-                  alert("Transaction completed by " + details.payer.name.given_name);
-                });
-              }}
-              style={{ layout: "vertical" }}
-            />
 
             <Button
               type="submit"

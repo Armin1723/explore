@@ -97,7 +97,10 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
         title: "Review Deleted",
         message: "Review has been successfully deleted",
       });
-      window.location.reload();
+      setCompany((prev) => ({
+        ...prev,
+        reviews: prev.reviews.filter((review) => review._id !== reviewId),
+      }));
     } catch (error) {
       notifications.show({
         title: "Error",
@@ -128,7 +131,7 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
                 <Title order={5}>{review?.user?.name}</Title>
                 <Rating value={review?.rating} readOnly size="sm" />
               </div>
-              <span className="text-sm ">
+              <span className="text-sm max-sm:text-xs">
                 {new Date(review?.createdAt).toLocaleDateString()}
               </span>
             </Group>
@@ -157,7 +160,7 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
               </Menu.Dropdown>
             </Menu>
           </Group>
-          <p className="mt-2">{review?.comment}</p>
+          <p className="mt-2 max-sm:text-xs">{review?.comment}</p>
         </Paper>
       ))}
 

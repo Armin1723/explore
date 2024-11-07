@@ -7,7 +7,6 @@ import "@mantine/tiptap/styles.css";
 
 import App from "./App";
 import { useSelector } from "react-redux";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { FaArrowUp } from "react-icons/fa";
 import { useWindowScroll } from "@mantine/hooks";
 
@@ -16,12 +15,6 @@ const Wrapper = () => {
   const theme = useSelector((state) => state.theme);
 
   const [scroll, scrollTo] = useWindowScroll();
-
-  const initialOptions = {
-    "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
-    currency: "USD",
-    intent: "capture",
-  };
 
   return (
     <MantineProvider
@@ -83,7 +76,6 @@ const Wrapper = () => {
         primaryColor: "accent",
       }}
     >
-      <PayPalScriptProvider options={initialOptions}>
         <Notifications />
         <Affix position={{ bottom: 20, right: 20 }}>
           <Transition transition="slide-up" mounted={scroll.y > 0}>
@@ -102,7 +94,6 @@ const Wrapper = () => {
           </Transition>
         </Affix>
         <App />
-      </PayPalScriptProvider>
     </MantineProvider>
   );
 };

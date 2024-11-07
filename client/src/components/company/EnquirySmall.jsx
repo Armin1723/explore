@@ -69,7 +69,7 @@ const EnquirySmall = () => {
     }
   };
   return (
-    <div className="w-full rounded-lg border flex flex-col items-center p-4">
+    <div className="w-full rounded-lg border flex flex-col items-center p-4 ">
       <div className="form flex flex-col w-full gap-4">
         <p className="heading !my-2">Send Enquiry</p>
         <Textarea
