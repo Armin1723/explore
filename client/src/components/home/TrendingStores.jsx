@@ -4,79 +4,94 @@ import React, { useEffect, useState } from "react";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 import { MdArrowRightAlt } from "react-icons/md";
 import { Link } from "react-router-dom";
+import striptags from "striptags";
 
-const RecentlyReviewed = () => {
+const TrendingStores = () => {
   const [embla, setEmbla] = useState(null);
-  const autoplayInterval = useInterval(() => embla && embla.scrollNext(), 3000);
   const [activeSlide, setActiveSlide] = useState(0);
 
-  useEffect(() => {
-    autoplayInterval.start();
-    return autoplayInterval.stop;
-  }, [embla]);
-
-  const stores = [
+  const storeData = [
     {
       name: "Store 1",
-      image: "https://picsum.photos/200/300?random=1",
+      gallery: [{ url: "https://picsum.photos/200/300?random=1" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 2",
-      image: "https://picsum.photos/200/300?random=2",
+      gallery: [{ url: "https://picsum.photos/200/300?random=2" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 3",
-      image: "https://picsum.photos/200/300?random=3",
+      gallery: [{ url: "https://picsum.photos/200/300?random=3" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 4",
-      image: "https://picsum.photos/200/300?random=4",
+      gallery: [{ url: "https://picsum.photos/200/300?random=4" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 5",
-      image: "https://picsum.photos/200/300?random=5",
+      gallery: [{ url: "https://picsum.photos/200/300?random=5" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 6",
-      image: "https://picsum.photos/200/300?random=6",
+      gallery: [{ url: "https://picsum.photos/200/300?random=6" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 7",
-      image: "https://picsum.photos/200/300?random=7",
+      gallery: [{ url: "https://picsum.photos/200/300?random=7" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 8",
-      image: "https://picsum.photos/200/300?random=8",
+      gallery: [{ url: "https://picsum.photos/200/300?random=8" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 9",
-      image: "https://picsum.photos/200/300?random=9",
+      gallery: [{ url: "https://picsum.photos/200/300?random=9" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
       name: "Store 10",
-      image: "https://picsum.photos/200/300?random=10",
+      gallery: [{ url: "https://picsum.photos/200/300?random=10" }],
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
   ];
+
+  const [stores, setStores] = useState(storeData);
+
+  useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/company/trending`
+        );
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+        setStores(data.companies);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    fetchStores();
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -87,7 +102,7 @@ const RecentlyReviewed = () => {
           <Carousel
             slideSize={{ base: "50%", sm: "50%", md: "20%" }}
             slideGap={{ base: "xl", sm: "xl", md: "xl" }}
-            onSlideChange={(index) => setActiveSlide(index+1)}
+            onSlideChange={(index) => setActiveSlide(index + 1)}
             loop
             getEmblaApi={setEmbla}
             withControls={false}
@@ -104,9 +119,12 @@ const RecentlyReviewed = () => {
                     className="flex flex-col p-2 h-full rounded-xl group bg-[#d9d9d9] hover:bg-primary hover:text-white transition-all duration-200 border border-black hover:border-accent hover:shadow-[0_0_30px_orange] shadow-accent/70"
                   >
                     <div className="image-container w-full aspect-[4/3] overflow-hidden rounded-lg p-3 max-lg:p-1 flex items-center justify-center">
-                      {store.image ? (
+                      {store.gallery ? (
                         <img
-                          src={store.image}
+                          src={store?.gallery[0]?.url.replace(
+                            "/upload/",
+                            "/upload/w_300,h_200,c_fill/"
+                          )}
                           alt="store"
                           className="w-full aspect-[4/3] object-cover rounded-lg group-hover:scale-105 border border-black/70 transition-all duration-300"
                         />
@@ -129,7 +147,10 @@ const RecentlyReviewed = () => {
                         </div>
                       </div>
                       <p className="italic text-xs max-sm:text-[0.70rem]">
-                        {store.description.split(" ").slice(0, 10).join(" ")}
+                        {striptags(store?.description)
+                          .split(" ")
+                          .slice(0, 10)
+                          .join(" ")}
                       </p>
                     </div>
                   </Link>
@@ -149,7 +170,8 @@ const RecentlyReviewed = () => {
             </button>
             <button
               className={`p-2 rounded-s-lg bg-white/40 ${
-                activeSlide === stores.length - 1 && "invisible"
+                (activeSlide === stores.length - 1 || stores.length < 5) &&
+                "invisible"
               }`}
               onClick={() => embla && embla.scrollNext()}
               disabled={activeSlide >= stores.length - 1}
@@ -163,4 +185,4 @@ const RecentlyReviewed = () => {
   );
 };
 
-export default RecentlyReviewed;
+export default TrendingStores;

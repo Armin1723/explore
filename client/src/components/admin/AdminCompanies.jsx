@@ -69,9 +69,9 @@ const AdminCompanies = () => {
   return (
     <Card className="flex flex-col flex-1" withBorder>
       <ScrollArea h={400} className="w-full">
-        <div className="heading w-full border-l-8 border-teal-300 my-4 flex justify-between flex-wrap gap-2">
+        <div className="w-full my-4 flex justify-between items-center flex-wrap gap-2">
           <div className="flex items-center gap-2 w-full pl-6 text-xl tracking-wide">
-            <p>Companies</p>
+            <p className="heading !my-0 border-l-4 pl-6 border-primary">Companies</p>
             <Select
               data={['All', ...Object.values(categories).map((cat) => cat.name)]}
               value={category}
@@ -79,7 +79,7 @@ const AdminCompanies = () => {
               onChange={(value) => {setCategory(value); setSubCategory('all'); navigate(`/admin/companies/${value}`)}}
             />
              </div>
-          <div className="actions flex gap-2 pl-4">
+          <div className="actions flex gap-2 pl-8">
             <SubCategoryMenu
               subCategory={subCategory}
               setSubCategory={setSubCategory}

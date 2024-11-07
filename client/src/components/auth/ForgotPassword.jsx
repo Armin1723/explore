@@ -123,7 +123,7 @@ const ForgotPassword = () => {
                 </div>
               </Center>
             </Link>
-            <Button className={classes.control} onClick={handlePasswordReset}>
+            <Button className={classes.control} color="primary.3" onClick={handlePasswordReset}>
               Reset password
             </Button>
           </Group>

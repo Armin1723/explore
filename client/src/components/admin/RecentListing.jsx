@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { io } from "socket.io-client";
 import { notifications } from "@mantine/notifications";
+import striptags from "striptags";
 
 const socket = io(import.meta.env.VITE_BACKEND_URL, {withCredentials: true});
 
@@ -153,8 +154,8 @@ export const RecentListing = ({ refetch, setRefetch }) => {
         <Text fz="sm" c="dimmed" mt="sm" className="flex-1">
           {listing ? (
             <div
-              dangerouslySetInnerHTML={{ __html: listing.description }}
-            ></div>
+             
+            >{striptags(listing?.description).split(' ').slice(0,40).join(' ')}</div>
           ) : (
             <>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
@@ -168,10 +169,10 @@ export const RecentListing = ({ refetch, setRefetch }) => {
           ...
         </Text>
 
-        <Group justify="space-around" mt="lg">
+        <div className="flex justify-center gap-4">
           <Button
             size="sm"
-            color="green.7"
+            color="primary.4"
             radius="md"
             onClick={() => handleRequest("approve")}
           >
@@ -179,14 +180,14 @@ export const RecentListing = ({ refetch, setRefetch }) => {
           </Button>
           <Button
             size="sm"
-            color="red"
+            color="red.9"
             radius="md"
             onClick={() => handleRequest("reject")}
           >
             <RxCross1 size={18} className="font-bold" />{" "}
             <p className=" pl-2">Reject</p>
           </Button>
-        </Group>
+        </div>
       </Card>
     </ScrollAreaAutosize>
   );

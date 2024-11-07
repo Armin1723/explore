@@ -126,10 +126,11 @@ return (
                 <Dropzone.Accept>
                     <FaUpload
                         style={{
-                            width: rem(52),
+                            // width: rem(52),
                             height: rem(52),
                             color: "var(--mantine-color-blue-6)",
                             alignSelf: "center",
+                            width: '100%'
                         }}
                         stroke={1.5}
                     />
@@ -137,7 +138,7 @@ return (
                 <Dropzone.Reject>
                     <FaCross
                         style={{
-                            width: rem(52),
+                            // width: rem(52),
                             height: rem(52),
                             color: "var(--mantine-color-red-6)",
                             alignSelf: "center",
@@ -149,7 +150,7 @@ return (
                 <Dropzone.Idle>
                     <MdPhoto
                         style={{
-                            width: rem(52),
+                            // width: rem(52),
                             height: rem(52),
                             color: "var(--mantine-color-dimmed)",
                             alignSelf: "center",
@@ -194,7 +195,7 @@ return (
                 </Carousel>
             )}
 
-            <Button type="submit" color="blue" fullWidth disabled={files.length === 0}>
+            <Button type="submit" color="primary.3" fullWidth disabled={files.length === 0}>
                 Finish
             </Button>
         </form>

@@ -40,6 +40,7 @@ const AdvertiseForm = React.lazy(() =>import("./components/company/AdvertiseForm
 const EnquiryForm = React.lazy(() =>
   import("./components/company/EnquiryForm")
 );
+const EnquiryPage = React.lazy(() => import("./components/company/EnquiryPage"));
 
 const AboutUs = React.lazy(() => import("./pages/AboutUs"));
 
@@ -68,6 +69,7 @@ const App = () => {
             <Route path="add" element={<CompanyListing />} />
             <Route path="advertise" element={<AdvertiseForm />} />
             <Route path=":name/enquiries/add" element={<EnquiryForm />} />
+            <Route path=":name/enquiries" element={<EnquiryPage />} />
           </Route>
 
           <Route path="/auth" element={<AuthPage />}>

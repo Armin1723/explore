@@ -287,8 +287,18 @@ const deleteReview = async (req, res) => {
     company.reviews = company.reviews.filter(
       (id) => id.toString() !== reviewId
     );
+    
+    
+    // Calculate new rating
+    if (company.reviews.length > 0) {
+      company.rating =
+      (company.rating * (company.reviews.length + 1) - review.rating) /
+      company.reviews.length;
+    } else {
+      company.rating = 0;
+    }
+    
     await company.save();
-
     await review.deleteOne();
 
     res.status(200).json({ message: "Review deleted successfully" });

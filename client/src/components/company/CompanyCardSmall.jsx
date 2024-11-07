@@ -16,7 +16,10 @@ const CompanyCardSmall = ({ company, self = false }) => {
       <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
         <img
           src={
-            (company.gallery && company?.gallery[0]?.url) ||
+            (company.gallery && company?.gallery[0]?.url.replace(
+                        "/upload/",
+                        "/upload/w_300,h_200,c_fill/"
+                      )) ||
             "/utility/placeholder-card.png"
           }
           alt={company && company?.name}
@@ -45,20 +48,23 @@ const CompanyCardSmall = ({ company, self = false }) => {
         </div>
         <div className="ratings flex gap-2 items-center ">
           <p
-            className="rating py-1 px-2 rounded-md text-white font-bold border  flex items-center gap-1"
+            className="rating py-1 px-2 rounded-md text-white font-semibold text-xs border  flex items-center gap-1"
             style={{
               backgroundColor:
-                company?.rating >= 4
+                company.rating >= 4
                   ? "green"
-                  : company?.rating >= 2
-                  ? "yellow"
+                  : company.rating >= 3.5
+                  ? "yellowgreen"
+                  : company.rating >= 2.5
+                  ? "orange"
                   : "red",
+              color: "aliceblue",
             }}
           >
             {company?.rating == 0
               ? company?.rating
               : company?.rating.toFixed(1)}
-            <FaStar />
+            <FaStar size={12}/>
           </p>
           <p className="text-xs text-gray-500">
             {company?.reviews.length}{" "}
@@ -98,7 +104,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
             <Link
               to={`/companies/${company?.name.split(" ").join("-")}/enquiries/`}
             >
-              <Button color="primary.6">
+              <Button color="primary.3">
                 <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries
               </Button>
             </Link>

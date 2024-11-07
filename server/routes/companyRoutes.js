@@ -8,6 +8,8 @@ const {
   addReview,
   getReviews,
   flagReview,
+  getTrendingCompanies,
+  getSimilarCompanies,
 } = require("../controllers/companyController");
 const router = require("express").Router();
 const multer = require("multer");
@@ -37,13 +39,14 @@ const companyRoutes = (io) => {
   //Search and fetch routes
   router.get("/name/:name", getCompanyDetails);
   router.get('/', getCompanies);
-  // router.get("/category/:category", isLoggedIn, getCompanies);
   router.get(
     "/subcategory/:subCategory",
     isLoggedIn,
     getCompaniesBySubCategory
   );
   router.get("/search", searchCompanies);
+  router.get("/trending", getTrendingCompanies);
+  router.get("/similar", getSimilarCompanies);
 
   //Review routes
   router.post("/review/add", isLoggedIn, addReview);

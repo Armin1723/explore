@@ -123,7 +123,7 @@ const Categories = () => {
                 <CompanyCardSmall company={company} key={index} />
               ))
             ) : loading ? (
-              <div className="w-full min-h-screen rounded-xl border p-2 boder-black/70 flex items-center justify-center">
+              <div className="w-full min-h-[50vh] rounded-xl border p-2 boder-black/70 flex items-center justify-center">
                 <div className="loader"></div>
               </div>
             ) : (

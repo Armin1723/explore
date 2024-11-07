@@ -249,6 +249,7 @@ const Register = () => {
               <Button
                 fullWidth
                 type="submit"
+                color="primary.3"
                 disabled={Object.keys(form.errors).length > 0}
               >
                 Register

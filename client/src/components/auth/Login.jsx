@@ -192,7 +192,7 @@ const Login = () => {
               </Link>
             </Group>
 
-            <Button type="submit" fullWidth mt="xl">
+            <Button type="submit" color="primary.3" fullWidth mt="xl">
               Sign in
             </Button>
           </form>

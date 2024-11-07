@@ -165,8 +165,8 @@ export const Header = () => {
                         A one stop destination for all your needs.
                       </Text>
                     </div>
-                    <Link to="/companies/add">
-                      <Button variant="default">Get started</Button>
+                    <Link to="/companies/categories">
+                      <Button variant="outline" color="primary.3">Explore Now</Button>
                     </Link>
                   </Group>
                 </div>

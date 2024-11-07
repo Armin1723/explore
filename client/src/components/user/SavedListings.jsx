@@ -64,7 +64,10 @@ const SavedListings = ({ user }) => {
                 >
                   <div className="image-container w-full aspect-video overflow-hidden rounded-t-lg flex items-center justify-center">
                     <img
-                      src={company?.gallery[0]?.url}
+                      src={company?.gallery[0]?.url.replace(
+                        "/upload/",
+                        "/upload/w_300,h_200,c_fill/"
+                      )}
                       alt={company?.name}
                       className="w-full object-cover group-hover:scale-105 border border-black/70 transition-all duration-300"
                     />

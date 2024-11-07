@@ -13,6 +13,7 @@ import {
   import classes from './AdvertisementCard.module.css';
   
   import { useEffect, useState } from "react";
+  import striptags from "striptags";
   
 const AdvertisementCard = () => {  
   
@@ -98,9 +99,9 @@ const AdvertisementCard = () => {
   
           <div className="flex-1 font-['inter'] text-md text-gray-600 mt-2 max-h-[30vh] overflow-hidden">
             {listing ? (
-              <div
-                dangerouslySetInnerHTML={{ __html: listing.description }}
-              ></div>
+              <>
+                {striptags(listing?.description).split(' ').split(0, 40).join(' ')}  
+              </>
             ) : (
               <>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
@@ -114,7 +115,7 @@ const AdvertisementCard = () => {
             ...
           </div>
 
-            <Button className="my-2" color="blue.9">View Now</Button>
+            <Button className="my-2" color="primary.2">View Now</Button>
 
         </Card>
       </ScrollAreaAutosize>

@@ -69,7 +69,7 @@ const UserDetail = () => {
             <Avatar
               size={100}
               src={userData?.profilePic}
-              className="border-2 shadow-xl "
+              className="border-2 border-black/40 shadow-xl "
             />
           </div>
 

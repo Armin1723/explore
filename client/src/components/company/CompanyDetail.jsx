@@ -3,15 +3,13 @@ import React, { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Carousel } from "@mantine/carousel";
 import {
-  Paper,
-  Title,
   Avatar,
   Group,
   Rating,
   Badge,
   Textarea,
-  Menu,
   ScrollArea,
+  Indicator,
 } from "@mantine/core";
 
 import {
@@ -19,8 +17,6 @@ import {
   FaWhatsapp,
   FaEnvelope,
   FaShare,
-  FaEllipsisV,
-  FaFlag,
   FaMapMarkerAlt,
   FaStar,
   FaChevronCircleLeft,
@@ -34,7 +30,7 @@ import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import SimilarStores from "./SimilarStores";
 import Bookmark from "./Bookmark";
 import AdminActions from "./AdminActions";
-import { MdDelete } from "react-icons/md";
+import CompanyReviews from "./CompanyReviews";
 
 const CompanyDetail = () => {
   let { name } = useParams();
@@ -84,7 +80,7 @@ const CompanyDetail = () => {
       }
     };
     fetchCompany();
-  }, []);
+  }, [name]);
 
   if (!company)
     return (
@@ -117,66 +113,6 @@ const CompanyDetail = () => {
         color: "teal",
       });
       setCompany(JSON.parse(JSON.stringify(data.company)));
-    } catch (error) {
-      notifications.show({
-        title: "Error",
-        message: error.message,
-        color: "red",
-      });
-    }
-  };
-
-  const flagReview = async (reviewId) => {
-    try {
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/company/review/flag/${reviewId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message);
-      }
-      const data = await response.json();
-      notifications.show({
-        title: "Review flagged",
-        message: data.message,
-        color: "teal",
-      });
-    } catch (error) {
-      notifications.show({
-        title: "Error",
-        message: error.message,
-        color: "red",
-      });
-    }
-  };
-
-  const deleteReview = async (reviewId) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin/reviews/${reviewId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("An error occurred while deleting review");
-      }
-      const data = await response.json();
-      notifications.show({
-        title: "Review Deleted",
-        message: "Review has been successfully deleted",
-      });
-      window.location.reload();
     } catch (error) {
       notifications.show({
         title: "Error",
@@ -242,15 +178,26 @@ const CompanyDetail = () => {
             <AdminActions company={company} setCompany={setCompany} />
           )}
           {isSelf && (
-             <Link
-             to={`/companies/${company?.name
-               .split(" ")
-               .join("-")}/enquiries`}
-           >
-             <Button color="primary.3">
-               <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries
-             </Button>
-           </Link>
+            <Indicator
+              inline
+              color="red.9"
+              size={16}
+              label={
+                company?.enquiries?.filter(
+                  (enquiry) => enquiry.status === "pending"
+                ).length
+              }
+            >
+              <Link
+                to={`/companies/${company?.name
+                  .split(" ")
+                  .join("-")}/enquiries`}
+              >
+                <Button color="primary.3">
+                  <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries
+                </Button>
+              </Link>
+            </Indicator>
           )}
         </div>
 
@@ -259,28 +206,36 @@ const CompanyDetail = () => {
           className="ratings flex flex-col items-start gap-2 my-4"
         >
           <div className="flex items-center gap-2">
-            <Rating value={company?.rating} readOnly size="lg" />
+            <Rating value={company?.rating}fractions={4} readOnly size="lg" />
             <div
-              className="text-sm px-4 py-2 rounded-lg flex items-center font-semibold gap-1"
+              className="px-4 py-1 rounded-lg flex items-center font-semibold text-sm gap-1"
               style={{
                 backgroundColor:
                   company.rating >= 4
                     ? "green"
-                    : company.rating >= 2
-                    ? "yellow"
+                    : company.rating >= 3.5
+                    ? "yellowgreen"
+                    : company.rating >= 2.5
+                    ? "orange"
                     : "red",
-                color: "white",
+                color: "aliceblue",
               }}
             >
-              <p>{company?.rating}</p>
+              <p>{company?.rating.toFixed(1)}</p>
               <FaStar />
             </div>
           </div>
           <div className="text-gray-600 flex items-center gap-2">
-            <p>{company?.reviews?.length} review{company?.reviews?.length > 1 && 's'}{"."}</p>
-          <div className="joined">
+            <p>
+              {company?.reviews?.length} review
+              {company?.reviews?.length > 1 && "s"}
+              {"."}
+            </p>
+            <div className="joined">
               <span className="text-xs italic text-gray-500">
-                {'('}Joined on {new Date(company.createdAt).toLocaleDateString()}{')'}
+                {"("}Listed Since:{" "}
+                {new Date(company.createdAt).toLocaleDateString()}
+                {")"}
               </span>
             </div>
           </div>
@@ -322,20 +277,19 @@ const CompanyDetail = () => {
             <FaMapMarkerAlt />
             {company.address}
           </Link>
-            <Link
-              to={`${
-                company?.website.includes("https")
-                  ? company?.website
-                  : `https://${company.website}`
-              } `}
-              target="blank"
-              className="text-xs"
-            >
-              <p className="website text-blue-800 hover:text-blue-900 transition-all duration-200 my-1">
-                {company.website}
-              </p>
-            </Link>
-            
+          <Link
+            to={`${
+              company?.website.includes("https")
+                ? company?.website
+                : `https://${company.website}`
+            } `}
+            target="blank"
+            className="text-xs"
+          >
+            <p className="website text-blue-800 hover:text-blue-900 transition-all duration-200 my-1">
+              {company.website}
+            </p>
+          </Link>
         </div>
 
         <div id="contact" className="contact my-4">
@@ -383,15 +337,17 @@ const CompanyDetail = () => {
               <FaShare className="mx-2" />
               Share
             </Button>
-            {!isSelf && <Link
-              to={`/companies/${company?.name
-                .split(" ")
-                .join("-")}/enquiries/add`}
-            >
-              <Button color="primary.3">
-                <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiry
-              </Button>
-            </Link>}
+            {!isSelf && (
+              <Link
+                to={`/companies/${company?.name
+                  .split(" ")
+                  .join("-")}/enquiries/add`}
+              >
+                <Button color="primary.3">
+                  <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiry
+                </Button>
+              </Link>
+            )}
           </Group>
         </div>
 
@@ -430,7 +386,7 @@ const CompanyDetail = () => {
                   ></Textarea>
                   <Button
                     variant="filled"
-                    color="blue"
+                    color="primary.2"
                     disabled={!review?.comment}
                     onClick={addReview}
                   >
@@ -443,66 +399,11 @@ const CompanyDetail = () => {
 
           <div className="right w-1/3 flex flex-col max-lg:w-[90%] max-sm:w-full px-4 gap-4">
             <AdvertisementCard />
-            {isSelf ? <Link to="">View Enquiries</Link> : <EnquirySmall />}
+            {isSelf ? <Link to="enquiries" className="w-full flex flex-col items-start gap-4 justify-center min-h-[10vh] rounded-md border p-4 "><p className="sub-heading !my-0">View Your Enquiries.</p><Button fullwidth mx='' color="primary.1">View Enquiries</Button></Link> : <EnquirySmall />}
           </div>
         </div>
 
-        <div id="reviews" className="reviews">
-          <div className="heading !my-4 pl-8 max-sm:pl-4 border-l-4 border-primary">
-            Reviews
-          </div>
-          {company.reviews.slice(0, 10).map((review, index) => (
-            <Paper
-              key={index}
-              withBorder
-              className="p-4 mb-4 shadow-sm rounded-lg w-full"
-            >
-              <Group position="apart" justify="space-between">
-                <Group>
-                  <Avatar
-                    src={review?.user?.profilePic}
-                    alt={review?.user?.name}
-                  />
-                  <div>
-                    <Title order={5}>{review?.user?.name}</Title>
-                    <Rating value={review.rating} readOnly size="sm" />
-                  </div>
-                  <span className="text-sm ">
-                    {new Date(review.createdAt).toLocaleDateString()}
-                  </span>
-                </Group>
-
-                <Menu shadow="md" width={200}>
-                  <Menu.Target>
-                    <p>
-                      <FaEllipsisV />
-                    </p>
-                  </Menu.Target>
-                  <Menu.Dropdown>
-                    <Menu.Item
-                      onClick={() => flagReview(review._id)}
-                      leftSection={<FaFlag />}
-                    >
-                      Flag Review
-                    </Menu.Item>
-                    {isAdmin && (
-                      <Menu.Item
-                        onClick={() => deleteReview(review._id)}
-                        leftSection={<MdDelete />}
-                      >
-                        Delete Review
-                      </Menu.Item>
-                    )}
-                  </Menu.Dropdown>
-                </Menu>
-              </Group>
-              <p className="mt-2">{review.comment}</p>
-            </Paper>
-          ))}
-          {company.reviews.length === 0 && (
-            <p className="font-['inter']">No reviews found</p>
-          )}
-        </div>
+        <CompanyReviews company={company} setCompany={setCompany} isAdmin={isAdmin}/>
 
         <div className="similar">
           <SimilarStores />

@@ -38,36 +38,6 @@ const PopularStores = () => {
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
-    {
-      name: "Store 6",
-      image: "https://picsum.photos/200/300?random=6",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 7",
-      image: "https://picsum.photos/200/300?random=7",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 8",
-      image: "https://picsum.photos/200/300?random=8",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 9",
-      image: "https://picsum.photos/200/300?random=9",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 10",
-      image: "https://picsum.photos/200/300?random=10",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
   ];
 
   return (

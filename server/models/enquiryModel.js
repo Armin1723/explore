@@ -15,7 +15,7 @@ const enquirySchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["pending", "approved", "rejected"],
+        enum: ["pending", "responded", "rejected"],
         default: "pending",
     },
     createdAt: {

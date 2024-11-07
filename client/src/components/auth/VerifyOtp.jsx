@@ -236,7 +236,7 @@ const VerifyOtp = () => {
                 <div className="text-xs my-2">Your Otp has expired. Request <span className="italic text-blue-600 cursor-pointer hover:text-blue-800" onClick={resendOtp}>another?.</span></div>
             )}
 
-            <Button type="submit" fullWidth mt="xl">
+            <Button type="submit" color="primary.3" fullWidth mt="xl">
               Verify
             </Button>
           </form>
