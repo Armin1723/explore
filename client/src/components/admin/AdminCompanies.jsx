@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import SubCategoryMenu from "./SubCategoryMenu";
 import { useSelector } from "react-redux";
 import { getSubCategories } from "../../utils";
-import { set } from "mongoose";
 
 const AdminCompanies = () => {
   const [results, setResults] = useState(null);

@@ -60,7 +60,7 @@ export const Header = () => {
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {

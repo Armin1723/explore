@@ -102,16 +102,16 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
 
         <div className="hero flex-1 px-2 flex max-lg:flex-col gap-2 overflow-y-auto">
           <div className="right max-lg:w-full w-2/3 flex flex-col">
-            <React.Suspense
+            {/* <React.Suspense
               fallback={
                 <div className="w-full min-h-[40vh] flex items-center justify-center">
                   <div className="loader"></div>
                 </div>
               }
-            >
+            > */}
               <AdminCards />
               <Outlet />
-            </React.Suspense>
+            {/* </React.Suspense> */}
           </div>
 
           <div className="recent-listing w-1/3 p-2 pt-4 max-lg:w-full min-h-fit max-h-[80vh max-sm:p-0">
