@@ -46,7 +46,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
     if (!user || user.role !== "admin") {
       navigate("/admin/login");
     }
-  }, [user]);
+  }, []);
 
   return (
     <div

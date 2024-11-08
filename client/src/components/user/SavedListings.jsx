@@ -36,7 +36,7 @@ const SavedListings = ({ user }) => {
       }
     };
     fetchSavedStores();
-  }, [user, page]);
+  }, [ page]);
 
   return (
     <div className="w-full flex flex-col items-start my-4">

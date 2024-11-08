@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const { setColorScheme } = useMantineColorScheme();
+
   useEffect(() => {
     setColorScheme("light");
   }, []);
