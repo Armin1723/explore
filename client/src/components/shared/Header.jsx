@@ -16,7 +16,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import UserProfile from "./UserProfile";
@@ -79,6 +79,7 @@ export const Header = () => {
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
 
+
   const links = categoryData.map((item) => (
     <Link
       to={`/companies/categories?category=${item.title.toLowerCase()}`}
@@ -103,7 +104,7 @@ export const Header = () => {
 
   return (
     <div
-      className={`fixed header transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
+      className={` fixed header transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-2 flex justify-between items-center`}

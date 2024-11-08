@@ -111,6 +111,7 @@ const Register = () => {
           loading: false,
           autoClose: 2000,
         });
+        throw new Error(data.message);
       }
     } catch (error) {
       console.log(error.message);

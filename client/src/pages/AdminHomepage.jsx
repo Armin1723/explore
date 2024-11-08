@@ -88,7 +88,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
           <span className="max-sm:hidden">to the Admin Dashboard.</span>
         </p>
 
-        {/* Small Naav For sm devices */}
+        {/* Small Nav For sm devices */}
         <Drawer
           opened={drawerOpened}
           onClose={closeDrawer}
