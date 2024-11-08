@@ -68,9 +68,11 @@ export const Header = () => {
       if (window.scrollY > 30) {
         header.classList.add("bg-white");
         header.classList.add("border-b");
+        header.classList.add("shadow-lg");
       } else {
         header.classList.remove("bg-white");
         header.classList.remove("border-b");
+        header.classList.remove("shadow-lg");
       }
     });
   }, []);
@@ -103,7 +105,7 @@ export const Header = () => {
 
   return (
     <div
-      className={` fixed header transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
+      className={` fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-1 flex justify-between items-center`}
