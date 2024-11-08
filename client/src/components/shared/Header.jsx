@@ -219,7 +219,10 @@ export const Header = () => {
         title="Explore"
         zIndex={1000000}
       >
-        <ScrollArea h={"80dvh"} w="100%">
+        <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={"80dvh"} w="100%">
           <div className="links text-sm gap-4 px-4 flex flex-col justify-start">
             <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
               Home

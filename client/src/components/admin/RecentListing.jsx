@@ -4,7 +4,7 @@ import {
   Text,
   Group,
   Button,
-  ScrollAreaAutosize,
+  ScrollArea,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { FaStar } from "react-icons/fa";
@@ -99,7 +99,10 @@ export const RecentListing = ({ refetch, setRefetch }) => {
   }, [refetch]);
 
   return (
-    <ScrollAreaAutosize>
+    <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500}>
       <Card radius="md" className="flex-1 overflow-y-scroll border border-black">
         <Card.Section>
           <Carousel
@@ -189,6 +192,6 @@ export const RecentListing = ({ refetch, setRefetch }) => {
           </Button>
         </div>
       </Card>
-    </ScrollAreaAutosize>
+    </ScrollArea>
   );
 };

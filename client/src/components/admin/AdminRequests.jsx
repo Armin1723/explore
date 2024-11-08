@@ -73,7 +73,10 @@ const AdminRequests = ({ refetch, setRefetch }) => {
 
   return (
     <Card className="flex flex-col flex-1" withBorder>
-      <ScrollArea h={400}>
+      <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={400}>
         <div className="heading w-full border-l-4 border-primary my-4 flex items-center">
           <div className="w-full pl-6 text-xl tracking-wide flex items-center gap-2">
             Pending Requests{" "}
@@ -137,13 +140,11 @@ const AdminRequests = ({ refetch, setRefetch }) => {
             );
           })}
 
-          {results && results.companies.length === 0 && (
-            <p className="my-2">No requests found</p>
-          )}
-
-        {results?.totalPages > 1 && (
+        {results && results.companies.length === 0 ? (
+          <p className="my-2">No requests found</p>
+        ) : (
           <Pagination
-            totalPages={results.totalPages}
+            totalPages={results?.totalPages}
             page={page}
             setPage={setPage}
           />

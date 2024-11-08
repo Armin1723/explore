@@ -35,7 +35,10 @@ const AdminUsers = () => {
 
   return (
     <Card className="flex flex-col flex-1" withBorder>
-      <ScrollArea h={400}>
+      <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={400}>
         <div className="heading w-full border-l-4 border-primary my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">Recent Users</p>
         </div>
@@ -75,17 +78,15 @@ const AdminUsers = () => {
             );
           })}
 
-        {results && results?.users.length === 0 && (
+        {results && results?.users.length === 0 ? (
           <p className="py-2">No users found</p>
-        )}
-
-        {results?.totalPages == 1 && (
-          <Pagination
-            totalPages={results.totalPages}
+        ) : (<Pagination
+            totalPages={results?.totalPages}
             page={page}
             setPage={setPage}
           />
         )}
+
       </ScrollArea>
     </Card>
   );

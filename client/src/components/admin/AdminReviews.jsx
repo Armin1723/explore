@@ -1,8 +1,9 @@
-import { Avatar, Button, Card, Pagination, ScrollArea } from "@mantine/core";
+import { Avatar, Button, Card, ScrollArea } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import React, { useEffect, useState } from "react";
 import { MdDelete, MdOutlineOutlinedFlag } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Pagination from "../shared/Pagination";
 
 const AdminReviews = () => {
   const [results, setResults] = useState(null);
@@ -60,7 +61,10 @@ const AdminReviews = () => {
 
   return (
     <Card className="flex flex-col flex-1 " withBorder>
-      <ScrollArea h={400}>
+      <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={400}>
         <div className="heading w-full border-l-4 border-primary my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">
             Most Flagged Reviews
@@ -69,10 +73,11 @@ const AdminReviews = () => {
 
         {loading && (
           <div className="w-full min-h-[40vh] flex items-center justify-center">
-          <div className="loader"></div>
-        </div>)}
+            <div className="loader"></div>
+          </div>
+        )}
 
-        {results && (
+        {results &&
           results.reviews.map((review, index) => {
             return (
               <div
@@ -116,25 +121,25 @@ const AdminReviews = () => {
                   </div>
                   <div className="flex items-center">
                     <p>
-                      <span className="max-sm:hidden">Reviewed at:{" "}</span>
+                      <span className="max-sm:hidden">Reviewed at: </span>
                       {new Date(review.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                 </Link>
               </div>
             );
-          })
-        )}
+          })}
 
-        {(results && results.length == 0) && <div>No Reviews found</div>}
-
-        {results?.totalPages > 1 && (
+        {results && results.length == 0 ? (
+          <div>No Reviews found</div>
+        ) : (
           <Pagination
-            totalPages={results.totalPages}
+            totalPages={results?.totalPages}
             page={page}
             setPage={setPage}
           />
         )}
+
       </ScrollArea>
     </Card>
   );

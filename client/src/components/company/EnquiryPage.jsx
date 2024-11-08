@@ -80,6 +80,9 @@ const EnquiryPage = () => {
         className="form-container flex flex-col items-center justify-center h-full"
       >
         <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500}
           shadow="xs"
           padding="lg"
           className=" shadow-sm p-8 max-sm:p-4 bg-white w-screen h-full max-w-screen-lg flex flex-col border rounded-lg border-black/30"

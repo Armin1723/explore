@@ -113,7 +113,10 @@ const Search = () => {
       </div>
 
       <div className="cards-container w-full flex max-lg:flex-col gap-4 overflow-x-hidden">
-        <ScrollArea h={600} className="w-full ">
+        <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={600} className="w-full ">
           <div className="cards max-lg:w-full overflow-y-scroll p-4 max-sm:p-1 overflow-x-hidden flex flex-col gap-4">
             {results?.companies?.length ? (
               results.companies.map((company, index) => (

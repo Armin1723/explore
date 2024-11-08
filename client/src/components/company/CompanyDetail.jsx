@@ -445,7 +445,10 @@ const CompanyDetail = () => {
 
         <div className="variable flex max-sm:flex-col justify-between w-full gap-2">
           <div className="left flex flex-col w-2/3 max-sm:w-full border rounded-lg p-4 max-sm:p-2">
-            <ScrollArea h={800} className="w-full">
+            <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={800} className="w-full">
               <div id="description" className="">
                 <div className="heading !my-4 pl-8 max-sm:pl-4 border-l-4 border-primary">
                   Description

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import BreadCrumbNav from "../shared/BreadCrumbNav"
+import BreadCrumbNav from "../shared/BreadCrumbNav";
 import { ScrollArea, Select } from "@mantine/core";
 import CompanyCardSmall from "./CompanyCardSmall";
 import Pagination from "../shared/Pagination";
@@ -10,12 +10,13 @@ import { getSubCategories } from "../../utils";
 
 const Categories = () => {
   const [searchParams] = useSearchParams();
+
+  const pageParam = searchParams.get("page");
   const categoryParam = searchParams.get("category");
   const subCategoryParam = searchParams.get("subCategory");
-  const pageParam = searchParams.get("page");
 
-  const [category, setCategory] = useState(categoryParam || "all");
-  const [subCategory, setSubCategory] = useState(subCategoryParam || "all");
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(pageParam || 1);
 
@@ -55,15 +56,7 @@ const Categories = () => {
       }
     };
     fetchResults();
-  }, [
-    category,
-    subCategory,
-    sort,
-    page,
-    categoryParam,
-    subCategoryParam,
-    pageParam,
-  ]);
+  }, [category, subCategory, sort, page, pageParam]);
 
   return (
     <div className="page flex flex-col w-[90%] py-4 overflow-x-hidden">
@@ -77,7 +70,7 @@ const Categories = () => {
           <Select
             data={["all", ...Object.values(categories).map((cat) => cat.name)]}
             value={category}
-            placeholder="Chose Category"
+            placeholder={categoryParam ?? "Chose Category"}
             clearable
             onClear={() => setCategory("")}
             onChange={(value) => {
@@ -95,7 +88,7 @@ const Categories = () => {
             onChange={setSubCategory}
             onClear={() => setSubCategory("")}
             clearable
-            disabled={!category || category === "all"}
+            disabled={!category || category.toLowerCase() === "all"}
           />
         </div>
         <div className="max-sm:w-[150px] w-fit">
@@ -116,7 +109,10 @@ const Categories = () => {
       </div>
 
       <div className="cards-container w-full flex max-lg:flex-col gap-4 overflow-x-hidden">
-        <ScrollArea h={600} className="w-full ">
+        <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={600} className="w-full ">
           <div className="cards max-lg:w-full overflow-y-scroll p-4 max-sm:p-1 overflow-x-hidden flex flex-col gap-4">
             {results?.companies?.length ? (
               results.companies.map((company, index) => (

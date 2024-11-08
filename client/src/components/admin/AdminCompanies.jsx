@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import SubCategoryMenu from "./SubCategoryMenu";
 import { useSelector } from "react-redux";
 import { getSubCategories } from "../../utils";
+import Pagination from "../shared/Pagination";
 
 const AdminCompanies = () => {
   const [results, setResults] = useState(null);
@@ -43,7 +44,7 @@ const AdminCompanies = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -73,33 +74,51 @@ const AdminCompanies = () => {
 
   return (
     <Card className="flex flex-col flex-1" withBorder>
-      <ScrollArea h={400} className="w-full">
+      <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500}
+        h={400}
+        type="scroll"
+        className="w-full"
+      >
         <div className="w-full my-4 flex justify-between items-center flex-wrap gap-2">
           <div className="flex items-center gap-2 w-full pl-6 text-xl tracking-wide">
-            <p className="heading !my-0 border-l-4 pl-6 border-primary">Companies</p>
+            <p className="heading !my-0 border-l-4 pl-6 border-primary">
+              Companies
+            </p>
             <Select
-              data={['All', ...Object.values(categories).map((cat) => cat.name)]}
+              data={[
+                "All",
+                ...Object.values(categories).map((cat) => cat.name),
+              ]}
               value={category}
               placeholder={category}
-              onChange={(value) => {setCategory(value); setSubCategory('all'); navigate(`/admin/companies/${value}`)}}
+              onChange={(value) => {
+                setCategory(value);
+                setSubCategory("all");
+                navigate(`/admin/companies/${value}`);
+              }}
             />
-             </div>
+          </div>
           <div className="actions flex gap-2 pl-8">
             <SubCategoryMenu
               subCategory={subCategory}
               setSubCategory={setSubCategory}
               choices={getSubCategories(category)}
             />
-            <Button color="green.8" onClick={exportData}>Export</Button>
+            <Button color="green.8" onClick={exportData}>
+              Export
+            </Button>
           </div>
         </div>
-
         {loading && (
           <div className="w-full min-h-[40vh] flex items-center justify-center">
-          <div className="loader"></div>
-        </div>)}
-
-        {results && results.companies.length > 0 && (
+            <div className="loader"></div>
+          </div>
+        )}
+        {results &&
+          results.companies.length > 0 &&
           results.companies.map((company, index) => {
             return (
               <Link
@@ -110,28 +129,35 @@ const AdminCompanies = () => {
                 key={index}
               >
                 <div className="flex items-center gap-8 max-sm:gap-4 pr-2">
-                  <Avatar src={company?.logo?.url} alt={company?.name} className="border border-black"/>
+                  <Avatar
+                    src={company?.logo?.url}
+                    alt={company?.name}
+                    className="border border-black"
+                  />
                   <p className="capitalize font-semibold">{company?.name}</p>
-                  <Badge className="max-sm:scale-75" color={company?.status == 'active' ? 'green' : 'red'} variant="filled"> {company?.status == 'active' ? 'Live' : 'Suspended'} </Badge>
+                  <Badge
+                    className="max-sm:scale-75"
+                    color={company?.status == "active" ? "green" : "red"}
+                    variant="filled"
+                  >
+                    {" "}
+                    {company?.status == "active" ? "Live" : "Suspended"}{" "}
+                  </Badge>
                 </div>
                 <div className="flex items-center">
                   <p>
-                    <span className="max-sm:hidden">Registered:{" "}</span>
+                    <span className="max-sm:hidden">Registered: </span>
                     {new Date(company?.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               </Link>
             );
-          })
-        ) }
-
-        {results && results.companies.length === 0 && (
+          })}
+        {results && results.companies.length === 0 ? (
           <p className="py-2">No companies found</p>
-        )}
-
-        {results?.totalPages > 1 && (
+        ) : (
           <Pagination
-            totalPages={results.totalPages}
+            totalPages={results?.totalPages}
             page={page}
             setPage={setPage}
           />

@@ -25,6 +25,19 @@ body,
     border-radius: 10px;
 }
 
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4B5563 !important;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+.custom-scrollbar::-webkit-scrollbar{
+    width: 3px !important;
+}
+
 /* Fancy Button from UIVerse */
 .fancy {
     background-color: transparent;

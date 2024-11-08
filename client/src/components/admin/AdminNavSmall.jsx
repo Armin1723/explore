@@ -48,7 +48,10 @@ const AdminNavSmall = () => {
             active={location.pathname.includes("/admin/companies")}
             rightSection={<FaChevronRight />}
           >
-            <ScrollArea h={400} className="w-full">
+            <ScrollArea
+        offsetScrollbars
+        scrollbarSize={6}
+        scrollHideDelay={500} h={400} className="w-full">
               <NavLink
                 href={`/admin/companies/all`}
                 active={location.pathname.includes("all")}
