@@ -12,7 +12,6 @@ const AdminReviews = () => {
 
   const deleteReview = async (reviewId) => {
     try {
-      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/reviews/${reviewId}`,
         {
@@ -30,16 +29,15 @@ const AdminReviews = () => {
         title: "Review Deleted",
         message: "Review has been successfully deleted",
       });
-      setLoading(false);
     } catch (error) {
       console.error(error);
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/admin/reviews?page=${page}`,
           {
@@ -51,8 +49,10 @@ const AdminReviews = () => {
         }
         const data = await response.json();
         setResults(data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
     fetchReviews();

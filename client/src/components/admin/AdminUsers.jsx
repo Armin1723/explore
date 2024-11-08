@@ -79,7 +79,7 @@ const AdminUsers = () => {
           <p className="py-2">No users found</p>
         )}
 
-        {results?.totalPages > 1 && (
+        {results?.totalPages == 1 && (
           <Pagination
             totalPages={results.totalPages}
             page={page}
