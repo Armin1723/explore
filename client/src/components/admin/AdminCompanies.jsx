@@ -4,11 +4,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import SubCategoryMenu from "./SubCategoryMenu";
 import { useSelector } from "react-redux";
 import { getSubCategories } from "../../utils";
+import { set } from "mongoose";
 
 const AdminCompanies = () => {
   const [results, setResults] = useState(null);
   const [page, setPage] = useState(1);
   const [refetch, setRefetch] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const categories = useSelector((state) => state.categories);
 
@@ -45,6 +48,7 @@ const AdminCompanies = () => {
 
   useEffect(() => {
     const fetchCompanies = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
           `${
@@ -59,8 +63,10 @@ const AdminCompanies = () => {
         }
         const data = await response.json();
         setResults(data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
     fetchCompanies();
@@ -89,7 +95,12 @@ const AdminCompanies = () => {
           </div>
         </div>
 
-        {results && results.companies.length > 0 ? (
+        {loading && (
+          <div className="w-full min-h-[40vh] flex items-center justify-center">
+          <div className="loader"></div>
+        </div>)}
+
+        {results && results.companies.length > 0 && (
           results.companies.map((company, index) => {
             return (
               <Link
@@ -113,8 +124,10 @@ const AdminCompanies = () => {
               </Link>
             );
           })
-        ) : (
-          <div>No Such Listings found</div>
+        ) }
+
+        {results && results.companies.length === 0 && (
+          <p className="text-center">No companies found</p>
         )}
 
         {results?.totalPages > 1 && (

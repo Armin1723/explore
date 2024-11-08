@@ -6,14 +6,14 @@ import { TiTick } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { notifications } from "@mantine/notifications";
 
-const AdminRequests = ({refetch, setRefetch}) => {
+const AdminRequests = ({ refetch, setRefetch }) => {
   const [results, setResults] = useState(null);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRequest = async (action, companyId, companyName) => {
     try {
-      setIsLoading(true);
+      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/requests/handle`,
         {
@@ -29,7 +29,7 @@ const AdminRequests = ({refetch, setRefetch}) => {
         }
       );
       if (!response.ok) {
-        setIsLoading(false);
+        setLoading(false);
         throw new Error("An error occurred while handling request");
       }
       const data = await response.json();
@@ -40,7 +40,7 @@ const AdminRequests = ({refetch, setRefetch}) => {
           action === "approve" ? "approved" : "rejected"
         }`,
       });
-      setIsLoading(false);
+      setLoading(false);
       setRefetch((prev) => !prev);
     } catch (error) {
       console.error(error);
@@ -50,7 +50,7 @@ const AdminRequests = ({refetch, setRefetch}) => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        setIsLoading(true);
+        setLoading(true);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/admin/requests?page=${page}`,
           {
@@ -58,12 +58,12 @@ const AdminRequests = ({refetch, setRefetch}) => {
           }
         );
         if (!response.ok) {
-          setIsLoading(false);
+          setLoading(false);
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setResults(data);
-        setIsLoading(false);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -78,13 +78,21 @@ const AdminRequests = ({refetch, setRefetch}) => {
           <div className="w-full pl-6 text-xl tracking-wide flex items-center gap-2">
             Pending Requests{" "}
             <p
-              className={`cursor-pointer w-4 aspect-square rounded-full border-t-2 border-b-2 border-gray-600 ${isLoading && 'animate-spin'}`}
+              className={`cursor-pointer w-4 aspect-square rounded-full border-t-2 border-b-2 border-gray-600 ${
+                loading && "animate-spin"
+              }`}
               onClick={() => setRefetch((prev) => !prev)}
             ></p>
           </div>
         </div>
 
-        {results ? (
+        {loading && (
+          <div className="w-full min-h-[40vh] flex items-center justify-center">
+            <div className="loader"></div>
+          </div>
+        )}
+
+        {results &&
           results.companies.map((company, index) => {
             return (
               <div
@@ -127,11 +135,7 @@ const AdminRequests = ({refetch, setRefetch}) => {
                 </div>
               </div>
             );
-          })
-        ) : (
-          <div>No Requests found</div>
-        )}
-
+          })}
 
         {results?.totalPages > 1 && (
           <Pagination

@@ -6,11 +6,13 @@ import Pagination from "../shared/Pagination";
 const AdminUsers = () => {
   const [refetch, setRefetch] = useState(false);
   const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetchAdminUsers = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/admin/users?page=${page}`,
           {
@@ -22,8 +24,10 @@ const AdminUsers = () => {
         }
         const data = await response.json();
         setResults(data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
     fetchAdminUsers();
@@ -35,7 +39,14 @@ const AdminUsers = () => {
         <div className="heading w-full border-l-4 border-primary my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">Recent Users</p>
         </div>
-        {results ? (
+
+        {loading && (
+          <div className="w-full min-h-[40vh] flex items-center justify-center">
+            <div className="loader"></div>
+          </div>
+        )}
+
+        {results &&
           results?.users.map((user, index) => {
             return (
               <Link
@@ -62,9 +73,10 @@ const AdminUsers = () => {
                 </div>
               </Link>
             );
-          })
-        ) : (
-          <div>No users found</div>
+          })}
+
+        {results && results?.users.length === 0 && (
+          <p className="text-center">No users found</p>
         )}
 
         {results?.totalPages > 1 && (

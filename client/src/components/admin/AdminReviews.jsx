@@ -8,9 +8,11 @@ const AdminReviews = () => {
   const [results, setResults] = useState(null);
   const [page, setPage] = useState(1);
   const [refetch, setRefetch] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const deleteReview = async (reviewId) => {
     try {
+      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/reviews/${reviewId}`,
         {
@@ -28,8 +30,10 @@ const AdminReviews = () => {
         title: "Review Deleted",
         message: "Review has been successfully deleted",
       });
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 
@@ -62,6 +66,12 @@ const AdminReviews = () => {
             Most Flagged Reviews
           </p>
         </div>
+
+        {loading && (
+          <div className="w-full min-h-[40vh] flex items-center justify-center">
+          <div className="loader"></div>
+        </div>)}
+
         {results && (
           results.reviews.map((review, index) => {
             return (
