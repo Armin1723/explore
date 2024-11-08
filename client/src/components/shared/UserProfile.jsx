@@ -82,10 +82,11 @@ const UserProfile = () => {
           <Group gap={7}>
             <Link to={`/users/${user._id}`} className="flex gap-2 items-center">
               <Avatar
-                src={user.profilePic}
-                alt={user.name}
+                src={user?.profilePic.replace('/uploads/', '/uploads/w_100/')}
+                className="border border-black"
+                alt={user?.name}
                 radius="xl"
-                size={20}
+                size={28}
               />
             </Link>
             <FaChevronDown

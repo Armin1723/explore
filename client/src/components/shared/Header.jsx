@@ -79,7 +79,6 @@ export const Header = () => {
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
 
-
   const links = categoryData.map((item) => (
     <Link
       to={`/companies/categories?category=${item.title.toLowerCase()}`}
@@ -107,7 +106,7 @@ export const Header = () => {
       className={` fixed header transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
-        className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-2 flex justify-between items-center`}
+        className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-1 flex justify-between items-center`}
       >
         <Link to="/" className="flex items-center gap-2">
           {/* <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
@@ -116,9 +115,12 @@ export const Header = () => {
           <p className="heading !my-0">Explore </p>
         </Link>
 
-        <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end">
-          <div className="links max-lg:hidden flex md:gap-6 gap-2">
-            <Link to="/" className="link text-sm transition-colors duration-200">
+        <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end ">
+          <div className="links max-lg:hidden flex md:gap-6 gap-2 ">
+            <Link
+              to="/"
+              className="link text-sm transition-colors duration-200"
+            >
               Home
             </Link>
             <HoverCard
@@ -167,7 +169,9 @@ export const Header = () => {
                       </Text>
                     </div>
                     <Link to="/companies/categories">
-                      <Button variant="outline" color="primary.3">Explore Now</Button>
+                      <Button variant="outline" color="primary.3">
+                        Explore Now
+                      </Button>
                     </Link>
                   </Group>
                 </div>
@@ -185,16 +189,18 @@ export const Header = () => {
               to={`${user && user?.name ? "/companies/advertise" : "/"}`}
               onClick={(event) => {
                 if (!user || !user.name) {
-                  event.preventDefault(); 
+                  event.preventDefault();
                 }
               }}
-              className={`link text-sm  transition-colors duration-200 ${(!user || !user.name) && "text-gray-700 cursor-not-allowed"}`}
+              className={`link text-sm  transition-colors duration-200 ${
+                (!user || !user.name) && "text-gray-700 cursor-not-allowed"
+              }`}
             >
               Advertise
             </Link>
           </div>
 
-          <div className="m-2">
+          <div className="mx-2 my-1">
             {user && user?.name ? (
               <UserProfile />
             ) : (
@@ -207,7 +213,11 @@ export const Header = () => {
             )}
           </div>
           <div className="max-lg:flex hidden">
-            <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm"/>
+            <Burger
+              opened={drawerOpened}
+              onClick={toggleDrawer}
+              hiddenFrom="sm"
+            />
           </div>
         </div>
       </header>
@@ -220,9 +230,12 @@ export const Header = () => {
         zIndex={1000000}
       >
         <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500} h={"80dvh"} w="100%">
+          offsetScrollbars
+          scrollbarSize={6}
+          scrollHideDelay={500}
+          h={"80dvh"}
+          w="100%"
+        >
           <div className="links text-sm gap-4 px-4 flex flex-col justify-start">
             <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
               Home
@@ -245,8 +258,10 @@ export const Header = () => {
               Add Company
             </Link>
             <Link
-              to={`${user && user?.name && "/companies/advertise" }`}
-              className={` font-['poppins']  transition-colors duration-200 ${(!user || !user.name) && "text-gray-700 cursor-not-allowed"}`}
+              to={`${user && user?.name && "/companies/advertise"}`}
+              className={` font-['poppins']  transition-colors duration-200 ${
+                (!user || !user.name) && "text-gray-700 cursor-not-allowed"
+              }`}
               onClick={closeDrawer}
             >
               Advertise
