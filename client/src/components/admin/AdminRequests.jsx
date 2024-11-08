@@ -137,6 +137,10 @@ const AdminRequests = ({ refetch, setRefetch }) => {
             );
           })}
 
+          {results && results.companies.length === 0 && (
+            <p className="my-2">No requests found</p>
+          )}
+
         {results?.totalPages > 1 && (
           <Pagination
             totalPages={results.totalPages}

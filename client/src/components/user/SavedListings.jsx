@@ -94,7 +94,7 @@ const SavedListings = ({ user }) => {
 
             {stores.length === 0 && (
               <Carousel.Slide>
-                <p className="text-center">No Saved Stores</p>
+                <p className="py-2">No Saved Stores</p>
               </Carousel.Slide>
             )}
 

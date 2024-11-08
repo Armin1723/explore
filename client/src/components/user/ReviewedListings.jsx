@@ -99,7 +99,7 @@ const ReviewedListing = ({ user }) => {
 
             {results?.length === 0 && (
               <Carousel.Slide>
-                <p className="text-center">No Reviewed Stores</p>
+                <p className="py-2">No Reviewed Stores</p>
               </Carousel.Slide>
             )}
 

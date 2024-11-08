@@ -76,7 +76,7 @@ const AdminUsers = () => {
           })}
 
         {results && results?.users.length === 0 && (
-          <p className="text-center">No users found</p>
+          <p className="py-2">No users found</p>
         )}
 
         {results?.totalPages > 1 && (

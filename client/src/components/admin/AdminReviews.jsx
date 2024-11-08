@@ -126,7 +126,7 @@ const AdminReviews = () => {
           })
         )}
 
-        {(!results || results.length == 0) && <div>No Reviews found</div>}
+        {(results && results.length == 0) && <div>No Reviews found</div>}
 
         {results?.totalPages > 1 && (
           <Pagination

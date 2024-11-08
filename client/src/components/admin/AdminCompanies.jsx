@@ -126,7 +126,7 @@ const AdminCompanies = () => {
         ) }
 
         {results && results.companies.length === 0 && (
-          <p className="text-center">No companies found</p>
+          <p className="py-2">No companies found</p>
         )}
 
         {results?.totalPages > 1 && (
