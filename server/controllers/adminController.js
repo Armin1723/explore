@@ -61,6 +61,9 @@ const loginAdmin = async (req, res) => {
     );
     res.cookie("token", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
     });
     user.password = undefined;
     res.status(200).json({ success: true, user });
@@ -216,11 +219,10 @@ const exportCompanies = async (req, res) => {
 const getReviewsSortedByFlags = async (req, res) => {
   try {
     let { page } = req.query;
-    const limit = 10;
 
     if (!page) page = 1;
 
-    const reviewsData = await Review.aggregate([
+    const reviews = await Review.aggregate([
       {
         $addFields: {
           flagCount: { $size: "$flags" },
@@ -230,49 +232,46 @@ const getReviewsSortedByFlags = async (req, res) => {
         $sort: { flagCount: -1 },
       },
       {
-        $facet: {
-          reviews: [
-            { $skip: (page - 1) * limit },
-            { $limit: limit },
-            {
-              $lookup: {
-                from: "users",
-                localField: "user",
-                foreignField: "_id",
-                as: "user",
-              },
-            },
-            { $unwind: "$user" },
-            {
-              $lookup: {
-                from: "companies",
-                localField: "company",
-                foreignField: "_id",
-                as: "company",
-              },
-            },
-            { $unwind: "$company" },
-          ],
-          totalCount: [
-            { $count: "count" },
-          ],
+        $skip: (page - 1) * 20,
+      },
+      {
+        $limit: 20,
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
         },
+      },
+      {
+        $unwind: "$user",
+      },
+      {
+        $lookup: {
+          from: "companies",
+          localField: "company",
+          foreignField: "_id",
+          as: "company",
+        },
+      },
+      {
+        $unwind: "$company",
       },
     ]);
 
-    const reviews = reviewsData[0].reviews;
-    const totalReviews = reviewsData[0].totalCount[0]?.count || 0;
-    const totalPages = Math.ceil(totalReviews / limit);
+    const totalReviews = await Review.find().countDocuments();
 
     res.status(200).json({
       success: true,
       reviews,
       page,
-      totalPages,
+      totalPages: Math.ceil(totalReviews / 20),
     });
   } catch (error) {
     console.error("Error fetching reviews:", error);
-    res.status(500).json({ success: false, error: "Error fetching reviews" });
+    throw error;
   }
 };
 

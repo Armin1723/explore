@@ -69,7 +69,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-const registerUser = async (req, res, io) => {
+const registerUser = async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
 
@@ -106,7 +106,7 @@ const registerUser = async (req, res, io) => {
     };
 
     // Handling ProfilePic Upload to cloudinary
-    if (req.files && req.files?.profilePic) {
+    if (req.files && req.files.profilePic) {
       const { profilePic } = req.files;
       if (profilePic) {
         try {
@@ -117,20 +117,20 @@ const registerUser = async (req, res, io) => {
           if (!cloudinaryResponse || cloudinaryResponse.error) {
             return res.status(500).json({
               success: false,
-              message: "Failed to upload profilePic to cloud.",
+              message: "Failed to upload profilePic to cloud." ,  
               error: cloudinaryResponse.error,
             });
           }
           userData.profilePic = cloudinaryResponse.secure_url;
-          fs.unlink(profilePic[0].path, (err) => {
-            if (err) {
-              console.error("Failed to delete temporary profilePic file:", err);
-            }
-          });
+          // fs.unlink(profilePic[0].path, (err) => {
+          //   if (err) {
+          //     console.error("Failed to delete temporary profilePic file:", err);
+          //   }
+          // });
         } catch (error) {
           return res.status(500).json({
             success: false,
-            message: "Failed to upload profilePic",
+            message: error.message,
             error: error.message,
           });
         }

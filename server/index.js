@@ -47,6 +47,7 @@ app.use('/api/enquiries', require('./routes/enquiryRoutes.js'))
 app.use('/api/admin', require('./routes/adminRoutes.js'))
 app.use('/api/advertisement', require('./routes/advertisementRoutes.js'))
 app.use('/api/categories', require('./routes/categoryRoutes.js'))
+app.use('/api/testimonials', require('./routes/testimonialRoutes.js'))
 
 
 server.listen(process.env.PORT, () => {
