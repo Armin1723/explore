@@ -15,8 +15,8 @@ const Categories = () => {
   const categoryParam = searchParams.get("category");
   const subCategoryParam = searchParams.get("subCategory");
 
-  const [category, setCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
+  const [category, setCategory] = useState(categoryParam || "");
+  const [subCategory, setSubCategory] = useState(subCategoryParam || "");
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(pageParam || 1);
 
