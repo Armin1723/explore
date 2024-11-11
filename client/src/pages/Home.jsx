@@ -13,7 +13,7 @@ import RecentlyReviewed from "../components/home/RecentlyReviewed";
 
 import { useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
-import Promotions from "../components/home/Promotions";
+// import Promotions from "../components/home/Promotions";
 
 const Home = () => {
   const { setColorScheme } = useMantineColorScheme();
@@ -38,7 +38,7 @@ const Home = () => {
 
         <CategorySection />
 
-        <Promotions />
+        {/* <Promotions /> */}
 
         <TrendingStores />
 

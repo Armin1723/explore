@@ -1,30 +1,21 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
-import AdminUsers from "./components/admin/AdminUsers";
-import AdminCompanies from "./components/admin/AdminCompanies";
-import AdminReviews from "./components/admin/AdminReviews";
-import AdminRequests from "./components/admin/AdminRequests";
-import AdminCategories from "./components/admin/AdminCategories";
-import AddCategoryForm from "./components/admin/AddCategoryForm";
-import AdminHomepage from "./pages/AdminHomepage";
-import AdminLogin from "./components/admin/AdminLogin";
-
 const Home = React.lazy(() => import("./pages/Home"));
-// const AdminCategories = React.lazy(() => import("./components/admin/AdminCategories"));
-// const AddCategoryForm = React.lazy(() => import("./components/admin/AddCategoryForm"));
-// const AdminHomepage = React.lazy(() => import("./pages/AdminHomepage"));
-// const AdminLogin = React.lazy(() => import("./components/admin/AdminLogin"));
-// const AdminUsers = React.lazy(() => import("./components/admin/AdminUsers"));
-// const AdminCompanies = React.lazy(() =>
-//   import("./components/admin/AdminCompanies")
-// );
-// const AdminReviews = React.lazy(() =>
-//   import("./components/admin/AdminReviews")
-// );
-// const AdminRequests = React.lazy(() =>
-//   import("./components/admin/AdminRequests")
-// );
+const AdminCategories = React.lazy(() => import("./components/admin/AdminCategories"));
+const AddCategoryForm = React.lazy(() => import("./components/admin/AddCategoryForm"));
+const AdminHomepage = React.lazy(() => import("./pages/AdminHomepage"));
+const AdminLogin = React.lazy(() => import("./components/admin/AdminLogin"));
+const AdminUsers = React.lazy(() => import("./components/admin/AdminUsers"));
+const AdminCompanies = React.lazy(() =>
+  import("./components/admin/AdminCompanies")
+);
+const AdminReviews = React.lazy(() =>
+  import("./components/admin/AdminReviews")
+);
+const AdminRequests = React.lazy(() =>
+  import("./components/admin/AdminRequests")
+);
 const CompanyHomepage = React.lazy(() => import("./pages/CompanyHomepage"));
 const CompanyDetail = React.lazy(() =>
   import("./components/company/CompanyDetail")

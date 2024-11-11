@@ -64,7 +64,7 @@ const AdminReviews = () => {
       <ScrollArea
         offsetScrollbars
         scrollbarSize={6}
-        scrollHideDelay={500} h={400}>
+        scrollHideDelay={500} h={800}>
         <div className="heading w-full border-l-4 border-primary my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">
             Most Flagged Reviews

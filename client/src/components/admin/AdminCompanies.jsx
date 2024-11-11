@@ -78,7 +78,7 @@ const AdminCompanies = () => {
         offsetScrollbars
         scrollbarSize={6}
         scrollHideDelay={500}
-        h={400}
+        h={800}
         type="scroll"
         className="w-full"
       >

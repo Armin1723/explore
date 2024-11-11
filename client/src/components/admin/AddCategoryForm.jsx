@@ -94,7 +94,7 @@ import { useNavigate } from "react-router-dom";
         <ScrollArea
         offsetScrollbars
         scrollbarSize={6}
-        scrollHideDelay={500} h={400}>
+        scrollHideDelay={500} h={800}>
           <div className="heading w-full border-l-4 border-primary my-4 flex items-center justify-start gap-2">
             <p className="pl-6 text-xl tracking-wide">Add Category</p>
           </div>
@@ -137,7 +137,7 @@ import { useNavigate } from "react-router-dom";
                   </Chip>
                 ))}
               </Group>
-              <Button type="submit" className="btn">
+              <Button type="submit" color='primary.3'>
                 Add Category
               </Button>
             </div>

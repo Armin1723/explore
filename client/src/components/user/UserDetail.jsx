@@ -66,7 +66,7 @@ const UserDetail = () => {
       <ScrollArea
         offsetScrollbars
         scrollbarSize={6}
-        scrollHideDelay={500} h={600} scrollbars="y" className="">
+        scrollHideDelay={500} h={800} scrollbars="y" className="">
         <div className="profile flex justify-start items-start px-4 gap-4 max-sm:gap-2 py-6 w-full bg-secondary my-6 ">
           <div className="avatar flex flex-col justify-center h-full">
             <Avatar
