@@ -5,7 +5,6 @@ import aboutUsGraphic from "../assets/about-us.json";
 import { Accordion } from "@mantine/core";
 import classes from "./AboutUs.module.css";
 import Footer from "../components/shared/Footer";
-import ContactCard from "../components/home/ContactCard";
 
 const AboutUs = () => {
   return (

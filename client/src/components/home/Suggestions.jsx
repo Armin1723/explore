@@ -62,7 +62,7 @@ const Suggestions = () => {
   ];
   return (
     <div className="page flex items-center justify-center w-full">
-      <div className="container grid grid-cols-2 max-sm:grid-cols-1 w-3/4 max-sm:w-[90%] py-12 max-sm:py-4 gap-12 max-sm:gap-4">
+      <div className="container grid grid-cols-2 max-sm:grid-cols-1 w-[90%] max-sm:w-[90%] py-12 max-sm:py-4 gap-12 max-sm:gap-4 ">
         {suggestions &&
           suggestions.map((suggestion, index) => {
             return (

@@ -44,6 +44,8 @@ const EnquiryPage = React.lazy(() => import("./components/company/EnquiryPage"))
 
 const AboutUs = React.lazy(() => import("./pages/AboutUs"));
 
+const TestimonialPage = React.lazy(() => import("./pages/TestimonialPage"));
+
 const App = () => {
   const [refetch, setRefetch] = React.useState(false);
 
@@ -109,6 +111,8 @@ const App = () => {
           <Route path="/admin/login" element={<AdminLogin />} />
 
           <Route path='/about' element={<AboutUs />} />
+
+          <Route path='/testimonials' element={<TestimonialPage/>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
