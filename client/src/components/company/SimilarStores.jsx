@@ -104,13 +104,14 @@ const SimilarStores = ({category = 'all'}) => {
         <Suspense fallback={<div className="w-full aspect-video flex items-center justify-center"><div className="loader"></div></div>}>
         <div className="carousel-container relative w-full">
           <Carousel
-            slideSize={{base: '50%', md: '20%'}}
+            slideSize={{base: '50%', md: '18%'}}
             slideGap={{base: 'lg', md: 'xl'}} 
             align="start"
             loop
             onSlideChange={(index) => setActiveSlide(index)}
             getEmblaApi={setEmbla}
             withControls={false}
+            className="py-2"
           >
             {stores.map((company, index) => (
               <Carousel.Slide key={index}>
@@ -119,7 +120,7 @@ const SimilarStores = ({category = 'all'}) => {
                   onClick={()=>window.scrollY(0)}
                   className="flex flex-col h-full rounded-xl group bg-gray-200 hover:bg-primary hover:text-white transition-all duration-200 border border-black hover:border-accent"
                 >
-                  <div className="image-container w-full aspect-video overflow-hidden rounded-t-lg flex items-center justify-center">
+                  <div className="image-container w-full aspect-[14/9] overflow-hidden rounded-t-lg flex items-center justify-center">
                     <img
                       src={company?.gallery[0]?.url.replace('/upload/', '/upload/w_300,h_200,c_fill/')}
                       alt={company?.name}

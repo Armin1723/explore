@@ -24,7 +24,7 @@ const AdminLogin = () => {
       navigate("/admin");
     }
     localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
+  }, []);
 
   const form = useForm({
     mode: "uncontrolled",

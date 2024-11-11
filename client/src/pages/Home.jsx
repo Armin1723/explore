@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 
 import { Header } from "../components/shared/Header";
@@ -14,6 +13,7 @@ import RecentlyReviewed from "../components/home/RecentlyReviewed";
 
 import { useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
+import Promotions from "../components/home/Promotions";
 
 const Home = () => {
   const { setColorScheme } = useMantineColorScheme();
@@ -29,7 +29,6 @@ const Home = () => {
       className={`flex flex-col items-center min-h-screen max-sm:min-w-screen home `}
     >
       <Header />
-        
 
       <div
         rounded="lg"
@@ -38,6 +37,8 @@ const Home = () => {
         <Hero />
 
         <CategorySection />
+
+        <Promotions />
 
         <TrendingStores />
 
@@ -51,10 +52,8 @@ const Home = () => {
 
         <ContactCard />
 
-      <Footer />
+        <Footer />
       </div>
-
-
     </div>
   );
 };
