@@ -26,14 +26,14 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="w-screen aspect-video max-h-[70vh] overflow-hidden relative">
+    <div className="w-screen aspect-[16/6] max-h-[70vh] overflow-hidden relative">
       {Array.from({ length: 4 }).map((_, index) => {
         return (
           <img
             key={index}
-            src={`/assets/hero-image-${index + 1}.webp`}
+            src={`/assets/banner-${index + 1}.webp`}
             alt="hero"
-            className={`aspect-video object-fill !rounded-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ${
+            className={` object-cover !rounded-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ${
               index === curr && "opacity-100"
             }`}
           />

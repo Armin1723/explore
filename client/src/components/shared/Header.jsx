@@ -105,7 +105,7 @@ export const Header = () => {
 
   return (
     <div
-      className={` fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
+      className={` fixed header  border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-1 flex justify-between items-center`}
@@ -114,14 +114,14 @@ export const Header = () => {
           {/* <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
             <IoIosTrendingUp className="text-2xl font-bold text-white" />
           </div> */}
-          <p className="heading !my-0">Explore </p>
+          <p className="heading !my-0 text-white mix-blend-difference">Explore </p>
         </Link>
 
         <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end ">
           <div className="links max-lg:hidden flex md:gap-6 gap-2 ">
             <Link
               to="/"
-              className="link text-sm transition-colors duration-200"
+              className="link text-sm transition-colors duration-200 text-white mix-blend-difference"
             >
               Home
             </Link>
@@ -133,7 +133,7 @@ export const Header = () => {
               withinPortal
             >
               <HoverCard.Target>
-                <div className="link text-sm  transition-colors duration-200">
+                <div className="link text-sm  transition-colors duration-200 text-white mix-blend-difference">
                   <Center inline>
                     <Box component="span" mr={4}>
                       Categories
@@ -150,7 +150,7 @@ export const Header = () => {
                   <Text fw={500}>Categories</Text>
                   <Link
                     to="/companies/categories"
-                    className="text-xs text-blue-700 hover:underline"
+                    className="text-xs text-blue-700 hover:underline "
                   >
                     View all
                   </Link>
@@ -182,7 +182,7 @@ export const Header = () => {
 
             <Link
               to="/companies/add"
-              className="link text-sm  transition-colors duration-200"
+              className="link text-sm  transition-colors duration-200 text-white mix-blend-difference"
             >
               Add Company
             </Link>
@@ -194,7 +194,7 @@ export const Header = () => {
                   event.preventDefault();
                 }
               }}
-              className={`link text-sm  transition-colors duration-200 ${
+              className={`link text-sm  transition-colors duration-200 text-white mix-blend-difference ${
                 (!user || !user.name) && "text-gray-700 cursor-not-allowed"
               }`}
             >
@@ -214,11 +214,12 @@ export const Header = () => {
               </Link>
             )}
           </div>
-          <div className="max-lg:flex hidden">
+          <div className="max-lg:flex hidden ">
             <Burger
               opened={drawerOpened}
               onClick={toggleDrawer}
               hiddenFrom="sm"
+              color="white"
             />
           </div>
         </div>
