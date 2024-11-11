@@ -121,7 +121,7 @@ const TrendingStores = () => {
                     <div className="image-container w-full aspect-[4/3] overflow-hidden rounded-lg p-3 max-lg:p-1 flex items-center justify-center">
                       {store.gallery ? (
                         <img
-                          src={store?.gallery[0]?.url.replace(
+                          src={store?.gallery[0]?.url?.replace(
                             "/upload/",
                             "/upload/w_300,h_200,c_fill/"
                           )}

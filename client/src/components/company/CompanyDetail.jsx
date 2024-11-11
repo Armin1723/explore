@@ -224,7 +224,7 @@ const CompanyDetail = () => {
                 }
               >
                 <img
-                  src={image?.url.replace(
+                  src={image?.url?.replace(
                     "/upload/",
                     "/upload/w_1080/h_720/c_fill/"
                   )}

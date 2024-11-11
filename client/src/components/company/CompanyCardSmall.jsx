@@ -16,7 +16,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
       <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
         <img
           src={
-            (company.gallery && company?.gallery[0]?.url.replace(
+            (company.gallery && company?.gallery[0]?.url?.replace(
                         "/upload/",
                         "/upload/w_300,h_200,c_fill/"
                       )) ||

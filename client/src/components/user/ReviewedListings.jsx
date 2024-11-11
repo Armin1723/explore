@@ -66,7 +66,7 @@ const ReviewedListing = ({ user }) => {
                   >
                     <div className="image-container w-full aspect-video overflow-hidden rounded-t-lg flex items-center justify-center">
                       <img
-                        src={result?.company?.gallery[0]?.url.replace(
+                        src={result?.company?.gallery[0]?.url?.replace(
                           "/upload/",
                           "/upload/w_300,h_200,c_fill/"
                         )}
