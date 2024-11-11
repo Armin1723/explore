@@ -85,7 +85,7 @@ const AdminLogin = () => {
           autoClose: 3000,
         });
         dispatch(setUser(data.user));
-        navigate("/");
+        navigate("/admin");
       }
     } catch (error) {
       notifications.update({
