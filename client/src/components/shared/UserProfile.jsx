@@ -45,6 +45,7 @@ const UserProfile = () => {
           color: "green",
         });
         dispatch(setUser());
+        localStorage.setItem("user", null);
         navigate("/");
       } else {
         notifications.show({
