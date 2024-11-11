@@ -16,9 +16,9 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UserProfile from "./UserProfile";
 
 const categoryData = [
@@ -56,25 +56,27 @@ const categoryData = [
 ];
 
 export const Header = () => {
-  const user = useSelector((state) => state.user);
 
+  const user = useSelector((state) => state.user);
+  
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, []);
-
+  
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      const header = document.querySelector(".header");
-      if (window.scrollY > 30) {
-        header.classList.add("bg-white");
-        header.classList.add("border-b");
-        header.classList.add("shadow-lg");
-      } else {
-        header.classList.remove("bg-white");
-        header.classList.remove("border-b");
-        header.classList.remove("shadow-lg");
-      }
-    });
+
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector(".header");
+        if (window.scrollY > 30) {
+          header.classList.add("bg-white");
+          header.classList.add("border-b");
+          header.classList.add("shadow-lg");
+        } else {
+          header.classList.remove("bg-white");
+          header.classList.remove("border-b");
+          header.classList.remove("shadow-lg");
+        }
+      });
   }, []);
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -105,7 +107,7 @@ export const Header = () => {
 
   return (
     <div
-      className={` fixed header  border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
+      className={` fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-1 flex justify-between items-center`}
@@ -114,14 +116,16 @@ export const Header = () => {
           {/* <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
             <IoIosTrendingUp className="text-2xl font-bold text-white" />
           </div> */}
-          <p className="heading !my-0 text-white mix-blend-difference">Explore </p>
+          <p className="heading !my-0 ">
+            Explore{" "}
+          </p>
         </Link>
 
         <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end ">
           <div className="links max-lg:hidden flex md:gap-6 gap-2 ">
             <Link
               to="/"
-              className="link text-sm transition-colors duration-200 text-white mix-blend-difference"
+              className="link text-sm transition-colors duration-200 "
             >
               Home
             </Link>
@@ -133,7 +137,7 @@ export const Header = () => {
               withinPortal
             >
               <HoverCard.Target>
-                <div className="link text-sm  transition-colors duration-200 text-white mix-blend-difference">
+                <div className="link text-sm  transition-colors duration-200 ">
                   <Center inline>
                     <Box component="span" mr={4}>
                       Categories
@@ -182,7 +186,7 @@ export const Header = () => {
 
             <Link
               to="/companies/add"
-              className="link text-sm  transition-colors duration-200 text-white mix-blend-difference"
+              className="link text-sm  transition-colors duration-200 "
             >
               Add Company
             </Link>
@@ -194,7 +198,7 @@ export const Header = () => {
                   event.preventDefault();
                 }
               }}
-              className={`link text-sm  transition-colors duration-200 text-white mix-blend-difference ${
+              className={`link text-sm  transition-colors duration-200  ${
                 (!user || !user.name) && "text-gray-700 cursor-not-allowed"
               }`}
             >
