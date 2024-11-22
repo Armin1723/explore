@@ -113,16 +113,13 @@ export const Header = () => {
         className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-1 flex justify-between items-center`}
       >
         <Link to="/" className="flex items-center gap-2">
-          {/* <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
-            <IoIosTrendingUp className="text-2xl font-bold text-white" />
-          </div> */}
           <p className="heading !my-0 ">
             Explore{" "}
           </p>
         </Link>
 
         <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end ">
-          <div className="links max-lg:hidden flex md:gap-6 gap-2 ">
+          <div className="links max-lg:hidden flex md:gap-6 gap-2 py-2">
             <Link
               to="/"
               className="link text-sm transition-colors duration-200 "
@@ -137,7 +134,7 @@ export const Header = () => {
               withinPortal
             >
               <HoverCard.Target>
-                <div className="link text-sm  transition-colors duration-200 ">
+                <div className="link text-sm transition-colors duration-200">
                   <Center inline>
                     <Box component="span" mr={4}>
                       Categories
@@ -206,7 +203,7 @@ export const Header = () => {
             </Link>
           </div>
 
-          <div className="mx-2 my-1">
+          <div className="m-2 my-3">
             {user && user?.name ? (
               <UserProfile />
             ) : (

@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, ScrollArea } from "@mantine/core";
+import { Avatar, Card, ScrollArea } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import React, { useEffect, useState } from "react";
 import { MdDelete, MdOutlineOutlinedFlag } from "react-icons/md";
@@ -88,7 +88,7 @@ const AdminReviews = () => {
                   index === 0 && "border-t"
                 }`}
               >
-                <div className="flex justify-between items-center capitalize py-2 text-lg max-sm:text-sm bg-gray-100/40 px-2 rounded-md my-2 w-full">
+                <div className="flex justify-between items-center capitalize py-2 text-lg max-sm:text-sm px-2 rounded-md my-2 w-full">
                   <Link
                     to={`/companies/${review.company.name
                       .split(" ")
@@ -103,10 +103,10 @@ const AdminReviews = () => {
                       <MdOutlineOutlinedFlag /> <p>:</p>{" "}
                       <p>{review.flags.length}</p>
                     </div>
-                    <div className="p-1 rounded-full bg-red-600 hover:bg-red-600/80 transition-all duration-300 cursor-pointer">
+                    <div className="p-1 rounded-full  transition-all duration-300 cursor-pointer">
                       <MdDelete
-                        size={16}
-                        className=""
+                        size={20}
+                        className="fill-red-600 hover:fill-red-500 hover:scale-110 transition-all duration-300"
                         onClick={() => deleteReview(review._id)}
                       />
                     </div>
@@ -114,18 +114,19 @@ const AdminReviews = () => {
                 </div>
                 <Link
                   to={`/users/${review.user._id}`}
-                  className="userCard flex justify-between w-full"
+                  className="userCard flex justify-between w-full py-2 px-2 rounded-sm"
                 >
-                  <div className="flex items-center gap-8 max-sm:gap-4">
+                  <div className="flex items-center gap-8 max-sm:gap-4 ">
                     <Avatar
                       src={review.user?.profilePic}
                       alt={review.user.name}
+                      className="border border-black"
                     />
                     <p className="capitalize font-semibold">
                       {review.user.name}
                     </p>
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-center text-xs">
                     <p>
                       <span className="max-sm:hidden">Reviewed at: </span>
                       {new Date(review.createdAt).toLocaleDateString()}
