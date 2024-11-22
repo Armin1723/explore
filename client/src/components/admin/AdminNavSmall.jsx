@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "@mantine/core";
 import { FaChevronRight } from "react-icons/fa";
 import { MdCategory, MdPendingActions } from "react-icons/md";
+import { IoImageSharp } from "react-icons/io5";
 
 const AdminNavSmall = () => {
   const user = useSelector((state) => state.user);
@@ -101,6 +102,13 @@ const AdminNavSmall = () => {
           label="Categories"
           leftSection={<MdCategory className="text-2xl" />}
           active={location.pathname.includes("/admin/categories")}
+        />
+        <NavLink
+          component={Link}
+          to="/admin/banners"
+          label="Banners"
+          leftSection={<IoImageSharp className="text-2xl" />}
+          active={location.pathname.includes("/admin/banners")}
         />
       </div>
       {/* </ScrollArea> */}

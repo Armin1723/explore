@@ -64,7 +64,9 @@ const AdminReviews = () => {
       <ScrollArea
         offsetScrollbars
         scrollbarSize={6}
-        scrollHideDelay={500} h={800}>
+        scrollHideDelay={500}
+        h={800}
+      >
         <div className="heading w-full border-l-4 border-primary my-4 ">
           <p className="w-full pl-6 text-xl tracking-wide">
             Most Flagged Reviews
@@ -96,14 +98,18 @@ const AdminReviews = () => {
                     {review.comment.split(" ").slice(0, 10).join(" ")}
                     ...
                   </Link>
-                  <div className="flex items-center">
-                    <MdOutlineOutlinedFlag /> : {review.flags.length}
-                    <Button className="!px-1 mx-2" color="red.7">
+                  <div className="flex items-center gap-3">
+                    <div className="flag flex items-center gap-1">
+                      <MdOutlineOutlinedFlag /> <p>:</p>{" "}
+                      <p>{review.flags.length}</p>
+                    </div>
+                    <div className="p-1 rounded-full bg-red-600 hover:bg-red-600/80 transition-all duration-300 cursor-pointer">
                       <MdDelete
-                        size={24}
+                        size={16}
+                        className=""
                         onClick={() => deleteReview(review._id)}
                       />
-                    </Button>
+                    </div>
                   </div>
                 </div>
                 <Link
@@ -139,7 +145,6 @@ const AdminReviews = () => {
             setPage={setPage}
           />
         )}
-
       </ScrollArea>
     </Card>
   );

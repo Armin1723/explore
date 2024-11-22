@@ -6,6 +6,7 @@ const Company = require("../models/companyModel");
 const Review = require("../models/reviewModel");
 const Category = require("../models/categoryModel");
 const { sendMail } = require("../helpers");
+const Advertisement = require("../models/advertisementModel");
 
 //Login as admin
 const loginAdmin = async (req, res) => {
@@ -465,6 +466,50 @@ const getRequests = async (req, res) => {
   }
 };
 
+//Get Banners
+const getBanners = async (req, res, limit = 20) => {
+  try {
+    const { page = 1 } = req.query;
+
+    // Fetch active advertisements with populated company banner
+    const advertisedCompanies = await Advertisement.find({
+      featured: true,
+      endDate: { $gte: new Date() },
+    })
+      .populate({
+        path: 'company', 
+        select: 'banner gallery',
+      })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const totalBanners = await Advertisement.countDocuments({
+      status: "active",
+      endDate: { $gte: new Date() },
+    });
+
+    const updatedBanners = advertisedCompanies.map(advertisement => {
+      const company = advertisement.company;
+      const bannerImage = company.banner || (company.gallery && company.gallery[0]) || null;
+      return {
+        ...advertisement.toObject(), 
+        banner: bannerImage,
+      };
+    });
+
+    res.status(200).json({
+      page: page,
+      totalPages: Math.ceil(totalBanners / limit),
+      banners: updatedBanners,
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
 module.exports = {
   loginAdmin,
   logoutAdmin,
@@ -481,4 +526,5 @@ module.exports = {
   getRecentCompany,
   handleRequest,
   getRequests,
+  getBanners
 };

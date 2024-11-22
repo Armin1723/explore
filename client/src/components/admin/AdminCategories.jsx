@@ -61,11 +61,11 @@ const AdminCategories = () => {
                   index === 0 && "border-t"
                 }`}
               >
-                <div className="flex gap-4 font-['inter'] font-semibold">
-                  <p className="">{index + 1}.</p>
+                <div className="flex gap-4 font-['inter'] font-medium">
+                  <p className="font-semibold">{index + 1}.</p>
                   <Link
                     to={`/admin/companies/${category?.name}`}
-                    className=""
+                    className="font-medium"
                   >
                     {category?.name}
                   </Link>

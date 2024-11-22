@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import AdminBanners from "./components/admin/AdminBanners";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const AdminCategories = React.lazy(() => import("./components/admin/AdminCategories"));
@@ -106,6 +107,7 @@ const App = () => {
             />
             <Route path="categories" element={<AdminCategories />} />
             <Route path="categories/add" element={<AddCategoryForm />} />
+            <Route path='banners' element={<AdminBanners />} />
           </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />

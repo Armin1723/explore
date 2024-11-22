@@ -30,6 +30,10 @@ const advertisementSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    featured: {
+        type: Boolean,
+        default: true,
+    },
 })
 
 const Advertisement = mongoose.model('Advertisement', advertisementSchema);

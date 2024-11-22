@@ -69,7 +69,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
                 </div>
                 <p>Dashboard</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-center">
                 <ThemeToggle />
                 <UserProfile />
               </div>

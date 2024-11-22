@@ -1,4 +1,4 @@
-const { getUsers, getAdminStats,  exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin, handleRequest, getRecentCompany, deleteReview, getRequests } = require('../controllers/adminController');
+const { getUsers, getAdminStats,  exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin, handleRequest, getRecentCompany, deleteReview, getRequests, getBanners } = require('../controllers/adminController');
 const { isAdmin } = require('../middlewares');
 
 const router = require('express').Router();
@@ -33,5 +33,8 @@ router.delete('/reviews/:reviewId', isAdmin, deleteReview);
 router.post('/requests/handle', isAdmin, handleRequest);
 router.get('/recent-request', isAdmin, getRecentCompany);
 router.get('/requests', isAdmin, getRequests);
+
+//Get Banners with pagination support
+router.get('/banners', isAdmin, getBanners);
 
 module.exports = router;

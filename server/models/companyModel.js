@@ -62,22 +62,18 @@ const companySchema = new mongoose.Schema({
     banner: {
         public_id: {
             type: String,
-            default: null,
         },
         url: {
             type: String,
-            default: null,
         },
     },
     gallery: [
         {
             public_id: {
                 type: String,
-                default: null,
             },
             url: {
                 type: String,
-                default: null,
             },
         },
     ],

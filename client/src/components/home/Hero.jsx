@@ -6,10 +6,11 @@ import {
   FaChevronCircleRight,
   FaSearch,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [curr, setCurr] = useState(0);
+  const [images, setImages] = useState([]);
 
   const [searchQuery, setSearchQuery] = React.useState("");
   const navigate = useNavigate();
@@ -19,24 +20,53 @@ const Hero = () => {
   };
 
   useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/advertisement/banners`);
+        const data = await response.json();
+        if (!response.ok || data.banners.length === 0) {
+          setImages([
+            '/assets/banner-1.webp',
+            '/assets/banner-2.webp',
+            '/assets/banner-3.webp',
+            '/assets/banner-4.webp',
+          ]);
+          throw new Error(data.message || "Failed to fetch images");
+        } else {
+          setImages(data.banners);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchImages();
+
     const autoSlide = setInterval(() => {
       setCurr((prev) => (prev + 1) % 4);
     }, 8000);
     return () => clearInterval(autoSlide);
-  }, []);
+  },[]);
 
   return (
     <div className="w-screen aspect-[16/6] max-h-[70vh] overflow-hidden relative">
-      {Array.from({ length: 4 }).map((_, index) => {
+      {images && images.map((image, index) => {
         return (
-          <img
-            key={index}
-            src={`/assets/banner-${index + 1}.webp`}
+          <Link to={`/companies/${image.name.split(' ').join('-')}`} key={index}>
+            <img
+            key={image.name}
+            src={image.image}
+            srcSet={`
+              ${image.image.replace('/uploads/', '/uploads/w_400/')} 400w,
+              ${image.image.replace('/uploads/', '/uploads/w_800/')} 800w,
+              ${image.image.replace('/uploads/', '/uploads/w_1200/')} 1200w
+            `}
+            sizes="(max-width: 480px) 400px, (max-width: 768px) 800px, 1600px"
             alt="hero"
-            className={` object-cover !rounded-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ${
+            className={`object-cover !rounded-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ${
               index === curr && "opacity-100"
             }`}
           />
+          </Link>
         );
       })}
 
