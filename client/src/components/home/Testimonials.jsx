@@ -94,9 +94,9 @@ const Testimonials = () => {
               results.testimonials &&
               results?.testimonials.map((testimonial, index) => (
                 <Carousel.Slide key={index}>
-                  <div className="bg-secondary text-black rounded-lg p-6 md:p-8 lg:p-10 flex flex-col items-center gap-4 shadow-md h-[300px]">
-                    <FaUser className="text-5xl md:text-6xl mb-2" />
-                    <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="bg-secondary text-black overflow-y-scroll rounded-lg py-4 max-sm:px-2 max-lg:px-4 px-6 flex flex-col items-center gap-4 shadow-md h-[300px]">
+                    <FaUser size={48} className="!text-5xl md:!text-6xl mb-2" />
+                    <div className="flex flex-col items-center text-center space-y-2 overflow-y-scroll">
                       <p className="text-xl font-semibold">
                         {testimonial?.name}
                       </p>
@@ -106,7 +106,7 @@ const Testimonials = () => {
                           {formatDate(testimonial?.createdAt)}
                         </p>
                       </div>
-                      <p className="italic w-full max-w-lg ">
+                      <p className="italic w-full">
                         {testimonial?.message.split(" ").slice(0, 20).join(" ")}
                         ...
                       </p>

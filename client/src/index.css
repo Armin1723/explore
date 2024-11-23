@@ -212,6 +212,13 @@ body,
     }
 }
 
+.text-shadow {
+    text-shadow: 0px 0px 2px white;
+}
+.text-stroke {
+    -webkit-text-stroke: 0.2px white;
+}
+
 /* Heading Text */
 .heading {
     @apply text-2xl max-sm:text-xl font-['poppins'] font-bold mt-6 max-sm:mt-4;

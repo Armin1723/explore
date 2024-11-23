@@ -77,11 +77,11 @@ const UserProfile = () => {
       <Menu.Target>
         <UnstyledButton
           className={`${classes.user} ${
-            userMenuOpened ? classes.userActive : ""
+            userMenuOpened ? classes.userActive : "!p-0"
           }`}
         >
-          <Group gap={7}>
-            <Link to={`/users/${user._id}`} className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center">
+            <Link to={`/users/${user._id}`} className="flex gap-2 items-center ">
               <Avatar
                 src={user?.profilePic?.replace('/uploads/', '/uploads/w_100/')}
                 className="border border-black"
@@ -95,7 +95,7 @@ const UserProfile = () => {
               stroke={1.5}
               className=""
             />
-          </Group>
+          </div>
         </UnstyledButton>
       </Menu.Target>
 

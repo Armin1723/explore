@@ -12,14 +12,18 @@ import {
   Collapse,
   ScrollArea,
   rem,
+  ActionIcon,
+  TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import UserProfile from "./UserProfile";
+import { FaArrowRight, FaSearch } from "react-icons/fa";
+import SearchBar from "./SearchBar";
 
 const categoryData = [
   {
@@ -56,27 +60,32 @@ const categoryData = [
 ];
 
 export const Header = () => {
-
   const user = useSelector((state) => state.user);
-  
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    navigate(`/companies/search?query=${searchQuery}`);
+  };
+
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, []);
-  
-  useEffect(() => {
 
-      window.addEventListener("scroll", () => {
-        const header = document.querySelector(".header");
-        if (window.scrollY > 30) {
-          header.classList.add("bg-white");
-          header.classList.add("border-b");
-          header.classList.add("shadow-lg");
-        } else {
-          header.classList.remove("bg-white");
-          header.classList.remove("border-b");
-          header.classList.remove("shadow-lg");
-        }
-      });
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      const header = document.querySelector(".header");
+      if (window.scrollY > 10) {
+        header.classList.add("bg-white");
+        header.classList.add("border-b");
+        header.classList.add("shadow-lg");
+      } else {
+        header.classList.remove("bg-white");
+        header.classList.remove("border-b");
+        header.classList.remove("shadow-lg");
+      }
+    });
   }, []);
 
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -110,19 +119,53 @@ export const Header = () => {
       className={` fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
     >
       <header
-        className={`md:px-[15vw] px-6 py-1 flex justify-between items-center`}
+        className={`md:px-[8vw] px-6 py-1 flex justify-between`}
       >
-        <Link to="/" className="flex items-center gap-2">
-          <p className="heading !my-0 ">
-            Explore{" "}
-          </p>
-        </Link>
+        <div className="nav-left flex items-center py-4 max-lg:py-2 gap-4 max-lg:gap-1">
+          <Link to="/" className="flex items-center">
+            <p className="heading !my-0 text-shadow text-stroke !font-extrabold">Explore </p>
+          </Link>
+          <div className="flex items-center justify-center">
+            {/* <TextInput
+              radius="md"
+              size="sm"
+              placeholder="Search query"
+              color="primary.3"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.currentTarget.value)}
+              className="w-[25vw] max-lg:w-[30vw] max-sm:w-[70vw] shadow-[0_0_18px_primary] placeholder:!text-black"
+              rightSectionWidth={42}
+              leftSection={
+                <FaSearch
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              }
+              rightSection={
+                <ActionIcon
+                  size={28}
+                  radius="md"
+                  variant="filled"
+                  color="primary.1"
+                  my='md'
+                  onClick={handleSearch}
+                >
+                  <FaArrowRight
+                    style={{ width: rem(22), height: rem(18) }}
+                    stroke={1.5}
+                  />
+                </ActionIcon>
+              }
+            /> */}
+            <SearchBar />
+          </div>
+        </div>
 
-        <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end ">
+        <div className="nav-right flex gap-4 max-sm:gap-0 py-4 max-lg:py-2 items-center max-lg:items-start justify-end ">
           <div className="links max-sm:hidden flex md:gap-6 gap-2 py-2">
             <Link
               to="/"
-              className="link text-sm transition-colors duration-200 "
+              className="link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200 "
             >
               Home
             </Link>
@@ -134,7 +177,7 @@ export const Header = () => {
               withinPortal
             >
               <HoverCard.Target>
-                <div className="link text-sm transition-colors duration-200">
+                <div className="link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200">
                   <Center inline>
                     <Box component="span" mr={4}>
                       Categories
@@ -183,9 +226,9 @@ export const Header = () => {
 
             <Link
               to="/companies/add"
-              className="link text-sm  transition-colors duration-200 "
+              className="link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200 "
             >
-              Add Company
+              Listing
             </Link>
 
             <Link
@@ -195,7 +238,7 @@ export const Header = () => {
                   event.preventDefault();
                 }
               }}
-              className={`link text-sm  transition-colors duration-200  ${
+              className={`link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200  ${
                 (!user || !user.name) && "text-gray-700 cursor-not-allowed"
               }`}
             >
@@ -203,11 +246,11 @@ export const Header = () => {
             </Link>
           </div>
 
-          <div className="m-2 my-3">
+          <div className="flex gap-2 items-center max-lg:items-start ">
             {user && user?.name ? (
               <UserProfile />
             ) : (
-              <Link className="fancy w-44 max-sm:hidden !py-2 " to="/auth">
+              <Link className="fancy w-44 max-sm:hidden !py-2 shadow-xl" to="/auth">
                 <span className="top-key"></span>
                 <span className="text">Join Now</span>
                 <span className="bottom-key-1"></span>
@@ -221,6 +264,7 @@ export const Header = () => {
               onClick={toggleDrawer}
               hiddenFrom="sm"
               color="white"
+              className="!text-white/75 !mix-blend-difference"
             />
           </div>
         </div>

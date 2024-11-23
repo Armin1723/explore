@@ -6,18 +6,11 @@ import {
   FaChevronCircleRight,
   FaSearch,
 } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const [curr, setCurr] = useState(0);
   const [images, setImages] = useState([]);
-
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const navigate = useNavigate();
-
-  const handleSearch = () => {
-    navigate(`/companies/search?query=${searchQuery}`);
-  };
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -48,7 +41,7 @@ const Hero = () => {
   },[]);
 
   return (
-    <div className="w-screen aspect-[16/6] max-h-[70vh] overflow-hidden relative">
+    <div className="w-screen aspect-[16/7] max-lg:aspect-video max-h-[70vh] overflow-hidden relative">
       {images && images.map((image, index) => {
         return (
           <Link to={`/companies/${image.name.split(' ').join('-')}`} key={index}>
@@ -69,39 +62,6 @@ const Hero = () => {
           </Link>
         );
       })}
-
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[97] flex items-center justify-center">
-        <TextInput
-          radius="md"
-          size="sm"
-          placeholder="Search query"
-          color="green.9"
-          value={searchQuery}
-          onChange={(event) => setSearchQuery(event.currentTarget.value)}
-          className="w-[50vw] md:w-[30vw] shadow-[0_0_18px_primary] placeholder:text-black"
-          rightSectionWidth={42}
-          leftSection={
-            <FaSearch
-              style={{ width: rem(18), height: rem(18) }}
-              stroke={1.5}
-            />
-          }
-          rightSection={
-            <ActionIcon
-              size={28}
-              radius="md"
-              variant="filled"
-              color="primary.1"
-              onClick={handleSearch}
-            >
-              <FaArrowRight
-                style={{ width: rem(22), height: rem(18) }}
-                stroke={1.5}
-              />
-            </ActionIcon>
-          }
-        />
-      </div>
 
       <div className="absolute w-full top-1/2 -translate-y-1/2 flex justify-between items-center">
         <button
