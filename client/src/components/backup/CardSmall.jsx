@@ -16,7 +16,7 @@ const CardSmall = ({ company }) => {
             "/upload/w_300,h_220/"
           )}
           alt={company?.name}
-          className="w-full h-full object-cover group-hover:scale-110 border border-black/70 transition-all duration-300"
+          className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
         />
       </div>
 

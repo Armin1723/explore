@@ -5,7 +5,7 @@ const Suggestions = () => {
   const suggestions = [
     {
       title: "All About Fashion",
-      category: "fashion",
+      category: "Fashion",
       subCategories: [
         {
           image: "fashion-mens",
@@ -33,7 +33,7 @@ const Suggestions = () => {
     },
     {
       title: "Electronics",
-      category: "electronics",
+      category: "Electronics",
       subCategories: [
         {
           image: "electronics-mobile",
@@ -47,7 +47,7 @@ const Suggestions = () => {
     },
     {
       title: "Books",
-      category: "books",
+      category: "Books",
       subCategories: [
         {
           image: "books-fiction",
