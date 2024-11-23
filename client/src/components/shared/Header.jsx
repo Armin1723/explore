@@ -59,13 +59,6 @@ const categoryData = [
 export const Header = () => {
   const user = useSelector((state) => state.user);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
-
-  const handleSearch = () => {
-    navigate(`/companies/search?query=${searchQuery}`);
-  };
-
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, []);
@@ -123,42 +116,11 @@ export const Header = () => {
             <p className="heading !my-0 text-shadow text-stroke !font-extrabold">Explore </p>
           </Link>
           <div className="flex items-center justify-center">
-            {/* <TextInput
-              radius="md"
-              size="sm"
-              placeholder="Search query"
-              color="primary.3"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.currentTarget.value)}
-              className="w-[25vw] max-lg:w-[30vw] max-sm:w-[70vw] shadow-[0_0_18px_primary] placeholder:!text-black"
-              rightSectionWidth={42}
-              leftSection={
-                <FaSearch
-                  style={{ width: rem(18), height: rem(18) }}
-                  stroke={1.5}
-                />
-              }
-              rightSection={
-                <ActionIcon
-                  size={28}
-                  radius="md"
-                  variant="filled"
-                  color="primary.1"
-                  my='md'
-                  onClick={handleSearch}
-                >
-                  <FaArrowRight
-                    style={{ width: rem(22), height: rem(18) }}
-                    stroke={1.5}
-                  />
-                </ActionIcon>
-              }
-            /> */}
             <SearchBar />
           </div>
         </div>
 
-        <div className="nav-right flex gap-4 max-sm:gap-0 py-4 max-lg:py-2 items-center max-lg:items-start justify-end ">
+        <div className="nav-right flex gap-4 max-sm:gap-0 py-4 max-lg:py-2 items-center justify-end ">
           <div className="links max-sm:hidden flex md:gap-6 gap-2 py-2">
             <Link
               to="/"
@@ -243,7 +205,7 @@ export const Header = () => {
             </Link>
           </div>
 
-          <div className="flex gap-2 items-center max-lg:items-start ">
+          <div className="flex gap-2 items-center">
             {user && user?.name ? (
               <UserProfile />
             ) : (

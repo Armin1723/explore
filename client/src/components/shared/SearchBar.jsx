@@ -1,15 +1,17 @@
 import { Button } from "@mantine/core";
 import React, { useState } from "react";
 import { FaArrowRight, FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSearch = () => {
-    if (searchQuery.trim() === "") return;
-    console.log("Searching for:", searchQuery);
     setIsMobileSearchOpen(false);
+    navigate(`/companies/search?query=${searchQuery}`);
   };
 
   const handleKeyDown = (event) => {
@@ -21,7 +23,7 @@ const SearchBar = () => {
   return (
     <div className="relative">
       {/* Search Bar for Large Screens */}
-      <div className="hidden md:flex items-center border border-primary rounded-md overflow-hidden bg-white shadow-sm w-[30vw] max-xl:w-[50vw] ">
+      <div className="max-lg:hidden flex items-center border border-primary rounded-md overflow-hidden bg-white shadow-sm w-[25vw] ">
         {/* Search Icon */}
         <button className="text-primary bg-gray-200 p-2 border-r border-primary h-full">
           <FaSearch />
@@ -47,7 +49,7 @@ const SearchBar = () => {
       {/* Mobile Search Icon */}
       <button
         onClick={() => setIsMobileSearchOpen(true)}
-        className="md:hidden p-2 h-full"
+        className="max-lg:block hidden p-2 h-full"
       >
         <FaSearch />
       </button>
