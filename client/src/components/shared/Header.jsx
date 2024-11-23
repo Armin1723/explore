@@ -124,7 +124,7 @@ export const Header = () => {
           <div className="links max-sm:hidden flex md:gap-6 gap-2 py-2">
             <Link
               to="/"
-              className="link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200 "
+              className="link text-sm max-lg:text-xs transition-colors duration-200 "
             >
               Home
             </Link>
@@ -136,7 +136,7 @@ export const Header = () => {
               withinPortal
             >
               <HoverCard.Target>
-                <div className="link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200">
+                <div className="link text-sm max-lg:text-xs transition-colors duration-200">
                   <Center inline>
                     <Box component="span" mr={4}>
                       Categories
@@ -185,7 +185,7 @@ export const Header = () => {
 
             <Link
               to="/companies/add"
-              className="link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200 "
+              className="link text-sm max-lg:text-xs transition-colors duration-200 "
             >
               Listing
             </Link>
@@ -197,7 +197,7 @@ export const Header = () => {
                   event.preventDefault();
                 }
               }}
-              className={`link text-sm max-lg:text-xs text-white/75 mix-blend-difference transition-colors duration-200  ${
+              className={`link text-sm max-lg:text-xs transition-colors duration-200  ${
                 (!user || !user.name) && "text-gray-700 cursor-not-allowed"
               }`}
             >

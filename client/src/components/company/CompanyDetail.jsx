@@ -384,8 +384,8 @@ const CompanyDetail = () => {
           </Link>
         </div>
 
-        <div id="contact" className="contact my-4">
-          <Group position="apart">
+        <div id="contact" className="contact my-4 max-sm:my-1">
+          <div className="flex flex-wrap gap-2">
             <Button
               component="a"
               href={`tel:${company.phone.number}`}
@@ -440,7 +440,7 @@ const CompanyDetail = () => {
                 </Button>
               </Link>
             )}
-          </Group>
+          </div>
         </div>
 
         <div className="variable flex max-sm:flex-col justify-between w-full gap-2">
