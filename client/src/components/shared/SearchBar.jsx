@@ -1,10 +1,11 @@
 import { Button } from "@mantine/core";
 import React, { useState } from "react";
 import { FaArrowRight, FaSearch } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("query") || "");
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
   const navigate = useNavigate();

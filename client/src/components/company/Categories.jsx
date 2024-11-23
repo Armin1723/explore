@@ -59,7 +59,7 @@ const Categories = () => {
   }, [category, subCategory, sort, page, pageParam]);
 
   return (
-    <div className="page flex flex-col w-[90%] py-4 overflow-x-hidden">
+    <div className="page flex flex-col w-[90%] py-4">
       <BreadCrumbNav />
       <p className="heading capitalize !my-2">
         {category} results in Lucknow.{" "}
@@ -108,22 +108,24 @@ const Categories = () => {
         </p>
       </div>
 
-      <div className="cards-container w-full flex max-lg:flex-col gap-4 overflow-x-hidden">
+      <div className="cards-container w-full flex max-lg:flex-col gap-4">
         <ScrollArea
         offsetScrollbars
         scrollbarSize={6}
-        scrollHideDelay={500} h={600} className="w-full ">
-          <div className="cards max-lg:w-full overflow-y-scroll p-4 max-sm:p-1 overflow-x-hidden flex flex-col gap-4">
+        h="600px"
+        style={{ minHeight: "200px" }}
+        scrollHideDelay={500} className="w-full ">
+          <div className="cards max-lg:w-full flex-1 overflow-y-auto p-4 max-sm:p-1 flex flex-col gap-4">
             {results?.companies?.length ? (
               results.companies.map((company, index) => (
                 <CompanyCardSmall company={company} key={index} />
               ))
             ) : loading ? (
-              <div className="w-full min-h-[50vh] rounded-xl border p-2 boder-black/70 flex items-center justify-center">
+              <div className="w-full min-h-[50vh] rounded-xl border p-2 flex items-center justify-center">
                 <div className="loader"></div>
               </div>
             ) : (
-              <div className="w-full p-2 boder-black/70 flex flex-col items-start justify-start">
+              <div className="w-full p-2 flex flex-col items-start justify-start">
                 <p className="heading p-4 my-2 !text-4xl max-lg:!text-2xl max-sm:!text-xl">Uh...Oh. Its empty in here.</p>
                 <p
                   className="px-4 hover:text-blue-600 text-gray-500 cursor-pointer transition-all duration-200 font-['inter']"

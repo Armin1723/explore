@@ -16,9 +16,9 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 import SearchBar from "./SearchBar";
 
