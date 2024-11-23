@@ -12,7 +12,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
   const encodedAddress = encodeURI(company?.address);
 
   return (
-    <div className=" max-sm:flex-col max-w-full max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-accent/70 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200">
+    <div className="flex-shrink-0 max-sm:flex-col max-w-full max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-accent/70 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200">
       <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
         <img
           src={

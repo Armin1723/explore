@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import BreadCrumbNav from "../shared/BreadCrumbNav";
-import { rem, ScrollArea, Select, TextInput } from "@mantine/core";
+import { rem, Select, TextInput } from "@mantine/core";
 import CompanyCardSmall from "./CompanyCardSmall";
 import Pagination from "../shared/Pagination";
 import { FaSearch } from "react-icons/fa";
@@ -112,12 +112,8 @@ const Search = () => {
         </p>
       </div>
 
-      <div className="cards-container w-full flex max-lg:flex-col gap-4 overflow-x-hidden">
-        <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500} h={600} className="w-full ">
-          <div className="cards max-lg:w-full overflow-y-scroll p-4 max-sm:p-1 overflow-x-hidden flex flex-col gap-4">
+      <div className="cards-container w-full flex max-lg:flex-col gap-4 ">
+          <div className="cards flex-1 min-h-[50px] max-h-[600px] overflow-y-auto p-4 max-sm:p-1  flex flex-col gap-4">
             {results?.companies?.length ? (
               results.companies.map((company, index) => (
                 <CompanyCardSmall company={company} key={index} />
@@ -145,7 +141,6 @@ const Search = () => {
               />
             )}
           </div>
-        </ScrollArea>
         <div className="sidebar w-1/3 max-lg:w-full">
            <AdvertisementCard />
         </div>

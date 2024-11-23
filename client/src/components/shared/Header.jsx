@@ -205,7 +205,7 @@ export const Header = () => {
             </Link>
           </div>
 
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-4 items-center">
             {user && user?.name ? (
               <UserProfile />
             ) : (
