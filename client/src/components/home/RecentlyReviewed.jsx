@@ -85,9 +85,9 @@ const RecentlyReviewed = () => {
       <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center ">
         <div className="carousel-container mak max-sm:no-mask md:w-[80%] w-[90%] relative ">
           <Carousel
-            slideSize={{ base: "50%", sm: "50%", md: "20%" }}
-            slideGap={{ base: "xl", sm: "xl", md: "xl" }}
-            onSlideChange={(index) => setActiveSlide(index+1)}
+            slideSize={{ base: "50%", sm: "33.33%", md: "20%" }}
+            slideGap='xl'
+            onSlideChange={(index) => setActiveSlide(index+1)}  
             loop
             getEmblaApi={setEmbla}
             withControls={false}
@@ -101,14 +101,14 @@ const RecentlyReviewed = () => {
                       ?.toLowerCase()
                       .split(" ")
                       .join("-")}`}
-                    className="flex flex-col p-2 h-full rounded-xl group bg-[#d9d9d9] hover:bg-primary hover:text-white transition-all duration-200 border border-black hover:border-accent hover:shadow-[0_0_30px_orange] shadow-accent/70"
+                    className="flex flex-col p-2 h-full rounded-md group bg-[#d9d9d9] hover:bg-primary hover:text-white transition-all duration-200 border border-black hover:border-accent hover:shadow-[0_0_30px_orange] shadow-accent/70"
                   >
-                    <div className="image-container w-full aspect-[4/3] overflow-hidden rounded-lg p-3 max-lg:p-1 flex items-center justify-center">
+                    <div className="image-container w-full aspect-[4/3] overflow-hidden rounded-md flex items-center justify-center">
                       {store.image ? (
                         <img
                           src={store.image}
                           alt="store"
-                          className="w-full aspect-[4/3] object-cover rounded-lg group-hover:scale-105 border border-black/70 transition-all duration-300"
+                          className="w-full aspect-[4/3] object-cover rounded-md group-hover:scale-105 border border-black/70 transition-all duration-300"
                         />
                       ) : (
                         <img

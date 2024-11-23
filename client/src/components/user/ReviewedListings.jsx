@@ -4,6 +4,7 @@ import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 import { MdArrowRightAlt, MdMore } from "react-icons/md";
 import { Link } from "react-router-dom";
 import striptags from "striptags";
+import CardSmall from "../backup/CardSmall";
 
 const ReviewedListing = ({ user }) => {
   const [embla, setEmbla] = useState(null);
@@ -47,9 +48,9 @@ const ReviewedListing = ({ user }) => {
 
       <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center">
         <div className="carousel-container relative w-full">
-          <Carousel
-            slideSize="20%"
-            slideGap="md"
+        <Carousel
+            slideSize={{ base: "50%", md: "50%", lg: "20%" }}
+            slideGap={{ base: "md", md: "md", lg: "xl" }}
             align="start"
             onSlideChange={(index) => setActiveSlide(index)}
             getEmblaApi={setEmbla}
@@ -58,42 +59,7 @@ const ReviewedListing = ({ user }) => {
             {results &&
               results?.map((result, index) => (
                 <Carousel.Slide key={index}>
-                  <Link
-                    to={`/companies/${result?.company?.name
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`}
-                    className="flex flex-col h-full rounded-xl group bg-gray-200 hover:bg-primary hover:text-white transition-all duration-200 border border-black hover:border-accent"
-                  >
-                    <div className="image-container w-full aspect-video overflow-hidden rounded-t-lg flex items-center justify-center">
-                      <img
-                        src={result?.company?.gallery[0]?.url?.replace(
-                          "/upload/",
-                          "/upload/w_300,h_200,c_fill/"
-                        )}
-                        alt={result?.company?.name}
-                        className="w-full object-cover group-hover:scale-105 border border-black/70 transition-all duration-300"
-                      />
-                    </div>
-
-                    <div className="details flex flex-col justify-around p-2">
-                      <div className="flex justify-between items-center w-full pb-2 max-sm:pb-1">
-                        <p className="sub-heading !max-lg:text-sm">
-                          {result?.company?.name}
-                        </p>
-                        <div className="icon p-2 flex aspect-square rounded-full border border-gray-500/50 group-hover:bg-accent group-hover:-rotate-45 transition-all duration-300">
-                          <MdArrowRightAlt size={14} />
-                        </div>
-                      </div>
-                      <p className="italic text-xs max-sm:text-[0.70rem]">
-                        {striptags(
-                          result?.company?.description
-                            .split(" ")
-                            .slice(0, 10)
-                            .join(" ")
-                        )}
-                      </p>
-                    </div>
-                  </Link>
+                  <CardSmall company={result?.company} />
                 </Carousel.Slide>
               ))}
 

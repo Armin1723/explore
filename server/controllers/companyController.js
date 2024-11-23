@@ -504,7 +504,7 @@ const searchCompanies = async (req, res) => {
 const getTrendingCompanies = async (req, res) => {
   try {
     const companies = await Company.find({ status: "active" })
-      .select("name description gallery rating")
+      .select("name description gallery rating logo category")
       .sort({ rating: -1 })
       .limit(10);
 

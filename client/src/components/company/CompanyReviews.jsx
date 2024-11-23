@@ -4,12 +4,15 @@ import React from "react";
 import { FaFlag } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaEllipsisV } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CompanyReview = ({ company, setCompany, isAdmin }) => {
   const [hasMore, setHasMore] = React.useState(
     company?.reviews?.length < 5 ? false : true
   );
   const [loading, setLoading] = React.useState(false);
+  const user = useSelector((state) => state.user);
 
   const fetchMoreReviews = async () => {
     try {
@@ -125,18 +128,18 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
           className="p-4 mb-4 shadow-sm rounded-lg w-full"
         >
           <Group position="apart" justify="space-between">
-            <Group>
+            <Link to={`/users/${review?.user?._id}`} className="flex gap-2 items-center">
               <Avatar src={review?.user?.profilePic} alt={review?.user?.name} />
               <div>
                 <Title order={5}>{review?.user?.name}</Title>
                 <Rating value={review?.rating} readOnly size="sm" />
               </div>
-              <span className="text-sm max-sm:text-xs">
+              <div className="text-sm max-sm:text-xs h-full items-start ">
                 {new Date(review?.createdAt).toLocaleDateString()}
-              </span>
-            </Group>
+              </div>
+            </Link>
 
-            <Menu shadow="md" width={200}>
+            <Menu shadow="md" width={200} className={(!user || !user.name) && 'hidden'}>
               <Menu.Target>
                 <p>
                   <FaEllipsisV />

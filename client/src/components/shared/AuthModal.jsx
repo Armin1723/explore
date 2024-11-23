@@ -186,6 +186,7 @@ const AuthModal = ({ close }) => {
           loading: false,
           autoClose: 2000,
         });
+        close();
       }
     } catch (error) {
       console.log(error.message);

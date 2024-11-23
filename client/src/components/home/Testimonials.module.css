@@ -1,7 +1,7 @@
 .carouselIndicator {
     width: 8px;
     height: 8px;
-    transition: width 250ms ease;
+    transition: all 250ms ease;
     border: 2px solid var(--color-accent);
     background-color: transparent; 
 }

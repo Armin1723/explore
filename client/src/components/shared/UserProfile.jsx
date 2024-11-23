@@ -84,7 +84,7 @@ const UserProfile = () => {
             <Link to={`/users/${user._id}`} className="flex gap-2 items-center">
               <Avatar
                 src={user?.profilePic?.replace('/uploads/', '/uploads/w_100/')}
-                className="border border-white"
+                className="border border-black"
                 alt={user?.name}
                 radius="xl"
                 size={28}
@@ -93,7 +93,7 @@ const UserProfile = () => {
             <FaChevronDown
               style={{ width: rem(12), height: rem(12) }}
               stroke={1.5}
-              className="text-white"
+              className=""
             />
           </Group>
         </UnstyledButton>

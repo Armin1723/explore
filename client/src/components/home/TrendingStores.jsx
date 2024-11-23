@@ -1,4 +1,5 @@
 import { Carousel } from "@mantine/carousel";
+import { Avatar } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
@@ -100,8 +101,8 @@ const TrendingStores = () => {
       <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center ">
         <div className="carousel-container mak max-sm:no-mask md:w-[80%] w-[90%] relative ">
           <Carousel
-            slideSize={{ base: "50%", sm: "50%", md: "20%" }}
-            slideGap={{ base: "xl", sm: "xl", md: "xl" }}
+            slideSize={{ base: "50%", sm: "33.33%", md: "20%" }}
+            slideGap='xl'
             onSlideChange={(index) => setActiveSlide(index + 1)}
             loop
             getEmblaApi={setEmbla}
@@ -116,9 +117,9 @@ const TrendingStores = () => {
                       ?.toLowerCase()
                       .split(" ")
                       .join("-")}`}
-                    className="flex flex-col p-2 h-full rounded-xl group bg-[#d9d9d9] hover:bg-primary hover:text-white transition-all duration-200 border border-black hover:border-accent hover:shadow-[0_0_30px_orange] shadow-accent/70"
+                    className="flex flex-col items-center p-2 h-full rounded-md group hover:bg-primary hover:text-white transition-all duration-200 border border-neutral-500 hover:border-accent hover:shadow-[0_0_30px_orange] shadow-accent/70"
                   >
-                    <div className="image-container w-full aspect-[4/3] overflow-hidden rounded-lg p-3 max-lg:p-1 flex items-center justify-center">
+                    <div className="image-container w-full aspect-[4/3] overflow-hidden rounded-md flex items-center justify-center">
                       {store.gallery ? (
                         <img
                           src={store?.gallery[0]?.url?.replace(
@@ -126,7 +127,7 @@ const TrendingStores = () => {
                             "/upload/w_300,h_200,c_fill/"
                           )}
                           alt="store"
-                          className="w-full aspect-[4/3] object-cover rounded-lg group-hover:scale-105 border border-black/70 transition-all duration-300"
+                          className="w-full aspect-[4/3] object-cover rounded-md group-hover:scale-105 border border-black/70 transition-all duration-300"
                         />
                       ) : (
                         <img
@@ -153,7 +154,7 @@ const TrendingStores = () => {
                           .join(" ")}
                       </p>
                     </div>
-                  </Link>
+                    </Link>
                 </Carousel.Slide>
               );
             })}
