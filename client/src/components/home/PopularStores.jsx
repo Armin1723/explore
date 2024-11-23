@@ -9,32 +9,32 @@ const PopularStores = () => {
 
   const stores = [
     {
-      name: "Store 1",
-      image: "https://picsum.photos/200/300?random=1",
+      name: "Home",
+      image: "/categories/home.webp",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
-      name: "Store 2",
-      image: "https://picsum.photos/200/300?random=2",
+      name: "Books",
+      image: "/categories/books.webp",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
-      name: "Store 3",
-      image: "https://picsum.photos/200/300?random=3",
+      name: "Electronics",
+      image: "/categories/electronics.webp",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
-      name: "Store 4",
-      image: "https://picsum.photos/200/300?random=4",
+      name: "Fashion",
+      image: "/categories/fashion.webp",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
     {
-      name: "Store 5",
-      image: "https://picsum.photos/200/300?random=5",
+      name: "Grocery",
+      image: "/categories/grocery.webp",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
     },
@@ -61,7 +61,7 @@ const PopularStores = () => {
                     ?.toLowerCase()
                     .split(" ")
                     .join("-")}`}
-                  className="flex flex-col justify-end relative group overflow-hidden w-full my-4 aspect-[3/4] rounded-xl border hover:border-accent hover:shadow-[0_0_40px_orange] shadow-accent/70 transition-all duration-300"
+                  className="flex flex-col justify-end relative group overflow-hidden w-full my-4 aspect-[3/4] rounded-xl border hover:border-accent transition-all duration-300"
                 >
                   <img
                     src={store.image}
@@ -72,7 +72,7 @@ const PopularStores = () => {
                     <p className="sub-heading max-lg:text-sm">{store.name}</p>
                     <Link
                       className="fancy w-40 max-lg:scale-50 max-lg:-translate-x-8 !py-2 !bg-gray-200"
-                      to={`/companies/${store?.name.split(" ").join("-")}`}
+                      to={`/companies/categories?category=${store?.name.toLowerCase()}`}
                     >
                       <span className="top-key"></span>
                       <span className="text !text-black">Explore</span>

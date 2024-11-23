@@ -143,7 +143,7 @@ const registerUser = async (req, res) => {
     await user.save();
     const message = `<p>Hi ${user.name}, Welcome to <strong>Explore</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
 
-    sendMail(user.email, message, (subject = "Email Verification"));
+    sendMail(user.email, subject = "Email Verification", message);
 
     res
       .status(201)

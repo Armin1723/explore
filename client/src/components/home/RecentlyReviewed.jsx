@@ -2,81 +2,109 @@ import { Carousel } from "@mantine/carousel";
 import { useInterval } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
-import { MdArrowRightAlt } from "react-icons/md";
-import { Link } from "react-router-dom";
+import CardSmall from "../backup/CardSmall";
+import { useSelector } from "react-redux";
 
 const RecentlyReviewed = () => {
   const [embla, setEmbla] = useState(null);
   const autoplayInterval = useInterval(() => embla && embla.scrollNext(), 3000);
   const [activeSlide, setActiveSlide] = useState(0);
 
+  const [results, setResults] = useState([]);
+
+  const user = useSelector((state) => state.user);
+
   useEffect(() => {
     autoplayInterval.start();
     return autoplayInterval.stop;
   }, [embla]);
 
-  const stores = [
-    {
-      name: "Store 1",
-      image: "https://picsum.photos/200/300?random=1",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 2",
-      image: "https://picsum.photos/200/300?random=2",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 3",
-      image: "https://picsum.photos/200/300?random=3",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 4",
-      image: "https://picsum.photos/200/300?random=4",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 5",
-      image: "https://picsum.photos/200/300?random=5",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 6",
-      image: "https://picsum.photos/200/300?random=6",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 7",
-      image: "https://picsum.photos/200/300?random=7",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 8",
-      image: "https://picsum.photos/200/300?random=8",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 9",
-      image: "https://picsum.photos/200/300?random=9",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-    {
-      name: "Store 10",
-      image: "https://picsum.photos/200/300?random=10",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
-    },
-  ];
+  useEffect(() => {
+    try {
+      const fetchReviewedStores = async () => {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/user/${
+            user?._id
+          }/reviewed-companies?page=1`,
+          {
+            credentials: "include",
+          }
+        );
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.message);
+        }
+        const data = await response.json();
+        setResults(data.reviews);
+      };
+      fetchReviewedStores();
+    } catch (error) {
+      console.error(error.message);
+    }
+  }, []);
+
+  // const stores = [
+  //   {
+  //     name: "Store 1",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=1"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 2",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=2"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 3",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=3"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 4",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=4"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 5",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=5"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 6",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=6"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 7",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=7"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 8",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=8"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 9",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=9"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  //   {
+  //     name: "Store 10",
+  //     gallery: [{url: "https://picsum.photos/200/300?random=10"}],
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium obcaecati distinctio a possimus at cum sit quo inventore eaque nostrum?",
+  //   },
+  // ];
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -93,10 +121,10 @@ const RecentlyReviewed = () => {
             withControls={false}
             align="start"
           >
-            {stores.map((store, index) => {
+            {results && results.map((result, index) => {
               return (
                 <Carousel.Slide key={index}>
-                  <Link
+                  {/* <Link
                     to={`/companies/${store?.name
                       ?.toLowerCase()
                       .split(" ")
@@ -132,7 +160,8 @@ const RecentlyReviewed = () => {
                         {store.description.split(" ").slice(0, 10).join(" ")}
                       </p>
                     </div>
-                  </Link>
+                  </Link> */}
+                  <CardSmall company={result?.company} />
                 </Carousel.Slide>
               );
             })}
@@ -149,10 +178,10 @@ const RecentlyReviewed = () => {
             </button>
             <button
               className={`p-2 rounded-s-lg bg-white/40 ${
-                activeSlide === stores.length - 1 && "invisible"
+                activeSlide === results.length - 1 && "invisible"
               }`}
               onClick={() => embla && embla.scrollNext()}
-              disabled={activeSlide >= stores.length - 1}
+              disabled={activeSlide >= results.length - 1}
             >
               <FaChevronCircleRight color="black" className="text-2xl" />
             </button>

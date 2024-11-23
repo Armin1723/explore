@@ -6,6 +6,7 @@ import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 import { MdArrowRightAlt } from "react-icons/md";
 import { Link } from "react-router-dom";
 import striptags from "striptags";
+import CardSmall from "../backup/CardSmall";
 
 const TrendingStores = () => {
   const [embla, setEmbla] = useState(null);
@@ -112,7 +113,7 @@ const TrendingStores = () => {
             {stores.map((store, index) => {
               return (
                 <Carousel.Slide key={index}>
-                  <Link
+                  {/* <Link
                     to={`/companies/${store?.name
                       ?.toLowerCase()
                       .split(" ")
@@ -154,7 +155,8 @@ const TrendingStores = () => {
                           .join(" ")}
                       </p>
                     </div>
-                    </Link>
+                    </Link> */}
+                    <CardSmall company={store} />
                 </Carousel.Slide>
               );
             })}

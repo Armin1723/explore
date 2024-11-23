@@ -62,21 +62,21 @@ const UserDetail = () => {
   }
 
   return (
-    <div className="w-[80%] max-sm:w-[95%] bg-white h-full pt-[8vh] border shadow-[0_0_20px_black] shadow-black/20 py-6 px-12 max-lg:px-6 max-sm:px-4 overflow-x-hidden">
+    <div className="w-[80%] max-sm:!w-full bg-white h-full pt-[8vh] border shadow-[0_0_20px_black] shadow-black/20 py-6 px-12 max-lg:px-6 max-sm:px-4 overflow-x-hidden">
       <ScrollArea
         offsetScrollbars
         scrollbarSize={6}
-        scrollHideDelay={500} h={800} scrollbars="y" className="">
+        scrollHideDelay={500} h={800} scrollbars="y" className="!max-w-full">
         <div className="profile flex justify-start items-start px-4 gap-4 max-sm:gap-2 py-6 w-full bg-secondary my-6 ">
           <div className="avatar flex flex-col justify-center h-full">
             <Avatar
-              size={100}
+              size={{ base: "lg", sm: "xl" }}
               src={userData?.profilePic}
-              className="border-2 border-black/40 shadow-xl "
+              className="border-2 border-black/40 shadow-xl max-sm:w-12 max-sm:h-12"
             />
           </div>
 
-          <div className="creds flex flex-col justify-start h-full flex-1">
+          <div className="creds flex flex-col justify-start h-full flex-1 max-sm:text-sm ">
             <div className="top flex gap-2 items-center max-sm:flex-col max-sm:items-start max-sm:gap-0">
               <p className="heading !my-0">{userData?.name}</p>
 

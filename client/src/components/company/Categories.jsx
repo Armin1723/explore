@@ -124,9 +124,9 @@ const Categories = () => {
               </div>
             ) : (
               <div className="w-full p-2 boder-black/70 flex flex-col items-start justify-start">
-                <p className="heading p-4">No companies found</p>
+                <p className="heading p-4 my-2 !text-4xl max-lg:!text-2xl max-sm:!text-xl">Uh...Oh. Its empty in here.</p>
                 <p
-                  className="px-4 text-sm text-gray-500 cursor-pointer hover:text-gray-700 transition-all duration-200 font-['inter']"
+                  className="px-4 hover:text-blue-600 text-gray-500 cursor-pointer transition-all duration-200 font-['inter']"
                   onClick={reset}
                 >
                   Search for all??

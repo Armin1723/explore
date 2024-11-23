@@ -1,9 +1,7 @@
 import { Carousel } from "@mantine/carousel";
 import React, { useEffect, useState } from "react";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
-import { MdArrowRightAlt, MdMore } from "react-icons/md";
-import { Link } from "react-router-dom";
-import striptags from "striptags";
+import { MdMore } from "react-icons/md";
 import CardSmall from "../backup/CardSmall";
 
 const ReviewedListing = ({ user }) => {
@@ -49,7 +47,7 @@ const ReviewedListing = ({ user }) => {
       <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center">
         <div className="carousel-container relative w-full">
         <Carousel
-            slideSize={{ base: "50%", md: "50%", lg: "20%" }}
+            slideSize={{ base: "50%",sm: '33.33%', md: "33.33%", lg: "20%" }}
             slideGap={{ base: "md", md: "md", lg: "xl" }}
             align="start"
             onSlideChange={(index) => setActiveSlide(index)}

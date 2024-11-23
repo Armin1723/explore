@@ -126,7 +126,7 @@ body,
 
 .fancy:hover::before {
     width: 0.9375rem;
-    background: white;
+    background: black;
 }
 
 .fancy:hover .text {

@@ -8,11 +8,11 @@ const Suggestions = () => {
       category: "fashion",
       subCategories: [
         {
-          image: "mens-fashion",
+          image: "fashion-mens",
           title: "Mens",
         },
         {
-          image: "womens-fashion",
+          image: "fashion-women",
           title: "Womens",
         },
       ],
@@ -22,11 +22,11 @@ const Suggestions = () => {
       category: "Grocery",
       subCategories: [
         {
-          image: "grocery-daily",
+          image: "grocery-vegetable",
           title: "Vegetables",
         },
         {
-          image: "home-daily",
+          image: "grocery-fruits",
           title: "Fruits",
         },
       ],
@@ -36,11 +36,11 @@ const Suggestions = () => {
       category: "electronics",
       subCategories: [
         {
-          image: "mobiles",
+          image: "electronics-mobile",
           title: "Mobiles",
         },
         {
-          image: "laptops",
+          image: "electronics-laptop",
           title: "Laptops",
         },
       ],
@@ -50,11 +50,11 @@ const Suggestions = () => {
       category: "books",
       subCategories: [
         {
-          image: "fiction-books",
+          image: "books-fiction",
           title: "Fiction",
         },
         {
-          image: "nonfiction-books",
+          image: "books-nonfiction",
           title: "Non-Fiction",
         },
       ],
@@ -83,10 +83,11 @@ const Suggestions = () => {
                       >
                         <div className="image-container w-2/3 aspect-[16/11] object-cover rounded-lg overflow-hidden border border-black/70 group-hover/child:border-accent">
                           <img
-                            // src={`suggestions/${subCategory.image}.webp`}
-                            src="https://picsum.photos/300/300/?suggestion"
+                            src={`suggestions/${subCategory.image}.webp`}
+                            loading="lazy"
+                            // src="https://picsum.photos/300/300/?suggestion"
                             alt="https://picsum.photos/300/300/?suggestion"
-                            className="w-full h-full object-cover rounded-lg border border-black/70 group-hover/child:scale-105 group-hover/child:border-accent transition-all duration-300"
+                            className="h-full w-[300px] object-cover origin-center rounded-lg border border-black/70 group-hover/child:scale-105 group-hover/child:border-accent transition-all duration-300"
                           />
                         </div>
                         <p className="text-sm group-hover/child:text-accent">{subCategory.title}</p>
