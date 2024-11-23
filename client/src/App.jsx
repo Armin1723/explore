@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import ScrollRestoration from "./components/utility/ScrollRestoration";
+
 import AdminBanners from "./components/admin/AdminBanners";
 
 const Home = React.lazy(() => import("./pages/Home"));
@@ -59,6 +61,9 @@ const App = () => {
           </div>
         }
       >
+        
+        <ScrollRestoration />
+        
         <Routes>
           <Route path="/" element={<Outlet />}>
             <Route path="" element={<Home />} />
