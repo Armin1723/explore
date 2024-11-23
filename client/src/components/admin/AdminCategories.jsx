@@ -1,4 +1,4 @@
-import { Card, Pill, ScrollArea } from "@mantine/core";
+import { Card, Pill } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -38,11 +38,7 @@ const AdminCategories = () => {
   }
 
   return (
-    <Card className="flex flex-col flex-1" withBorder>
-      <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500} h={800}>
+    <div className="flex flex-col flex-1" withBorder>
         <div className="heading w-full border-l-4 border-primary my-4 flex items-center justify-start gap-2">
           <p className=" pl-6 text-xl tracking-wide">All Categories</p>
           <Link
@@ -52,6 +48,7 @@ const AdminCategories = () => {
             <FaPlus />
           </Link>
         </div>
+        <div className="users-container min-h-[50px] max-h-[600px] overflow-y-auto flex flex-col">
         {results &&
           results.categories.map((category, index) => {
             return (
@@ -71,7 +68,7 @@ const AdminCategories = () => {
                   </Link>
                 </div>
 
-                <div className="sub-categories flex gap-2 flex-wrap">
+                <div className="sub-categories flex gap-2 flex-wrap justify-end">
                   {category?.subCategories.map((subCategory, index) => {
                     return (
                       <Pill key={index} color="primary.1" className="capitalize ">
@@ -83,8 +80,8 @@ const AdminCategories = () => {
               </div>
             );
           })}
-      </ScrollArea>
-    </Card>
+          </div>
+    </div>
   );
 };
 

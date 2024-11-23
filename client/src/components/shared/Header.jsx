@@ -222,7 +222,7 @@ export const Header = () => {
               opened={drawerOpened}
               onClick={toggleDrawer}
               hiddenFrom="sm"
-              className=""
+              className="ml-2"
             />
           </div>
         </div>

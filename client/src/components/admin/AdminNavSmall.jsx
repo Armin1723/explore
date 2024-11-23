@@ -9,7 +9,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { MdCategory, MdPendingActions } from "react-icons/md";
 import { IoImageSharp } from "react-icons/io5";
 
-const AdminNavSmall = () => {
+const AdminNavSmall = ({ closeDrawer }) => {
   const user = useSelector((state) => state.user);
   const { colorScheme } = useMantineColorScheme();
   const location = useLocation();
@@ -28,6 +28,7 @@ const AdminNavSmall = () => {
           component={Link}
           to="/admin/users"
           label="Users"
+          onClick={closeDrawer}
           style={(theme) => ({
             root: {
               "&:hover": {
@@ -62,6 +63,7 @@ const AdminNavSmall = () => {
               to={`/admin/companies/all`}
               active={location.pathname.includes("all")}
               label="All"
+              onClick={closeDrawer}
               childrenOffset={14}
             />
             {Object.values(categories).map((category) => {
@@ -75,6 +77,7 @@ const AdminNavSmall = () => {
                     category?.name.charAt(0).toUpperCase() +
                     category?.name.slice(1)
                   }
+                  onClick={closeDrawer}
                   childrenOffset={14}
                 />
               );
@@ -86,6 +89,7 @@ const AdminNavSmall = () => {
           component={Link}
           to="/admin/reviews"
           label="Reviews"
+          onClick={closeDrawer}
           leftSection={<CiReceipt className="text-2xl" />}
           active={location.pathname.includes("/admin/reviews")}
         />
@@ -93,6 +97,7 @@ const AdminNavSmall = () => {
           component={Link}
           to="/admin/requests"
           label="Pending Requests"
+          onClick={closeDrawer}
           leftSection={<MdPendingActions className="text-2xl" />}
           active={location.pathname.includes("/admin/requests")}
         />
@@ -100,6 +105,7 @@ const AdminNavSmall = () => {
           component={Link}
           to="/admin/categories"
           label="Categories"
+          onClick={closeDrawer}
           leftSection={<MdCategory className="text-2xl" />}
           active={location.pathname.includes("/admin/categories")}
         />
@@ -107,11 +113,11 @@ const AdminNavSmall = () => {
           component={Link}
           to="/admin/banners"
           label="Banners"
+          onClick={closeDrawer}
           leftSection={<IoImageSharp className="text-2xl" />}
           active={location.pathname.includes("/admin/banners")}
         />
       </div>
-      {/* </ScrollArea> */}
 
       <div className="nav-bottom">
         <Link

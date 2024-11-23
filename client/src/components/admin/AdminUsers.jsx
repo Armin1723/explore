@@ -1,4 +1,4 @@
-import { Avatar, Card, ScrollArea } from "@mantine/core";
+import { Avatar, Card } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../shared/Pagination";
@@ -35,20 +35,17 @@ const AdminUsers = () => {
 
   return (
     <Card className="flex flex-col flex-1" withBorder>
-      <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500} h={800}>
-        <div className="heading w-full border-l-4 border-primary my-4 ">
-          <p className="w-full pl-6 text-xl tracking-wide">Recent Users</p>
+      <div className="heading w-full border-l-4 border-primary my-4 ">
+        <p className="w-full pl-6 text-xl tracking-wide">Recent Users</p>
+      </div>
+
+      {loading && (
+        <div className="w-full min-h-[40vh] flex items-center justify-center">
+          <div className="loader"></div>
         </div>
+      )}
 
-        {loading && (
-          <div className="w-full min-h-[40vh] flex items-center justify-center">
-            <div className="loader"></div>
-          </div>
-        )}
-
+      <div className="users-container min-h-[50px] max-h-[600px] overflow-y-auto flex flex-col">
         {results &&
           results?.users.map((user, index) => {
             return (
@@ -77,17 +74,17 @@ const AdminUsers = () => {
               </Link>
             );
           })}
+      </div>
 
-        {results && results?.users.length === 0 ? (
-          <p className="py-2">No users found</p>
-        ) : (<Pagination
-            totalPages={results?.totalPages}
-            page={page}
-            setPage={setPage}
-          />
-        )}
-
-      </ScrollArea>
+      {results && results?.users.length === 0 ? (
+        <p className="py-2">No users found</p>
+      ) : (
+        <Pagination
+          totalPages={results?.totalPages}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </Card>
   );
 };

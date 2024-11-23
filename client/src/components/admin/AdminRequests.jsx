@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Card, ScrollArea } from "@mantine/core";
+import { Avatar, Button, Card } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import Pagination from "../shared/Pagination";
 import { Link } from "react-router-dom";
@@ -73,10 +73,6 @@ const AdminRequests = ({ refetch, setRefetch }) => {
 
   return (
     <Card className="flex flex-col flex-1" withBorder>
-      <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500} h={800}>
         <div className="heading w-full border-l-4 border-primary my-4 flex items-center">
           <div className="w-full pl-6 text-xl tracking-wide flex items-center gap-2">
             Pending Requests{" "}
@@ -95,50 +91,52 @@ const AdminRequests = ({ refetch, setRefetch }) => {
           </div>
         )}
 
-        {results &&
-          results.companies.map((company, index) => {
-            return (
-              <div
-                className={`userCard flex justify-between py-3 px-2 border-b border-gray-400 hover:bg-teal-100/20 ${
-                  index === 0 && "border-t"
-                }`}
-                key={index}
-              >
-                <Link
-                  to={`/companies/${company.name.split(" ").join("-")}`}
-                  className="flex items-center gap-2"
+        <div className="users-container min-h-[50px] max-h-[600px] overflow-y-auto flex flex-col">
+          {results &&
+            results.companies.map((company, index) => {
+              return (
+                <div
+                  className={`userCard flex justify-between py-3 px-2 border-b border-gray-400 hover:bg-teal-100/20 ${
+                    index === 0 && "border-t"
+                  }`}
+                  key={index}
                 >
-                  <Avatar src={company?.logo.url} alt={company.name} />
-                  <p className="capitalize font-semibold">{company.name}</p>
-                </Link>
-                <div className="flex items-center">
-                  <p>
-                    Joined: {new Date(company.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  <Button
-                    color="green.7"
-                    className="!p-1 !px-2 rounded-xl"
-                    onClick={() =>
-                      handleRequest("approve", company._id, company.name)
-                    }
+                  <Link
+                    to={`/companies/${company.name.split(" ").join("-")}`}
+                    className="flex items-center gap-2"
                   >
-                    <TiTick /> Approve
-                  </Button>
-                  <Button
-                    color="red.7"
-                    className="!p-1 !px-2 rounded-xl"
-                    onClick={() =>
-                      handleRequest("reject", company._id, company.name)
-                    }
-                  >
-                    <RxCross2 /> Reject
-                  </Button>
+                    <Avatar src={company?.logo.url} alt={company.name} />
+                    <p className="capitalize font-semibold">{company.name}</p>
+                  </Link>
+                  <div className="flex items-center">
+                    <p>
+                      Joined: {new Date(company.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="flex gap-4">
+                    <Button
+                      color="green.7"
+                      className="!p-1 !px-2 rounded-xl"
+                      onClick={() =>
+                        handleRequest("approve", company._id, company.name)
+                      }
+                    >
+                      <TiTick /> Approve
+                    </Button>
+                    <Button
+                      color="red.7"
+                      className="!p-1 !px-2 rounded-xl"
+                      onClick={() =>
+                        handleRequest("reject", company._id, company.name)
+                      }
+                    >
+                      <RxCross2 /> Reject
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
 
         {results && results.companies.length === 0 ? (
           <p className="my-2">No requests found</p>
@@ -149,7 +147,6 @@ const AdminRequests = ({ refetch, setRefetch }) => {
             setPage={setPage}
           />
         )}
-      </ScrollArea>
     </Card>
   );
 };

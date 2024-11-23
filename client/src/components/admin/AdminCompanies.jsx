@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Card, ScrollArea, Select } from "@mantine/core";
+import { Avatar, Badge, Button, Card, Select } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SubCategoryMenu from "./SubCategoryMenu";
@@ -74,49 +74,40 @@ const AdminCompanies = () => {
 
   return (
     <Card className="flex flex-col flex-1" withBorder>
-      <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500}
-        h={800}
-        type="scroll"
-        className="w-full"
-      >
-        <div className="w-full my-4 flex justify-between items-center flex-wrap gap-2">
-          <div className="flex items-center gap-2 w-full pl-6 text-xl tracking-wide">
-            <p className="heading !my-0 border-l-4 pl-6 border-primary">
-              Companies
-            </p>
-            <Select
-              data={[
-                "All",
-                ...Object.values(categories).map((cat) => cat.name),
-              ]}
-              value={category}
-              placeholder={category}
-              onChange={(value) => {
-                setCategory(value);
-                setSubCategory("all");
-                navigate(`/admin/companies/${value}`);
-              }}
-            />
-          </div>
-          <div className="actions flex gap-2 pl-8">
-            <SubCategoryMenu
-              subCategory={subCategory}
-              setSubCategory={setSubCategory}
-              choices={getSubCategories(category)}
-            />
-            <Button color="green.8" onClick={exportData}>
-              Export
-            </Button>
-          </div>
+      <div className="w-full my-4 flex justify-between items-center flex-wrap gap-2">
+        <div className="flex items-center gap-2 w-full pl-6 text-xl tracking-wide">
+          <p className="heading !my-0 border-l-4 pl-6 border-primary">
+            Companies
+          </p>
+          <Select
+            data={["All", ...Object.values(categories).map((cat) => cat.name)]}
+            value={category}
+            placeholder={category}
+            onChange={(value) => {
+              setCategory(value);
+              setSubCategory("all");
+              navigate(`/admin/companies/${value}`);
+            }}
+          />
         </div>
-        {loading && (
-          <div className="w-full min-h-[40vh] flex items-center justify-center">
-            <div className="loader"></div>
-          </div>
-        )}
+        <div className="actions flex gap-2 pl-8">
+          <SubCategoryMenu
+            subCategory={subCategory}
+            setSubCategory={setSubCategory}
+            choices={getSubCategories(category)}
+          />
+          <Button color="green.8" onClick={exportData}>
+            Export
+          </Button>
+        </div>
+      </div>
+      {loading && (
+        <div className="w-full min-h-[40vh] flex items-center justify-center">
+          <div className="loader"></div>
+        </div>
+      )}
+
+      <div className="users-container min-h-[100px] max-h-[600px] overflow-y-auto flex flex-col">
         {results &&
           results.companies.length > 0 &&
           results.companies.map((company, index) => {
@@ -153,16 +144,17 @@ const AdminCompanies = () => {
               </Link>
             );
           })}
-        {results && results.companies.length === 0 ? (
-          <p className="py-2">No companies found</p>
-        ) : (
-          <Pagination
-            totalPages={results?.totalPages}
-            page={page}
-            setPage={setPage}
-          />
-        )}
-      </ScrollArea>
+      </div>
+
+      {results && results.companies.length === 0 ? (
+        <p className="py-2">No companies found</p>
+      ) : (
+        <Pagination
+          totalPages={results?.totalPages}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </Card>
   );
 };

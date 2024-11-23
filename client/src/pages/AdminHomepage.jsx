@@ -96,7 +96,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
           title="Explore"
           zIndex={1000000}
         >
-          <AdminNavSmall />
+          <AdminNavSmall closeDrawer={closeDrawer}/>
         </Drawer>
         {/* Small Nav Ends */}
 
