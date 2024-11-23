@@ -13,7 +13,6 @@ const Promotions = () => {
 
   const [embla, setEmbla] = useState(null);
   const autoplayInterval = useInterval(() => embla && embla.scrollNext(), 5000);
-  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     autoplayInterval.start();
@@ -52,13 +51,12 @@ const Promotions = () => {
         </div>
       </div>
 
-      <div className="carousel flex flex-1 relative max-sm:px-2">
+      <div className="carousel-container flex items-center justify-center flex-1 relative max-sm:px-2">
         <Carousel
           slideSize='100%'
           slideGap='xl'
           withControls={false}
           getEmblaApi={setEmbla}
-          onSlideChange={(index) => setActiveSlide(index)}
           loop
         >
           {Array.from({ length: 4 }).map((_, index) => {

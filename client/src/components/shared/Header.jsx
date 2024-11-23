@@ -107,10 +107,10 @@ export const Header = () => {
 
   return (
     <div
-      className={` fixed header lg:bg-white border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
+      className={` fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
     >
       <header
-        className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-1 flex justify-between items-center`}
+        className={`md:px-[15vw] px-6 py-1 flex justify-between items-center`}
       >
         <Link to="/" className="flex items-center gap-2">
           <p className="heading !my-0 ">

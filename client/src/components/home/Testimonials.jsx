@@ -76,14 +76,14 @@ const Testimonials = () => {
           Hear what our customers have to say.
         </p>
 
-        <div className="w-full md:w-3/4 px-4">
+        <div className="w-full max-sm:w-full max-lg:w-[90%] md:w-3/4 px-4">
           <Carousel
             slideSize={{ base: "100%", sm: "50%", md: "50%", lg: "50%" }}
             slideGap="md"
             onSlideChange={(index) => setActiveSlide(index)}
             getEmblaApi={setEmbla}
             withIndicators
-            align={"start"}
+            align="start"
             withControls={false}
             loop
             classNames={{
