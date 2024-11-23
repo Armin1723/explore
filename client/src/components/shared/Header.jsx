@@ -107,7 +107,7 @@ export const Header = () => {
 
   return (
     <div
-      className={` fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
+      className={` fixed header lg:bg-white border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[15vw] max-sm:bg-white/20 px-6 py-1 flex justify-between items-center`}
@@ -119,7 +119,7 @@ export const Header = () => {
         </Link>
 
         <div className="nav-right flex gap-4 max-sm:gap-0 items-center justify-end ">
-          <div className="links max-lg:hidden flex md:gap-6 gap-2 py-2">
+          <div className="links max-sm:hidden flex md:gap-6 gap-2 py-2">
             <Link
               to="/"
               className="link text-sm transition-colors duration-200 "

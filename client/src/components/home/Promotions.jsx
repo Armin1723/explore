@@ -54,8 +54,8 @@ const Promotions = () => {
 
       <div className="carousel flex flex-1 relative max-sm:px-2">
         <Carousel
-          slideSize={{ base: "100%" }}
-          slideGap={{ base: "xl" }}
+          slideSize='100%'
+          slideGap='xl'
           withControls={false}
           getEmblaApi={setEmbla}
           onSlideChange={(index) => setActiveSlide(index)}

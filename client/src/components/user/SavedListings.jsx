@@ -48,7 +48,7 @@ const SavedListings = ({ user }) => {
       <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center">
         <div className="carousel-container relative w-full">
           <Carousel
-            slideSize={{ base: "50%",sm: '33.33%', md: "33.33%", lg: "20%" }}
+            slideSize={{ base: "50%",sm: '33.33%', md: "25%", lg: "20%" }}
             slideGap={{ base: "md", md: "md", lg: "xl" }}
             align="start"
             onSlideChange={(index) => setActiveSlide(index)}

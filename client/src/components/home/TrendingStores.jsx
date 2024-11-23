@@ -1,11 +1,6 @@
 import { Carousel } from "@mantine/carousel";
-import { Avatar } from "@mantine/core";
-import { useInterval } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
-import { MdArrowRightAlt } from "react-icons/md";
-import { Link } from "react-router-dom";
-import striptags from "striptags";
 import CardSmall from "../backup/CardSmall";
 
 const TrendingStores = () => {
@@ -100,9 +95,9 @@ const TrendingStores = () => {
       <p className="heading w-[90%] pb-6 max-lg:py-2 ">Trending Stores</p>
 
       <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center ">
-        <div className="carousel-container mak max-sm:no-mask md:w-[80%] w-[90%] relative ">
+        <div className="carousel-container md:w-[80%] w-[90%] relative ">
           <Carousel
-            slideSize={{ base: "50%", sm: "33.33%", md: "20%" }}
+            slideSize={{ base: "50%", sm: "33.33%", md: "25%", lg: "20%" }}
             slideGap='xl'
             onSlideChange={(index) => setActiveSlide(index + 1)}
             loop
@@ -113,49 +108,6 @@ const TrendingStores = () => {
             {stores.map((store, index) => {
               return (
                 <Carousel.Slide key={index}>
-                  {/* <Link
-                    to={`/companies/${store?.name
-                      ?.toLowerCase()
-                      .split(" ")
-                      .join("-")}`}
-                    className="flex flex-col items-center p-2 h-full rounded-md group hover:bg-primary hover:text-white transition-all duration-200 border border-neutral-500 hover:border-accent hover:shadow-[0_0_30px_orange] shadow-accent/70"
-                  >
-                    <div className="image-container w-full aspect-[4/3] overflow-hidden rounded-md flex items-center justify-center">
-                      {store.gallery ? (
-                        <img
-                          src={store?.gallery[0]?.url?.replace(
-                            "/upload/",
-                            "/upload/w_300,h_200,c_fill/"
-                          )}
-                          alt="store"
-                          className="w-full aspect-[4/3] object-cover rounded-md group-hover:scale-105 border border-black/70 transition-all duration-300"
-                        />
-                      ) : (
-                        <img
-                          src="utility/placeholder-card.png"
-                          alt="store"
-                          className="flex items-center justify-center object-contain w-16"
-                        />
-                      )}
-                    </div>
-
-                    <div className="details flex flex-col justify-around p-2">
-                      <div className="flex justify-between items-center w-full pb-2 max-sm:pb-1">
-                        <p className="sub-heading !max-lg:text-md">
-                          {store.name}
-                        </p>
-                        <div className="icon p-2 flex aspect-square rounded-full border border-gray-500/50 group-hover:-rotate-45 group-hover:bg-accent transition-all duration-300">
-                          <MdArrowRightAlt size={14} />
-                        </div>
-                      </div>
-                      <p className="italic text-xs max-sm:text-[0.70rem]">
-                        {striptags(store?.description)
-                          .split(" ")
-                          .slice(0, 10)
-                          .join(" ")}
-                      </p>
-                    </div>
-                    </Link> */}
                     <CardSmall company={store} />
                 </Carousel.Slide>
               );
