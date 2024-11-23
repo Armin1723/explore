@@ -12,8 +12,6 @@ import {
   Collapse,
   ScrollArea,
   rem,
-  ActionIcon,
-  TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { GoChevronDown } from "react-icons/go";
@@ -22,7 +20,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import UserProfile from "./UserProfile";
-import { FaArrowRight, FaSearch } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 
 const categoryData = [
@@ -116,7 +113,7 @@ export const Header = () => {
 
   return (
     <div
-      className={` fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
+      className={`fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
     >
       <header
         className={`md:px-[8vw] px-6 py-1 flex justify-between`}
@@ -263,8 +260,7 @@ export const Header = () => {
               opened={drawerOpened}
               onClick={toggleDrawer}
               hiddenFrom="sm"
-              color="white"
-              className="!text-white/75 !mix-blend-difference"
+              className=""
             />
           </div>
         </div>
