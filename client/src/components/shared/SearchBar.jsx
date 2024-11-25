@@ -1,17 +1,14 @@
-import { Button } from "@mantine/core";
 import React, { useState } from "react";
 import { FaArrowRight, FaSearch } from "react-icons/fa";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
-  const [searchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("query") || "");
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
+  const pathname = useLocation().pathname;
 
   const handleSearch = () => {
-    setIsMobileSearchOpen(false);
     navigate(`/companies/search?query=${searchQuery}`);
   };
 
@@ -22,9 +19,9 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="relative">
+    <div className={`relative ${pathname.includes('search') && 'hidden'} max-lg:hidden`}>
       {/* Search Bar for Large Screens */}
-      <div className="max-lg:hidden flex items-center border border-primary rounded-md overflow-hidden bg-white shadow-sm w-[25vw] ">
+      <div className="flex items-center border border-primary rounded-md overflow-hidden bg-white shadow-sm w-[25vw] ">
         {/* Search Icon */}
         <button className="text-primary bg-gray-200 p-2 border-r border-primary h-full">
           <FaSearch />
@@ -45,44 +42,7 @@ const SearchBar = () => {
         >
           <FaArrowRight />
         </button>
-      </div>
-
-      {/* Mobile Search Icon */}
-      <button
-        onClick={() => setIsMobileSearchOpen(true)}
-        className="max-lg:block hidden p-2 h-full"
-      >
-        <FaSearch />
-      </button>
-
-      {/* Mobile Search Overlay */}
-      {isMobileSearchOpen && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-80 z-50 flex items-center justify-center">
-          <div className="bg-white rounded-md shadow-lg w-4/5 p-4 space-y-2">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type your search..."
-              className="w-full border border-gray-300 rounded-md p-2 outline-none"
-            />
-            <Button
-            fullWidth
-              onClick={handleSearch}
-              color="primary.3"   
-            >
-              Search
-            </Button>
-          </div>
-          <button
-            onClick={() => setIsMobileSearchOpen(false)}
-            className="absolute top-5 right-5 text-white"
-          >
-            Close
-          </button>
-        </div>
-      )}
+      </div>      
     </div>
   );
 };

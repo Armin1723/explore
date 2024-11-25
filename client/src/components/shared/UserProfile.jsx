@@ -90,6 +90,7 @@ const UserProfile = () => {
                 size={28}
               />
             </Link>
+
             <FaChevronDown
               style={{ width: rem(12), height: rem(12) }}
               stroke={1.5}

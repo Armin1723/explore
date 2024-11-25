@@ -1,4 +1,4 @@
-import { Avatar, Badge, ScrollArea } from "@mantine/core";
+import { Avatar, Badge } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -62,11 +62,8 @@ const UserDetail = () => {
   }
 
   return (
-    <div className="w-[80%] max-sm:!w-full bg-white h-full pt-[8vh] border shadow-[0_0_20px_black] shadow-black/20 py-6 px-12 max-lg:px-6 max-sm:px-4 overflow-x-hidden">
-      <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500} h={800} scrollbars="y" className="!max-w-full">
+    <div className="w-[80%] max-sm:!w-full bg-white h-full pt-[8vh] max-sm:pt-2 border shadow-[0_0_20px_black] shadow-black/20 py-6 px-12 max-lg:px-6 max-sm:px-4">
+        <div className="overflow-y-auto max-h-[75vh]">
         <div className="profile flex justify-start items-start px-4 gap-4 max-sm:gap-2 py-6 w-full bg-secondary my-6 ">
           <div className="avatar flex flex-col justify-center h-full">
             <Avatar
@@ -113,7 +110,7 @@ const UserDetail = () => {
         <SavedListings user={userData} />
 
         <ReviewedListings user={userData} />
-      </ScrollArea>
+        </div>
     </div>
   );
 };

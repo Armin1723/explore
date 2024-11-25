@@ -217,7 +217,7 @@ export const Header = () => {
               </Link>
             )}
           </div>
-          <div className="max-lg:flex hidden ">
+          <div className="max-lg:flex hidden z-[999]">
             <Burger
               opened={drawerOpened}
               onClick={toggleDrawer}

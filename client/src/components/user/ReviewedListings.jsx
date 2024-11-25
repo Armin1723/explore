@@ -45,7 +45,7 @@ const ReviewedListing = ({ user }) => {
       </p>
 
       <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center">
-        <div className="carousel-container relative w-full">
+        <div className="carousel-container relative w-full ">
         <Carousel
             slideSize={{ base: "50%",sm: '33.33%', md: "25%", lg: "20%" }}
             slideGap={{ base: "md", md: "md", lg: "xl" }}
@@ -56,7 +56,7 @@ const ReviewedListing = ({ user }) => {
           >
             {results &&
               results?.map((result, index) => (
-                <Carousel.Slide key={index}>
+                <Carousel.Slide key={index} className="py-1">
                   <CardSmall company={result?.company} />
                 </Carousel.Slide>
               ))}
