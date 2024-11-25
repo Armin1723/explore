@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 import SearchBar from "./SearchBar";
 import SearchBarSmall from "./SearchBarSmall";
+import { useScroll } from "framer-motion";
 
 const categoryData = [
   {
@@ -60,9 +61,8 @@ const categoryData = [
 export const Header = () => {
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, []);
+  const {scrollY } = useScroll();
+
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -206,7 +206,7 @@ export const Header = () => {
             </Link>
           </div>
 
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center justify-end">
             <SearchBarSmall />
             {user && user?.name ? (
               <UserProfile />
