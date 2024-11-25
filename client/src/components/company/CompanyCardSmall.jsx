@@ -95,7 +95,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
           </Link>
         )}
 
-        <div className="action-buttons flex gap-2 max-sm:flex-col flex-wrap grow-0">
+        <div className="action-buttons flex gap-2 flex-wrap grow-0">
           <Link to={`tel:${company?.phone?.number}`} target="blank">
             <Button color="green.9">
               <FaPhone className="mr-2" /> {company?.phone?.number}

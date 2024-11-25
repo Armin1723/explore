@@ -1,10 +1,8 @@
 import {
   Avatar,
-  Group,
   Menu,
   UnstyledButton,
   rem,
-  useMantineColorScheme,
   useMantineTheme,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
@@ -16,7 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import { setUser } from "../../redux/features/user/userSlice";
 
-const UserProfile = () => {
+const UserProfile = ({expanded = false}) => {
   const user = useSelector((state) => state.user);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
@@ -70,6 +68,7 @@ const UserProfile = () => {
       width={260}
       position="bottom-end"
       transitionProps={{ transition: "pop-top-right" }}
+      className='!z-[99999999]'
       onClose={() => setUserMenuOpened(false)}
       onOpen={() => setUserMenuOpened(true)}
       withinPortal
@@ -77,7 +76,7 @@ const UserProfile = () => {
       <Menu.Target>
         <UnstyledButton
           className={`${classes.user} ${
-            userMenuOpened ? classes.userActive : "!p-0"
+            userMenuOpened ? classes.userActive : ""
           }`}
         >
           <div className="flex gap-2 items-center">
@@ -91,16 +90,19 @@ const UserProfile = () => {
               />
             </Link>
 
+            {expanded && (
+              <Link to={`/users/${user?._id}`} className="text-sm font-semibold">{user?.name}</Link>
+            )}
+
             <FaChevronDown
               style={{ width: rem(12), height: rem(12) }}
-              stroke={1.5}
               className=""
             />
           </div>
         </UnstyledButton>
       </Menu.Target>
 
-      <Menu.Dropdown>
+      <Menu.Dropdown className="!z-[99999999] !shadow-lg !border">
 
       {user && user?.role == 'admin' && (
           <Link to="/admin">

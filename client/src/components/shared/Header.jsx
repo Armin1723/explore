@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 import SearchBar from "./SearchBar";
+import SearchBarSmall from "./SearchBarSmall";
 
 const categoryData = [
   {
@@ -108,12 +109,12 @@ export const Header = () => {
     <div
       className={`fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
     >
-      <header
-        className={`md:px-[8vw] px-6 py-1 flex justify-between`}
-      >
+      <header className={`md:px-[8vw] px-6 py-1 flex justify-between`}>
         <div className="nav-left flex items-center py-4 max-lg:py-2 gap-4 max-lg:gap-1">
           <Link to="/" className="flex items-center">
-            <p className="heading !my-0 text-shadow text-stroke !font-extrabold">Explore </p>
+            <p className="heading !my-0 text-shadow text-stroke !font-extrabold">
+              Explore{" "}
+            </p>
           </Link>
           <div className="flex items-center justify-center">
             <SearchBar />
@@ -205,11 +206,15 @@ export const Header = () => {
             </Link>
           </div>
 
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-2 items-center">
+            <SearchBarSmall />
             {user && user?.name ? (
               <UserProfile />
             ) : (
-              <Link className="fancy w-44 max-sm:hidden !py-2 shadow-xl" to="/auth">
+              <Link
+                className="fancy w-44 max-sm:hidden !py-2 shadow-xl"
+                to="/auth"
+              >
                 <span className="top-key"></span>
                 <span className="text">Join Now</span>
                 <span className="bottom-key-1"></span>
@@ -217,7 +222,7 @@ export const Header = () => {
               </Link>
             )}
           </div>
-          <div className="max-lg:flex hidden z-[999]">
+          <div className="max-lg:flex hidden ">
             <Burger
               opened={drawerOpened}
               onClick={toggleDrawer}
@@ -233,16 +238,11 @@ export const Header = () => {
         onClose={closeDrawer}
         size="80%"
         title="Explore"
-        zIndex={1000000}
+        zIndex={100}
+        className=""
       >
-        <ScrollArea
-          offsetScrollbars
-          scrollbarSize={6}
-          scrollHideDelay={500}
-          h={"80dvh"}
-          w="100%"
-        >
-          <div className="links text-sm gap-4 px-4 flex flex-col justify-start">
+
+          <div className="links text-sm gap-4 overflow-y-auto px-4 flex h-[80dvh] flex-col justify-start">
             <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
               Home
             </Link>
@@ -273,11 +273,10 @@ export const Header = () => {
               Advertise
             </Link>
           </div>
-        </ScrollArea>
 
-        <div className="">
+        <div className="flex gap-1 items-center">
           {user && user?.name ? (
-            <UserProfile />
+            <UserProfile expanded />
           ) : (
             <Link className="fancy !my-4 w-48 max-sm:scale-75" to="/auth">
               <span className="top-key"></span>
