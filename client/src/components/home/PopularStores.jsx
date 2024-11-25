@@ -67,7 +67,7 @@ const PopularStores = () => {
                   />
                   <div className="flex flex-col w-full min-h-fit items-start p-4 max-lg:py-2 gap-2 max-lg:gap-1 justify-start bg-[#082222]/30 backdrop-blur-xl">
                     <p className="sub-heading max-lg:text-sm">{store?.name}</p>
-                    <Link
+                    <div
                       className="fancy w-40 max-lg:scale-50 max-lg:-translate-x-8 !py-2 !bg-gray-200"
                       to={`/companies/categories?category=${store?.name.toLowerCase()}`}
                     >
@@ -75,7 +75,7 @@ const PopularStores = () => {
                       <span className="text !text-black">Explore</span>
                       <span className="bottom-key-1"></span>
                       <span className="bottom-key-2"></span>
-                    </Link>
+                    </div>
                   </div>
                 </Link>
               </Carousel.Slide>

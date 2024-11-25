@@ -61,12 +61,12 @@ const categoryData = [
 export const Header = () => {
   const user = useSelector((state) => state.user);
 
-  const {scrollY } = useScroll();
-
+  const { scrollY } = useScroll();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const header = document.querySelector(".header");
+      const links = document.querySelectorAll(".link");
       if (window.scrollY > 10) {
         header.classList.add("bg-white");
         header.classList.add("border-b");
@@ -125,7 +125,7 @@ export const Header = () => {
           <div className="links max-sm:hidden flex md:gap-6 gap-2 py-2">
             <Link
               to="/"
-              className="link text-sm max-lg:text-xs transition-colors duration-200 "
+              className="link text-sm max-lg:text-xs transition-all duration-200 "
             >
               Home
             </Link>
@@ -137,7 +137,7 @@ export const Header = () => {
               withinPortal
             >
               <HoverCard.Target>
-                <div className="link text-sm max-lg:text-xs transition-colors duration-200">
+                <div className="link text-sm max-lg:text-xs transition-all duration-200 ">
                   <Center inline>
                     <Box component="span" mr={4}>
                       Categories
@@ -186,21 +186,21 @@ export const Header = () => {
 
             <Link
               to="/companies/add"
-              className="link text-sm max-lg:text-xs transition-colors duration-200 "
+              className="link text-sm max-lg:text-xs transition-all duration-200 "
             >
               Listing
             </Link>
 
             <Link
               to={`${user && user?.name ? "/companies/advertise" : "/"}`}
+              className={`link text-sm max-lg:text-xs transition-all duration-200   ${
+                (!user || !user.name) && "text-gray-700/30 cursor-not-allowed"
+              }`}
               onClick={(event) => {
                 if (!user || !user.name) {
                   event.preventDefault();
                 }
               }}
-              className={`link text-sm max-lg:text-xs transition-colors duration-200  ${
-                (!user || !user.name) && "text-gray-700 cursor-not-allowed"
-              }`}
             >
               Advertise
             </Link>
@@ -241,38 +241,37 @@ export const Header = () => {
         zIndex={100}
         className=""
       >
-
-          <div className="links text-sm gap-4 overflow-y-auto px-4 flex h-[80dvh] flex-col justify-start">
-            <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
-              Home
-            </Link>
-            <div className="font-['poppins'] " onClick={toggleLinks}>
-              <Center inline>
-                <p className="font-['poppins'] ">Categories</p>
-                <GoChevronDown
-                  style={{ width: rem(16), height: rem(16) }}
-                  className=""
-                />
-              </Center>
-            </div>
-            <Collapse in={linksOpened}>{links}</Collapse>
-            <Link
-              to="/companies/add"
-              className="font-['poppins']"
-              onClick={closeDrawer}
-            >
-              Add Company
-            </Link>
-            <Link
-              to={`${user && user?.name && "/companies/advertise"}`}
-              className={` font-['poppins']  transition-colors duration-200 ${
-                (!user || !user.name) && "text-gray-700 cursor-not-allowed"
-              }`}
-              onClick={closeDrawer}
-            >
-              Advertise
-            </Link>
+        <div className="links text-sm gap-4 overflow-y-auto px-4 flex h-[80dvh] flex-col justify-start">
+          <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
+            Home
+          </Link>
+          <div className="font-['poppins'] " onClick={toggleLinks}>
+            <Center inline>
+              <p className="font-['poppins'] ">Categories</p>
+              <GoChevronDown
+                style={{ width: rem(16), height: rem(16) }}
+                className=""
+              />
+            </Center>
           </div>
+          <Collapse in={linksOpened}>{links}</Collapse>
+          <Link
+            to="/companies/add"
+            className="font-['poppins']"
+            onClick={closeDrawer}
+          >
+            Add Company
+          </Link>
+          <Link
+            to={`${user && user?.name && "/companies/advertise"}`}
+            className={` font-['poppins']  transition-colors duration-200 ${
+              (!user || !user.name) && "text-gray-700 cursor-not-allowed"
+            }`}
+            onClick={closeDrawer}
+          >
+            Advertise
+          </Link>
+        </div>
 
         <div className="flex gap-1 items-center">
           {user && user?.name ? (

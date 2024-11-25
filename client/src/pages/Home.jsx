@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <div
-      className={`flex flex-col items-center min-h-screen max-sm:min-w-screen home `}
+      className={`flex flex-col items-center min-h-screen max-sm:min-w-screen home`}
     >
       <Header />
 

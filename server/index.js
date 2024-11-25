@@ -10,7 +10,8 @@ const cookieParser = require('cookie-parser');
 const advertisementCron = require('./cron/advertisementCron.js');
 
 const userRoutes = require('./routes/userRoutes.js');
-const companyRoutes = require('./routes/companyRoutes.js')
+const companyRoutes = require('./routes/companyRoutes.js');
+const weeklyPushNotificationCron = require('./cron/weeklyPushNotificationCron.js');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(cookieParser());
 connectToDB();
 
 //Cron Jobs
+weeklyPushNotificationCron();
 advertisementCron();
 
 app.get('/', (req, res) => {

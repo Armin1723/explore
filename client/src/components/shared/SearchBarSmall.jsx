@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBarSmall = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showInput, setShowInput] = useState(false); // State to toggle input visibility
+  const inputRef = useRef(null); // Ref for the input element
 
   const pathname = useLocation().pathname;
   const navigate = useNavigate();
@@ -16,7 +17,16 @@ const SearchBarSmall = () => {
   };
 
   const toggleInput = () => {
-    setShowInput((prev) => !prev);
+    setShowInput((prev) => {
+      const shouldShowInput = !prev;
+      if (shouldShowInput) {
+        // Focus the input field when it becomes visible
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100); // Delay to ensure input is rendered before focus
+      }
+      return shouldShowInput;
+    });
   };
 
   return (
@@ -40,6 +50,7 @@ const SearchBarSmall = () => {
         <div className="absolute -right-2 transition-all duration-300">
           <input
             type="text"
+            ref={inputRef} // Attach the ref to the input element
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className={`border-none outline-1 w-fit max-w-[30vw] rounded-md p-1 pl-2 text-sm bg-transparent text-black placeholder:text-gray-400 transition`}

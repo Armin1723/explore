@@ -122,6 +122,26 @@ const Footer = () => {
 
         </div>
       </div>
+      <div className="bottom-footer !text-xs w-full flex justify-between px-16 max-lg:px-8 max-sm:px-4 max-sm:flex-col py-2 border-t border-gray-100/20">
+        <div className="left">
+          <p className="!text-xs text-gray-200">
+            Explore LLC © 2024. All Rights Reserved.
+          </p>
+        </div>
+
+        <div className="right flex gap-2">
+          <Link to="/privacy-policy" className="hover:text-blue-600 transition">
+            
+            Privacy Policy
+          </Link>
+          <p>|</p>
+          <Link to="/terms-and-conditions" className="hover:text-blue-600 transition">
+            
+            Terms of Use
+          </Link>
+
+        </div>
+      </div>
 
       <div className="bg-[#082222] credits">
         <div className="mx-auto flex max-lg:flex-col items-center gap-3 px-4 py-4 md:justify-around">

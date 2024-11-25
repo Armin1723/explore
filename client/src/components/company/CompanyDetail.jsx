@@ -291,6 +291,7 @@ const CompanyDetail = () => {
               </Link>
             </Indicator>
           )}
+
         </div>
 
         <div

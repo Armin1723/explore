@@ -71,12 +71,12 @@ const Testimonials = () => {
         <MarqueeItem images={upperMarquee} from={"0%"} to={"-100%"} />
       </div>
 
-      <div className="flex flex-col items-center p-6 md:px-12 relative bg-primary overflow-x-hidden text-white mx-8 my-4 pb-12 max-sm:pb-6 rounded-xl w-[90%]">
+      <div className="flex flex-col items-center p-6 max-sm:p-2 md:px-12 relative bg-primary overflow-x-hidden text-white mx-8 my-4 pb-12 max-sm:pb-6 rounded-xl w-[90%] max-sm:w-[95%]">
         <p className="heading max-sm:mt-4 text-center max-sm:py-2 my-6 max-w-3/5">
           Hear what our customers have to say.
         </p>
 
-        <div className="w-full max-sm:w-full max-lg:w-[90%] md:w-3/4 px-4">
+        <div className="carousel-container w-full max-sm:w-full max-lg:w-[90%] md:w-3/4 px-4">
           <Carousel
             slideSize={{ base: "100%", sm: "50%", md: "50%", lg: "50%" }}
             slideGap="md"

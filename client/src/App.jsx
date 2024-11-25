@@ -3,6 +3,8 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollRestoration from "./components/utility/ScrollRestoration";
 
 import AdminBanners from "./components/admin/AdminBanners";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const AdminCategories = React.lazy(() => import("./components/admin/AdminCategories"));
@@ -118,6 +120,10 @@ const App = () => {
           <Route path="/admin/login" element={<AdminLogin />} />
 
           <Route path='/about' element={<AboutUs />} />
+
+          <Route path='privacy-policy' element={<PrivacyPolicy />} />
+
+          <Route path='/terms-and-conditions' element={<Terms />} />
 
           <Route path='/testimonials' element={<TestimonialPage/>} />
 
