@@ -69,8 +69,8 @@ const Categories = () => {
         <div className="max-sm:w-[150px] w-fit">
           <Select
             data={["all", ...Object.values(categories).map((cat) => cat.name)]}
-            value={category}
-            placeholder={categoryParam ?? "Chose Category"}
+            value={category || null}
+            placeholder={category || "Chose Category"}
             clearable
             onClear={() => setCategory("")}
             onChange={(value) => {
@@ -83,8 +83,8 @@ const Categories = () => {
         <div className="max-sm:w-[150px] w-fit">
           <Select
             data={getSubCategories(category) || ["all"]}
-            value={subCategory}
-            placeholder="Chose Sub Category"
+            value={subCategory || null}
+            placeholder={subCategory || "Chose Sub Category"}
             onChange={setSubCategory}
             onClear={() => setSubCategory("")}
             clearable
@@ -137,7 +137,6 @@ const Categories = () => {
               />
             )}
           </div>
-        {/* </ScrollArea> */}
 
         <div className="sidebar w-1/3 max-lg:w-full">
           <AdvertisementCard />
