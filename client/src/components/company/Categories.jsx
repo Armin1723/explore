@@ -125,7 +125,7 @@ const Categories = () => {
                   className="px-4 hover:text-blue-600 text-gray-500 cursor-pointer transition-all duration-200 font-['inter']"
                   onClick={reset}
                 >
-                  Search for all??
+                  Search for all?
                 </p>
               </div>
             )}

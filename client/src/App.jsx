@@ -7,8 +7,12 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 
 const Home = React.lazy(() => import("./pages/Home"));
-const AdminCategories = React.lazy(() => import("./components/admin/AdminCategories"));
-const AddCategoryForm = React.lazy(() => import("./components/admin/AddCategoryForm"));
+const AdminCategories = React.lazy(() =>
+  import("./components/admin/AdminCategories")
+);
+const AddCategoryForm = React.lazy(() =>
+  import("./components/admin/AddCategoryForm")
+);
 const AdminHomepage = React.lazy(() => import("./pages/AdminHomepage"));
 const AdminLogin = React.lazy(() => import("./components/admin/AdminLogin"));
 const AdminUsers = React.lazy(() => import("./components/admin/AdminUsers"));
@@ -41,18 +45,61 @@ const ResetPassword = React.lazy(() =>
 const CompanyListing = React.lazy(() => import("./pages/CompanyListing"));
 const Categories = React.lazy(() => import("./components/company/Categories"));
 const Search = React.lazy(() => import("./components/company/Search"));
-const AdvertiseForm = React.lazy(() =>import("./components/company/AdvertiseForm"));
+const AdvertiseForm = React.lazy(() =>
+  import("./components/company/AdvertiseForm")
+);
 const EnquiryForm = React.lazy(() =>
   import("./components/company/EnquiryForm")
 );
-const EnquiryPage = React.lazy(() => import("./components/company/EnquiryPage"));
+const EnquiryPage = React.lazy(() =>
+  import("./components/company/EnquiryPage")
+);
 
 const AboutUs = React.lazy(() => import("./pages/AboutUs"));
 
 const TestimonialPage = React.lazy(() => import("./pages/TestimonialPage"));
 
+
+const registerServiceWorker = async () => {
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+      console.log("Service Worker registered:", registration);
+    } catch (error) {
+      console.error("Service Worker registration failed:", error);
+    }
+  }
+};
+
+
 const App = () => {
   const [refetch, setRefetch] = React.useState(false);
+
+      React.useEffect(() => {
+        registerServiceWorker();
+    // const requestPermission = async () => {
+    //   try {
+    //     const permission = await Notification.requestPermission();
+    //     if (permission === "granted") {
+    //       const token = await getToken(messaging, {
+    //         vapidKey: "YOUR_PUBLIC_VAPID_KEY", // Replace with your VAPID key from Firebase console
+    //       });
+    //       if (token) {
+    //         console.log("Notification Token:", token);
+    //         // Send the token to your server or use it as needed
+    //         return token;
+    //       } else {
+    //         console.warn("No registration token available. Request permission to generate one.");
+    //       }
+    //     } else {
+    //       console.warn("Notification permission not granted.");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error getting notification token:", error);
+    //   }
+    // }
+    // requestPermission();
+  }, []);
 
   return (
     <BrowserRouter>
@@ -63,9 +110,8 @@ const App = () => {
           </div>
         }
       >
-        
         <ScrollRestoration />
-        
+
         <Routes>
           <Route path="/" element={<Outlet />}>
             <Route path="" element={<Home />} />
@@ -114,18 +160,18 @@ const App = () => {
             />
             <Route path="categories" element={<AdminCategories />} />
             <Route path="categories/add" element={<AddCategoryForm />} />
-            <Route path='banners' element={<AdminBanners />} />
+            <Route path="banners" element={<AdminBanners />} />
           </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />
 
-          <Route path='/about' element={<AboutUs />} />
+          <Route path="/about" element={<AboutUs />} />
 
-          <Route path='privacy-policy' element={<PrivacyPolicy />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
 
-          <Route path='/terms-and-conditions' element={<Terms />} />
+          <Route path="/terms-and-conditions" element={<Terms />} />
 
-          <Route path='/testimonials' element={<TestimonialPage/>} />
+          <Route path="/testimonials" element={<TestimonialPage />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
