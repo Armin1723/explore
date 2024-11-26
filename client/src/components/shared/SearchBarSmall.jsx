@@ -12,6 +12,7 @@ const SearchBarSmall = () => {
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
+      event.preventDefault(); 
       navigate(`/companies/search?query=${searchQuery}`);
     }
   };

@@ -455,7 +455,7 @@ const CompanyDetail = () => {
                   Description
                 </div>
                 <div
-                  className="w-full max-sm:text-sm font-['inter'] leading-relaxed"
+                  className="w-full max-sm:text-sm font-['inter'] leading-relaxed text-justify"
                   dangerouslySetInnerHTML={{ __html: company.description }}
                 ></div>
               </div>

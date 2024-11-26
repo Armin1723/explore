@@ -9,9 +9,9 @@ import App from "./App";
 import { useSelector } from "react-redux";
 import { FaArrowUp } from "react-icons/fa";
 import { useWindowScroll } from "@mantine/hooks";
+import { useEffect } from "react";
 
 const Wrapper = () => {
-
   const theme = useSelector((state) => state.theme);
 
   const [scroll, scrollTo] = useWindowScroll();
@@ -76,24 +76,24 @@ const Wrapper = () => {
         primaryColor: "accent",
       }}
     >
-        <Notifications />
-        <Affix position={{ bottom: 20, right: 20 }}>
-          <Transition transition="slide-up" mounted={scroll.y > 0}>
-            {(transitionStyles) => (
-              <Button
-                color="primary.1"
-                leftSection={
-                  <FaArrowUp style={{ width: rem(16), height: rem(16) }} />
-                }
-                style={transitionStyles}
-                onClick={() => scrollTo({ y: 0 })}
-              >
-                Top
-              </Button>
-            )}
-          </Transition>
-        </Affix>
-        <App />
+      <Notifications />
+      <Affix position={{ bottom: 20, right: 20 }}>
+        <Transition transition="slide-up" mounted={scroll.y > 0}>
+          {(transitionStyles) => (
+            <Button
+              color="primary.1"
+              leftSection={
+                <FaArrowUp style={{ width: rem(16), height: rem(16) }} />
+              }
+              style={transitionStyles}
+              onClick={() => scrollTo({ y: 0 })}
+            >
+              Top
+            </Button>
+          )}
+        </Transition>
+      </Affix>
+      <App />
     </MantineProvider>
   );
 };

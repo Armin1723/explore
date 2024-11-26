@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollRestoration from "./components/utility/ScrollRestoration";
 
@@ -59,47 +59,8 @@ const AboutUs = React.lazy(() => import("./pages/AboutUs"));
 
 const TestimonialPage = React.lazy(() => import("./pages/TestimonialPage"));
 
-
-const registerServiceWorker = async () => {
-  if ("serviceWorker" in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
-      console.log("Service Worker registered:", registration);
-    } catch (error) {
-      console.error("Service Worker registration failed:", error);
-    }
-  }
-};
-
-
 const App = () => {
   const [refetch, setRefetch] = React.useState(false);
-
-      React.useEffect(() => {
-        registerServiceWorker();
-    // const requestPermission = async () => {
-    //   try {
-    //     const permission = await Notification.requestPermission();
-    //     if (permission === "granted") {
-    //       const token = await getToken(messaging, {
-    //         vapidKey: "YOUR_PUBLIC_VAPID_KEY", // Replace with your VAPID key from Firebase console
-    //       });
-    //       if (token) {
-    //         console.log("Notification Token:", token);
-    //         // Send the token to your server or use it as needed
-    //         return token;
-    //       } else {
-    //         console.warn("No registration token available. Request permission to generate one.");
-    //       }
-    //     } else {
-    //       console.warn("Notification permission not granted.");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error getting notification token:", error);
-    //   }
-    // }
-    // requestPermission();
-  }, []);
 
   return (
     <BrowserRouter>

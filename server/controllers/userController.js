@@ -29,8 +29,13 @@ const loginUser = async (req, res) => {
         .json({ success: false, errors: { email: "User not found" } });
     }
 
-    if(!user.isActive){
-      return res.status(400).json({ success: false, errors: { email: "Your account has been suspended." } });
+    if (!user.isActive) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          errors: { email: "Your account has been suspended." },
+        });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -117,7 +122,7 @@ const registerUser = async (req, res) => {
           if (!cloudinaryResponse || cloudinaryResponse.error) {
             return res.status(500).json({
               success: false,
-              message: "Failed to upload profilePic to cloud." ,  
+              message: "Failed to upload profilePic to cloud.",
               error: cloudinaryResponse.error,
             });
           }
@@ -143,7 +148,7 @@ const registerUser = async (req, res) => {
     await user.save();
     const message = `<p>Hi ${user.name}, Welcome to <strong>Explore</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
 
-    sendMail(user.email, subject = "Email Verification", message);
+    sendMail(user.email, (subject = "Email Verification"), message);
 
     res
       .status(201)
@@ -184,17 +189,30 @@ const verifyOtp = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "User not found", errors: { otp: "User not found" } });
+        .json({
+          success: false,
+          message: "User not found",
+          errors: { otp: "User not found" },
+        });
     }
     if (user.otp !== otp) {
       return res
         .status(400)
-        .json({ success: false, message: "Invalid OTP", errors: { otp: "Invalid OTP" } });
+        .json({
+          success: false,
+          message: "Invalid OTP",
+          errors: { otp: "Invalid OTP" },
+        });
     }
     if (user.otpExpires < Date.now()) {
       return res
         .status(400)
-        .json({ success: false, message: "OTP expired", expired: true , errors: { otp: "OTP expired" } });
+        .json({
+          success: false,
+          message: "OTP expired",
+          expired: true,
+          errors: { otp: "OTP expired" },
+        });
     }
     user.otp = undefined;
     user.otpExpires = undefined;
@@ -208,11 +226,16 @@ const verifyOtp = async (req, res) => {
       },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
-    );  
+    );
     res.cookie("token", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
+
+    //Send Welcome Email
+    const message = `<p>Hi ${user.name}, Welcome to <strong>Explore</strong>. Your account has been verified successfully. <br/>You can now explore through our services and find the best <a href='${process.env.FRONTEND_URL}/companies' target='_blank'>companies</a> in your area.</p>`;
+    sendMail(user.email,(subject = "Welcome to Explore"), message);
+
     user.password = undefined;
     res.status(200).json({ success: true, user });
   } catch (error) {
@@ -224,22 +247,33 @@ const verifyOtp = async (req, res) => {
 const resendOtp = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ email
-    });
+    const user = await User.findOne({ email });
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "User not found", errors: { otp: "User not found" } });
+        .json({
+          success: false,
+          message: "User not found",
+          errors: { otp: "User not found" },
+        });
     }
     if (user.isVerified === true) {
       return res
         .status(400)
-        .json({ success: false, message: "User already verified", errors: { otp: "User already verified" } });
+        .json({
+          success: false,
+          message: "User already verified",
+          errors: { otp: "User already verified" },
+        });
     }
     if (user.otp && user.otpExpires > Date.now()) {
       return res
         .status(400)
-        .json({ success: false, message: "OTP already sent", errors: { otp: "OTP already sent" } });
+        .json({
+          success: false,
+          message: "OTP already sent",
+          errors: { otp: "OTP already sent" },
+        });
     }
     user.otp = Math.floor(1000 + Math.random() * 9000);
     user.otpExpires = Date.now() + 10 * 60 * 1000; //10 minutes

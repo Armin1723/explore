@@ -11,7 +11,7 @@ const advertisementCron = require('./cron/advertisementCron.js');
 
 const userRoutes = require('./routes/userRoutes.js');
 const companyRoutes = require('./routes/companyRoutes.js');
-const weeklyPushNotificationCron = require('./cron/weeklyPushNotificationCron.js');
+const { weeklyPushNotificationCron, monthlyPromotionalMailCron } = require('./cron/pushNotificationCron.js');
 
 const app = express();
 
@@ -36,6 +36,7 @@ connectToDB();
 
 //Cron Jobs
 weeklyPushNotificationCron();
+monthlyPromotionalMailCron();
 advertisementCron();
 
 app.get('/', (req, res) => {
