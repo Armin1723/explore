@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-
 const AdvertiseForm = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -139,10 +138,6 @@ const AdvertiseForm = () => {
         }}
         className="form-container flex flex-col items-center justify-center  h-full"
       >
-        <p className="heading">Enter Banner.</p>
-        <p>
-          Enter banner for <span>{user?.company?.name}</span>
-        </p>
         <Paper
           withBorder
           shadow="md"
@@ -151,12 +146,16 @@ const AdvertiseForm = () => {
           radius="md"
           className="min-w-[30vw] px-4 max-lg:min-w-[60vw] max-sm:min-w-[80vw] py-8 border-2 border-accent "
         >
+            <p className="heading">Enter Banner.</p>
+            <p>
+              Enter banner for <span>{user?.company?.name}</span>
+            </p>
           <form
             onSubmit={form.onSubmit(handleAdvertise)}
             className="flex flex-col items-center gap-6 max-sm:gap-2 w-[90vw] md:w-[60vw] "
           >
             <FileInput
-              label="Banner"
+              // label="Banner"
               placeholder="Upload your banner"
               className="flex-1 w-full gap-2 flex flex-col"
               accept="image/*"
@@ -171,7 +170,7 @@ const AdvertiseForm = () => {
                 <img
                   src={bannerUrl}
                   alt="Banner"
-                  className="w-full aspect-video"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <img

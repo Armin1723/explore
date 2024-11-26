@@ -7,6 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { Modal, useMantineColorScheme } from "@mantine/core";
 import AuthModal from "../components/shared/AuthModal";
 import { useDisclosure } from "@mantine/hooks";
+import { Helmet } from "react-helmet-async";
 
 const UserPage = () => {
   const { setColorScheme } = useMantineColorScheme();
@@ -40,17 +41,29 @@ const UserPage = () => {
       </Modal>
     );
   }
-  // useEffect(() => {
-  //   if (!user || !user.name) {
-  //     notifications.show({
-  //       title: "Error",
-  //       message: "You must be logged in to view this page.",
-  //       color: "red",
-  //     });
-  //     navigate("/auth");
-  //   }
-  // }, [user]);
+
   return (
+    <>
+    {/* Description and Tags */}
+    <Helmet>
+    <title>Users | Explore Portal</title>
+    <meta
+      name="description"
+      content="Explore Portal helps you find the best local businesses in your area."
+    />
+    <meta
+      name="keywords"
+      content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
+    />
+    <meta name="author" content="Explore Portal" />
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="Users | Explore Portal" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${import.meta.env.VITE_FRONTEND_URL}/users/${user?._id}`} />
+  </Helmet>
+
+  {/* Actual Content */}
     <div className="flex flex-col min-h-screen w-screen overflow-hidden items-center justify-between relative">
       <motion.img
         initial={{
@@ -74,6 +87,7 @@ const UserPage = () => {
         <Outlet />
       </div>
     </div>
+    </>
   );
 };
 

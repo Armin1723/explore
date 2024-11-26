@@ -1,5 +1,5 @@
 import { Affix, Button, MantineProvider, rem, Transition } from "@mantine/core";
-import { Notifications } from "@mantine/notifications";
+import { notifications, Notifications } from "@mantine/notifications";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/carousel/styles.css";
@@ -9,12 +9,28 @@ import App from "./App";
 import { useSelector } from "react-redux";
 import { FaArrowUp } from "react-icons/fa";
 import { useWindowScroll } from "@mantine/hooks";
+import { HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
+import { generateFCMToken, messaging } from "./notifications/firebase";
+import { onMessage } from "firebase/messaging";
 
 const Wrapper = () => {
   const theme = useSelector((state) => state.theme);
 
   const [scroll, scrollTo] = useWindowScroll();
+
+  useEffect(() => {
+    generateFCMToken();
+    onMessage(messaging, (payload) => {
+      const image = <img src={payload.notification.image} alt="notification" className="object-cover"/>;
+      notifications.show({
+        title: payload.notification.title,
+        message: payload.notification.body,
+        icon: image,
+        color: "teal",
+      });
+    });
+  },[]);
 
   return (
     <MantineProvider
@@ -76,24 +92,26 @@ const Wrapper = () => {
         primaryColor: "accent",
       }}
     >
-      <Notifications />
-      <Affix position={{ bottom: 20, right: 20 }}>
-        <Transition transition="slide-up" mounted={scroll.y > 0}>
-          {(transitionStyles) => (
-            <Button
-              color="primary.1"
-              leftSection={
-                <FaArrowUp style={{ width: rem(16), height: rem(16) }} />
-              }
-              style={transitionStyles}
-              onClick={() => scrollTo({ y: 0 })}
-            >
-              Top
-            </Button>
-          )}
-        </Transition>
-      </Affix>
-      <App />
+      <HelmetProvider>
+        <Notifications />
+        <Affix position={{ bottom: 20, right: 20 }}>
+          <Transition transition="slide-up" mounted={scroll.y > 0}>
+            {(transitionStyles) => (
+              <Button
+                color="primary.1"
+                leftSection={
+                  <FaArrowUp style={{ width: rem(16), height: rem(16) }} />
+                }
+                style={transitionStyles}
+                onClick={() => scrollTo({ y: 0 })}
+              >
+                Top
+              </Button>
+            )}
+          </Transition>
+        </Affix>
+        <App />
+      </HelmetProvider>
     </MantineProvider>
   );
 };

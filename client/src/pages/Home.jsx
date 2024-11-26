@@ -13,6 +13,7 @@ import RecentlyReviewed from "../components/home/RecentlyReviewed";
 
 import { useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet-async";
 // import Promotions from "../components/home/Promotions";
 
 const Home = () => {
@@ -25,36 +26,48 @@ const Home = () => {
   const user = useSelector((state) => state.user);
 
   return (
-    <div
-      className={`flex flex-col items-center min-h-screen max-sm:min-w-screen home`}
-    >
-      <Header />
+    <>
+      {/* Description and Tags */}
+      <Helmet>
+        <title>Explore Portal - Find the Best Local Businesses</title>
+        <meta
+          name="description"
+          content="Explore Portal helps you find the best local businesses in your area."
+        />
+      </Helmet>
 
+      {/* Actual Content */}
       <div
-        rounded="lg"
-        className="content relative flex flex-col items-center w-full"
+        className={`flex flex-col items-center min-h-screen max-sm:min-w-screen home`}
       >
-        <Hero />
+        <Header />
 
-        <CategorySection />
+        <div
+          rounded="lg"
+          className="content relative flex flex-col items-center w-full"
+        >
+          <Hero />
 
-        {/* <Promotions /> */}
+          <CategorySection />
 
-        <TrendingStores />
+          {/* <Promotions /> */}
 
-        <Suggestions />
+          <TrendingStores />
 
-        <PopularStores />
+          <Suggestions />
 
-        {user && user?.name && <RecentlyReviewed />}
+          <PopularStores />
 
-        <Testimonials />
+          {user && user?.name && <RecentlyReviewed />}
 
-        <ContactCard />
+          <Testimonials />
 
-        <Footer />
+          <ContactCard />
+
+          <Footer />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
