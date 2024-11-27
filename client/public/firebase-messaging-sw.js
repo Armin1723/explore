@@ -26,9 +26,11 @@ messaging.onBackgroundMessage((payload) => {
     
     // Customize notification here
     const notificationTitle = payload.notification.title;
+
+    const image = <img src={payload.notification.image || '/favicon/android-chrome-192x192.png'} alt="notification" className="object-cover"/>;
     const notificationOptions = {
       body: payload.notification.body,
-      icon: payload.notification.image || '/favicon/android-chrome-192x192.png',
+      icon: image,
     };
   
     self.registration.showNotification(notificationTitle, notificationOptions);
