@@ -48,7 +48,7 @@ const AdminCategories = () => {
             <FaPlus />
           </Link>
         </div>
-        <div className="users-container min-h-[50px] max-h-[600px] overflow-y-auto flex flex-col">
+        <div className="users-container min-h-[50px] max-h-[400px] overflow-y-auto flex flex-col">
         {results &&
           results.categories.map((category, index) => {
             return (

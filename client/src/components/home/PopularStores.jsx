@@ -46,7 +46,7 @@ const PopularStores = () => {
 
       <div className="carousel-container md:w-[80%] w-[90%] relative">
         <Carousel
-          slideSize={{ base: "25%", sm: "25%", md: "20%" }}
+          slideSize={{ base: "50%", sm:'33.33%', md: "25%", lg: "20%" }}
           slideGap={{ base: "md", sm: "md", md: "2vw" }}
           onSlideChange={(index) => setActiveSlide(index)}
           withControls={false}

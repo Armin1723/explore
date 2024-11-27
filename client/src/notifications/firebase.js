@@ -21,7 +21,6 @@ export const generateFCMToken = async () => {
       const token = await getToken(messaging, {
         vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
       });
-      console.log("Token:", token);
       return token;
     } else {
       console.log("Permission denied");

@@ -76,7 +76,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
 
       {/* Content */}
       <div
-        className={`flex h-[100dvh] font-['inter'] overflow-y-scroll w-full overflow-x-hidden ${
+        className={`flex h-[100dvh] font-['inter'] overflow-hidden max-lg:overflow-y-scroll w-full ${
           colorScheme === "light" && "bg-teal-100/20"
         }`}
       >
@@ -126,7 +126,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
           </Drawer>
           {/* Small Nav Ends */}
 
-          <div className="hero flex-1 px-2 flex max-lg:flex-col gap-2 overflow-y-auto">
+          <div className="hero flex-1 px-2 flex max-lg:flex-col gap-2 ">
             <div className="right max-lg:w-full w-2/3 flex flex-col">
               <AdminCards />
               <Outlet />

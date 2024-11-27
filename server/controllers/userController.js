@@ -76,7 +76,7 @@ const loginUser = async (req, res) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, phone } = req.body;
+    const { name, email, password, phone, fcmToken } = req.body;
 
     if (!name || !email || !password || !phone) {
       return res.status(400).json({
@@ -108,6 +108,7 @@ const registerUser = async (req, res) => {
       email,
       phone,
       password: hashedPassword,
+      fcmToken
     };
 
     // Handling ProfilePic Upload to cloudinary
@@ -144,7 +145,7 @@ const registerUser = async (req, res) => {
     const user = await User.create(userData);
 
     user.otp = Math.floor(1000 + Math.random() * 9000);
-    user.otpExpires = Date.now() + 10 * 60 * 1000; //10 minutes
+    user.otpExpires = Date.now() + 10 * 60 * 1000; 
     await user.save();
     const message = `<p>Hi ${user.name}, Welcome to <strong>Explore</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
 

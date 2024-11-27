@@ -20,9 +20,14 @@ const Wrapper = () => {
   const [scroll, scrollTo] = useWindowScroll();
 
   useEffect(() => {
-    generateFCMToken();
+    const tokenGenerateWrapper = async () =>{
+      const token = await generateFCMToken();
+      if(token) localStorage.setItem("fcm_token", token); 
+    };
+    tokenGenerateWrapper();
+    
     onMessage(messaging, (payload) => {
-      const image = <img src={payload.notification.image} alt="notification" className="object-cover"/>;
+      const image = <img src={payload.notification.image || '/favicon/android-chrome-192x192.png'} alt="notification" className="object-cover"/>;
       notifications.show({
         title: payload.notification.title,
         message: payload.notification.body,

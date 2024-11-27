@@ -475,8 +475,8 @@ const CompanyDetail = () => {
             </div>
           </div>
 
-          <div className="variable flex max-sm:flex-col justify-between w-full gap-2">
-            <div className="left flex flex-col w-2/3 max-sm:w-full border rounded-lg p-4 max-sm:p-2">
+          <div className="variable flex max-lg:flex-col justify-between w-full gap-2">
+            <div className="left flex flex-col w-2/3 max-lg:w-full border rounded-lg p-4 max-sm:p-2">
               <ScrollArea
                 offsetScrollbars
                 scrollbarSize={6}
@@ -527,7 +527,7 @@ const CompanyDetail = () => {
               </ScrollArea>
             </div>
 
-            <div className="right w-1/3 flex flex-col max-lg:w-[90%] max-sm:w-full px-4 max-sm:px-0 gap-4">
+            <div className="right w-1/3 flex flex-col max-lg:w-full px-4 max-sm:px-0 gap-4">
               <AdvertisementCard />
               {isSelf ? (
                 <Link

@@ -4,17 +4,18 @@ const cron = require("node-cron");
 const User = require("../models/userModel");
 const { sendMail } = require("../helpers");
 const Review = require("../models/reviewModel");
+const { sendNotification } = require("../services/notificationService");
 
 const weeklyPushNotificationCron = async () => {
-  cron.schedule("0 9 * * 1", async () => {
-    try {
-      // Send weekly mails to all users who have registered but not listed yet.
-      const usersWithNoListing = await User.find({
-        company: { $exists: false },
-      });
+  cron.schedule("* * * * *", async () => {
+  try {
+    // Send weekly mails to all users who have registered but not listed yet.
+    const usersWithNoListing = await User.find({
+      company: { $exists: false },
+    });
 
-      usersWithNoListing.forEach(async (user) => {
-        const message = `
+    usersWithNoListing.forEach(async (user) => {
+      const message = `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <h2 style="color: #113c3d;">Hello, ${user?.name}!</h2>
           <p>
@@ -43,15 +44,23 @@ const weeklyPushNotificationCron = async () => {
         </div>
       `;
 
-        //Send email to user
-        sendMail(user?.email, "Reminder to List Your Company", message);
-      });
-    } catch (error) {
-      console.error(
-        "Error occurred while sending weekly push notifications:",
-        error
-      );
-    }
+      //Send email to user
+      sendMail(user?.email, "Reminder to List Your Company", message);
+
+      // Send Push Notification to user
+      if (user.fcmToken) {
+          const title = "List Your Company";
+          const body = "Don't miss out on the opportunity to grow your business. List your company on our platform now!";
+        
+        await sendNotification(user?.fcmToken, title, body);
+      }
+    });
+  } catch (error) {
+    console.error(
+      "Error occurred while sending weekly push notifications:",
+      error
+    );
+  }
   });
 };
 

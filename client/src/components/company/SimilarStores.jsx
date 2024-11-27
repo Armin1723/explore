@@ -1,9 +1,6 @@
 import { Carousel } from "@mantine/carousel";
 import React, { Suspense, useEffect, useState } from "react";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
-import { MdArrowRightAlt } from "react-icons/md";
-import { Link } from "react-router-dom";
-import striptags from "striptags";
 import CardSmall from "../backup/CardSmall";
 
 const SimilarStores = ({ category = "all" }) => {
@@ -111,7 +108,7 @@ const SimilarStores = ({ category = "all" }) => {
         >
           <div className="carousel-container relative w-full">
             <Carousel
-              slideSize={{ base: "50%", md: "50%", lg: "20%" }}
+              slideSize={{ base: "50%", sm:'33.33%', md: "25%", lg: "20%" }}
               slideGap={{ base: "md", md: "md", lg: "xl" }}
               align="start"
               onSlideChange={(index) => setActiveSlide(index)}
