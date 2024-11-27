@@ -7,7 +7,7 @@ const Review = require("../models/reviewModel");
 const { sendNotification } = require("../services/notificationService");
 
 const weeklyPushNotificationCron = async () => {
-  // cron.schedule("0 9 * * 1", async () => {
+  cron.schedule("0 9 * * 1", async () => {
   try {
     // Send weekly mails to all users who have registered but not listed yet.
     const usersWithNoListing = await User.find({
@@ -61,7 +61,7 @@ const weeklyPushNotificationCron = async () => {
       error
     );
   }
-  // });
+  });
 };
 
 const monthlyPromotionalMailCron = async () => {
