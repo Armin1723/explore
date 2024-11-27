@@ -7,7 +7,7 @@ const Review = require("../models/reviewModel");
 const { sendNotification } = require("../services/notificationService");
 
 const weeklyPushNotificationCron = async () => {
-  cron.schedule("* * * * *", async () => {
+  cron.schedule("0 9 * * 1", async () => {
   try {
     // Send weekly mails to all users who have registered but not listed yet.
     const usersWithNoListing = await User.find({
@@ -49,7 +49,7 @@ const weeklyPushNotificationCron = async () => {
 
       // Send Push Notification to user
       if (user.fcmToken) {
-          const title = "List Your Company";
+          const title = `List Your Company ${user?.name.split(' ')[0]}`; 
           const body = "Don't miss out on the opportunity to grow your business. List your company on our platform now!";
         
         await sendNotification(user?.fcmToken, title, body);
