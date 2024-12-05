@@ -76,7 +76,7 @@ const CategorySection = () => {
       <p className="heading w-[90%] py-6 max-lg:py-2 ">
         Categories
       </p>
-      <div className="icons-container grid max-lg:grid-cols-5 md:grid-cols-8 items-center gap-4 w-4/5 my-8 max-lg:my-6 max-sm:my-2 max-sm:w-[90%]">
+      <div className="icons-container grid max-lg:grid-cols-5 md:grid-cols-8 items-center gap-4 max-sm:gap-2 w-4/5 my-8 max-lg:my-6 max-sm:my-2 max-sm:w-[90%]">
         {categoryData.map((category, index) => {
           return(
             <Link

@@ -10,9 +10,9 @@ importScripts('https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-com
 // https://firebase.google.com/docs/web/setup#config-object
 firebase.initializeApp({
     apiKey: "AIzaSyDzkrE_uEqtKSoTkqNUu8xj3Qo6IUF33T4",
-    authDomain: "explore-39697.firebaseapp.com",
-    projectId: "explore-39697",
-    storageBucket: "explore-39697.firebasestorage.app",
+    authDomain: "LinkIndia-39697.firebaseapp.com",
+    projectId: "LinkIndia-39697",
+    storageBucket: "LinkIndia-39697.firebasestorage.app",
     messagingSenderId: "409032430983",
     appId: "1:409032430983:web:4cb7d0f612c1d8adfb2f22",
     measurementId: "G-17KMRKL1RZ"

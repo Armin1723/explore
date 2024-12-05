@@ -209,7 +209,7 @@ const CompanyDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{`${company?.name} - Explore Portal`}</title>
+        <title>{`${company?.name} - LinkIndia Portal`}</title>
         <meta
           name="description"
           content={`Learn more about ${
@@ -223,7 +223,7 @@ const CompanyDetail = () => {
         <meta property="og:title" content={company?.name} />
         <meta
           property="og:description"
-          content={`Explore services and reviews for ${company?.name}.`}
+          content={`LinkIndia services and reviews for ${company?.name}.`}
         />
         <meta property="og:image" content={company?.logo?.url} />
         <meta

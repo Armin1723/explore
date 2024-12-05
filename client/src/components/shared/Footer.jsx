@@ -76,7 +76,7 @@ const Footer = () => {
             <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
               <IoIosTrendingUp className="text-2xl font-bold text-white" />
             </div>
-            <p className="font-bold heading text-lg !my-0">Explore </p>
+            <p className="font-bold heading text-lg !my-0">LinkIndia </p>
           </Link>
           <p className="text-sm">
             {contact.address}
@@ -125,7 +125,7 @@ const Footer = () => {
       <div className="bottom-footer !text-xs w-full flex justify-between px-16 max-lg:px-8 max-sm:px-4 max-sm:flex-col py-2 border-t border-gray-100/20">
         <div className="left">
           <p className="!text-xs text-gray-200">
-            Explore LLC © 2024. All Rights Reserved.
+            LinkIndia LLC © 2024. All Rights Reserved.
           </p>
         </div>
 
@@ -148,7 +148,7 @@ const Footer = () => {
           <p className="text-center text-gray-200">
             Digicrowd Solutions © 2024.
           </p>
-          <ul className="flex items-center gap-3">
+          {/* <ul className="flex items-center gap-3">
             {quickLinks.items.map(( item ) => (
                 <Link
                 key={item?.label}
@@ -162,7 +162,7 @@ const Footer = () => {
                   <span className="sr-only">{item?.label} account</span>
                 </Link>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </footer>

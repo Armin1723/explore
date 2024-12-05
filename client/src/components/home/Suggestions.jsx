@@ -22,7 +22,7 @@ const Suggestions = () => {
       category: "Grocery",
       subCategories: [
         {
-          image: "grocery-vegetable",
+          image: "grocery-vegetables",
           title: "Vegetables",
         },
         {
@@ -83,7 +83,7 @@ const Suggestions = () => {
                       >
                         <div className="image-container w-2/3 aspect-[16/11] object-cover rounded-lg overflow-hidden border border-black/70 group-hover/child:border-accent">
                           <img
-                            src={`suggestions/${subCategory.image}.webp`}
+                            src={`suggestions/${subCategory.image}.png`}
                             loading="lazy"
                             // src="https://picsum.photos/300/300/?suggestion"
                             alt="https://picsum.photos/300/300/?suggestion"

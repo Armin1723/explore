@@ -147,7 +147,7 @@ const registerUser = async (req, res) => {
     user.otp = Math.floor(1000 + Math.random() * 9000);
     user.otpExpires = Date.now() + 10 * 60 * 1000; 
     await user.save();
-    const message = `<p>Hi ${user.name}, Welcome to <strong>Explore</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
+    const message = `<p>Hi ${user.name}, Welcome to <strong>LinkIndia</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
 
     sendMail(user.email, (subject = "Email Verification"), message);
 
@@ -234,8 +234,8 @@ const verifyOtp = async (req, res) => {
     });
 
     //Send Welcome Email
-    const message = `<p>Hi ${user.name}, Welcome to <strong>Explore</strong>. Your account has been verified successfully. <br/>You can now explore through our services and find the best <a href='${process.env.FRONTEND_URL}/companies' target='_blank'>companies</a> in your area.</p>`;
-    sendMail(user.email,(subject = "Welcome to Explore"), message);
+    const message = `<p>Hi ${user.name}, Welcome to <strong>LinkIndia</strong>. Your account has been verified successfully. <br/>You can now LinkIndia through our services and find the best <a href='${process.env.FRONTEND_URL}/companies' target='_blank'>companies</a> in your area.</p>`;
+    sendMail(user.email,(subject = "Welcome to LinkIndia"), message);
 
     user.password = undefined;
     res.status(200).json({ success: true, user });
@@ -279,7 +279,7 @@ const resendOtp = async (req, res) => {
     user.otp = Math.floor(1000 + Math.random() * 9000);
     user.otpExpires = Date.now() + 10 * 60 * 1000; //10 minutes
     await user.save();
-    const message = `<p>Hi ${user.name}, Welcome to <strong>Explore</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
+    const message = `<p>Hi ${user.name}, Welcome to <strong>LinkIndia</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
     sendMail(user.email, message, (subject = "Email Verification"));
     res
 

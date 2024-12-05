@@ -32,7 +32,7 @@ const AdminNav = () => {
         <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
           <IoIosTrendingUp className="text-2xl font-bold text-white" />
         </div>
-        <p className="text-xl font-extralight max-lg:text-sm">Explore</p>
+        <p className="text-xl font-extralight max-lg:text-sm">LinkIndia</p>
       </Link>
 
       <div className="nav-links py-12 flex-col flex-1 items-start w-full">

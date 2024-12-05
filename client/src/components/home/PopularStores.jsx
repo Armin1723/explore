@@ -72,7 +72,7 @@ const PopularStores = () => {
                       to={`/companies/categories?category=${store?.name.toLowerCase()}`}
                     >
                       <span className="top-key"></span>
-                      <span className="text !text-black">Explore</span>
+                      <span className="text !text-black">See Now</span>
                       <span className="bottom-key-1"></span>
                       <span className="bottom-key-2"></span>
                     </div>

@@ -7,6 +7,7 @@ import Pagination from "../shared/Pagination";
 import { FaSearch } from "react-icons/fa";
 import AdvertisementCard from "../shared/AdvertisementCard";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet-async";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -57,62 +58,91 @@ const Search = () => {
   }, [category, sort, page, query]);
 
   return (
-    <div className="page flex flex-col w-[90%] py-4 overflow-x-hidden">
-      <BreadCrumbNav />
-      <p className="heading capitalize !my-2">
-        "{query == "" ? "All" : query}" results in Lucknow.{" "}
-      </p>
-      <div className="filters flex flex-wrap justify-start gap-4 max-sm:gap-2 items-center py-2">
-        <p className="text-sm">All filters</p>
-        <div className=" flex items-center justify-center">
-          <TextInput
-            radius="md"
-            size="sm"
-            placeholder="Search query"
-            color="green.9"
-            value={query}
-            onChange={(e)=>setQuery(e.target.value)}
-            className="w-[50vw] md:w-[30vw] shadow-[0_0_18px_primary] placeholder:text-black"
-            rightSectionWidth={42}
-            leftSection={
-              <FaSearch
-                style={{ width: rem(18), height: rem(18) }}
-                stroke={1.5}
-              />
-            }
-          />
-        </div>
-        <div className="max-sm:w-[150px] w-fit">
-          <Select
-            data={["all", ...Object.values(categories).map(cat => cat.name)]}
-            value={category}
-            placeholder="Chose Category"
-            clearable
-            onClear={() => setCategory("")}
-            onChange={(value) => {
-              setCategory(value);
-              // navigate(`/companies/search`);
-            }}
-          />
-        </div>
-        <div className="max-sm:w-[150px] w-fit">
-          <Select
-            data={["Rating", "Name", "createdAt"]}
-            value={sort}
-            placeholder="Sort By"
-            onChange={setSort}
-            clearable
-          />
-        </div>
-        <p
-          className="text-xs italic text-blue-400 cursor-pointer"
-          onClick={reset}
-        >
-          Clear all filters
-        </p>
-      </div>
+    <>
+      {/* Description and Tags */}
+      <Helmet>
+        <title>{query || "All"} results - LinkIndia Portal</title>
+        <meta name="description" content={`Search for local businesses in Lucknow`} />
+        <meta
+          name="keywords"
+          content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
+        />
+        <meta name="author" content="LinkIndia Portal" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:title"
+          content={`Search results - LinkIndia Portal`}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`${
+            import.meta.env.VITE_FRONTEND_URL
+          }/companies/search?query=${query}`}
+        />
+      </Helmet>
 
-      <div className="cards-container w-full flex max-lg:flex-col gap-4 ">
+      {/* Actual Content */}
+      <div className="page flex flex-col w-[90%] py-4 overflow-x-hidden">
+        <BreadCrumbNav />
+        <p className="heading capitalize !my-2">
+          "{query == "" ? "All" : query}" results in Lucknow.{" "}
+        </p>
+        <div className="filters flex flex-wrap justify-start gap-4 max-sm:gap-2 items-center py-2">
+          <p className="text-sm">All filters</p>
+          <div className=" flex items-center justify-center">
+            <TextInput
+              radius="md"
+              size="sm"
+              placeholder="Search query"
+              color="green.9"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-[50vw] md:w-[30vw] shadow-[0_0_18px_primary] placeholder:text-black"
+              rightSectionWidth={42}
+              leftSection={
+                <FaSearch
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              }
+            />
+          </div>
+          <div className="max-sm:w-[150px] w-fit">
+            <Select
+              data={[
+                "all",
+                ...Object.values(categories).map((cat) => cat.name),
+              ]}
+              value={category}
+              placeholder="Chose Category"
+              clearable
+              onClear={() => setCategory("")}
+              onChange={(value) => {
+                setCategory(value);
+                // navigate(`/companies/search`);
+              }}
+            />
+          </div>
+          <div className="max-sm:w-[150px] w-fit">
+            <Select
+              data={["Rating", "Name", "createdAt"]}
+              value={sort}
+              placeholder="Sort By"
+              onChange={setSort}
+              clearable
+            />
+          </div>
+          <p
+            className="text-xs italic text-blue-400 cursor-pointer"
+            onClick={reset}
+          >
+            Clear all filters
+          </p>
+        </div>
+
+        <div className="cards-container w-full flex max-lg:flex-col gap-4 ">
           <div className="cards flex-1 min-h-[50px] max-h-[600px] overflow-y-auto p-4 max-sm:p-1  flex flex-col gap-4">
             {results?.companies?.length ? (
               results.companies.map((company, index) => (
@@ -141,11 +171,12 @@ const Search = () => {
               />
             )}
           </div>
-        <div className="sidebar w-1/3 max-lg:w-full">
-           <AdvertisementCard />
+          <div className="sidebar w-1/3 max-lg:w-full">
+            <AdvertisementCard />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -29,10 +29,10 @@ const Home = () => {
     <>
       {/* Description and Tags */}
       <Helmet>
-        <title>Explore Portal - Find the Best Local Businesses</title>
+        <title>LinkIndia Portal - Find the Best Local Businesses</title>
         <meta
           name="description"
-          content="Explore Portal helps you find the best local businesses in your area."
+          content="LinkIndia Portal helps you find the best local businesses in your area."
         />
       </Helmet>
 

@@ -22,7 +22,6 @@ import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 import SearchBar from "./SearchBar";
 import SearchBarSmall from "./SearchBarSmall";
-import { useScroll } from "framer-motion";
 
 const categoryData = [
   {
@@ -61,12 +60,9 @@ const categoryData = [
 export const Header = () => {
   const user = useSelector((state) => state.user);
 
-  const { scrollY } = useScroll();
-
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const header = document.querySelector(".header");
-      const links = document.querySelectorAll(".link");
       if (window.scrollY > 10) {
         header.classList.add("bg-white");
         header.classList.add("border-b");
@@ -113,7 +109,7 @@ export const Header = () => {
         <div className="nav-left flex items-center py-4 max-lg:py-2 gap-4 max-lg:gap-1">
           <Link to="/" className="flex items-center">
             <p className="heading !my-0 text-shadow text-stroke !font-extrabold">
-              Explore{" "}
+              LinkIndia
             </p>
           </Link>
           <div className="flex items-center justify-center">
@@ -176,7 +172,7 @@ export const Header = () => {
                     </div>
                     <Link to="/companies/categories">
                       <Button variant="outline" color="primary.3">
-                        Explore Now
+                        LinkIndia Now
                       </Button>
                     </Link>
                   </Group>
@@ -237,7 +233,7 @@ export const Header = () => {
         opened={drawerOpened}
         onClose={closeDrawer}
         size="80%"
-        title="Explore"
+        title="LinkIndia"
         zIndex={100}
         className=""
       >

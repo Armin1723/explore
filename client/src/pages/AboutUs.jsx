@@ -12,20 +12,20 @@ const AboutUs = () => {
     <>
       {/* Meta Tags */}
       <Helmet>
-        <title>About Us | Explore Portal</title>
+        <title>About Us | LinkIndia Portal</title>
         <meta
           name="description"
-          content="Explore Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
+          content="LinkIndia Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
         />
         <meta
           name="keywords"
           content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
         />
 
-        <meta name="author" content="Explore Portal" />
+        <meta name="author" content="LinkIndia Portal" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="About Us | Explore Portal" />
+        <meta property="og:title" content="About Us | LinkIndia Portal" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
@@ -39,19 +39,19 @@ const AboutUs = () => {
 
         <div className="banner relative w-full overflow-hidden aspect-[16/3]">
           <img
-            src="/backgrounds/about-bg.webp"
+            src="/backgrounds/about-bg.png"
             alt="About Us"
             className="w-full object-fit aspect-[16/3]"
           />
           <div className="overlay !my-0 bg-black/10 absolute top-0 left-0 w-full h-full flex items-center justify-center">
-            <p className="heading !my-0 !text-3xl !max-lg:text-2xl !max-sm:text-xl text-white">
+            {/* <p className="heading !my-0 !text-3xl !max-lg:text-2xl !max-sm:text-xl text-white">
               {" "}
               About Us
-            </p>
+            </p> */}
           </div>
         </div>
 
-        <div className="about-us-heading-container flex items-start max-lg:items-center w-4/5 max-lg:w-[90%] my-8 max-sm:my-4">
+        <div className="about-us-heading-container flex items-center w-4/5 max-lg:w-[90%] my-8 max-sm:my-4">
           <div className="about-us-content w-2/3 max-lg:w-full">
             <p className="heading !my-0 py-2 pl-6 border-l-4 border-primary">
               About Us
@@ -78,8 +78,8 @@ const AboutUs = () => {
               totam saepe adipisci voluptates quis voluptas nostrum vero!
             </p>
           </div>
-          <div className="about-us-graphic max-sm:hidden w-1/3">
-            <Lottie animationData={aboutUsGraphic} loop={true} />
+          <div className="about-us-graphic max-sm:hidden w-1/3 h-full flex items-center justify-center">
+            <img src="/about/graphic-1.png" alt="About Us" className="w-full h-full flex items-center justify-center object-cover"/> 
           </div>
         </div>
 

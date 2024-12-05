@@ -8,7 +8,7 @@ const isLoggedIn = (req, res, next) => {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if(!decoded || decoded.exp < Date.now().valueOf() / 1000) {
+    if(!decoded || decoded.exp < (Date.now().valueOf() / 1000)) {
         return res.status(401).json({ success: false, message: "Token Expired. Please Login Again" });
     }
     req.user = decoded;

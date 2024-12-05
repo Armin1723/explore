@@ -39,20 +39,20 @@ const TestimonialPage = () => {
     <>
       {/* Meta Tags */}
       <Helmet>
-        <title>Testimonials | Explore Portal</title>
+        <title>Testimonials | LinkIndia Portal</title>
         <meta
           name="description"
-          content="Explore Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
+          content="LinkIndia Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
         />
         <meta
           name="keywords"
           content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
         />
 
-        <meta name="author" content="Explore Portal" />
+        <meta name="author" content="LinkIndia Portal" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="Testimonials | Explore Portal" />
+        <meta property="og:title" content="Testimonials | LinkIndia Portal" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
@@ -64,18 +64,18 @@ const TestimonialPage = () => {
       <div className="w-screen flex flex-col items-center mt-[10vh] bg-secondary font-['Inter']">
         <Header />
 
-        <div className="banner relative w-full overflow-hidden aspect-[16/2]">
+        <div className="banner relative w-full overflow-hidden aspect-[16/3]">
           <img
-            src="/backgrounds/testimonials-bg.webp"
+            src="/backgrounds/testimonials-bg.png"
             alt="testimonials"
-            className="w-full object-fill aspect-[16/3]"
+            className="w-full object-cover bg-center center/cover aspect-[16/3]"
           />
-          <div className="overlay !my-0 bg-black/10 absolute top-0 left-0 w-full h-full flex items-center justify-center">
+          {/* <div className="overlay !my-0 bg-black/10 absolute top-0 left-0 w-full h-full flex items-center justify-center">
             <p className="heading !my-0 !text-3xl !max-lg:text-2xl !max-sm:text-xl text-white">
               {" "}
               Testimonials
             </p>
-          </div>
+          </div> */}
         </div>
 
         <div className="testimonial-container flex max-lg:flex-col items-start w-[90%] max-lg:w-full mt-6">

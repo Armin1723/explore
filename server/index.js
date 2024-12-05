@@ -18,7 +18,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: [process.env.FRONTEND_URL, 'https://explore-main.netlify.app'],
+    origin: [process.env.FRONTEND_URL, 'https://LinkIndia-main.netlify.app'],
     credentials: true,
   },
 });
@@ -26,7 +26,7 @@ const io = new Server(server, {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));    
 app.use(cors({
-    origin: [process.env.FRONTEND_URL, 'https://explore-main.netlify.app'],
+    origin: [process.env.FRONTEND_URL, 'https://LinkIndia-main.netlify.app'],
     credentials: true
 }));
 app.use(cookieParser());
@@ -40,7 +40,7 @@ monthlyPromotionalMailCron();
 advertisementCron();
 
 app.get('/', (req, res) => {
-    res.send('Hello from explore backend');
+    res.send('Hello from LinkIndia backend');
 });
 
 // Routes
