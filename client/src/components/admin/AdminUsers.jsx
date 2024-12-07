@@ -45,7 +45,7 @@ const AdminUsers = () => {
         </div>
       )}
 
-      <div className="users-container min-h-[50px] max-h-[600px] overflow-y-auto flex flex-col">
+      <div className="users-container min-h-[50px] max-h-[600px overflow-y-auto flex flex-col">
         {results &&
           results?.users.map((user, index) => {
             return (
@@ -62,7 +62,7 @@ const AdminUsers = () => {
                     alt={user?.name}
                     className="border border-black"
                   />
-                  <p className="capitalize !font-['inter'] sub-heading">
+                  <p className="capitalize sub-heading">
                     {user?.name}
                   </p>
                 </div>

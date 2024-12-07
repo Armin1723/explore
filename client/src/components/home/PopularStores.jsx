@@ -42,9 +42,9 @@ const PopularStores = () => {
 
   return (
     <div className="w-full flex flex-col items-center ">
-      <p className="heading w-[90%] pb-6 max-lg:py-2 !my-0">Popular Stores</p>
-
-      <div className="carousel-container md:w-[80%] w-[90%] relative">
+      <p className="heading text-center w-[90%] pb-6 max-lg:py-2 !my-0">Popular Stores</p>
+ 
+      <div className="carousel-container w-[90%] relative">
         <Carousel
           slideSize={{ base: "50%", sm:'33.33%', md: "25%", lg: "20%" }}
           slideGap={{ base: "md", sm: "md", md: "2vw" }}
@@ -58,7 +58,7 @@ const PopularStores = () => {
               <Carousel.Slide key={index}>
                 <Link
                   to={`/companies/categories?category=${store?.name}`}
-                  className="flex flex-col justify-end relative group overflow-hidden w-full my-4 aspect-[3/4] rounded-xl border hover:border-accent transition-all duration-300"
+                  className="flex flex-col justify-end relative group overflow-hidden w-full my-4 aspect-[3/4] rounded-xl  transition-all duration-300"
                 >
                   <img
                     src={store.image}
@@ -66,7 +66,7 @@ const PopularStores = () => {
                     className="w-full h-full group-hover:scale-110 transition-all duration-300 object-cover absolute inset-0 z-[-1]"
                   />
                   <div className="flex flex-col w-full min-h-fit items-start p-4 max-lg:py-2 gap-2 max-lg:gap-1 justify-start bg-[#082222]/30 backdrop-blur-xl">
-                    <p className="sub-heading max-lg:text-sm">{store?.name}</p>
+                    <p className="sub-heading max-lg:text-sm !font-normal">{store?.name}</p>
                     <div
                       className="fancy w-40 max-lg:scale-50 max-lg:-translate-x-8 !py-2 !bg-gray-200"
                       to={`/companies/categories?category=${store?.name.toLowerCase()}`}

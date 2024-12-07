@@ -149,7 +149,7 @@ const Categories = () => {
                   Uh...Oh. Its empty in here.
                 </p>
                 <p
-                  className="px-4 hover:text-blue-600 text-gray-500 cursor-pointer transition-all duration-200 font-['inter']"
+                  className="px-4 hover:text-blue-600 text-gray-500 cursor-pointer transition-all duration-200 "
                   onClick={reset}
                 >
                   Search for all?

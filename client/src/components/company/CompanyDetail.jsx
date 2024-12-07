@@ -392,7 +392,7 @@ const CompanyDetail = () => {
             className="address flex justify-start items-start flex-col"
           >
             <Link
-              className="my-1 text-sm flex items-center gap-2 font-['inter']"
+              className="my-1 text-sm flex items-center gap-2 "
               target="blank"
               to={`https://www.google.com/maps/search/?api=1&query=${encodeURI(
                 company?.address
@@ -489,7 +489,7 @@ const CompanyDetail = () => {
                     Description
                   </div>
                   <div
-                    className="w-full max-sm:text-sm font-['inter'] leading-relaxed text-justify"
+                    className="w-full max-sm:text-sm leading-relaxed text-justify"
                     dangerouslySetInnerHTML={{ __html: company.description }}
                   ></div>
                 </div>

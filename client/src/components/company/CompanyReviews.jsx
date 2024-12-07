@@ -185,7 +185,7 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
       )}
 
       {company?.reviews?.length === 0 && (
-        <p className="font-['inter']">No reviews found</p>
+        <p className="">No reviews found</p>
       )}
     </div>
   );

@@ -33,7 +33,7 @@ const Terms = () => {
       </Helmet>
 
       {/* Content */}
-      <div className="w-screen flex flex-col items-center mt-[10vh] bg-secondary font-['Inter']">
+      <div className="w-screen flex flex-col items-center bg-secondary ">
         <Header />
 
         <div className="banner relative w-full overflow-hidden aspect-[16/3]">

@@ -66,13 +66,13 @@ const Testimonials = () => {
 
   return (
     <div className="flex flex-col page w-full items-center justify-center bg-gradient-to-b from-secondary to-white">
-      <p className="heading py-6 w-[90%]">Our Esteemed Partners</p>
+      <p className="heading text-center py-6 w-[90%]">Our Esteemed Partners</p>
       <div className="marquee flex flex-col py-6 items-center md:text-3xl text-black max-lg:text-xs rounded-t-lg overflow-hidden whitespace-nowrap ">
         <MarqueeItem images={upperMarquee} from={"0%"} to={"-100%"} />
       </div>
 
-      <div className="flex flex-col items-center p-6 max-sm:p-2 md:px-12 relative bg-primary overflow-x-hidden text-white mx-8 my-4 pb-12 max-sm:pb-6 rounded-xl w-[90%] max-sm:w-[95%]">
-        <p className="heading max-sm:mt-4 text-center max-sm:py-2 my-6 max-w-3/5">
+      <div className="flex flex-col items-center p-6 max-sm:p-2 md:px-12 relative overflow-x-hidden border border-neutral-500/30 shadow-[0_0_5px_gray] !shadow-neutral-500/30 bg-secondary mx-8 my-4 pb-12 max-sm:pb-6 rounded-xl w-[90%]">
+        <p className="heading max-sm:mt-4 text-center max-sm:py-2 max-lg:px-6 my-6 max-lg:my-4 max-w-3/5">
           Hear what our customers have to say.
         </p>
 
@@ -94,7 +94,7 @@ const Testimonials = () => {
               results.testimonials &&
               results?.testimonials.map((testimonial, index) => (
                 <Carousel.Slide key={index}>
-                  <div className="bg-secondary text-black overflow-y-scroll rounded-lg py-4 max-sm:px-2 max-lg:px-4 px-6 flex flex-col items-center gap-4 shadow-md h-[300px]">
+                  <div className="bg-white text-black overflow-y-scroll rounded-lg py-4 max-sm:px-2 max-lg:px-4 px-6 flex flex-col items-center gap-4 shadow-md h-[300px] border border-neutral-500/40">
                     <FaUser size={48} className="!text-5xl md:!text-6xl mb-2" />
                     <div className="flex flex-col items-center text-center space-y-2 overflow-y-scroll">
                       <p className="text-xl font-semibold">
@@ -117,21 +117,16 @@ const Testimonials = () => {
           </Carousel>
         </div>
 
-        <div className="controls absolute w-full top-1/2 left-0 flex justify-between max-sm:hidden">
+        <div className="controls absolute w-full top-1/2 -translate-y-1/2 left-0 flex justify-between max-sm:hidden">
           <button
-            className={`p-2 rounded-e-lg bg-white/40 ${
-              activeSlide === 0 && "invisible"
-            }`}
+            className={`p-2 rounded-e-lg bg-white/40`}
             onClick={() => embla && embla.scrollPrev()}
           >
             <FaChevronCircleLeft color="black" className="text-2xl" />
           </button>
           <button
-            className={`p-2 rounded-s-lg bg-white/40 ${
-              activeSlide === 10 - 1 && "invisible"
-            }`}
+            className={`p-2 rounded-s-lg bg-white/40 `}
             onClick={() => embla && embla.scrollNext()}
-            disabled={activeSlide >= 10 - 1}
           >
             <FaChevronCircleRight color="black" className="text-2xl" />
           </button>

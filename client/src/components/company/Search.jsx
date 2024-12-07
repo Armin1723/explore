@@ -156,7 +156,7 @@ const Search = () => {
               <div className="w-full p-2 boder-black/70 flex flex-col items-start justify-start">
                 <p className="heading p-4">No companies found</p>
                 <p
-                  className="px-4 text-sm text-gray-500 cursor-pointer hover:text-gray-700 transition-all duration-200 font-['inter']"
+                  className="px-4 text-sm text-gray-500 cursor-pointer hover:text-gray-700 transition-all duration-200 "
                   onClick={reset}
                 >
                   Search for all??

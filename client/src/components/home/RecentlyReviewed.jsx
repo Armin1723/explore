@@ -38,15 +38,14 @@ const RecentlyReviewed = () => {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <p className="heading w-[90%] pb-6 max-lg:py-2 ">Recently Reviewed</p>
+      <p className="heading text-center w-[90%] pb-6 max-lg:py-2 ">Recently Reviewed</p>
 
-      <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center ">
-        <div className="carousel-container md:w-[80%] w-[90%] relative ">
+      <div className="carousel-wrapper w-full py-4 flex items-center justify-center ">
+        <div className="carousel-container w-[90%] relative ">
           <Carousel
             slideSize={{ base: "50%", sm: "33.33%", md: "25%", lg: "20%" }}
             slideGap='xl'
             onSlideChange={(index) => setActiveSlide(index+1)}  
-            loop
             getEmblaApi={setEmbla}
             withControls={false}
             align="start"

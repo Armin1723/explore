@@ -98,7 +98,7 @@ const SimilarStores = ({ category = "all" }) => {
         Similar Stores
       </p>
 
-      <div className="carousel-wrapper w-full py-4 border-t border-b border-black flex items-center justify-center">
+      <div className="carousel-wrapper w-full py-6 flex items-center justify-center">
         <Suspense
           fallback={
             <div className="w-full aspect-video flex items-center justify-center">

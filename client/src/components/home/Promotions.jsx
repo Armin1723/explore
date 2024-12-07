@@ -32,7 +32,7 @@ const Promotions = () => {
         <div className="flex gap-4 justify-around w-2/3">
           <div className="item flex flex-col items-center gap-2 ">
             <VscWorkspaceTrusted className="text-4xl text-primary border border-primary rounded-full p-2 hover:bg-primary/80 hover:border-white hover:text-white cursor-pointer transition-all duration-300" />
-            <p className="font-['inter'] text-center text-sm max-lg:hidden">
+            <p className=" text-center text-sm max-lg:hidden">
               Trusted <br/> Platform
             </p>
           </div>
@@ -44,7 +44,7 @@ const Promotions = () => {
           </div>
           <div className="item flex flex-col items-center gap-2">
             <MdOutlineMessage className="text-4xl text-primary border border-primary rounded-full p-2 hover:bg-primary/80 hover:border-white hover:text-white cursor-pointer transition-all duration-300" />
-            <p className="font-['inter'] text-center text-sm max-lg:hidden">
+            <p className=" text-center text-sm max-lg:hidden">
               Quick <br/> Assistance
             </p>
           </div>

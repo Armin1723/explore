@@ -10,7 +10,6 @@ import {
   Burger,
   Drawer,
   Collapse,
-  ScrollArea,
   rem,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -22,6 +21,7 @@ import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 import SearchBar from "./SearchBar";
 import SearchBarSmall from "./SearchBarSmall";
+import Logo from "./Logo";
 
 const categoryData = [
   {
@@ -63,13 +63,11 @@ export const Header = () => {
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const header = document.querySelector(".header");
-      if (window.scrollY > 10) {
-        header.classList.add("bg-white");
-        header.classList.add("border-b");
+      if (window.scrollY > 200) {
+        header.classList.add("!top-0");
         header.classList.add("shadow-lg");
       } else {
-        header.classList.remove("bg-white");
-        header.classList.remove("border-b");
+        header.classList.remove("!top-0");
         header.classList.remove("shadow-lg");
       }
     });
@@ -85,7 +83,7 @@ export const Header = () => {
       className=""
       key={item.title}
     >
-      <div className="w-[100%] px-2 max-sm:py-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-primary/90 group flex items-center justify-start gap-2 font-['poppins'] ">
+      <div className="w-[100%] px-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-primary/90 group flex items-center justify-start gap-2 font-['poppins'] ">
         <ThemeIcon size={34} variant="default" radius="md">
           <img style={{ width: rem(22), height: rem(22) }} src={item.icon} />
         </ThemeIcon>
@@ -93,7 +91,7 @@ export const Header = () => {
           <div className="text-sm font-['poppins'] font-[400] max-sm:text-sm group-hover:text-secondary transition-colors duration-150">
             {item.title}
           </div>
-          <div className="text-sm max-sm:text-xs font-light font-['inter'] group-hover:text-white/70 transition-colors duration-150">
+          <div className="text-sm max-sm:text-xs font-light group-hover:text-white/70 transition-colors duration-150">
             {item.description}
           </div>
         </div>
@@ -103,22 +101,18 @@ export const Header = () => {
 
   return (
     <div
-      className={`fixed header border-black transition-all duration-100 top-0 left-0 w-screen bg-inherit hover:bg-white !font-['poppins'] !z-[98]`}
+      className={`sticky header border-neutral-300/50 border-b transition-all duration-300 ease-in -top-[12vh] left-0 w-screen bg-white !font-['poppins'] !z-[98]`}
     >
-      <header className={`md:px-[8vw] px-6 py-1 flex justify-between`}>
-        <div className="nav-left flex items-center py-4 max-lg:py-2 gap-4 max-lg:gap-1">
-          <Link to="/" className="flex items-center">
-            <p className="heading !my-0 text-shadow text-stroke !font-extrabold">
-              LinkIndia
-            </p>
-          </Link>
+      <header className={`md:px-[6vw] px-6 flex justify-between`}>
+        <div className="nav-left flex items-center gap-4 max-sm:gap-2 ">
+          <Logo />
           <div className="flex items-center justify-center">
             <SearchBar />
           </div>
         </div>
 
-        <div className="nav-right flex gap-4 max-sm:gap-0 py-4 max-lg:py-2 items-center justify-end ">
-          <div className="links max-sm:hidden flex md:gap-6 gap-2 py-2">
+        <div className="nav-right flex gap-4 max-lg:gap-2 max-sm:gap-0 items-center justify-end ">
+          <div className="links hidden lg:flex md:gap-6 gap-2 ">
             <Link
               to="/"
               className="link text-sm max-lg:text-xs transition-all duration-200 "
@@ -172,7 +166,7 @@ export const Header = () => {
                     </div>
                     <Link to="/companies/categories">
                       <Button variant="outline" color="primary.3">
-                        LinkIndia Now
+                        Explore Now
                       </Button>
                     </Link>
                   </Group>
@@ -205,7 +199,7 @@ export const Header = () => {
           <div className="flex gap-2 items-center justify-end">
             <SearchBarSmall />
             {user && user?.name ? (
-              <UserProfile />
+              <div className="md:flex hidden"><UserProfile /></div>
             ) : (
               <Link
                 className="fancy w-44 max-sm:hidden !py-2 shadow-xl"

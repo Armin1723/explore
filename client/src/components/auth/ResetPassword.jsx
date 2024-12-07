@@ -101,7 +101,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center relative overflow-hidden w-screen h-[100dvh]">
+    <div className="flex flex-col items-center relative overflow-hidden w-screen h-full">
       <motion.img
         initial={{
           opacity: 0,

@@ -34,7 +34,7 @@ const AboutUs = () => {
       </Helmet>
 
       {/* Content */}
-      <div className="w-screen flex flex-col items-center mt-[10vh] bg-secondary font-['Inter']">
+      <div className="w-screen flex flex-col items-center bg-secondary ">
         <Header />
 
         <div className="banner relative w-full overflow-hidden aspect-[16/3]">
@@ -56,7 +56,7 @@ const AboutUs = () => {
             <p className="heading !my-0 py-2 pl-6 border-l-4 border-primary">
               About Us
             </p>
-            <p className="text w-3/4 max-lg:w-full py-4 font-['inter'] leading-7 max-sm:leading-5 text-justify ">
+            <p className="text w-3/4 max-lg:w-full py-4 leading-7 max-sm:leading-5 text-justify ">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt
               nobis inventore reprehenderit tenetur necessitatibus distinctio ea
               quod exercitationem. A deleniti molestias eaque tempora nostrum
@@ -91,7 +91,7 @@ const AboutUs = () => {
             <p className="heading !my-0 py-2 pl-6 border-l-4 border-primary">
               Our Mission
             </p>
-            <p className="text w-3/4 max-lg:w-full py-4 font-['inter'] leading-7 max-sm:leading-5 text-justify ">
+            <p className="text w-3/4 max-lg:w-full py-4 leading-7 max-sm:leading-5 text-justify ">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam
               enim facere doloribus sapiente corrupti quibusdam porro modi
               voluptatum nam illo amet neque perspiciatis vel odio at, sint

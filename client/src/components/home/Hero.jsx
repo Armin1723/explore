@@ -1,10 +1,7 @@
-import { ActionIcon, rem, TextInput } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import {
-  FaArrowRight,
   FaChevronCircleLeft,
   FaChevronCircleRight,
-  FaSearch,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -66,7 +63,7 @@ const Hero = () => {
             `}
                 sizes="(max-width: 480px) 400px, (max-width: 768px) 800px, 1600px"
                 alt="hero"
-                className={`object-fill !rounded-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ${
+                className={`object-cover max-lg:object-fill !rounded-none absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ${
                   index === curr && "opacity-100"
                 }`}
               />

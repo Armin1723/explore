@@ -72,11 +72,11 @@ const CategorySection = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center bg-gradient-to-b from-secondary border-t border-black">
-      <p className="heading w-[90%] py-6 max-lg:py-2 ">
+    <div className="w-full flex flex-col items-center bg-gradient-to-b from-secondary border-t border-neutral-300/50">
+      <p className="heading w-[90%] py-6 max-lg:py-2 text-center">
         Categories
       </p>
-      <div className="icons-container grid max-lg:grid-cols-5 md:grid-cols-8 items-center gap-4 max-sm:gap-2 w-4/5 my-8 max-lg:my-6 max-sm:my-2 max-sm:w-[90%]">
+      <div className="icons-container grid max-lg:grid-cols-5 md:grid-cols-8 items-center gap-4 max-sm:gap-2 w-[90%] my-8 max-lg:my-6 max-sm:my-2 ">
         {categoryData.map((category, index) => {
           return(
             <Link
@@ -84,10 +84,10 @@ const CategorySection = () => {
               key={index}
               className={`group flex flex-col items-center gap-1 max-sm:p-1 ${index === categoryData.length - 1 && 'max-lg:hidden md:flex'}`}
             >
-              <div className="icon-container rounded-lg aspect-square p-3 group-hover:border-accent border-[0.5px] group-hover:shadow-[0_0_8px_orange] shadow-accent/10 max-sm:group-hover:border-black max-sm:group-hover:shadow-none flex items-center justify-center transition-all duration-150">
-                <img src={`icon/${category.image}`} alt={category.title} className="w-12 aspect-square group-hover:scale-[1.05] transition-all duration-300"/>
+              <div className="icon-container rounded-lg aspect-square p-3 border-[0.5px] group-hover:shadow-[0_0_8px_gray] !shadow-gray-300/50 max-sm:group-hover:border-black max-sm:group-hover:shadow-none flex items-center justify-center transition-all duration-150">
+                <img src={`icon/${category.image}`} alt={category.title} className="w-14 max-lg:w-12 aspect-square group-hover:scale-[1.05] transition-all duration-300"/>
               </div>
-              <p className="font-['poppins'] text-sm max-sm:text-xs text-center group-hover:text-accent group-hover:max-sm:text-black transition-colors duration-200">{category.title}</p>
+              <p className="font-['poppins'] text-sm max-sm:text-xs text-center group-hover:text-gray-800 group-hover:max-sm:text-black transition-colors duration-200">{category.title}</p>
             </Link>
           )
         })}

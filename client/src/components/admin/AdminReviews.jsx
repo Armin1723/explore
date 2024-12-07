@@ -73,7 +73,7 @@ const AdminReviews = () => {
           </div>
         )}
 
-        <div className="users-container min-h-[50px] max-h-[600px] overflow-y-auto flex flex-col">
+        <div className="reviews-container min-h-[50px] max-h-[400px] overflow-y-auto flex flex-col">
           {results &&
             results.reviews.map((review, index) => {
               return (

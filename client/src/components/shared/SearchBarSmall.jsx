@@ -31,7 +31,7 @@ const SearchBarSmall = () => {
 
   return (
     <div
-      className={`relative items-center max-sm:flex hidden ${
+      className={`relative items-center flex lg:hidden ${
         pathname.includes("search") && "!hidden"
       }`}
       onKeyDown={handleSearch}

@@ -103,7 +103,7 @@ export const RecentListing = ({ refetch, setRefetch }) => {
         offsetScrollbars
         scrollbarSize={6}
         scrollHideDelay={500}>
-      <Card radius="md" className="flex-1 overflow-y-scroll border border-black">
+      <Card radius="md" className="flex-1 overflow-y-scroll border border-neutral-500/50">
         <Card.Section>
           <Carousel
             withIndicators
@@ -120,7 +120,7 @@ export const RecentListing = ({ refetch, setRefetch }) => {
                 <Carousel.Slide key={image}>
                   <Image
                     src={image.url}
-                    height={220}
+                    height={200}
                     className="aspect-video"
                   />
                 </Carousel.Slide>
@@ -172,10 +172,10 @@ export const RecentListing = ({ refetch, setRefetch }) => {
           ...
         </Text>
 
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-4 my-4">
           <Button
             size="sm"
-            color="primary.4"
+            color="primary.3"
             radius="md"
             onClick={() => handleRequest("approve")}
           >

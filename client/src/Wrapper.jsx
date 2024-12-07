@@ -54,8 +54,21 @@ const Wrapper = () => {
             "#153266",
             "#0a1933",
           ],
+          brand:[
+              "#e0e0ff",
+               "#b3b3ff",
+               "#8080ff",
+               "#4d4dff",
+               "#1a1aff",
+               "#000085", // base
+               "#000076",
+               "#000066",
+               "#000055",
+               "#000033"
+            
+          ],
           primary: [
-            "#113c3d",
+            "#103d3d",
             "#0e3232",
             "#0a2929",
             "#063d3e",
@@ -103,7 +116,7 @@ const Wrapper = () => {
           <Transition transition="slide-up" mounted={scroll.y > 0}>
             {(transitionStyles) => (
               <Button
-                color="primary.1"
+                color="primary.3"
                 leftSection={
                   <FaArrowUp style={{ width: rem(16), height: rem(16) }} />
                 }

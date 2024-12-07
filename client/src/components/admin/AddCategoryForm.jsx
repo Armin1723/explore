@@ -90,7 +90,7 @@ import { useNavigate } from "react-router-dom";
     };
   
     return (
-      <Card className="flex flex-col flex-1 font-['inter'] " withBorder>
+      <Card className="flex flex-col flex-1" withBorder>
         <ScrollArea
         offsetScrollbars
         scrollbarSize={6}

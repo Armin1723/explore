@@ -37,10 +37,10 @@ const Home = () => {
       </Helmet>
 
       {/* Actual Content */}
+      <Header />
       <div
         className={`flex flex-col items-center min-h-screen max-sm:min-w-screen home`}
       >
-        <Header />
 
         <div
           rounded="lg"

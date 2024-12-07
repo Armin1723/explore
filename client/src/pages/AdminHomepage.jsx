@@ -76,7 +76,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
 
       {/* Content */}
       <div
-        className={`flex h-[100dvh] font-['inter'] overflow-hidden max-lg:overflow-y-scroll w-full ${
+        className={`flex h-[100dvh] overflow-y-auto w-full ${
           colorScheme === "light" && "bg-teal-100/20"
         }`}
       >
