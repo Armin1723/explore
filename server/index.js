@@ -40,7 +40,7 @@ monthlyPromotionalMailCron();
 advertisementCron();
 
 app.get('/', (req, res) => {
-    res.send('Hello from LinkIndia backend');
+    res.send('Hello from Link India backend');
 });
 
 // Routes

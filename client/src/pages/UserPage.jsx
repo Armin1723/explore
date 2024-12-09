@@ -46,19 +46,19 @@ const UserPage = () => {
     <>
     {/* Description and Tags */}
     <Helmet>
-    <title>Users | LinkIndia Portal</title>
+    <title>Users | Link India Portal</title>
     <meta
       name="description"
-      content="LinkIndia Portal helps you find the best local businesses in your area."
+      content="Link India Portal helps you find the best local businesses in your area."
     />
     <meta
       name="keywords"
       content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
     />
-    <meta name="author" content="LinkIndia Portal" />
+    <meta name="author" content="Link India Portal" />
     <meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="Users | LinkIndia Portal" />
+    <meta property="og:title" content="Users | Link India Portal" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={`${import.meta.env.VITE_FRONTEND_URL}/users/${user?._id}`} />
   </Helmet>

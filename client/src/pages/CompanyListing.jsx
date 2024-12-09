@@ -61,20 +61,20 @@ const CompanyListing = () => {
     <>
       {/* Meta Tags */}
       <Helmet>
-        <title>List your Business | LinkIndia Portal</title>
+        <title>List your Business | Link India Portal</title>
         <meta
           name="description"
-          content="LinkIndia Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
+          content="Link India Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
         />
         <meta
           name="keywords"
           content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
         />
-        <meta name="author" content="LinkIndia Portal" />
+        <meta name="author" content="Link India Portal" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <meta property="og:title" content="LinkIndia Portal" />
+        <meta property="og:title" content="Link India Portal" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"

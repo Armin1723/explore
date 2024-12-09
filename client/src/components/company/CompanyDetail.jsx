@@ -209,7 +209,7 @@ const CompanyDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{`${company?.name} - LinkIndia Portal`}</title>
+        <title>{`${company?.name} - Link India Portal`}</title>
         <meta
           name="description"
           content={`Learn more about ${company?.name}. ${striptags(
@@ -223,7 +223,7 @@ const CompanyDetail = () => {
         <meta property="og:title" content={company?.name} />
         <meta
           property="og:description"
-          content={`LinkIndia services and reviews for ${company?.name}.`}
+          content={`Link India services and reviews for ${company?.name}.`}
         />
         <meta property="og:image" content={company?.logo?.url} />
         <meta

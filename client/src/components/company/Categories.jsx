@@ -63,16 +63,16 @@ const Categories = () => {
     <>
       {/* Description and Tags */}
       <Helmet>
-        <title>{category || "All"} results - LinkIndia Portal</title>
+        <title>{category || "All"} results - Link India Portal</title>
         <meta name="description" content={`Find ${category} in Lucknow`} />
         <meta
           name="keywords"
           content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
         />
-        <meta name="author" content="LinkIndia Portal" />
+        <meta name="author" content="Link India Portal" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content={`${category || "All"} results - LinkIndia Portal`}/>
+        <meta property="og:title" content={`${category || "All"} results - Link India Portal`}/>
         <meta property="og:type" content="website" />
         <meta
           property="og:url"

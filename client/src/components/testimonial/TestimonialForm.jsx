@@ -69,7 +69,7 @@ const TestimonialForm = () => {
 
   return (
     <Card shadow="lg" withBorder rounded="lg" className="flex flex-col w-[90%]">
-      <p className="sub-heading">Share Your Views about LinkIndia</p>
+      <p className="sub-heading">Share Your Views about Link India</p>
       <form
         onSubmit={form.onSubmit(handleTestimonial)}
         className="flex flex-col gap-2"

@@ -171,7 +171,7 @@ const Footer = () => {
       {/* <div className="bottom-footer !text-xs w-full flex justify-between px-16 max-lg:px-8 max-sm:px-4 max-sm:flex-col py-2 border-t border-gray-100/20">
         <div className="left">
           <p className="!text-xs text-gray-200">
-            LinkIndia LLC © 2024. All Rights Reserved.
+            Link India LLC © 2024. All Rights Reserved.
           </p>
         </div>
 
@@ -192,7 +192,7 @@ const Footer = () => {
       <div className="bg-[#000022] credits">
         <div className="mx-auto flex max-lg:flex-col items-center gap-3 px-4 py-4 justify-center">
           <p className="text-gray-200">
-            LinkIndia LLC © 2024. All Rights Reserved.
+            Link India LLC © 2024. All Rights Reserved.
           </p>
           <div className="divider max-lg:hidden">|</div>
           <p className="text-center text-gray-200">

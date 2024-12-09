@@ -8,22 +8,22 @@ const Terms = () => {
     <>
       {/* Meta Tags */}
       <Helmet>
-        <title>Terms and Conditions | LinkIndia Portal</title>
+        <title>Terms and Conditions | Link India Portal</title>
         <meta
           name="description"
-          content="LinkIndia Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
+          content="Link India Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
         />
         <meta
           name="keywords"
           content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
         />
 
-        <meta name="author" content="LinkIndia Portal" />
+        <meta name="author" content="Link India Portal" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           property="og:title"
-          content="Terms and COnditions | LinkIndia Portal"
+          content="Terms and COnditions | Link India Portal"
         />
         <meta property="og:type" content="website" />
         <meta
@@ -35,7 +35,6 @@ const Terms = () => {
       {/* Content */}
       <div className="w-screen flex flex-col items-center bg-secondary ">
         <Header />
-
         <div className="banner relative w-full overflow-hidden aspect-[16/3]">
           <img
             src="/backgrounds/testimonials-bg.webp"
@@ -50,169 +49,228 @@ const Terms = () => {
           </div>
         </div>
 
-        <div className="content-container flex flex-col w-full px-[10%] max-lg:px-[5%] max-sm:px-6 py-6 text-justify">
+        <ul className="content-container list list-decimal list-inside flex flex-col w-full px-[10%] max-lg:px-[5%] max-sm:px-6 py-6 text-justify">
           <p className="heading !my-2 pl-12 max-lg:pl-6 border-l-4 border-primary w-full text-left">
             Terms of Use
           </p>
           <p className="">
-            The Privacy Policy of www.indiamart.com (hereinafter referred to as
-            “site ") detailed herein below governs the collection, possession,
-            storage, handling and dealing of personal identifiable
-            information/data and sensitive personal data (hereinafter
-            collectively referred to as “information”) of the users of the site.
-            All the users must read and understand this Privacy Policy as it has
-            been formulated to safeguard the user’s privacy. This Privacy Policy
-            also outlines the ways the users can ensure protection of their
-            personal identifiable information. You must accept the contents of
-            this Policy in order to use or continue using our site. This Privacy
-            Policy detailed herein is also applicable to user of the site or
-            mobile application through mobile or any other similar device
+            Welcome to Link India Now, these terms and conditions govern your
+            use of our website, and any other services provided by Link India
+            Now. By accessing or using our services, you agree to comply with
+            and be bound by these terms. If you do not agree to these terms,
+            please refrain from using our Services.
           </p>
-          <p className="my-2 font-semibold uppercase">
-            COLLECTION OF INFORMATION
-          </p>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Definitions :
+          </li>
           <div className="w-full">
-            We confirm that we collect those information from you which is
-            required to extend the services available on the site.
-            <ul className="list-disc list-inside text-justify md:w-3/4 pl-4">
-              <li>
-                At the time of signing up and registration with the site, we
-                collect user information including name, company name, email
-                address, phone/mobile number, postal address and other business
-                information which may also include business statutory details
-                and tax registration numbers.{" "}
-              </li>
-              <li>
-                In this regard, we may also record conversations and archive
-                correspondence between users and the representatives of the site
-                (including the additional information, if any) in relation to
-                the services for quality control or training purposes.
-              </li>
+            <div className="item">
+              <span className="font-semibold">Company :</span> Refers to Link
+              India Now.
+            </div>
+            <div className="item">
+              <span className="font-semibold">User/ You :</span> Refers to
+              anyone accessing or using the Services.
+            </div>
+            <div className="item">
+              <span className="font-semibold">Content :</span> Any text, image,
+              graphics, videos, etc. that is put on the site or the app of the
+              organization or business.
+            </div>
+            <div className="item">
+              <span className="font-semibold">Third Parties : </span>Includes
+              any other company or organization that is not affiliated with the
+              Company in any way.
+            </div>
+          </div>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Eligibility :
+          </li>
+          <p>To use our services, you must:</p>
+          <ul className="list-decimal list-inside">
+            <li>
+              Be at least of 18 years or provide consent from a parent or a
+              legal guardian.{" "}
+            </li>
+            <li>
+              Be truthful and give all the information required during
+              registration.
+            </li>
+            <li>
+              Follow all the laws and regulations in relation to the use of our
+              Services.{" "}
+            </li>
+          </ul>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Use of Services :
+          </li>
+          <p>These restrictions relate to:</p>
+          <ul className="list-disc list-inside">
+            <li>Your use of the Services will remain legal and authorised.</li>
+            <li>
+              You are prohibited from sending or posting any unlawful, obscene,
+              indecent or defamatory material. Hacking, viruses, or systems are
+              the activities that aim to disturb the Services through any type
+              of unlawful intervention. Lying about who you are and where you
+              are coming from.
+            </li>
+            <li>
+              Follow all the laws and regulations in relation to the use of our
+              Services.{" "}
+            </li>
+          </ul>
+          <li className="my-2 font-semibold uppercase text-lg">
+            User Account :
+          </li>
+          <ul className="list-disc list-inside">
+            <li>
+              Remember it is your responsibility to keep your username and
+              password safe.
+            </li>{" "}
+            <li>
+              You also accept that you exceed reasonable speediness to advise us
+              of any unauthorized entry to your account.
+            </li>
+            <li>
+              Link India Now reserves the right to suspend or cancel at any time
+              the accounts opened by the users.
+            </li>
+          </ul>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Content Ownership and Use :
+          </li>
+          <ul className="list-disc list-inside">
+            <li>
+              <span className="font-semibold">Company Content:</span> All the
+              content on Services such as logos, designs, and text are the
+              property of Link India Now and they are under the IP laws. You
+              might not copy or share them without special consent.
+            </li>{" "}
+            <li>
+              <span className="font-semibold">User Content:</span>
+              When you post content e.g., reviews, comments in connection with
+              the Services, you also agree to give Link India Now the right to
+              use, modify, and display the content without asking for your
+              permission from all over the world.
+            </li>
+          </ul>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Fees and Payments :
+          </li>
+          <p>
+            {" "}
+            Some features or services might be paid. Further, all payments and
+            amounts mentioned are clearly stated to be non-refundable unless
+            others are stated from the information. Link India Now doesn’t take
+            any responsibility for this third party payment failure and
+            processing delay.{" "}
+          </p>
+          <li className="my-2 font-semibold uppercase text-lg">Privacy :</li>
+          <p>
+            {" "}
+            Use of the Services by you is governed by our Privacy Policy. You
+            further agree that the use of our Services constitutes your consent
+            to the collection and use of your information as set out in the
+            Privacy Policy.{" "}
+          </p>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Third-Party Links :
+          </li>
+          <p>
+            {" "}
+            The Services may include links to other websites or websites of
+            other companies. Link India Now does not sponsor or operate, and is
+            not necessarily affiliated with, any third-party commodities unless
+            expressly stated otherwise.{" "}
+          </p>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Limitation of Liability :
+          </li>
+          <p>
+            {" "}
+            Link India Now shall not be held to account for any direct,
+            indirect, incidental ,consequential, or punitive damages which
+            result from your utilization of the Services offered through this
+            web site. Pursuant to the scenarios described above, we cannot
+            ensure that the Services are entirely free of errors, secure or free
+            of interruptions. All consequences of the Services’ usage are
+            applied at the sole discretion and responsibility of the Users.{" "}
+          </p>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Indemnification :
+          </li>
+          <p>
+            You agree to indemnify and hold Link India Now harmless from any
+            claims, damages, losses, or expenses arising out of:
+            <ul className="pl-12 max-lg:pl-6 list-disc disc-inside">
+              <li>Your use of the Services.</li>
+              <li>Your breach of these Terms.</li>
               <li>
                 {" "}
-                In relation to our paid services, we may collect personal
-                information of a more sensitive nature which includes bank
-                account numbers and related details to facilitate the sale or
-                purchase of the services available on the site.{" "}
-              </li>
-              <li>
-                We also gathers and stores the user’s usage statistics such as
-                IP addresses, pages viewed, user behaviour pattern, number of
-                sessions and unique visitors, browsing activities, browser
-                software operating system etc. for analysis, which helps us to
-                provide improved experience and value added services to you.{" "}
-              </li>
-              <li>
-                Once a user registers, the user is no longer anonymous to us and
-                thus all the information provided by you shall be stored,
-                possessed in order to provide you with the requested services
-                and as may be required for compliance with statutory
-                requirements.{" "}
-              </li>
-              <li>
-                User’s registration with us and providing information is
-                intended for facilitating the users in its business. We retains
-                user provided Information for as long as the Information is
-                required for the purpose of providing services to you or where
-                the same is required for any purpose for which the Information
-                can be lawfully processed or retained as required under any
-                statutory enactments or applicable laws.{" "}
-              </li>
-              <li>
-                In relation to provide additional services to our users we also
-                let service providers, payment systems and data aggregators to
-                collect or store your information specially to verify credit
-                analysis and credit limits from time to time.
-              </li>
-              <li>
-                These data points may be captured by regulated financial
-                entities through secure integration from your desktop, mobile
-                and other such devices by analyzing transactional SMS, installed
-                app details, queries, device location, device information, IMEI
-                number, serial number, MNC and MCC codes, RAM storage, WIFI
-                information etc. We also avail of the class called
-                AccountManager from the Google SDK which allows us to fetch
-                social account related details.{" "}
-              </li>
-              <li>
-                However, we only collect Your e-mail IDs that you may be logged
-                into from the device that you are accessing our platform from.
-                This allows us to pre-fill Your verified e-mail ID details so
-                that we can offer You a seamless and convenient user experience.
-                You can always edit such pre-filled e-mail ID from your user
-                profile.{" "}
+                Any violation of third-party rights that may be occasioned by
+                your actions will be mapped out.{" "}
               </li>
             </ul>
-            User may update, correct, or confirm provided information by logging
-            on to their accounts on the site or by sending a request to
-            customercare@indiamart.com. The requested changes may take
-            reasonable time due to verification process and server cache
-            policies. In case you would like to receive a copy of our
-            information held by us for porting to another service, please
-            contact us with your request at the email address above. Users may
-            also choose to delete or deactivate their accounts on the site. We
-            will evaluate such requests on a case-to-case basis and take the
-            requisite action as per applicable law. In this regard, please note
-            that information sought to be deleted may remain with us in archival
-            records for the purpose of compliance of statutory enactments, or
-            for any other lawful purpose. Therefore, users are requested to
-            carefully evaluate what types of information they would like to
-            provide to us at the time of registration.
-          </div>
-
-          <p className="my-2 font-semibold uppercase">Cookies</p>
-          <div className="w-full">
-            We, and third parties with whom we partner, may use cookies, pixel
-            tags, web beacons, mobile device IDs, “flash cookies” and similar
-            files or technologies to collect and store information in respect to
-            your use of the site and track your visits to third party websites.
-            We also use cookies to recognize your browser software and to
-            provide features such as recommendations and personalization. Third
-            parties whose products or services are accessible or advertised
-            through the site, including social media sites, may also use cookies
-            or similar tools, and we advise you to check their privacy policies
-            for information about their cookies and the practices followed by
-            them. We do not control the practices of third parties and their
-            privacy policies govern their interactions with you.
-          </div>
-
-          <p className="my-2 font-semibold uppercase">
-            DATA COLLECTION RELATING TO CHILDREN
+            Link India Now shall not be held to account for any direct,
+            indirect, incidental ,consequential, or punitive damages which
+            result from your utilization of the Services offered through this
+            web site. Pursuant to the scenarios described above, we cannot
+            ensure that the Services are entirely free of errors, secure or free
+            of interruptions. All consequences of the Services’ usage are
+            applied at the sole discretion and responsibility of the Users.{" "}
           </p>
-          <div className="w-full">
-            We strongly believe in protecting the privacy of children. In line
-            with this belief, we do not knowingly collect or maintain Personally
-            Identifiable Information on our Site from persons under 18 years of
-            age, and no part of our Site is directed to persons under 18 years
-            of age. If you are under 18 years of age, then please do not use or
-            access our services at any time or in any manner. We will take
-            appropriate steps to delete any Personally Identifiable Information
-            of persons less than 18 years of age that has been collected on our
-            Site without verified parental consent upon learning of the
-            existence of such Personally Identifiable Information. If we become
-            aware that a person submitting personal information is under 18, we
-            will delete the account and all related information as soon as
-            possible. . If you believe we might have any information from or
-            about a child under 18 please contact us at
-            customercare@indiamart.com
-          </div>
 
-          <p className="my-2 font-semibold uppercase">DATA Transfers</p>
-          <div className="w-full">
-            User Information that we collect may be transferred to, and stored
-            at, any of our affiliates, partners or service providers which may
-            be inside or outside the country you reside in. By submitting your
-            personal data, you agree to such transfers. Your Personal
-            Information may be transferred to countries that do not have the
-            same data protection laws as the country in which you initially
-            provided the information. When we transfer or disclose your Personal
-            Information to other countries, we will protect that information as
-            described in this Privacy Policy. relevant, we will ensure
-            appropriate contractual safeguards to ensure that your information
-            is processed with the highest standards of transparency and
-            fairness.
-          </div>
-        </div>
+          <li className="my-2 font-semibold uppercase text-lg">
+            Termination :
+          </li>
+          <p>
+            Link India Now also has the rights to block and deny the access to
+            the Services by the user without notice and without any possible
+            explanation except the cases when the user violates the provisions
+            of present Terms and the other cases that may be considered as
+            worthy by the Company. Upon termination such use of the Services
+            shall cease immediately.
+          </p>
+
+          <li className="my-2 font-semibold uppercase text-lg">
+          Law and Dispute Regulation :
+          </li>
+          <p>
+          The Terms shall be clarified and
+          taken according to the laws of Indian jurisdiction. All conflict,
+          controversies, and disputes arising out of or in connection with these
+          Terms shall be referred to and heard by arbitration and the
+          arbitrator’s decision shall be final. 
+          </p>
+
+          <li className="my-2 font-semibold uppercase text-lg">
+          New Faqs & Policies :
+          </li>
+          <p>
+          India Now may change these Terms and Conditions from time to time.
+          However, the changes that have major impacts will be availed through
+          email or on the home page of the website. Any additions, deletions or
+          modifications to the Terms will take effect once the consumer carries
+          on with the use of the Services.
+          </p>
+
+          <li className="my-2 font-semibold uppercase text-lg">
+          Contact Us :
+          </li>
+          <p>
+          If you have any questions or concerns regarding these
+        Terms, please contact us at:
+        <ul className="list list-disc pl-12 max-lg:pl-6">
+          <li>Email:</li>
+          <li>Phone:</li>
+        </ul>
+              <span className="font-bold italic">"Your access to and use of
+        Link India Now is expressly conditioned on your full agreement with
+        these Terms and Conditions."</span>
+          </p>
+          
+          
+        </ul>
         <Footer />
       </div>
     </>
