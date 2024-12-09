@@ -195,7 +195,7 @@ return (
                 </Carousel>
             )}
 
-            <Button type="submit" color="primary.3" fullWidth disabled={files.length === 0}>
+            <Button type="submit" color="brand.5" fullWidth disabled={files.length === 0}>
                 Finish
             </Button>
         </form>

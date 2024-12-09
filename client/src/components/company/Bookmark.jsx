@@ -16,6 +16,8 @@ const Bookmark = ({ companyId }) => {
     }
   }, [user]);
 
+  if(!user || !user?.name) return null;
+
   const toggleBookmark = async () => {
     try {
       const response = await fetch(
@@ -47,13 +49,13 @@ const Bookmark = ({ companyId }) => {
     <div>
       {bookmarked ? (
         <FaBookmark
-          size={24}
+          size={18}
           onClick={toggleBookmark}
           className="cursor-pointer"
         />
       ) : (
         <FaRegBookmark
-          size={24}
+          size={18}
           onClick={toggleBookmark}
           className="cursor-pointer"
         />

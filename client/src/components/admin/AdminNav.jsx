@@ -9,6 +9,7 @@ import { NavLink } from "@mantine/core";
 import { FaChevronRight } from "react-icons/fa";
 import { MdCategory, MdPendingActions } from "react-icons/md";
 import { IoImageSharp } from "react-icons/io5";
+import Logo from "../shared/Logo";
 
 const AdminNav = () => {
   const user = useSelector((state) => state.user);
@@ -29,13 +30,11 @@ const AdminNav = () => {
         to="/"
         className="nav-top flex gap-4 justify-start items-center mt-2"
       >
-        <div className="logo rounded-lg bg-gradient-to-br from-teal-400 to-teal-300 border-[1px] border-black/40 p-1">
-          <IoIosTrendingUp className="text-2xl font-bold text-white" />
-        </div>
-        <p className="text-xl font-extralight max-lg:text-sm">LinkIndia</p>
+        <Logo />
       </Link>
+      <div className="divider my-2 border border-neutral-500/50 w-full" />
 
-      <div className="nav-links py-12 flex-col flex-1 items-start w-full">
+      <div className="nav-links py-6 flex-col flex-1 items-start w-full">
         <NavLink
           component={Link}
           to="/admin/users"

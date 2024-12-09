@@ -71,7 +71,7 @@ const AdminCategories = () => {
                 <div className="sub-categories flex gap-2 flex-wrap justify-end">
                   {category?.subCategories.map((subCategory, index) => {
                     return (
-                      <Pill key={index} color="primary.1" className="capitalize ">
+                      <Pill key={index} color="brand.5" className="capitalize ">
                         {subCategory}
                       </Pill>
                     );

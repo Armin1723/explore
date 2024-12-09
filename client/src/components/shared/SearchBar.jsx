@@ -25,11 +25,8 @@ const SearchBar = ({ visible = false }) => {
       } max-lg:hidden `}
     >
       {/* Search Bar for Large Screens */}
-      <div className="flex items-center border border-brand/60 rounded-md overflow-hidden bg-white shadow-sm w-[25vw]">
-        {/* Search Icon */}
-        <button className="text-brand/90 bg-brand/10 p-2 border-r border-brand/60 h-full">
-          <FaSearch />
-        </button>
+      <div className="flex items-center border border-brand/60 rounded-md overflow-hidden bg-white shadow-sm w-[20vw]">
+        
         {/* Text Input */}
         <input
           type="text"
@@ -39,12 +36,10 @@ const SearchBar = ({ visible = false }) => {
           placeholder="Search query"
           className="flex-1 border-none outline-none bg-transparent pl-2 text-sm text-black placeholder:text-gray-400"
         />
-        {/* Search Arrow */}
-        <button
-          onClick={handleSearch}
-          className="text-white bg-brand/70 p-2 px-3 hover:bg-brand transition"
-        >
-          <FaArrowRight />
+
+        {/* Search Icon */}
+        <button onClick={handleSearch} className="bg-brand/10 hover:bg-brand/20 transition-all duration-300 ease-in cursor-pointer p-2 border-l border-brand/60 h-full">
+          <FaSearch />
         </button>
       </div>
     </div>

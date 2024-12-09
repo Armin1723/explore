@@ -88,7 +88,7 @@ const TestimonialPage = () => {
               <Button
                 onClick={() => setSort("latest")}
                 variant={sort === "latest" ? "filled" : "outline"}
-                color="primary.3"
+                color="brand.5"
                 className={`!my-0 ${sort === "latest" && "border-primary"}`}
               >
                 Latest
@@ -96,7 +96,7 @@ const TestimonialPage = () => {
               <Button
                 onClick={() => setSort("popular")}
                 variant={sort === "popular" ? "filled" : "outline"}
-                color="primary.3"
+                color="brand.5"
                 className="!my-0"
               >
                 Popular
@@ -120,7 +120,7 @@ const TestimonialPage = () => {
                 <Button
                   onClick={() => setPage((prev) => prev + 1)}
                   variant="outline"
-                  color="primary.3"
+                  color="brand.5"
                 >
                   Load More
                 </Button>

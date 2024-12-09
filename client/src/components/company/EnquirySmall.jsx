@@ -96,7 +96,7 @@ const EnquirySmall = () => {
           className={`${error && 'border-red-500 text-red-500'} w-full`}
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <Button color="primary.3" disabled={!enquiry} fullWidth onClick={sendEnquiry}>
+        <Button color="brand.5" disabled={!enquiry} fullWidth onClick={sendEnquiry}>
           Send Enquiry
         </Button>
 

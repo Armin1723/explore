@@ -110,7 +110,7 @@ const UserProfile = ({expanded = false}) => {
               leftSection={
                 <MdAddBusiness
                   style={{ width: rem(16), height: rem(16) }}
-                  color={theme.colors.yellow[6]}
+                  color='brand.8'
                 />
               }
             >
@@ -125,7 +125,7 @@ const UserProfile = ({expanded = false}) => {
             leftSection={
               <MdBusiness
                 style={{ width: rem(16), height: rem(16) }}
-                color={theme.colors.yellow[6]}
+                color='brand.8'
               />
             }
           >

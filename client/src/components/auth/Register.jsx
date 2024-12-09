@@ -126,8 +126,8 @@ const Register = () => {
   ;
 
   return (
-    <div className="page flex flex-col items-center relative overflow-hidden w-screen h-full">
-      <motion.img
+    <div className="page flex flex-col items-center relative overflow-hidden w-screen h-full bg-secondary">
+      {/* <motion.img
         initial={{
           opacity: 0,
           y: 100,
@@ -142,7 +142,7 @@ const Register = () => {
         src="/backgrounds/register-bg.svg"
         alt="Background"
         className="absolute top-0 left-0 w-full h-full object-cover z-[-2]"
-      />
+      /> */}
 
       <motion.div
         initial={{
@@ -159,13 +159,7 @@ const Register = () => {
         }}
         className="form-container flex flex-col items-center justify-center h-full min-w-[50%] px-4 max-lg:min-w-[60%] max-sm:min-w-[80%]"
       >
-        <div className="heading">Enter Your Details</div>
-        <Text c="dimmed" size="sm" ta="center" mt={5}>
-          Already have an account?{" "}
-          <Link to="/auth/login" className="text-blue-800/60 hover:underline">
-            Log In
-          </Link>
-        </Text>
+        
         <Paper
           withBorder
           shadow="md"
@@ -176,8 +170,15 @@ const Register = () => {
             width: "100%",
             margin: "0 auto",
           }}
-          className=" py-8 border-2 border-accent md:max-w-[60vw]"
+          className=" py-4 border-2 md:max-w-[50vw]"
         >
+          <div className="heading text-center !mt-2">Enter Your Details</div>
+        <Text c="dimmed" size="sm" ta="center" mb='lg'>
+          Already have an account?{" "}
+          <Link to="/auth/login" className="text-blue-800/60 hover:underline">
+            Log In
+          </Link>
+        </Text>
           <form
             onSubmit={form.onSubmit(handleSubmit)}
             className="grid gap-4 max-lg:grid-cols-1 grid-cols-2"
@@ -256,7 +257,7 @@ const Register = () => {
               <Button
                 fullWidth
                 type="submit"
-                color="primary.3"
+                color="brand.5"
                 disabled={Object.keys(form.errors).length > 0}
               >
                 Register

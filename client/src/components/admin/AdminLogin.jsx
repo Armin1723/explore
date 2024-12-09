@@ -160,7 +160,7 @@ const AdminLogin = () => {
               {...form.getInputProps("password")}
             />
            
-            <Button type="submit" color="primary.3" fullWidth mt="xl">
+            <Button type="submit" color="brand.5" fullWidth mt="xl">
               Log In
             </Button>
           </form>

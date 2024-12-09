@@ -116,7 +116,8 @@ const Wrapper = () => {
           <Transition transition="slide-up" mounted={scroll.y > 0}>
             {(transitionStyles) => (
               <Button
-                color="primary.3"
+                color="brand.5"
+                className="!bg-brand/80 hover:!bg-brand"
                 leftSection={
                   <FaArrowUp style={{ width: rem(16), height: rem(16) }} />
                 }

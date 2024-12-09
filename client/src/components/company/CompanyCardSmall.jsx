@@ -12,7 +12,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
   const encodedAddress = encodeURI(company?.address);
 
   return (
-    <div className="flex-shrink-0 max-sm:flex-col max-w-full max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-accent/70 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200">
+    <div className="flex-shrink-0 max-sm:flex-col max-w-full max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-brand/90 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200">
       <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
         <img
           src={
@@ -35,11 +35,11 @@ const CompanyCardSmall = ({ company, self = false }) => {
           <FaChevronCircleLeft />
         </Link>
       </div>
-      <div className="details right max-sm:w-full max-sm:pl-4 max-sm:py-2 flex flex-col items-start justify-start h-full flex-1 py-2 gap-2">
+      <div className="details right max-sm:w-full max-sm:pl-4 max-sm:py-2 flex flex-col items-start justify-between  h-full flex-1 py-3 gap-2">
         <div className="title flex w-full items-center justify-between pr-4">
           <Link
             to={`/companies/${company?.name.split(" ").join("-")}`}
-            className="heading capitalize !my-1"
+            className="heading capitalize !my-0 font-medium"
           >
             {company?.name}
           </Link>
@@ -73,7 +73,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
           </p>
         </div>
         <Link
-          className="text-xs flex my-1 max-sm:my-0"
+          className="text-sm flex my-1 max-sm:my-0"
           target="blank"
           to={`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`}
         >
@@ -89,7 +89,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
                 : `https://${company.website}`
             } `}
             target="blank"
-            className="website max-sm:text-sm max-sm:m-0 text-blue-800 hover:text-blue-900 transition-all duration-200 my-1"
+            className="website max-sm:text-sm max-sm:m-0 text-blue-800 hover:text-blue-900 transition-all duration-200 "
           >
             {company?.website}
           </Link>
@@ -105,7 +105,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
             <Link
               to={`/companies/${company?.name.split(" ").join("-")}/enquiries/`}
             >
-              <Button color="primary.3">
+              <Button color="brand.5">
                 <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries
               </Button>
             </Link>
@@ -115,7 +115,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
                 .split(" ")
                 .join("-")}/enquiries/add`}
             >
-              <Button color="primary.3">
+              <Button color="brand.5">
                 <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiry
               </Button>
             </Link>

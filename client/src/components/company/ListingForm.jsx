@@ -221,7 +221,7 @@ const ListingForm = ({ nextStep }) => {
 
         <Button
           type="submit"
-          color="primary.3"
+          color="brand.5"
           className="col-span-1 lg:col-span-2 md:col-span-2"
           fullWidth
         >

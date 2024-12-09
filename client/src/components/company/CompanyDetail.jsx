@@ -14,7 +14,6 @@ import {
   Badge,
   Textarea,
   ScrollArea,
-  Indicator,
   Modal,
 } from "@mantine/core";
 
@@ -28,6 +27,7 @@ import {
   FaChevronCircleLeft,
   FaChevronCircleRight,
 } from "react-icons/fa";
+import { IoIosTrendingUp } from "react-icons/io";
 import { Button } from "@mantine/core";
 import { useSelector } from "react-redux";
 import AdvertisementCard from "../shared/AdvertisementCard";
@@ -212,9 +212,9 @@ const CompanyDetail = () => {
         <title>{`${company?.name} - LinkIndia Portal`}</title>
         <meta
           name="description"
-          content={`Learn more about ${
-            company?.name
-          }. ${striptags(company?.description)}.`}
+          content={`Learn more about ${company?.name}. ${striptags(
+            company?.description
+          )}.`}
         />
         <meta
           name="keywords"
@@ -228,10 +228,12 @@ const CompanyDetail = () => {
         <meta property="og:image" content={company?.logo?.url} />
         <meta
           property="og:url"
-          content={`${import.meta.env.VITE_FRONTEND_URL}/companies/${company?.name.split(' ').join('-')}`}
+          content={`${
+            import.meta.env.VITE_FRONTEND_URL
+          }/companies/${company?.name.split(" ").join("-")}`}
         />
       </Helmet>
-      
+
       <div className="flex flex-col flex-1 w-full items-center px-4 p-6">
         <div className="carousel-container relative w-full" id="contact">
           <Carousel
@@ -279,44 +281,54 @@ const CompanyDetail = () => {
         </div>
 
         <div className="company-detail-container flex flex-col w-full px-12 max-lg:px-8 max-sm:px-2">
-          <div className="title flex flex-wrap gap-4 items-center justify-start mt-6">
-            <Avatar
-              src={company?.logo.url}
-              alt={company?.name}
-              size="xl"
-              className="border-2 border-black/70"
-            />
-            <div className="heading !my-2">{company?.name}</div>
-            {company?.status === "pending" && (
-              <Badge color="yellow" variant="filled">
-                Pending
-              </Badge>
-            )}
-            <Bookmark companyId={company._id} />
-            {isAdmin && (
-              <AdminActions company={company} setCompany={setCompany} />
-            )}
-            {user && user?.name && isSelf && (
-              <Indicator
-                inline
-                color="red.9"
-                size={16}
-                label={
-                  company?.enquiries?.filter(
-                    (enquiry) => enquiry.status === "pending"
-                  ).length
-                }
+          <div className="title flex flex-wrap items-center justify-between mt-6">
+            <div className="title-left flex items-center flex-wrap gap-4">
+              <Avatar
+                src={company?.logo.url}
+                alt={company?.name}
+                size="xl"
+                className="border-2 border-black/70"
+              />
+              <div className="heading !my-2 font-medium">{company?.name}</div>
+              {company?.status === "pending" && (
+                <Badge color="yellow" variant="filled">
+                  Pending
+                </Badge>
+              )}
+              <Bookmark companyId={company._id} />{" "}
+              <div
+                onClick={() => {
+                  navigator.share({
+                    title: company?.name,
+                    text: `Check out ${company?.name}`,
+                    url: window.location.href,
+                  });
+                }}
+                className="cursor-pointer"
               >
+                <FaShare />
+              </div>
+              {user && user?.name && isSelf && (
                 <Link
                   to={`/companies/${company?.name
                     .split(" ")
                     .join("-")}/enquiries`}
+                  className="relative"
                 >
-                  <Button color="primary.3">
-                    <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries
-                  </Button>
+                  <IoChatbubbleEllipsesSharp className="mr-2 text-brand/75 hover:text-brand transition-al duration-300 text-xl" />
+                  <div className="indicator absolute text-xs top-0 right-0 -translate-y-1/2 -translate-x-1/2 font-semibold">
+                    {
+                      company?.enquiries?.filter(
+                        (enquiry) => enquiry.status === "pending"
+                      ).length
+                    }
+                  </div>
                 </Link>
-              </Indicator>
+              )}
+            </div>
+
+            {isAdmin && (
+              <AdminActions company={company} setCompany={setCompany} />
             )}
           </div>
 
@@ -408,7 +420,7 @@ const CompanyDetail = () => {
                   : `https://${company.website}`
               } `}
               target="blank"
-              className="text-xs"
+              className="text-sm"
             >
               <p className="website text-blue-800 hover:text-blue-900 transition-all duration-200 my-1">
                 {company.website}
@@ -421,12 +433,13 @@ const CompanyDetail = () => {
               <Button
                 component="a"
                 href={`tel:${company.phone.number}`}
-                variant="filled"
-                color="green.8"
+                color="green.9"
+                className="text-[#155515] hover:text-[darkGreen] rounded-full flex gap-2 items-center justify-center px-1 "
               >
                 <FaPhone className="mx-2" />
-                {company?.phone?.number}
+                {company.phone.number}
               </Button>
+
               <Button
                 component="a"
                 href={`https://wa.me/${company.phone.number}`}
@@ -447,31 +460,6 @@ const CompanyDetail = () => {
                 <FaEnvelope className="mx-2" />
                 {company.email}
               </Button>
-              <Button
-                onClick={() => {
-                  navigator.share({
-                    title: company?.name,
-                    text: `Check out ${company?.name}`,
-                    url: window.location.href,
-                  });
-                }}
-                variant="filled"
-                color="blue"
-              >
-                <FaShare className="mx-2" />
-                Share
-              </Button>
-              {!isSelf && (
-                <Link
-                  to={`/companies/${company?.name
-                    .split(" ")
-                    .join("-")}/enquiries/add`}
-                >
-                  <Button color="primary.3">
-                    <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiry
-                  </Button>
-                </Link>
-              )}
             </div>
           </div>
 
@@ -516,7 +504,7 @@ const CompanyDetail = () => {
                     ></Textarea>
                     <Button
                       variant="filled"
-                      color="primary.2"
+                      color="brand.5"
                       disabled={!review?.comment}
                       onClick={addReview}
                     >
@@ -532,12 +520,10 @@ const CompanyDetail = () => {
               {isSelf ? (
                 <Link
                   to="enquiries"
-                  className="w-full flex flex-col items-start gap-4 justify-center min-h-[10vh] rounded-md border p-4 relative"
+                  className="w-full flex items-center gap-4 justify-start min-h-[10vh] rounded-md border p-4 relative hover:opacity-90"
                 >
                   <p className="sub-heading !my-0">View Your Enquiries.</p>
-                  <Button fullwidth mx="" color="primary.1">
-                    View Enquiries
-                  </Button>
+                  <IoIosTrendingUp className="" />
                 </Link>
               ) : (
                 <EnquirySmall />

@@ -71,18 +71,18 @@ const Hero = () => {
           );
         })}
 
-      <div className="absolute w-full top-1/2 -translate-y-1/2 flex justify-between items-center">
+      <div className="controls absolute w-full top-1/2 -translate-y-1/2 flex justify-between items-center">
         <button
-          className={`p-2 rounded-e-lg bg-white/40 `}
+          className={`p-2 max-sm:p-1 rounded-e-lg bg-white/40 `}
           onClick={() => setCurr((prev) => (prev - 1 >= 0 ? prev - 1 : 3))}
         >
-          <FaChevronCircleLeft color="black" className="text-2xl" />
+          <FaChevronCircleLeft className="text-2xl max-lg:text-lg max-sm:text-sm" />
         </button>
         <button
-          className={`p-2 rounded-s-lg bg-white/70`}
+          className={`p-2 max-sm:p-1 rounded-s-lg bg-white/40`}
           onClick={() => setCurr((prev) => (prev + 1) % 4)}
         >
-          <FaChevronCircleRight color="black" className="text-2xl" />
+          <FaChevronCircleRight className="text-2xl max-lg:text-lg max-sm:text-sm " />
         </button>
       </div>
     </div>

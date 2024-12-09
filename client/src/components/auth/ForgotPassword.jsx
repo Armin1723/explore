@@ -49,8 +49,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center relative overflow-hidden w-screen h-full">
-      <motion.img
+    <div className="flex flex-col items-center relative overflow-hidden w-screen h-full bg-secondary">
+      {/* <motion.img
         initial={{
           opacity: 0,
           y: 100,
@@ -66,7 +66,7 @@ const ForgotPassword = () => {
         src="/backgrounds/login-bg.svg"
         alt="ok"
         className="absolute bottom-0 left-0 min-h-[100dvh] w-screen z-[-2] object-cover max-sm:aspect-[1/1.4] "
-      />
+      /> */}
       <motion.div
         initial={{
           opacity: 0,
@@ -82,13 +82,6 @@ const ForgotPassword = () => {
         }}
         className="form-container flex flex-col items-center justify-center h-full px-8"
       >
-        <div className="heading" ta="center">
-          Forgot your password?
-        </div>
-        <Text c="dimmed" fz="sm" ta="center">
-          Enter your email to get a reset link
-        </Text>
-
         <Paper
           withBorder
           shadow="md"
@@ -97,11 +90,20 @@ const ForgotPassword = () => {
           mt="xl"
           className="min-w-[30%] px-4 max-lg:min-w-[60%] max-sm:min-w-[90%]"
         >
+          <div className="flex flex-col items-center gap-2 my-2 py-1">
+            <div className="heading" ta="center">
+              Forgot your password?
+            </div>
+            <Text c="dimmed" fz="sm" ta="center">
+              Enter your email to get a reset link
+            </Text>
+          </div>
           <TextInput
             label="Your email"
             placeholder="me@mantine.dev"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            my={10}
             required
           />
           <Group pt="md">
@@ -112,7 +114,12 @@ const ForgotPassword = () => {
             )}
           </Group>
           <Group justify="space-between" mt="lg" className={classes.controls}>
-            <Link to="/auth/login" c="dimmed" size="sm" className={classes.control}>
+            <Link
+              to="/auth/login"
+              c="dimmed"
+              size="sm"
+              className={classes.control}
+            >
               <Center inline>
                 <div className="flex items-center">
                   <FaArrowLeft
@@ -123,7 +130,11 @@ const ForgotPassword = () => {
                 </div>
               </Center>
             </Link>
-            <Button className={classes.control} color="primary.3" onClick={handlePasswordReset}>
+            <Button
+              className={classes.control}
+              color="brand.5"
+              onClick={handlePasswordReset}
+            >
               Reset password
             </Button>
           </Group>
@@ -131,6 +142,6 @@ const ForgotPassword = () => {
       </motion.div>
     </div>
   );
-}
+};
 
 export default ForgotPassword;

@@ -15,13 +15,14 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { GoChevronDown } from "react-icons/go";
 import classes from "./Header.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import UserProfile from "./UserProfile";
 import SearchBar from "./SearchBar";
 import SearchBarSmall from "./SearchBarSmall";
 import Logo from "./Logo";
+import { FaArrowRight } from "react-icons/fa";
 
 const categoryData = [
   {
@@ -60,10 +61,12 @@ const categoryData = [
 export const Header = () => {
   const user = useSelector((state) => state.user);
 
+  const pathname = useLocation().pathname;
+
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const header = document.querySelector(".header");
-      if (window.scrollY > 200) {
+      if (window.scrollY > 100) {
         header.classList.add("!top-0");
         header.classList.add("shadow-lg");
       } else {
@@ -80,10 +83,10 @@ export const Header = () => {
   const links = categoryData.map((item) => (
     <Link
       to={`/companies/categories?category=${item.title.toLowerCase()}`}
-      className=""
+      className="!text-sm"
       key={item.title}
     >
-      <div className="w-[100%] px-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-primary/90 group flex items-center justify-start gap-2 font-['poppins'] ">
+      <div className="w-[100%] px-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-[#000088]/75 group flex items-center justify-start gap-2 font-['poppins'] ">
         <ThemeIcon size={34} variant="default" radius="md">
           <img style={{ width: rem(22), height: rem(22) }} src={item.icon} />
         </ThemeIcon>
@@ -101,7 +104,9 @@ export const Header = () => {
 
   return (
     <div
-      className={`sticky header border-neutral-300/50 border-b transition-all duration-300 ease-in -top-[12vh] left-0 w-screen bg-white !font-['poppins'] !z-[98]`}
+      className={`sticky header border-neutral-300/50 border-b transition-all duration-300 ease-in ${
+        pathname === "/" ? "-top-[12vh]" : "top-0 shadow-lg"
+      } left-0 w-screen bg-white !font-['poppins'] !z-[98]`}
     >
       <header className={`md:px-[6vw] px-6 flex justify-between`}>
         <div className="nav-left flex items-center gap-4 max-sm:gap-2 ">
@@ -199,16 +204,13 @@ export const Header = () => {
           <div className="flex gap-2 items-center justify-end">
             <SearchBarSmall />
             {user && user?.name ? (
-              <div className="md:flex hidden"><UserProfile /></div>
+              <div className="md:flex hidden">
+                <UserProfile />
+              </div>
             ) : (
-              <Link
-                className="fancy w-44 max-sm:hidden !py-2 shadow-xl"
-                to="/auth"
-              >
-                <span className="top-key"></span>
-                <span className="text">Join Now</span>
-                <span className="bottom-key-1"></span>
-                <span className="bottom-key-2"></span>
+              <Link to='/auth' className="button group flex items-center gap-2 bg-brand/75 hover:bg-brand transition-all text-white duration-300 rounded-md hover:-translate-y-1 px-3 py-1">
+                <p>Get Started</p>
+                <span className="overflow-hidden transition-all duration-500 ease-in"><FaArrowRight /></span>
               </Link>
             )}
           </div>

@@ -140,7 +140,7 @@ return (
 
                 <RichTextEditor.Content />
             </RichTextEditor>
-            <Button type="submit" color="primary.3" w="50%" disabled={!form.isValid()}>
+            <Button type="submit" color="brand.5" w="50%" disabled={!form.isValid()}>
                 Next
             </Button>
         </form>

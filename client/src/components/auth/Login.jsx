@@ -69,7 +69,8 @@ const Login = () => {
         notifications.update({
           id,
           title: "Error in Credentials",
-          message: data.errors.email || data.errors.password || "Some error occurred",
+          message:
+            data.errors.email || data.errors.password || "Some error occurred",
           color: "red",
           loading: false,
           autoClose: 3000,
@@ -99,7 +100,8 @@ const Login = () => {
       notifications.update({
         id,
         title: "An error occurred",
-        message: data.errors.email || data.errors.password || "Please try again",
+        message:
+          data.errors.email || data.errors.password || "Please try again",
         color: "red",
         loading: false,
         autoClose: 3000,
@@ -108,8 +110,8 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center relative overflow-hidden w-screen h-full">
-      <motion.img
+    <div className="flex flex-col items-center relative overflow-hidden w-screen h-full bg-secondary/80">
+      {/* <motion.img
         initial={{
           opacity: 0,
           y: 100,
@@ -122,10 +124,10 @@ const Login = () => {
           duration: 1,
           ease: "linear",
         }}
-        src="/backgrounds/login-bg.svg"
+        src="/backgrounds/login-bg.png"
         alt="ok"
         className="absolute bottom-0 left-0 min-h-[100dvh] w-screen z-[-2] object-cover max-sm:aspect-[1/1.4] "
-      />
+      /> */}
       <motion.div
         initial={{
           opacity: 0,
@@ -141,16 +143,7 @@ const Login = () => {
         }}
         className="form-container flex flex-col items-center justify-center h-full"
       >
-        <p className="heading">Welcome back!</p>
-        <Text c="dimmed" size="sm" ta="center" mt={5}>
-          Do not have an account yet?{" "}
-          <Link
-            to="/auth/register"
-            className="text-blue-800/60 hover:underline"
-          >
-            Sign up
-          </Link>
-        </Text>
+        
 
         <Paper
           withBorder
@@ -161,6 +154,17 @@ const Login = () => {
           className="min-w-[30vw] px-4 max-lg:min-w-[60vw] max-sm:min-w-[80vw] py-8 border-2 border-accent"
         >
           <form onSubmit={form.onSubmit(handleLogin)}>
+
+          <p className="heading text-center">Welcome back!</p>
+        <Text c="dimmed" size="sm" ta="center" mt={5}>
+          Do not have an account yet?{" "}
+          <Link
+            to="/auth/register"
+            className="text-blue-800/60 hover:underline"
+          >
+            Sign up
+          </Link>
+        </Text> 
             <TextInput
               withAsterisk
               label="Email"
@@ -192,7 +196,13 @@ const Login = () => {
               </Link>
             </Group>
 
-            <Button type="submit" color="primary.3" fullWidth mt="xl">
+            <Button
+              type="submit"
+              color="brand.5"
+              // className="!bg-brand/80 hover:!bg-brand"
+              fullWidth
+              mt="xl"
+            >
               Sign in
             </Button>
           </form>

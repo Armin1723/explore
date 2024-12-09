@@ -72,10 +72,11 @@ const CategorySection = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center bg-gradient-to-b from-secondary border-t border-neutral-300/50">
+    <div className="w-full relative flex flex-col items-center max-h-fit bg-gradient-to-b from-secondary border-t border-neutral-300/50 ">
       <p className="heading w-[90%] py-6 max-lg:py-2 text-center">
         Categories
       </p>
+
       <div className="icons-container grid max-lg:grid-cols-5 md:grid-cols-8 items-center gap-4 max-sm:gap-2 w-[90%] my-8 max-lg:my-6 max-sm:my-2 ">
         {categoryData.map((category, index) => {
           return(

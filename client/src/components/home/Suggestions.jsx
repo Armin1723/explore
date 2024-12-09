@@ -70,10 +70,10 @@ const Suggestions = () => {
                 className={`rounded-xl border group/parent border-neutral-500/50 hover:bg-prmary hover:shadow-[0_0_5px_gray] !shadow-neutral-500/50  hover:border-accen transition-all duration-300 ${index > 1 && "max-sm:hidden"}`}
                 key={index}
               >
-                <p className="sub-heading p-6 pb-2 group-hover/parent:text-hite">
+                <p className="sub-heading p-6 pb-2 text-center ">
                   {suggestion.title}
                 </p>
-                <div className="links-container flex items-center justify-center p-4 max-sm:p-1 max-sm:pb-2">
+                <div className="links-container flex items-center justify-center p-3 max-sm:p-1 max-sm:pb-2">
                   {suggestion.subCategories.map((subCategory, index) => {
                     return (
                       <Link
@@ -81,13 +81,13 @@ const Suggestions = () => {
                         className={`link flex flex-col items-center justify-center gap-4 group/child `}
                         key={index}
                       >
-                        <div className="image-container w-2/3 aspect-[16/11] object-cover rounded-lg overflow-hidden ">
+                        <div className="image-container w-4/5 aspect-[16/10] object-fit rounded-lg overflow-hidden ">
                           <img
                             src={`suggestions/${subCategory.image}.png`}
                             loading="lazy"
                             // src="https://picsum.photos/300/300/?suggestion"
                             alt="https://picsum.photos/300/300/?suggestion"
-                            className="h-full w-[300px] object-cover origin-center rounded-lg group-hover/child:scale-105 transition-all duration-300"
+                            className="h-full w-[300px] object-fit origin-center rounded-lg group-hover/child:scale-105 transition-all duration-300"
                           />
                         </div>
                         <p className="text-sm group-hover/child:text-gray-800">{subCategory.title}</p>

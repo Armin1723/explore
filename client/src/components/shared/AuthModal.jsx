@@ -379,7 +379,7 @@ const AuthModal = ({ close }) => {
 
             <Button
               type="submit"
-              color="primary.3"
+              color="brand.5"
               disabled={Object.keys(loginForm.errors).length > 0}
               fullWidth
               mt="xl"
@@ -484,7 +484,7 @@ const AuthModal = ({ close }) => {
               <Button
                 fullWidth
                 type="submit"
-                color="primary.3"
+                color="brand.5"
                 disabled={Object.keys(registerForm.errors).length > 0}
               >
                 Register
@@ -536,7 +536,7 @@ const AuthModal = ({ close }) => {
                 </div>
               )}
 
-              <Button type="submit" color="primary.3" fullWidth mt="xl">
+              <Button type="submit" color="brand.5" fullWidth mt="xl">
                 Verify
               </Button>
             </form>

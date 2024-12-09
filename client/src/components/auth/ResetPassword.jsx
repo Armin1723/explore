@@ -164,7 +164,7 @@ const ResetPassword = () => {
             {...form.getInputProps("confirmPassword")}
           />
           {error && <Text c="red">{error}</Text>}
-          <Button type="submit" color="primary.3" fullWidth mt="xl">
+          <Button type="submit" color="brand.5" fullWidth mt="xl">
             Update Password
           </Button>
         </form>

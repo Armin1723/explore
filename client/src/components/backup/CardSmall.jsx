@@ -23,8 +23,8 @@ const CardSmall = ({ company }) => {
       <div className="details flex flex-col justify-around p-2 px-3 pb-4">
         <div className="flex justify-between items-center w-full pb-2 max-sm:pb-1">
           <p className="sub-heading !max-lg:text-sm">{company?.name}</p>
-          <div className="icon p-[0.4rem] flex aspect-square rounded-full border border-gray-500/50 group-hover:bg-accent group-hover:-rotate-45 transition-all duration-300">
-            <MdArrowRightAlt size={12} />
+          <div className="icon text-xl p-[0.2rem] flex aspect-square rounded-full text-primary !font-bold group-hover:bg-accent group-hover:text-white group-hover:-rotate-45 transition-all duration-300">
+            <MdArrowRightAlt size={18} />
           </div>
         </div>
         <p className="text-xs max-sm:text-[0.60rem] tracking-wide text-neutral-800">

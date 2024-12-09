@@ -115,7 +115,7 @@ const AdvertisementCard = () => {
             ...
           </div>
 
-            <Button className="my-2" color="primary.2">View Now</Button>
+            <Button className="my-2" color="brand.5">View Now</Button>
 
         </Card>
       </ScrollAreaAutosize>

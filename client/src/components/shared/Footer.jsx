@@ -30,7 +30,9 @@ const socialIcons = {
       color: "#25D366",
       href: "/",
       icon: (
-        <FaWhatsapp className="size-6 text-[#25D366] opacity-85 hover:opacity-100" />
+        <div className="bg-gradient-to-br size-6 flex items-center justify-center from-[#25d366] via-[green] to-[seaGreen] p-1 rounded-full">
+          <FaWhatsapp className="opacity-85 hover:opacity-100" />
+        </div>
       ),
     },
     {
@@ -47,7 +49,7 @@ const socialIcons = {
       href: "/",
       icon: (
         <div className="bg-gradient-to-br size-6 flex items-center justify-center from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] p-1 rounded-full">
-          <FaInstagram className="text-white" />
+          <FaInstagram className="opacity-85 hover:opacity-100" />
         </div>
       ),
     },
@@ -85,7 +87,7 @@ const contact = {
 
 const Footer = () => {
   return (
-    <footer className="bg-primary w-screen h-fit text-secondary border-t border-neutral-500/40 mt-8">
+    <footer className="bg-[#000033] w-screen h-fit text-secondary border-t border-neutral-500/40 mt-8">
       <div className="footer-container flex max-lg:flex-col flex-1 mx-4 pt-24 max-sm:pt-8 pb-4 ">
         <div className="about-footer mx-12 max-sm:mx-4 max-sm:w-full flex flex-col h-full items-start justify-end ">
           <Logo variant='white' />
@@ -138,7 +140,7 @@ const Footer = () => {
             <p className="sub-heading text-xl gap-1 py-1 pb-2 my-3 w-fit cursor-pointer relative before:absolute before:bottom-0 before:left-0 before:h-0.5 before:rounded-full before:w-1/2 before:bg-white before:transition-all before:duration-200 before:ease-in">
               Contact
             </p>
-            <div className="social-icons flex gap-4 my-2">
+            <div className="social-icons flex gap-4 my-2 text-sm">
               {socialIcons.items.map((item, index) => {
                 return (
                   <Link
@@ -151,15 +153,15 @@ const Footer = () => {
                 );
               })}
             </div>
-            <div className="address flex items-center gap-2">
+            <div className="text-sm address flex items-center gap-2">
               <FaMapPin />
               <p>{contact.address}</p>
             </div>
-            <div className="phone flex items-center gap-2">
+            <div className="text-sm phone flex items-center gap-2">
               <FaPhone />
               <p>{contact.phone}</p>
             </div>
-            <div className="email flex items-center gap-2">
+            <div className="text-sm email flex items-center gap-2">
               <MdEmail />
               <p>{contact.email}</p>
             </div>
@@ -187,7 +189,7 @@ const Footer = () => {
         </div>
       </div> */}
 
-      <div className="bg-[#082222] credits">
+      <div className="bg-[#000022] credits">
         <div className="mx-auto flex max-lg:flex-col items-center gap-3 px-4 py-4 justify-center">
           <p className="text-gray-200">
             LinkIndia LLC © 2024. All Rights Reserved.

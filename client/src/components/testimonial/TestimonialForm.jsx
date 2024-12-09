@@ -120,7 +120,7 @@ const TestimonialForm = () => {
 
         <Button
           type="submit"
-          color="primary.3"
+          color="brand.5"
           disabled={Object.keys(form.errors).length > 0}
           fullWidth
         >

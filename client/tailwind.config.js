@@ -7,8 +7,11 @@ export default {
       colors: {
         primary: "#103d3d",
         secondary: "#f8f5f6",
-        accent: "#ed722a",
+        accent: "#ff641c",
         brand: " #000080",
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
     },
   },

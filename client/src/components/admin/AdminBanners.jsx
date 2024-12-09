@@ -128,7 +128,7 @@ const AdminBanners = () => {
                     </p>
                     <div className="flex gap-4 flex-wrap">
                       <Button
-                        color="primary.3"
+                        color="brand.5"
                         onClick={() => {
                           removeBanner(banner);
                           close();

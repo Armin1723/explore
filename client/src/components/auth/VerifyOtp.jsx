@@ -172,8 +172,8 @@ const VerifyOtp = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center relative overflow-hidden w-screen h-[100dvh]">
-      <motion.img
+    <div className="flex flex-col items-center relative overflow-hidden w-screen h-full bg-secondary ">
+      {/* <motion.img
         initial={{
           opacity: 0,
           y: 100,
@@ -189,7 +189,7 @@ const VerifyOtp = () => {
         src="/backgrounds/login-bg.svg"
         alt="ok"
         className="absolute bottom-0 left-0 min-h-[100dvh] w-screen z-[-2] object-cover max-sm:aspect-[1/1.4] "
-      />
+      /> */}
       <motion.div
         initial={{
           opacity: 0,
@@ -216,7 +216,7 @@ const VerifyOtp = () => {
           p={30}
           mt={30}
           radius="md"
-          className="min-w-[30vw] px-4 max-lg:min-w-[60vw] max-sm:min-w-[80vw] py-8 border-2 border-accent"
+          className="min-w-[30vw] px-4 max-lg:min-w-[60vw] max-sm:min-w-[80vw] py-8 "
         >
           <form onSubmit={form.onSubmit(verifyOtp)}>
             <PinInput
@@ -236,7 +236,7 @@ const VerifyOtp = () => {
                 <div className="text-xs my-2">Your Otp has expired. Request <span className="italic text-blue-600 cursor-pointer hover:text-blue-800" onClick={resendOtp}>another?.</span></div>
             )}
 
-            <Button type="submit" color="primary.3" fullWidth mt="xl">
+            <Button type="submit" color="brand.5" fullWidth mt="xl">
               Verify
             </Button>
           </form>
