@@ -89,14 +89,10 @@ const Footer = () => {
   return (
     <footer className="bg-[#000033] w-screen h-fit text-secondary border-t border-neutral-500/40 mt-8">
       <div className="footer-container flex max-lg:flex-col flex-1 mx-4 pt-24 max-sm:pt-8 pb-4 ">
-        <div className="about-footer mx-12 max-sm:mx-4 max-sm:w-full flex flex-col h-full items-start justify-end ">
+        <div className="about-footer mx-12 w-full md:max-w-[50%] lg:max-w-[33%] max-sm:mx-4 max-sm:w-full flex flex-col h-full items-start justify-end ">
           <Logo variant='white' />
-          <p className="text-sm">
-            {contact.address}
-            <br />
-            {contact.phone}
-            <br />
-            {contact.email}
+          <p className="text-sm px-3">
+            Link India Now is the best search engine platform serving you with everything that you need.
           </p>
         </div>
         <div className="links flex flex-row max-lg:flex-col mx-12 max-sm:mx-4 max-lg:items-start max-lg:justify-between max-sm:m-6 max-sm:gap-4 justify-evenly flex-1 ">

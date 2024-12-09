@@ -45,7 +45,7 @@ const AboutUs = () => {
           />
         </div>
 
-        <div className="about-us-heading-container flex items-center w-[90%] my-8 max-sm:my-4">
+        <div className="about-us-heading-container flex items-center w-4/5 max-lg:w-[90%] my-8 max-sm:my-4">
           <div className="about-us-content w-1/2 max-lg:w-full">
             <p className="heading !my-0 py-2 pl-6 border-l-4 border-primary">
               About Us
@@ -82,7 +82,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="our-mission-heading-container flex items-start justify-start w-[90%] my-6 max-sm:my-4 gap-6">
+        <div className="our-mission-heading-container flex items-start justify-start w-4/5 max-lg:w-[90%] my-6 max-sm:my-4 gap-6">
           <div className="about-us-graphic max-sm:hidden w-2/5 px-8 h-full flex items-center justify-center">
             <img
               src="/about/graphic-1.png"
@@ -109,7 +109,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="key-values flex flex-col w-[90%] my-4">
+        <div className="key-values flex flex-col w-4/5 max-lg:w-[90%] my-4">
           <div className="heading pl-6 border-l-4 border-primary mb-4">
             Key Highlights
           </div>
@@ -158,7 +158,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="faq w-[90%] px-4">
+        <div className="faq w-4/5 max-lg:w-[90%] px-4">
           <p className="heading pl-6 border-l-4 border-primary">
             Frequently Asked Questions.
           </p>

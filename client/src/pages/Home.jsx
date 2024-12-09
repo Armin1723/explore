@@ -34,6 +34,22 @@ const Home = () => {
           name="description"
           content="Link India Portal helps you find the best local businesses in your area."
         />
+        <meta
+          name="keywords"
+          content="businesses, services, grocery, sports, electronics, fashion, books, home essentials"
+        />
+        <meta name="author" content="Link India Portal" />
+        <meta name="robots" content="index, follow" />  
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:title"
+          content="Link India Portal - Find the Best Local Businesses"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`${import.meta.env.VITE_FRONTEND_URL}`}
+        />
       </Helmet>
 
       {/* Actual Content */}
