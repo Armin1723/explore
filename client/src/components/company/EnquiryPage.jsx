@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import Pagination from "../shared/Pagination";
 import EnquiryCard from "./EnquiryCard";
+import { FaArrowLeft } from "react-icons/fa";
 
 const EnquiryPage = () => {
   const [results, setResults] = useState([]);
@@ -16,6 +17,10 @@ const EnquiryPage = () => {
   const { name } = useParams();
 
   const navigate = useNavigate();
+
+  const navigateBack = () => {
+    navigate(-1);
+  };
 
   //Check if user exists and has access to view this page.
   useEffect(() => {
@@ -79,14 +84,21 @@ const EnquiryPage = () => {
       <div
         className="form-container flex flex-col items-center justify-center h-full"
       >
+        
         <ScrollArea
         offsetScrollbars
         scrollbarSize={6}
         scrollHideDelay={500}
-          shadow="xs"
-          padding="lg"
-          className=" shadow-sm p-8 max-sm:p-4 bg-white w-screen h-full max-w-screen-lg flex flex-col border rounded-lg border-black/30"
+        shadow="xs"
+        padding="lg"
+        className=" shadow-sm p-8 max-sm:p-4 bg-white w-screen h-full max-w-screen-lg flex flex-col border rounded-lg border-black/30"
         >
+          {/* Back to listing button */}
+          <div onClick={navigateBack} className="cursor-pointer hover:opacity-80 transition-all duration-300 flex items-center gap-3 px-3 hover:bg-brand/10 w-fit rounded-lg py-1">
+            <span><FaArrowLeft/></span>
+            <p>Go back</p>
+          </div>
+
           <div className="flex items-center gap-2 pl-6 border-l-4 border-primary my-4">
             <p className="heading !my-2">View Enquiries</p>
             <span className={` border-t-2 border-b-2 rounded-full w-4 aspect-square border-black cursor-pointer ${loading && 'animate-spin'}`} onClick={()=>setRefetch(prev => !prev)}></span>

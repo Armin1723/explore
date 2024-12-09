@@ -21,7 +21,7 @@ const AdminNavSmall = ({ closeDrawer }) => {
         colorScheme == "dark"
           ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900"
           : "bg-white text-black"
-      } flex flex-col justify-between items-start h-[90dvh]`}
+      } flex flex-col justify-between items-start h-[85vh]`}
     >
       <div className="nav-links flex-col flex-1 items-start w-full">
         <NavLink
@@ -119,7 +119,7 @@ const AdminNavSmall = ({ closeDrawer }) => {
         />
       </div>
 
-      <div className="nav-bottom">
+      <div className="nav-bottom py-6">
         <Link
           to={`/users/${user?._id}`}
           className="flex items-center gap-4 hover:text-teal-400 transition-all duration-300"

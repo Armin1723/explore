@@ -26,12 +26,12 @@ const AdminNav = () => {
           : "bg-white text-black"
       } flex flex-col justify-between items-start sticky top-0 px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60`}
     >
-      <Link
-        to="/"
+      <div
         className="nav-top flex gap-4 justify-start items-center mt-2"
       >
-        <Logo />
-      </Link>
+        
+        <Logo variant={colorScheme === 'light' ? 'colored' : 'white'}/>
+      </div>
       <div className="divider my-2 border border-neutral-500/50 w-full" />
 
       <div className="nav-links py-6 flex-col flex-1 items-start w-full">

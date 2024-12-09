@@ -175,7 +175,7 @@ export const RecentListing = ({ refetch, setRefetch }) => {
         <div className="flex justify-center gap-4 my-4">
           <Button
             size="sm"
-            color="brand.5"
+            color="brand.4"
             radius="md"
             onClick={() => handleRequest("approve")}
           >
@@ -183,7 +183,7 @@ export const RecentListing = ({ refetch, setRefetch }) => {
           </Button>
           <Button
             size="sm"
-            color="red.9"
+            color="red.7"
             radius="md"
             onClick={() => handleRequest("reject")}
           >

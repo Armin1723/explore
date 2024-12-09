@@ -71,7 +71,7 @@ const Hero = () => {
           );
         })}
 
-      <div className="controls absolute w-full top-1/2 -translate-y-1/2 flex justify-between items-center">
+      <div className="controls absolute w-full top-1/2 -translate-y-1/2 flex justify-between items-center text-[#000011] ">
         <button
           className={`p-2 max-sm:p-1 rounded-e-lg bg-white/40 `}
           onClick={() => setCurr((prev) => (prev - 1 >= 0 ? prev - 1 : 3))}

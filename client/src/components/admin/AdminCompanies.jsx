@@ -75,8 +75,8 @@ const AdminCompanies = () => {
   return (
     <Card className="flex flex-col flex-1" withBorder>
       <div className="w-full my-4 flex justify-between items-center flex-wrap gap-2">
-        <div className="flex items-center gap-2 w-full pl-6 text-xl tracking-wide">
-          <p className="heading !my-0 border-l-4 pl-6 border-primary">
+        <div className="flex items-center gap-2 w-full text-xl tracking-wide space-y-3">
+          <p className="heading !my-0 border-l-4 pl-4 border-primary">
             Companies
           </p>
           <Select
@@ -90,7 +90,7 @@ const AdminCompanies = () => {
             }}
           />
         </div>
-        <div className="actions flex gap-2 pl-8">
+        <div className="actions flex gap-2 ">
           <SubCategoryMenu
             subCategory={subCategory}
             setSubCategory={setSubCategory}

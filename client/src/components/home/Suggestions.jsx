@@ -70,7 +70,7 @@ const Suggestions = () => {
                 className={`rounded-xl border group/parent border-neutral-500/50 hover:bg-prmary hover:shadow-[0_0_5px_gray] !shadow-neutral-500/50  hover:border-accen transition-all duration-300 ${index > 1 && "max-sm:hidden"}`}
                 key={index}
               >
-                <p className="sub-heading p-6 pb-2 text-center ">
+                <p className="sub-heading p-6 pb-2 text-center !text-xl !font-normal">
                   {suggestion.title}
                 </p>
                 <div className="links-container flex items-center justify-center p-3 max-sm:p-1 max-sm:pb-2">

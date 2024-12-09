@@ -17,6 +17,7 @@ import AdminNavSmall from "../components/admin/AdminNavSmall";
 import UserProfile from "../components/shared/UserProfile";
 import ThemeToggle from "../components/shared/ThemeToggle";
 import { Helmet } from "react-helmet-async";
+import Logo from "../components/shared/Logo";
 
 const AdminHomepage = ({ refetch, setRefetch }) => {
   const { colorScheme } = useMantineColorScheme({
@@ -82,7 +83,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
       >
         <AdminNav />
         <div className="flex-1 flex flex-col p-4 ">
-          <div className="top-ribbon flex justify-between items-center py-2 px-4 w-full rounded-md bg-gray-400/20">
+          <div className="top-ribbon flex justify-between items-center py-2 w-full rounded-md bg-gray-400/20">
             <div className="content px-4 flex flex-col gap-2 w-full">
               <div className="ribbon-right flex items-center justify-between w-full">
                 <div className="flex items-center gap-1">
@@ -119,8 +120,8 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
             opened={drawerOpened}
             onClose={closeDrawer}
             size="80%"
-            title="LinkIndia"
-            zIndex={1000000}
+            title={<Logo variant={colorScheme === 'light' ? 'colored' : 'white'}/>}
+            zIndex={9999}
           >
             <AdminNavSmall closeDrawer={closeDrawer} />
           </Drawer>
@@ -133,13 +134,13 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
             </div>
 
             <div className="recent-listing w-1/3 p-2 pt-4 max-lg:w-full min-h-fit max-h-[80vh max-sm:p-0">
-              <Card
+              <div
                 withBorder
                 className="!max-h-full flex flex-col justify-start"
               >
                 <p className="text-2xl py-2 tracking wider">Recent Listing</p>
                 <RecentListing refetch={refetch} setRefetch={setRefetch} />
-              </Card>
+              </div>
             </div>
           </div>
         </div>

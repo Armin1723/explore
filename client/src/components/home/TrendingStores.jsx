@@ -92,14 +92,14 @@ const TrendingStores = () => {
 
   return (
     <div className="w-full flex flex-col items-center relative">
-      <p className="heading text-center w-[90%] pb-6 max-lg:py-2 ">Trending Stores</p>
+      <p className="heading text-center w-[90%] pb-2 pt-4 max-lg:py-2 ">Trending Stores</p>
 
       <div className="carousel-wrapper w-full py-4 flex items-center justify-center ">
         <div className="carousel-container w-[90%] relative ">
           <Carousel
             slideSize={{ base: "50%", sm: "33.33%", md: "25%", lg: "20%" }}
             slideGap='xl'
-            onSlideChange={(index) => setActiveSlide(index + 1)}
+            onSlideChange={(index) => setActiveSlide(index+1)}
             getEmblaApi={setEmbla}
             withControls={false}
             align="start"
@@ -124,8 +124,7 @@ const TrendingStores = () => {
             </button>
             <button
               className={`p-2 rounded-s-lg bg-white/40 ${
-                (activeSlide === stores.length - 1 || stores.length < 5) &&
-                "invisible"
+                activeSlide === stores.length - 1 && "invisible"
               }`}
               onClick={() => embla && embla.scrollNext()}
               disabled={activeSlide >= stores.length - 1}

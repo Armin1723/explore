@@ -37,8 +37,8 @@ const RecentlyReviewed = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <p className="heading text-center w-[90%] pb-6 max-lg:py-2 ">Recently Reviewed</p>
+    <div className="w-full flex flex-col items-center relative">
+      <p className="heading text-center w-[90%] pt-4 pb-2 max-lg:py-2 ">Recently Reviewed</p>
 
       <div className="carousel-wrapper w-full py-4 flex items-center justify-center ">
         <div className="carousel-container w-[90%] relative ">

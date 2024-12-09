@@ -61,7 +61,7 @@ body{
     margin: 0;
     outline: none;
     overflow: visible;
-    padding: 1em 1.8em;
+    padding: 1rem 1.8rem;
     position: relative;
     text-align: center;
     text-decoration: none;
@@ -69,12 +69,14 @@ body{
     transition: all 0.3s ease-in-out;
     user-select: none;
     font-size: 10px;
+
+    @apply max-sm:px-2 max-sm:pl-6 min-w-32;
 }
 
 .fancy::before {
     content: " ";
     width: 1.3625rem;
-    height: 2px;
+    height: 1px;
     background: black;
     top: 50%;
     left: 1.5em;
@@ -148,7 +150,6 @@ body{
 }
 
 /* Loader */
-/* From Uiverse.io by alexruix */
 .loader {
     position: relative;
     width: 120px;

@@ -83,11 +83,11 @@ const CompanyListing = () => {
       </Helmet>
 
       {/* Content */}
-      <div className="flex flex-col min-h-screen w-screen items-center relative">
-        <img
+      <div className="flex flex-col min-h-screen w-screen items-center relative bg-secondary">
+        {/* <img
           src="/backgrounds/register-bg.svg"
           className="absolute bottom-0 left-0 h-full w-full z-[-2] object-cover max-sm:aspect-[1/1.4]"
-        />
+        /> */}
         <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 mx-2 mb-20 max-lg:max-w-[80%] ">
           <div className="heading">List a company</div>
           <Stepper

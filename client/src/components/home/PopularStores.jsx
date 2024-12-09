@@ -42,7 +42,7 @@ const PopularStores = () => {
 
   return (
     <div className="w-full flex flex-col items-center ">
-      <p className="heading text-center w-[90%] pb-6 max-lg:py-2 !my-0">Popular Stores</p>
+      <p className="heading text-center w-[90%] pt-4 pb-2 max-lg:py-2 !my-0">Popular Stores</p>
  
       <div className="carousel-container w-[90%] relative">
         <Carousel
@@ -68,7 +68,7 @@ const PopularStores = () => {
                   <div className="flex flex-col w-full min-h-fit items-start p-4 max-lg:py-2 gap-2 max-lg:gap-1 justify-start bg-[#000088]/40 backdrop-blur-xl">
                     <p className="sub-heading !text-lg max-lg:text-sm !font-normal text-secondary">{store?.name}</p>
                     <div
-                      className="fancy w-40 max-lg:scale-50 max-lg:-translate-x-8 !py-2 !bg-gray-200"
+                      className="fancy !py-2 !bg-gray-200"
                       to={`/companies/categories?category=${store?.name.toLowerCase()}`}
                     >
                       <span className="top-key"></span>

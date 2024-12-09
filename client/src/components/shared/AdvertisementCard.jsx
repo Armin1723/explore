@@ -97,7 +97,7 @@ const AdvertisementCard = () => {
             </Group>
           </Group>
   
-          <div className="flex-1 text-md text-gray-600 mt-2 max-h-[30vh] overflow-hidden">
+          <div className="flex-1 max-lg:text-sm text-gray-600 mt-2 max-h-[30vh] overflow-hidden">
             {listing ? (
               <>
                 {striptags(listing?.description).split(' ').split(0, 40).join(' ')}  

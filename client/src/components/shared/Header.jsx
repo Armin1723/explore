@@ -108,7 +108,7 @@ export const Header = () => {
         pathname === "/" ? "-top-[12vh]" : "top-0 shadow-lg"
       } left-0 w-screen bg-white !font-['poppins'] !z-[98]`}
     >
-      <header className={`md:px-[6vw] px-6 flex justify-between`}>
+      <header className={`md:px-[6vw] px-4 flex justify-between`}>
         <div className="nav-left flex items-center gap-4 max-sm:gap-2 ">
           <Logo />
           <div className="flex items-center justify-center">
@@ -208,7 +208,7 @@ export const Header = () => {
                 <UserProfile />
               </div>
             ) : (
-              <Link to='/auth' className="button group flex items-center gap-2 bg-brand/75 hover:bg-brand transition-all text-white duration-300 rounded-md hover:-translate-y-1 px-3 py-1">
+              <Link to='/auth' className="md:flex hidden button group items-center gap-2 bg-brand/75 hover:bg-brand transition-all text-white duration-500 ease-in rounded-md hover:-translate-y-1 px-3 py-1">
                 <p>Get Started</p>
                 <span className="overflow-hidden transition-all duration-500 ease-in"><FaArrowRight /></span>
               </Link>
@@ -229,7 +229,7 @@ export const Header = () => {
         opened={drawerOpened}
         onClose={closeDrawer}
         size="80%"
-        title="LinkIndia"
+        title={<Logo />}
         zIndex={100}
         className=""
       >
@@ -269,12 +269,10 @@ export const Header = () => {
           {user && user?.name ? (
             <UserProfile expanded />
           ) : (
-            <Link className="fancy !my-4 w-48 max-sm:scale-75" to="/auth">
-              <span className="top-key"></span>
-              <span className="text !text-black">Join Now</span>
-              <span className="bottom-key-1"></span>
-              <span className="bottom-key-2"></span>
-            </Link>
+            <Link to='/auth' className="flex button group items-center gap-2 bg-brand/75 hover:bg-brand transition-all !text-white duration-300 rounded-md hover:-translate-y-1 px-3 py-1">
+            <p>Get Started</p>
+            <span className="overflow-hidden transition-all duration-500 ease-in "><FaArrowRight /></span>
+          </Link>
           )}
         </div>
       </Drawer>

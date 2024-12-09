@@ -68,7 +68,7 @@ const UserProfile = ({expanded = false}) => {
       width={260}
       position="bottom-end"
       transitionProps={{ transition: "pop-top-right" }}
-      className='!z-[99999999]'
+      className='!z-[99]'
       onClose={() => setUserMenuOpened(false)}
       onOpen={() => setUserMenuOpened(true)}
       withinPortal
@@ -102,7 +102,7 @@ const UserProfile = ({expanded = false}) => {
         </UnstyledButton>
       </Menu.Target>
 
-      <Menu.Dropdown className="!z-[99999999] !shadow-lg !border">
+      <Menu.Dropdown className="!z-[99] !shadow-lg !border">
 
       {user && user?.role == 'admin' && (
           <Link to="/admin">
