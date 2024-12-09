@@ -15,18 +15,12 @@ const ContactCard = () => {
 
   return (
     <div className="flex page w-full items-center justify-center ">
-      <div className="container flex max-lg:flex-col-reverse items-center p-20 max-lg:px-8 max-lg:py-6 max-sm:py-4 w-[80%] max-sm:w-[90%] rounded-lg bg-[#d9d9d9] border border-neutral-500/40 translate-y-28 max-sm:translate-y-0 max-sm:mt-8 z-[10]">
+      <div className="container flex max-lg:flex-col-reverse items-center p-20 max-lg:px-8 max-lg:py-6 max-sm:py-4 w-[80%] max-sm:w-[90%] rounded-lg bg-secondary shadow-[0_0_20px_gray] !shadow-neutral-500/20 border border-neutral-500/40 translate-y-28 max-sm:translate-y-0 max-sm:mt-8 z-[10]">
         <div className="text w-1/2 max-lg:w-full h-full flex flex-col items-start max-lg:items-center">
           <div className="font-['poppins'] text-3xl font-medium max-lg:text-xl max-sm:text-sm text-left max-lg:text-center">
             Grab the Opportunity Now! and start exploring from our diverse
             collection.
           </div>
-          {/* <Link
-            className="font-['poppins'] border border-neutral-400/80 px-4 flex w-fit my-4 py-1 rounded-md relative transition-all duration-300 hover:text-white before:absolute before:inset-0 before:!bottom-0 before:left-0 before:h-0 before:w-0 before:rounded-md before:bg-[var(--color-primary)] before:z-[-1] hover:before:w-full hover:before:h-full before:transition-all before:duration-300"
-            to="/companies/add"
-          >
-            Get Started{" "}
-          </Link> */}
           <Link
             to="/companies/add"
             className="md:flex hidden button group items-center gap-2 my-3 bg-brand/75 hover:bg-brand transition-all text-white duration-300 ease-in rounded-md hover:-translate-y-1 px-6 py-2"

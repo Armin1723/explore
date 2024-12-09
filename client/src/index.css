@@ -11,10 +11,6 @@
     --color-brand: #000080;
 }
 
-html{
-    scroll-behavior: smooth;
-}
-
 body,
 .home {
     overflow-x: hidden;
