@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollRestoration from "./components/utility/ScrollRestoration";
 
@@ -63,7 +63,7 @@ const TestimonialPage = React.lazy(() => import("./pages/TestimonialPage"));
 const App = () => {
   const [refetch, setRefetch] = React.useState(false);
 
-  useLenis();
+  // useLenis();
 
   return (
     <BrowserRouter>
