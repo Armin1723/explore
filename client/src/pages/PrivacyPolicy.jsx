@@ -35,20 +35,6 @@ const PrivacyPolicy = () => {
       <div className="w-screen flex flex-col items-center bg-secondary">
         <Header />
 
-        <div className="banner relative w-full overflow-hidden aspect-[16/3]">
-          <img
-            src="/backgrounds/testimonials-bg.webp"
-            alt="About Us"
-            className="w-full object-fit aspect-[16/3]"
-          />
-          <div className="overlay !my-0 bg-black/10 absolute top-0 left-0 w-full h-full flex items-center justify-center">
-            <p className="heading !my-0 !text-3xl !max-lg:text-2xl !max-sm:text-xl text-white">
-              {" "}
-              Privacy Policy
-            </p>
-          </div>
-        </div>
-
         <div className="content-container flex flex-col w-full px-[10%] max-lg:px-[5%] max-sm:px-6 py-6 text-justify">
           <p className="heading !my-2 pl-12 max-lg:pl-6 border-l-4 border-primary w-full text-left">
             Privacy Policy

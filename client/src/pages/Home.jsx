@@ -14,7 +14,7 @@ import RecentlyReviewed from "../components/home/RecentlyReviewed";
 import { useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
-// import Promotions from "../components/home/Promotions";
+import useLenis from "../hooks/useLenis";
 
 const Home = () => {
   const { setColorScheme } = useMantineColorScheme();
@@ -22,6 +22,8 @@ const Home = () => {
   useEffect(() => {
     setColorScheme("light");
   }, []);
+
+  useLenis();
 
   const user = useSelector((state) => state.user);
 

@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import React from "react";
-import { FaChevronCircleLeft, FaMapPin, FaPhone, FaStar } from "react-icons/fa";
+import { FaChevronCircleLeft, FaMapPin, FaPhoneAlt, FaStar } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
@@ -98,7 +98,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
         <div className="action-buttons flex gap-2 flex-wrap grow-0">
           <Link to={`tel:${company?.phone?.number}`} target="blank">
             <Button color="green.9">
-              <FaPhone className="mr-2" /> {company?.phone?.number}
+              <FaPhoneAlt className="mr-2" /> {company?.phone?.number}
             </Button>
           </Link>
           {self ? (

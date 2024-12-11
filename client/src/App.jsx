@@ -5,7 +5,6 @@ import ScrollRestoration from "./components/utility/ScrollRestoration";
 import AdminBanners from "./components/admin/AdminBanners";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
-import useLenis from "./utils/lenis";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const AdminCategories = React.lazy(() =>
@@ -62,9 +61,7 @@ const TestimonialPage = React.lazy(() => import("./pages/TestimonialPage"));
 
 const App = () => {
   const [refetch, setRefetch] = React.useState(false);
-
-  // useLenis();
-
+   
   return (
     <BrowserRouter>
       <Suspense

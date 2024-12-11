@@ -35,7 +35,7 @@ const Terms = () => {
       {/* Content */}
       <div className="w-screen flex flex-col items-center bg-secondary ">
         <Header />
-        <div className="banner relative w-full overflow-hidden aspect-[16/3]">
+        {/* <div className="banner relative w-full overflow-hidden aspect-[16/3]">
           <img
             src="/backgrounds/testimonials-bg.webp"
             alt="Terms and Conditions"
@@ -47,10 +47,10 @@ const Terms = () => {
               Terms and Conditions.
             </p>
           </div>
-        </div>
+        </div> */}
 
         <ul className="content-container list list-decimal list-inside flex flex-col w-full px-[10%] max-lg:px-[5%] max-sm:px-6 py-6 text-justify">
-          <p className="heading !my-2 pl-12 max-lg:pl-6 border-l-4 border-primary w-full text-left">
+          <p className="heading !my-4 pl-12 max-lg:pl-6 border-l-4 border-primary w-full text-left">
             Terms of Use
           </p>
           <p className="">

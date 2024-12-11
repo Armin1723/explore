@@ -3,10 +3,9 @@ import {
   FaInstagram,
   FaLinkedin,
   FaMapPin,
-  FaPhone,
+  FaPhoneAlt,
   FaWhatsapp,
 } from "react-icons/fa";
-import { IoIosTrendingUp } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
@@ -154,7 +153,7 @@ const Footer = () => {
               <p>{contact.address}</p>
             </div>
             <div className="text-sm phone flex items-center gap-2">
-              <FaPhone />
+              <FaPhoneAlt />
               <p>{contact.phone}</p>
             </div>
             <div className="text-sm email flex items-center gap-2">

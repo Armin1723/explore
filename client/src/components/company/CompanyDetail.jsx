@@ -18,7 +18,7 @@ import {
 } from "@mantine/core";
 
 import {
-  FaPhone,
+  FaPhoneAlt,
   FaWhatsapp,
   FaEnvelope,
   FaShare,
@@ -436,7 +436,7 @@ const CompanyDetail = () => {
                 color="green.9"
                 className="text-[#155515] hover:text-[darkGreen] rounded-full flex gap-2 items-center justify-center px-1 "
               >
-                <FaPhone className="mx-2" />
+                <FaPhoneAlt className="mx-2" />
                 {company.phone.number}
               </Button>
 
