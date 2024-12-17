@@ -158,7 +158,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="faq w-4/5 max-lg:w-[90%] max-sm:w-full px-4">
+        <div className="faq w-4/5 max-lg:w-[90%] px-4">
           <p className="heading pl-6 max-sm:pl-0 border-l-4 border-primary">
             Frequently Asked Questions.
           </p>
