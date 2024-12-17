@@ -158,11 +158,11 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="faq w-4/5 max-lg:w-[90%] px-4">
-          <p className="heading pl-6 border-l-4 border-primary">
+        <div className="faq w-4/5 max-lg:w-[90%] max-sm:w-full px-4">
+          <p className="heading pl-6 max-sm:pl-0 border-l-4 border-primary">
             Frequently Asked Questions.
           </p>
-          <div className="faq-container flex max-lg:flex-col items-center my-6 gap-4 w-full px-6">
+          <div className="faq-container flex max-lg:flex-col items-center my-6 gap-4 w-full px-6 max-sm:px-2">
             <div className="faq-text flex flex-col items-start max-lg:items-center w-full justify-between gap-6">
               <div className="actual-faq text-sm w-full max-lg:text-center">
                 <Accordion

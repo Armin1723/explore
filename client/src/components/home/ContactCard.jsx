@@ -34,12 +34,7 @@ const ContactCard = () => {
           </Link>
         </div>
         <div className="graphics relative w-1/2 max-lg:w-2/3 h-full flex items-center justify-center">
-          {/* <img
-            src="cta/cta.png"
-            alt="contact"
-            className="object-cover rounded-lg max-lg:scale-125"
-          /> */}
-          {/* <Lottie animationData={ctaAnimation} className="w-3/4 aspect-video"/> */}
+          
           <img src='/cta/cta-5.png' alt="contact" className="object-cover rounded-lg "/>
           {/* <Carousel
             slideSize="100%"
