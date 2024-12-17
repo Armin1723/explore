@@ -17,7 +17,7 @@ const ContactCard = () => {
 
   return (
     <div className="flex page w-full items-center justify-center ">
-      <div className="container flex max-lg:flex-col-reverse items-center p-20 max-lg:px-8 max-lg:py-6 max-sm:py-4 w-[80%] max-sm:w-[90%] rounded-lg bg-gradient-to-br from-[#d0d0ee] to-secondary shadow-[0_0_20px_gray] !shadow-neutral-500/20 border border-neutral-500/40 translate-y-28 max-sm:translate-y-0 max-sm:mt-8 z-[10]">
+      <div className="container flex max-lg:flex-col-reverse items-center px-20 py-12 max-lg:px-8 max-lg:py-6 max-sm:py-4 w-[80%] max-sm:w-[90%] rounded-lg bg-gradient-to-br from-[#d0d0ee] to-secondary shadow-[0_0_20px_gray] !shadow-neutral-500/20 border border-neutral-500/40 translate-y-28 max-sm:translate-y-0 max-sm:mt-8 z-[10]">
         <div className="text w-1/2 max-lg:w-full h-full flex flex-col items-start max-lg:items-center">
           <div className="font-['poppins'] text-3xl font-medium max-lg:text-xl max-sm:text-sm text-left max-lg:text-center">
             Grab the Opportunity Now! and start exploring from our diverse
@@ -39,7 +39,8 @@ const ContactCard = () => {
             alt="contact"
             className="object-cover rounded-lg max-lg:scale-125"
           /> */}
-          <Lottie animationData={ctaAnimation} className="w-3/4 aspect-video"/>
+          {/* <Lottie animationData={ctaAnimation} className="w-3/4 aspect-video"/> */}
+          <img src='/cta/cta-5.png' alt="contact" className="object-cover rounded-lg "/>
           {/* <Carousel
             slideSize="100%"
             slideGap="md"

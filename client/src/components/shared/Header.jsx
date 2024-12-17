@@ -269,7 +269,7 @@ export const Header = () => {
           {user && user?.name ? (
             <UserProfile expanded />
           ) : (
-            <Link to='/auth' className="flex button group items-center gap-2 bg-brand/75 hover:bg-brand transition-all !text-white duration-300 rounded-md hover:-translate-y-1 px-3 py-1">
+            <Link to='/auth' className="flex button group items-center gap-2 bg-accent/85 hover:bg-accent transition-all !text-white duration-300 rounded-md hover:-translate-y-1 px-3 py-1">
             <p>Get Started</p>
             <span className="overflow-hidden transition-all duration-500 ease-in "><FaArrowRight /></span>
           </Link>

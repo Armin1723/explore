@@ -71,7 +71,7 @@ const Testimonials = () => {
         <MarqueeItem images={upperMarquee} from={"0%"} to={"-100%"} />
       </div>
 
-      <div className="flex flex-col items-center p-6 max-sm:p-2 md:px-12 relative overflow-x-hidden border border-neutral-500/30 shadow-[0_0_5px_gray] !shadow-neutral-500/30 bg-secondary mx-8 my-4 pb-12 max-sm:pb-6 rounded-xl w-[90%]">
+      <div className="flex flex-col items-center p-6 max-sm:p-2 md:px-12 relative overflow-x-hidden border border-neutral-500/50 shadow-[0_0_5px_gray] !shadow-neutral-500/30 bg-secondary mx-8 my-4 pb-12 max-sm:pb-6 rounded-xl w-[90%]">
         <p className="heading max-sm:mt-4 text-center max-sm:py-2 max-lg:px-6 my-6 max-lg:my-4 max-w-3/5">
           Hear what our customers have to say.
         </p>
