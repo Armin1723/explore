@@ -64,18 +64,12 @@ const TestimonialPage = () => {
       <div className="w-screen flex flex-col items-center bg-secondary">
         <Header />
 
-        <div className="banner relative w-full overflow-hidden aspect-[16/3]">
+        <div className="banner relative w-full overflow-hidden aspect-[16/3] max-sm:aspect-[16/5]">
           <img
             src="/backgrounds/testimonials-bg.png"
             alt="testimonials"
-            className="w-full object-cover bg-center center/cover aspect-[16/3]"
+            className="w-full h-full object-cover max-sm:object-cover bg-center center/cover "
           />
-          {/* <div className="overlay !my-0 bg-black/10 absolute top-0 left-0 w-full h-full flex items-center justify-center">
-            <p className="heading !my-0 !text-3xl !max-lg:text-2xl !max-sm:text-xl text-white">
-              {" "}
-              Testimonials
-            </p>
-          </div> */}
         </div>
 
         <div className="testimonial-container flex max-lg:flex-col items-start w-[90%] max-lg:w-full mt-6">

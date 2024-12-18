@@ -10,7 +10,7 @@ const BreadCrumbNav = () => {
     .filter((item) => item !== "")
     .map((i, index, arr) => {
       let path = arr.slice(0, index + 1).join("/");
-      if (path == '/companies') path = '/companies/categories?category=all'
+      if (path == '/companies') path = '/companies/categories/all'
 
       return (
         <Link to={`/${path}`} key={i}>

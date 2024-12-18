@@ -57,7 +57,7 @@ const PopularStores = () => {
             return (
               <Carousel.Slide key={index}>
                 <Link
-                  to={`/companies/categories?category=${store?.name}`}
+                  to={`/companies/categories/${store?.name}`}
                   className="flex flex-col justify-end relative group overflow-hidden w-full my-4 aspect-[3/4] rounded-xl  transition-all duration-300"
                 >
                   <img
@@ -69,7 +69,7 @@ const PopularStores = () => {
                     <p className="sub-heading !text-lg max-lg:text-sm !font-normal text-secondary">{store?.name}</p>
                     <div
                       className="fancy !py-2 !bg-gray-200"
-                      to={`/companies/categories?category=${store?.name.toLowerCase()}`}
+                      to={`/companies/categories/${store?.name.toLowerCase()}`}
                     >
                       <span className="top-key"></span>
                       <span className="text !text-black">See Now</span>

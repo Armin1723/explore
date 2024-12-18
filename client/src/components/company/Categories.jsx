@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import BreadCrumbNav from "../shared/BreadCrumbNav";
 import { Select } from "@mantine/core";
 import CompanyCardSmall from "./CompanyCardSmall";
@@ -12,8 +12,9 @@ import { Helmet } from "react-helmet-async";
 const Categories = () => {
   const [searchParams] = useSearchParams();
 
+  const {category : categoryParam} = useParams();
+
   const pageParam = searchParams.get("page");
-  const categoryParam = searchParams.get("category");
   const subCategoryParam = searchParams.get("subCategory");
 
   const [category, setCategory] = useState(categoryParam || "");
@@ -30,7 +31,7 @@ const Categories = () => {
     setCategory("all");
     setSubCategory("all");
     setSort("");
-    navigate("/companies/categories?category=all");
+    navigate("/companies/categories/all");
     setPage(1);
   };
 
@@ -76,7 +77,7 @@ const Categories = () => {
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content={`${import.meta.env.VITE_FRONTEND_URL}/companies/categories?category=${category}`}
+          content={`${import.meta.env.VITE_FRONTEND_URL}/companies/categories/${category}`}
         />
       </Helmet>
 
@@ -101,7 +102,7 @@ const Categories = () => {
               onChange={(value) => {
                 setCategory(value);
                 setSubCategory("");
-                navigate(`/companies/categories?category=${value}`);
+                navigate(`/companies/categories/${value}`);
               }}
             />
           </div>
@@ -145,11 +146,11 @@ const Categories = () => {
               </div>
             ) : (
               <div className="w-full p-2 flex flex-col items-start justify-start">
-                <p className="heading p-4 my-2 !text-4xl max-lg:!text-2xl max-sm:!text-xl">
+                <p className="heading py-2 my-2 max-sm:my-0 !text-4xl max-lg:!text-2xl max-sm:!text-lg">
                   Uh...Oh. Its empty in here.
                 </p>
                 <p
-                  className="px-4 hover:text-blue-600 text-gray-500 cursor-pointer transition-all duration-200 "
+                  className="hover:text-blue-600 text-gray-500 cursor-pointer transition-all duration-200 "
                   onClick={reset}
                 >
                   Search for all?

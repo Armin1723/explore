@@ -82,7 +82,7 @@ export const Header = () => {
 
   const links = categoryData.map((item) => (
     <Link
-      to={`/companies/categories?category=${item.title.toLowerCase()}`}
+      to={`/companies/categories/${item.title.toLowerCase()}`}
       className="!text-sm"
       key={item.title}
     >
@@ -148,7 +148,7 @@ export const Header = () => {
                 <Group justify="space-between" px="md">
                   <Text fw={500}>Categories</Text>
                   <Link
-                    to="/companies/categories"
+                    to="/companies/categories/all"
                     className="text-xs text-blue-700 hover:underline "
                   >
                     View all
@@ -169,7 +169,7 @@ export const Header = () => {
                         A one stop destination for all your needs.
                       </Text>
                     </div>
-                    <Link to="/companies/categories">
+                    <Link to="/companies/categories/all">
                       <Button variant="outline" color="primary.3">
                         Explore Now
                       </Button>

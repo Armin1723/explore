@@ -66,15 +66,14 @@ const socialIcons = {
 const category = {
   title: "Category",
   items: [
-    { label: "Grocery", href: "/companies/categories?category=Grocery" },
-    { label: "Fashion", href: "/companies/categories?category=Fashion" },
+    { label: "Grocery", href: "/companies/categories/Grocery" },
+    { label: "Fashion", href: "/companies/categories/Fashion" },
     {
       label: "Electronics",
-      href: "/companies/categories?category=Electronics",
+      href: "/companies/categories/Electronics",
     },
-    { label: "Home", href: "/companies/categories?category=Home" },
-    // { label: "Books", href: "/companies/categories?category=Books" },
-    { label: "Fitness", href: "/companies/categories?category=Fitness" },
+    { label: "Home", href: "/companies/categories/Home" },
+    { label: "Fitness", href: "/companies/categories/Fitness" },
   ],
 };
 

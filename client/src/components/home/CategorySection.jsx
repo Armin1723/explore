@@ -81,7 +81,7 @@ const CategorySection = () => {
         {categoryData.map((category, index) => {
           return(
             <Link
-              to={`/companies/categories?category=${category.title.toLowerCase()}`}
+              to={`/companies/categories/${category.title.toLowerCase()}`}
               key={index}
               className={`group flex flex-col items-center gap-1 max-sm:p-1 ${index === categoryData.length - 1 && 'max-lg:hidden md:flex'}`}
             >

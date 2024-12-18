@@ -37,11 +37,11 @@ const AboutUs = () => {
       <div className="w-screen flex flex-col items-center bg-secondary ">
         <Header />
 
-        <div className="banner relative w-full overflow-hidden aspect-[16/3]">
+        <div className="banner relative w-full overflow-hidden aspect-[16/3] max-sm:aspect-[16/7]">
           <img
             src="/backgrounds/about-bg.png"
             alt="About Us"
-            className="w-full object-fit aspect-[16/3]"
+            className="w-full h-full object-fit max-sm:object-cover"
           />
         </div>
 
@@ -109,7 +109,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="key-values flex flex-col w-4/5 max-lg:w-[90%] my-4">
+        <div className="key-highlights flex flex-col w-4/5 max-lg:w-[90%] my-4">
           <div className="heading pl-6 border-l-4 border-primary mb-4">
             Key Highlights
           </div>
@@ -158,11 +158,11 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="faq w-4/5 max-lg:w-[90%] px-4">
-          <p className="heading pl-6 max-sm:pl-0 border-l-4 border-primary">
+        <div className="faq w-4/5 max-lg:w-[90%]">
+          <p className="heading pl-6 border-l-4 border-primary">
             Frequently Asked Questions.
           </p>
-          <div className="faq-container flex max-lg:flex-col items-center my-6 gap-4 w-full px-6 max-sm:px-2">
+          <div className="faq-container flex max-lg:flex-col items-center my-6 gap-4 w-full px-6 max-sm:px-0">
             <div className="faq-text flex flex-col items-start max-lg:items-center w-full justify-between gap-6">
               <div className="actual-faq text-sm w-full max-lg:text-center">
                 <Accordion

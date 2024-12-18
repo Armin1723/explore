@@ -12,7 +12,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
   const encodedAddress = encodeURI(company?.address);
 
   return (
-    <div className="flex-shrink-0 max-sm:flex-col max-w-full max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-black/70 bg-white gap-4 group hover:border-brand/90 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200">
+    <div className="flex-shrink-0 max-sm:flex-col max-w-full max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-neutral-500/50 bg-white gap-4 group hover:border-neutral-500/90 hover:shadow-[0_0_2px_orange] shadow-accent/40 transition-all duration-200">
       <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1.12] min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
         <img
           src={
@@ -39,7 +39,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
         <div className="title flex w-full items-center justify-between pr-4">
           <Link
             to={`/companies/${company?.name.split(" ").join("-")}`}
-            className="heading capitalize !my-0 font-medium"
+            className="capitalize my-0 font-bold text-2xl max-sm:text-xl font-['poppins']"
           >
             {company?.name}
           </Link>
@@ -96,11 +96,6 @@ const CompanyCardSmall = ({ company, self = false }) => {
         )}
 
         <div className="action-buttons flex gap-2 flex-wrap grow-0">
-          <Link to={`tel:${company?.phone?.number}`} target="blank">
-            <Button color="green.9">
-              <FaPhoneAlt className="mr-2" /> {company?.phone?.number}
-            </Button>
-          </Link>
           {self ? (
             <Link
               to={`/companies/${company?.name.split(" ").join("-")}/enquiries/`}
@@ -120,6 +115,11 @@ const CompanyCardSmall = ({ company, self = false }) => {
               </Button>
             </Link>
           )}
+           <Link to={`tel:${company?.phone?.number}`} target="blank">
+            <Button color="green.9" variant="outline">
+              <FaPhoneAlt className="mr-2" /> {company?.phone?.number}
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

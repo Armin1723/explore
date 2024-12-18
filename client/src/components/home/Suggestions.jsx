@@ -77,7 +77,7 @@ const Suggestions = () => {
                   {suggestion.subCategories.map((subCategory, index) => {
                     return (
                       <Link
-                        to={`/companies/categories?category=${suggestion.category}&subCategory=${subCategory.title.toLowerCase()}`}
+                        to={`/companies/categories/${suggestion.category}?subCategory=${subCategory.title.toLowerCase()}`}
                         className={`link flex flex-col items-center justify-center gap-4 group/child `}
                         key={index}
                       >

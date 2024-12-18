@@ -101,7 +101,7 @@ const monthlyPromotionalMailCron = async () => {
           Don't miss out on these opportunities to discover great products and services. Click the button below to Link India the <strong>${category}</strong> category now:
         </p>
         <div style="text-align: center; margin: 20px 0;">
-          <a href='${process.env.FRONTEND_URL}/companies/categories?category=${category}' 
+          <a href='${process.env.FRONTEND_URL}/companies/categories/${category}' 
              style="background-color: #113c3d; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-weight: bold;">
             Link India ${category} on the Link India App.
           </a>
