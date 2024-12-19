@@ -39,7 +39,7 @@ const AdvertisementCard = () => {
   }, []);
 
   return (
-    <div className="flex-1 overflow-y-auto border border-neutral-500/50 hover:border-neutral-500 relative mt-4 rounded-md">
+    <div className="flex- overflow-y-auto border border-neutral-500/20 hover:border-neutral-500/40 relative mt-4 rounded-md">
       <Badge
         color="gray.3"
         c="black"

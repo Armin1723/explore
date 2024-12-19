@@ -170,29 +170,24 @@ return (
             </Dropzone>
 
             {files.length > 0 && (
-                <Carousel
-                    slideSize={{ base: "100%", sm: "50%", md: "50%" }}
-                    slideGap={{ base: "xl", sm: "md" }}
-                    height={200}
-                    align="start"
-                    loop
-                    className="w-full"
-                >
+                  <div className="flex flex-nowrap gap-4 w-full overflow-x-auto scroll-snap snap-x snap-mandatory">
                     {files.map((file, index) => (
-                        <Carousel.Slide key={index}>
+                      <div className="item min-w-[50%] max-sm:min-w-full snap-start" key={index} >
                             <Image
                                 src={file.preview}
                                 alt={`Preview ${index + 1}`}
                                 withPlaceholder
                                 height={200}
-                                className="aspect-video !rounded-md"
+                                className="aspect-video !rounded-md "
                                 onClick={() => removeImage(file)}
                                 fit="cover"
                             />
-                        </Carousel.Slide>
+                            </div>
                     ))}
-                </Carousel>
+                    </div>
             )}
+
+            {files.length > 0 && (<p className="text-cemter text-xs text-neutral-600">Click on a image to remove it.</p>)}
 
             <Button type="submit" color="brand.5" fullWidth disabled={files.length === 0}>
                 Finish

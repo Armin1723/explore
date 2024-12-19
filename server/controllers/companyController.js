@@ -111,7 +111,7 @@ const registerCompany = async (req, res) => {
  };
 
 //Edit a company
-const editCompany = async (req, res, io) => {
+const editCompany = async (req, res, next, io) => {
     const { companyId } = req.params;
 
     const { edit } = req.query;
@@ -490,7 +490,7 @@ const getSimilarCompanies = async (req, res) => {
 
       if(companies.length < 4){
         const remainingCompanies = await Company.find({ status: "active" , category: { $ne: category}})
-        .select("name description gallery rating")
+        .select("name description gallery rating slug")
         .sort({ rating: -1 })
         .limit(4 - companies.length);
         companies.push(...remainingCompanies);

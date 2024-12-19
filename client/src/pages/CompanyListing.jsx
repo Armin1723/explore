@@ -39,7 +39,7 @@ const CompanyListing = () => {
       dispatch(toggleRedirectFlag());
       navigate("/auth/login");
     }
-    if (user && user.company ) {
+    if (user && user.company && user.company.status == "active") {
       notifications.show({
         title: "Already Listed",
         message: "You already have a listing.",
@@ -89,7 +89,7 @@ const CompanyListing = () => {
           className="absolute bottom-0 left-0 h-full w-full z-[-2] object-cover max-sm:aspect-[1/1.4]"
         /> */}
         <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 mx-2 mb-20 max-lg:max-w-[80%] ">
-          <div className="heading">List a company</div>
+          <div className="heading font-semibold">List a company</div>
           <Stepper
             active={active}
             allowNextStepsSelect={false}
@@ -117,17 +117,19 @@ const CompanyListing = () => {
             >
               <GalleryForm nextStep={nextStep} />
             </Stepper.Step>
-            <Stepper.Completed className="min-h-[40vh] w-[80vw] md:w-[30vw] flex flex-col items-center justify-start !my-[10vh] bg-white rounded-md">
-              Completed, now await request approval or see how your
-              <Link
-                to={`/companies/${user?.company?.slug}`}
-                className="cursor-pointer text-blue-900 font-bold"
-              >
-                {" "}
-                listing
-              </Link>{" "}
-              looks. A mail will be sent to you on {user.email} once your
-              listing is approved.
+            <Stepper.Completed className="min-h-[40vh] w-[80vw] md:w-[30vw] flex flex-col items-center justify-start !my-[10vh] bg-white rounded-md text-center">
+              <div className="text-center my-2">
+                Completed, now await request approval or see how your
+                <Link
+                  to={`/companies/${user?.company?.slug}`}
+                  className="cursor-pointer text-blue-900 font-bold"
+                >
+                  {" "}
+                  listing
+                </Link>{" "}
+                looks. A mail will be sent to you on {user.email} once your
+                listing is approved.
+              </div>
             </Stepper.Completed>
           </Stepper>
         </div>
