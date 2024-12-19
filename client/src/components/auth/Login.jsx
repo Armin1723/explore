@@ -64,8 +64,8 @@ const Login = () => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         notifications.update({
           id,
           title: "Error in Credentials",
@@ -77,7 +77,6 @@ const Login = () => {
         });
         form.setErrors(data.errors);
       } else {
-        const data = await response.json();
         notifications.update({
           id,
           title: "Login successful",

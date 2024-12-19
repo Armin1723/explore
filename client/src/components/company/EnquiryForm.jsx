@@ -1,5 +1,5 @@
 import { Paper, Text, Button, Textarea } from "@mantine/core";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { useForm } from "@mantine/form";
@@ -13,7 +13,7 @@ const EnquiryForm = () => {
 
   const user = useSelector((state) => state.user);
 
-  const companyName = useParams().name;
+  const { slug } = useParams();
 
   useEffect(() => {
     if (!user || !user.name) {
@@ -57,16 +57,15 @@ const EnquiryForm = () => {
           },
           body: JSON.stringify({
             message: enquiry,
-            companyName: companyName.split("-").join(" "),
+            slug,
           }),
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(data.message);
       }
-      const data = await response.json();
       notifications.update({
         id,
         title: "Enquiry sent",
@@ -76,7 +75,7 @@ const EnquiryForm = () => {
         autoClose: 2000,
       });
       dispatch(setUser(data.user));
-      navigate(`/companies/${companyName}`);
+      navigate(`/companies/${slug}`);
     } catch (error) {
       notifications.update({
         id,

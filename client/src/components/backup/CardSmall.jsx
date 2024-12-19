@@ -6,7 +6,7 @@ import striptags from "striptags";
 const CardSmall = ({ company }) => {
   return (
     <Link
-      to={`/companies/${company?.name?.toLowerCase().replace(/\s+/g, "-")}`}
+      to={`/companies/${company?.slug}`}
       className="flex flex-col h-full rounded-md group bg-gray-200/30 hover:bg-prmary transition-all duration-200 "
     >
       <div className="image-container w-full aspect-[3/2] overflow-hidden rounded-t-md flex items-center justify-center">

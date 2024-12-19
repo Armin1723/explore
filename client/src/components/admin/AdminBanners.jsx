@@ -47,11 +47,10 @@ const AdminBanners = () => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(data.message || "Failed to remove banner");
       }
-      const data = await response.json();
       notifications.show({
         title: "Success",
         message: data.message,
@@ -100,7 +99,7 @@ const AdminBanners = () => {
             {banners.map((banner, index) => (
               <Carousel.Slide key={index}>
                 <Link
-                  to={`/companies/${banner.name.split(" ").join("-")}`}
+                  to={`/companies/${banner?.slug}`}
                   className="banner"
                 >
                   <Image

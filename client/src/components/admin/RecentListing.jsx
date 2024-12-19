@@ -139,7 +139,7 @@ export const RecentListing = ({ refetch, setRefetch }) => {
 
         <Group justify="space-between" mt="lg">
           <Link
-            to={listing && `/companies/${listing.name.split(" ").join("-")}`}
+            to={listing && `/companies/${listing?.slug}`}
           >
             <Text fw={700} fz="xl">
               {listing?.name || "Company Name"}

@@ -95,8 +95,8 @@ const Register = () => {
           body: formData,
         }
       );
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         notifications.update({
           id,
           title: "Registration successful",
@@ -107,7 +107,6 @@ const Register = () => {
         });
         navigate(`/auth/verify?email=${values.email}`);
       } else {
-        const data = await response.json();
         form.setErrors(data.errors);
         notifications.update({
           id,

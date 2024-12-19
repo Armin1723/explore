@@ -19,43 +19,48 @@ const {
   verifyOtp,
 } = require("../controllers/userController");
 const { isLoggedIn } = require("../middlewares");
+const asyncHandler = require("../utils");
 
 const userRoutes = (io) => {
   //Auth Routes
-  router.post("/login", loginUser);
+  router.post("/login", asyncHandler(loginUser));
   router.post(
     "/register",
     upload.fields([{ name: "profilePic" }]),
-    (req,res) => registerUser(req,res,io)
+    asyncHandler((req, res, next) => registerUser(req, res, next, io))
   );
-  router.get("/verify", verifyUser);
-  router.post("/verify-otp", verifyOtp);
-  router.post("/resend-otp", resendOtp);
-  router.get("/logout", logoutUser);
+  router.get("/verify", asyncHandler(verifyUser));
+  router.post("/verify-otp", asyncHandler(verifyOtp));
+  router.post("/resend-otp", asyncHandler(resendOtp));
+  router.get("/logout", asyncHandler(logoutUser));
 
   //Account Management Routes
-  router.post("/forgot-password", forgotPassword);
-  router.post("/reset-password", resetPassword);
+  router.post("/forgot-password", asyncHandler(forgotPassword));
+  router.post("/reset-password", asyncHandler(resetPassword));
   router.post(
     "/edit-profile",
     isLoggedIn,
     upload.fields([{ name: "profilePic" }]),
-    editUser
+    asyncHandler(editUser)
   );
 
   //Wishlist Routes
-  router.post("/toggle-bookmark", isLoggedIn, toggleSavedCompany);
+  router.post("/toggle-bookmark", isLoggedIn, asyncHandler(toggleSavedCompany));
 
   //Fetch User
-  router.get("/:id", fetchUserById);
+  router.get("/:id", asyncHandler(fetchUserById));
 
   //Fetch Saved Companies
-  router.get("/:id/saved",isLoggedIn, fetchSavedCompanies);
+  router.get("/:id/saved", isLoggedIn, asyncHandler(fetchSavedCompanies));
 
   //Fetch Reviewed Companies
-  router.get("/:id/reviewed-companies",isLoggedIn, fetchReviewedCompanies);
+  router.get(
+    "/:id/reviewed-companies",
+    isLoggedIn,
+    asyncHandler(fetchReviewedCompanies)
+  );
 
   return router;
 };
 
-module.exports = userRoutes
+module.exports = userRoutes;

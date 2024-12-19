@@ -1,10 +1,15 @@
 const mongoose = require("mongoose"); 
+const slugify = require("slugify");
 
 const companySchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please provide a name"],
         unique: [true, "Company name already exists"],
+    },
+    slug: {
+        type: String,
+        unique: true,
     },
     email: {
         type: String,
@@ -105,6 +110,17 @@ const companySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Advertisement",
     }
+});
+
+companySchema.pre("save", function (next) {
+    if (!this.isModified('name')) return next();
+
+    this.slug = slugify(this.name, {
+        lower: true,
+        strict: true,
+    });
+
+    next();
 });
 
 const Company = mongoose.model("Company", companySchema);

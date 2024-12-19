@@ -119,7 +119,7 @@ const UserProfile = ({expanded = false}) => {
           </Link>
         )}
         
-        <Link to={`/companies/${ user && user.company && user.company.name && user?.company?.name.split(' ').join('-') }`}>
+        <Link to={`/companies/${ user && user.company && user?.company?.slug }`}>
           <Menu.Item
           disabled={!user?.company || !user?.company?.status=='incomplete'}
             leftSection={

@@ -1,8 +1,8 @@
 import { Button, Modal, Textarea } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { setUser } from "../../redux/features/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import AuthModal from "../shared/AuthModal";
@@ -14,15 +14,17 @@ const EnquirySmall = () => {
   const [error, setError] = useState(null);
   const [enquiry, setEnquiry] = useState("");
 
-  const [opened, {open, close}] = useDisclosure();
- 
-  const companyName = useParams().name;
+  const inputRef = useRef(null);
+
+  const [opened, { open, close }] = useDisclosure();
+
+  const { slug } = useParams();
 
   const sendEnquiry = async () => {
-    if(!enquiry) {
-        setError("Enquiry is required");
-        return;
-    }else setError(null);
+    if (!enquiry) {
+      setError("Enquiry is required");
+      return;
+    } else setError(null);
 
     const id = notifications.show({
       title: "Sending enquiry...",
@@ -41,14 +43,14 @@ const EnquirySmall = () => {
           },
           body: JSON.stringify({
             message: enquiry,
-            companyName: companyName.split("-").join(" "),
+            slug,
           }),
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
-        if(response.status === 401) {
+        if (response.status === 401) {
           notifications.update({
             id,
             title: "Unauthorized",
@@ -62,7 +64,6 @@ const EnquirySmall = () => {
         }
         throw new Error(data.message);
       }
-      const data = await response.json();
       notifications.update({
         id,
         title: "Enquiry sent",
@@ -71,8 +72,10 @@ const EnquirySmall = () => {
         loading: false,
         autoClose: 2000,
       });
+     
+      setEnquiry("");
       dispatch(setUser(data.user));
-      navigate(`/companies/${companyName}`);
+      navigate(`/companies/${slug}`);
     } catch (error) {
       notifications.update({
         id,
@@ -92,11 +95,19 @@ const EnquirySmall = () => {
           rows={3}
           placeholder="Write an enquiry."
           value={enquiry}
-          onChange={(e) => {setEnquiry(e.target.value); setError(null)}}
-          className={`${error && 'border-red-500 text-red-500'} w-full`}
+          onChange={(e) => {
+            setEnquiry(e.target.value);
+            setError(null);
+          }}
+          className={`${error && "border-red-500 text-red-500"} w-full`}
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <Button color="brand.5" disabled={!enquiry} fullWidth onClick={sendEnquiry}>
+        <Button
+          color="brand.5"
+          disabled={!enquiry}
+          fullWidth
+          onClick={sendEnquiry}
+        >
           Send Enquiry
         </Button>
 
@@ -104,7 +115,6 @@ const EnquirySmall = () => {
         <Modal opened={opened} onClose={close} centered size="auto">
           <AuthModal close={close} />
         </Modal>
-
       </div>
     </div>
   );

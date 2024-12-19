@@ -63,11 +63,10 @@ import { useNavigate } from "react-router-dom";
             credentials: "include",
           }
         );
+        const data = await response.json();
         if (!response.ok) {
-          const data = await response.json();
           throw new Error(data.message);
         }
-        const data = await response.json();
         notifications.update({
             id,
             title: "Category Added",

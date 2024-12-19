@@ -18,11 +18,10 @@ const AdminActions = ({ company, setCompany }) => {
                     credentials: "include",
                 }
             );
+            const data = await response.json();
             if (!response.ok) {
-                const data = await response.json();
                 throw new Error(data.message);
             }
-            const data = await response.json();
             setCompany(data.company);
         } catch (error) {
             console.log(error.message);

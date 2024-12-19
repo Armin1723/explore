@@ -135,7 +135,6 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
 
             <div className="recent-listing w-1/3 p-2 pt-4 max-lg:w-full min-h-fit max-h-[80vh max-sm:p-0">
               <div
-                withBorder
                 className="!max-h-full flex flex-col justify-start"
               >
                 <p className="text-2xl py-2 tracking wider">Recent Listing</p>

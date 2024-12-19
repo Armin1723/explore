@@ -7,7 +7,6 @@ const User = require("../models/userModel");
 const cloudinary = require("cloudinary");
 
 const createAdvertisement = async (req, res) => {
-  try {
     const user = await User.findById(req.user.id).populate("company");
     if (!user.company) {
       return res
@@ -60,13 +59,9 @@ const createAdvertisement = async (req, res) => {
     await user.save();
 
     res.status(201).json({ success: true, advertisement });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 const confirmAdvertisement = async (req, res) => {
-  try {
     // const { transactionId } = req.body;
 
     // const advertisement = await Advertisement.findOne({transactionId});
@@ -125,13 +120,9 @@ const confirmAdvertisement = async (req, res) => {
       message: "Advertisement confirmed successfully",
       user,
     });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 const getBanners = async (req, res) => {
-  try {
     const {forAdmin = false} = req.query;
     const company = await Advertisement.find({ active: true }, { company: 1 })
       .populate({
@@ -168,13 +159,9 @@ const getBanners = async (req, res) => {
     }
 
     res.status(200).json({ success: true, banners: [...banners, ...regularBanners] });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 const removeBanner = async (req, res) => {
-  try {
     const { name } = req.params;
 
     const company = await Company.findOne({ name });
@@ -192,10 +179,6 @@ const removeBanner = async (req, res) => {
     advertisement.featured = false;
     await advertisement.save();
     res.status(200).json({ success: true, message: "Banner removed" }); 
-  }
-  catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 } 
 
 module.exports = {

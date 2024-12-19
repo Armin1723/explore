@@ -32,12 +32,11 @@ const Bookmark = ({ companyId }) => {
         }
       );
 
+      const data = await response.json();
       if (response.ok) {
         setBookmarked(!bookmarked);
-        const data = await response.json();
         dispatch(setUser(data.user));
       } else {
-        const data = await response.json();
         throw new Error(data.message);
       }
     } catch (error) {

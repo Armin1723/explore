@@ -16,16 +16,18 @@ const router = require("express").Router();
 const multer = require("multer");
 
 const { isLoggedIn } = require("../middlewares");
+const asyncHandler = require("../utils");
 
 const upload = multer({ dest: "/tmp" });
 
 const companyRoutes = (io) => {
+
   //Listing routes
   router.post(
     "/register",
     upload.fields([{ name: "logo" }]),
     isLoggedIn,
-    registerCompany
+    asyncHandler(registerCompany)
   );
   router.post(
     "/:companyId/edit",
@@ -35,26 +37,26 @@ const companyRoutes = (io) => {
       { name: "banner" },
       { name: "gallery", maxCount: 5 }
     ]),
-    (req, res) => editCompany(req, res, io)
+    asyncHandler((req, res, next) => editCompany(req, res, next, io))
   );
 
   //Search and fetch routes
-  router.get("/name/:name", getCompanyDetails);
-  router.get('/', getCompanies);
+  router.get("/slug/:slug", asyncHandler(getCompanyDetails));
+  router.get('/', asyncHandler(getCompanies));
   router.get(
     "/subcategory/:subCategory",
     isLoggedIn,
-    getCompaniesBySubCategory
+    asyncHandler(getCompaniesBySubCategory)
   );
-  router.get("/search", searchCompanies);
-  router.get("/trending", getTrendingCompanies);
-  router.get("/similar", getSimilarCompanies);
+  router.get("/search", asyncHandler(searchCompanies));
+  router.get("/trending", asyncHandler(getTrendingCompanies));
+  router.get("/similar", asyncHandler(getSimilarCompanies));
 
   //Review routes
-  router.post("/review/add", isLoggedIn, addReview);
-  router.post("/review/all", isLoggedIn, getReviews);
-  router.get("/review/flag/:reviewId", isLoggedIn, flagReview);
-  router.get('/review/:id', getReview);
+  router.post("/review/add", isLoggedIn, asyncHandler(addReview));
+  router.post("/review/all", isLoggedIn, asyncHandler(getReviews));
+  router.get("/review/flag/:reviewId", isLoggedIn, asyncHandler(flagReview));
+  router.get('/review/:id', asyncHandler(getReview));
 
   return router;
 };

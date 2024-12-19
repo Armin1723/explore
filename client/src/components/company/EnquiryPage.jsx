@@ -14,7 +14,7 @@ const EnquiryPage = () => {
   const [loading, setLoading] = useState(false);
   const [refetch, setRefetch] = useState(false);
   const user = useSelector((state) => state.user);
-  const { name } = useParams();
+  const { slug } = useParams();
 
   const navigate = useNavigate();
 
@@ -24,42 +24,42 @@ const EnquiryPage = () => {
 
   //Check if user exists and has access to view this page.
   useEffect(() => {
-    if (!user && !(user?.company?.name == name.split(" ").join("-"))) {
+    if (!user || !(user?.company?.slug == slug)) {
       notifications.show({
         title: "Error",
         message: "You are not allowed to view this page.",
         color: "red",
       });
-      navigate(`/companies/${name}`);
+      navigate(`/companies/${slug}`);
     }
   }, [user, refetch]);
 
   useEffect(() => {
-    const fetchEnquiries = async () => {
-      try {
-        setLoading(true);
-        setResults([]);
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/enquiries/${
-            user?.company?._id
-          }?page=${page}`,
-          {
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.message);
-        }
-        setResults(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.error(error.message);
-      }
-    };
+    // const fetchEnquiries = async () => {
+    //   try {
+    //     setLoading(true);
+    //     setResults([]);
+    //     const response = await fetch(
+    //       `${import.meta.env.VITE_BACKEND_URL}/api/enquiries/${
+    //         user?.company?._id
+    //       }?page=${page}`,
+    //       {
+    //         credentials: "include",
+    //       }
+    //     );
+    //     const data = await response.json();
+    //     if (!response.ok) {
+    //       throw new Error(data.message);
+    //     }
+    //     setResults(data);
+    //     setLoading(false);
+    //   } catch (error) {
+    //     setLoading(false);
+    //     console.error(error.message);
+    //   }
+    // };
 
-    fetchEnquiries();
+    // fetchEnquiries();
   }, [refetch, page]);
 
   return (

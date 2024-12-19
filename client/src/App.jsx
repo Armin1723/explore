@@ -80,14 +80,14 @@ const App = () => {
 
           <Route path="/companies" element={<CompanyHomepage />}>
             <Route path="" element={<Categories />} />
-            <Route path=":name" element={<CompanyDetail />} />
+            <Route path=":slug" element={<CompanyDetail />} />
             <Route path="categories" element={<Categories />} />
             <Route path="categories/:category" element={<Categories />} />
             <Route path="search" element={<Search />} />
             <Route path="add" element={<CompanyListing />} />
             <Route path="advertise" element={<AdvertiseForm />} />
-            <Route path=":name/enquiries/add" element={<EnquiryForm />} />
-            <Route path=":name/enquiries" element={<EnquiryPage />} />
+            <Route path=":slug/enquiries/add" element={<EnquiryForm />} />
+            <Route path=":slug/enquiries" element={<EnquiryPage />} />
           </Route>
 
           <Route path="/auth" element={<AuthPage />}>

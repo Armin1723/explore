@@ -1,18 +1,21 @@
 const express = require("express");
 const { isLoggedIn } = require("../middlewares");
 const { getEnquiries, getSingleEnquiry, sendResponse, sendEnquiry, markAsRead, deleteEnquiry } = require("../controllers/enquiryController");
+const asyncHandler = require("../utils");
 const router = express.Router();
 
+//Middleware
+router.use(isLoggedIn);
 
 //Enquiry routes with pagination
-router.get("/:companyId", isLoggedIn, getEnquiries);
-router.get("/enquiry/:id", isLoggedIn, getSingleEnquiry);
-router.post("/reply", isLoggedIn, sendResponse);
+router.get("/:companyId", asyncHandler(getEnquiries));
+router.get("/enquiry/:id", asyncHandler(getSingleEnquiry));
+router.post("/reply", asyncHandler(sendResponse));
 
-router.post("/mark-read", isLoggedIn, markAsRead);
-router.post("/delete", isLoggedIn, deleteEnquiry);
+router.post("/mark-read", asyncHandler(markAsRead));
+router.post("/delete", asyncHandler(deleteEnquiry));
 
 //Send Enquiries
-router.post('/send',isLoggedIn, sendEnquiry);
+router.post('/send',asyncHandler(sendEnquiry));
 
 module.exports = router;

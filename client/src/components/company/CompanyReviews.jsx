@@ -28,17 +28,17 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
           credentials: "include",
         }
       );
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message);
-      }
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }else{
       setCompany((prev) => ({
         ...prev,
         reviews: [...prev.reviews, ...data.reviews],
       }));
       setHasMore(data.hasMore);
       setLoading(false);
+    }
     } catch (error) {
       notifications.show({
         title: "Error",
@@ -64,16 +64,16 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
           credentials: "include",
         }
       );
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message);
-      }
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }else{
       notifications.show({
         title: "Review flagged",
         message: data.message,
         color: "teal",
       });
+    }
     } catch (error) {
       notifications.show({
         title: "Error",

@@ -12,6 +12,7 @@ const advertisementCron = require('./cron/advertisementCron.js');
 const userRoutes = require('./routes/userRoutes.js');
 const companyRoutes = require('./routes/companyRoutes.js');
 const { weeklyPushNotificationCron, monthlyPromotionalMailCron } = require('./cron/pushNotificationCron.js');
+const { errorHandler } = require('./middlewares/index.js');
 
 const app = express();
 
@@ -52,6 +53,8 @@ app.use('/api/advertisement', require('./routes/advertisementRoutes.js'))
 app.use('/api/categories', require('./routes/categoryRoutes.js'))
 app.use('/api/testimonials', require('./routes/testimonialRoutes.js'))
 
+//Error Handler
+app.use(errorHandler);
 
 server.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);

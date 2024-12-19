@@ -1,13 +1,11 @@
 import { Button } from "@mantine/core";
 import React from "react";
 import { FaChevronCircleLeft, FaMapPin, FaPhoneAlt, FaStar } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import Bookmark from "./Bookmark";
 
 const CompanyCardSmall = ({ company, self = false }) => {
-  const user = useSelector((state) => state.user);
 
   const encodedAddress = encodeURI(company?.address);
 
@@ -28,7 +26,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
         />
         <Link
           to={`/companies/${
-            company && company.name && company?.name.split(" ").join("-")
+            company && company?.slug
           }`}
           className="link absolute right-0 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/40 transition-all duration-300 flex items-center justify-center rounded-s-md p-2"
         >
@@ -38,7 +36,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
       <div className="details right max-sm:w-full max-sm:pl-4 max-sm:py-2 flex flex-col items-start justify-between  h-full flex-1 py-3 gap-2">
         <div className="title flex w-full items-center justify-between pr-4">
           <Link
-            to={`/companies/${company?.name.split(" ").join("-")}`}
+            to={`/companies/${company?.slug}`}
             className="capitalize my-0 font-bold text-2xl max-sm:text-xl font-['poppins']"
           >
             {company?.name}
@@ -98,7 +96,7 @@ const CompanyCardSmall = ({ company, self = false }) => {
         <div className="action-buttons flex gap-2 flex-wrap grow-0">
           {self ? (
             <Link
-              to={`/companies/${company?.name.split(" ").join("-")}/enquiries/`}
+              to={`/companies/${company?.slug}/enquiries/`}
             >
               <Button color="brand.5">
                 <IoChatbubbleEllipsesSharp className="mr-2" /> Enquiries

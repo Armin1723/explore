@@ -64,8 +64,8 @@ const AuthModal = ({ close }) => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         notifications.update({
           id,
           title: "Error in Credentials",
@@ -77,7 +77,6 @@ const AuthModal = ({ close }) => {
         });
         loginForm.setErrors(data.errors);
       } else {
-        const data = await response.json();
         notifications.update({
           id,
           title: "Login successful",
@@ -177,8 +176,8 @@ const AuthModal = ({ close }) => {
           body: formData,
         }
       );
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         notifications.update({
           id,
           title: "Registration successful",
@@ -190,7 +189,6 @@ const AuthModal = ({ close }) => {
         setEmail(values.email);
         setMethod("otp");
       } else {
-        const data = await response.json();
         registerForm.setErrors(data.errors);
         notifications.update({
           id,
@@ -237,8 +235,8 @@ const AuthModal = ({ close }) => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         notifications.update({
           id,
           title: "An error occurred",
@@ -249,7 +247,6 @@ const AuthModal = ({ close }) => {
         });
         form.setErrors(data.errors);
       } else {
-        const data = await response.json();
         setOtpExpired(false);
         form.reset();
         notifications.update({
@@ -295,8 +292,8 @@ const AuthModal = ({ close }) => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         notifications.update({
           id,
           title: "An error occurred",
@@ -311,7 +308,6 @@ const AuthModal = ({ close }) => {
         }
         form.setErrors(data.errors);
       } else {
-        const data = await response.json();
         notifications.update({
           id,
           title: "Login successful",

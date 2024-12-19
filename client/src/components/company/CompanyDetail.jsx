@@ -43,7 +43,7 @@ import { Helmet } from "react-helmet-async";
 import striptags from "striptags";
 
 const CompanyDetail = () => {
-  let { name } = useParams();
+  let { slug } = useParams();
   const [company, setCompany] = React.useState(null);
 
   const [embla, setEmbla] = React.useState(null);
@@ -100,7 +100,7 @@ const CompanyDetail = () => {
         const response = await fetch(
           `${
             import.meta.env.VITE_BACKEND_URL
-          }/api/company/name/${name}?isAdmin=${isAdmin}`,
+          }/api/company/slug/${slug}?isAdmin=${isAdmin}`,
           {
             method: "GET",
             headers: {
@@ -109,11 +109,10 @@ const CompanyDetail = () => {
             credentials: "include",
           }
         );
+        const data = await response.json();
         if (!response.ok) {
-          const data = await response.json();
           throw new Error(data.message);
         }
-        const data = await response.json();
         setCompany(data.company);
       } catch (error) {
         console.log(error.message);
@@ -157,7 +156,7 @@ const CompanyDetail = () => {
       };
       fetchReview();
     }
-  }, [name]);
+  }, [slug]);
 
   if (!company)
     return (
@@ -179,8 +178,8 @@ const CompanyDetail = () => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         if (response.status == 401) {
           open();
           throw new Error("Kindly Login");
@@ -189,7 +188,6 @@ const CompanyDetail = () => {
           throw new Error(data.message);
         }
       }
-      const data = await response.json();
       notifications.show({
         title: "Review submitted",
         message: data.message,
@@ -230,7 +228,7 @@ const CompanyDetail = () => {
           property="og:url"
           content={`${
             import.meta.env.VITE_FRONTEND_URL
-          }/companies/${company?.name.split(" ").join("-")}`}
+          }/companies/${company?.slug}`}
         />
       </Helmet>
 
@@ -310,9 +308,7 @@ const CompanyDetail = () => {
               </div>
               {user && user?.name && isSelf && (
                 <Link
-                  to={`/companies/${company?.name
-                    .split(" ")
-                    .join("-")}/enquiries`}
+                  to={`/companies/${company?.slug}/enquiries`}
                   className="relative"
                 >
                   <IoChatbubbleEllipsesSharp className="mr-2 text-brand/75 hover:text-brand transition-al duration-300 text-xl" />
@@ -370,7 +366,7 @@ const CompanyDetail = () => {
               <div className="joined">
                 <span className="text-xs italic text-gray-500">
                   {"("}Listed Since:{" "}
-                  {new Date(company.createdAt).toLocaleDateString()}
+                  {new Date(company?.createdAt).toLocaleDateString()}
                   {")"}
                 </span>
               </div>
@@ -417,13 +413,13 @@ const CompanyDetail = () => {
               to={`${
                 company?.website.includes("https")
                   ? company?.website
-                  : `https://${company.website}`
+                  : `https://${company?.website}`
               } `}
               target="blank"
               className="text-sm"
             >
               <p className="website text-blue-800 hover:text-blue-900 transition-all duration-200 my-1">
-                {company.website}
+                {company?.website}
               </p>
             </Link>
           </div>
@@ -432,17 +428,17 @@ const CompanyDetail = () => {
             <div className="flex flex-wrap gap-2">
               <Button
                 component="a"
-                href={`tel:${company.phone.number}`}
+                href={`tel:${company?.phone?.number}`}
                 color="green.9"
                 className="text-[#155515] hover:text-[darkGreen] rounded-full flex gap-2 items-center justify-center px-1 "
               >
                 <FaPhoneAlt className="mx-2" />
-                {company.phone.number}
+                {company?.phone?.number}
               </Button>
 
               <Button
                 component="a"
-                href={`https://wa.me/${company.phone.number}`}
+                href={`https://wa.me/${company?.phone?.number}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 variant="filled"
@@ -453,12 +449,12 @@ const CompanyDetail = () => {
               </Button>
               <Button
                 component="a"
-                href={`mailto:${company.email}`}
+                href={`mailto:${company?.email}`}
                 variant="filled"
                 color="red"
               >
                 <FaEnvelope className="mx-2" />
-                {company.email}
+                {company?.email}
               </Button>
             </div>
           </div>
@@ -478,7 +474,7 @@ const CompanyDetail = () => {
                   </div>
                   <div
                     className="w-full max-sm:text-sm leading-relaxed text-justify"
-                    dangerouslySetInnerHTML={{ __html: company.description }}
+                    dangerouslySetInnerHTML={{ __html: company?.description }}
                   ></div>
                 </div>
 

@@ -69,8 +69,8 @@ const AdvertiseForm = () => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         notifications.show({
           title: "uccessfully Advertised.",
           message: data.message,
@@ -79,7 +79,6 @@ const AdvertiseForm = () => {
           autoClose: 2000,
         });
       } else {
-        const data = await response.json();
         form.setErrors(data.errors);
         notifications.update({
           id,

@@ -9,7 +9,6 @@ const fs = require("fs");
 const Review = require("../models/reviewModel");
 
 const loginUser = async (req, res) => {
-  try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({
@@ -69,13 +68,9 @@ const loginUser = async (req, res) => {
     });
     user.password = undefined;
     res.status(200).json({ success: true, user });
-  } catch (error) {
-    console.error(error);
-  }
 };
 
 const registerUser = async (req, res) => {
-  try {
     const { name, email, password, phone, fcmToken } = req.body;
 
     if (!name || !email || !password || !phone) {
@@ -154,14 +149,9 @@ const registerUser = async (req, res) => {
     res
       .status(201)
       .json({ success: true, message: "kindly check your e-mail!" });
-  } catch (error) {
-    console.error(error);
-  }
 };
 
 const verifyUser = async (req, res) => {
-  try {
-    try {
       const updateInfo = await User.updateOne(
         { _id: req.query.id },
         { isVerified: true }
@@ -174,17 +164,10 @@ const verifyUser = async (req, res) => {
         .status(200)
         .send(
           "<div>Email Verified Successfully. Kindly Login to continue</div>"
-        );
-    } catch (error) {
-      res.status(500).json({ error: "Error Occured" });
-    }
-  } catch (error) {
-    console.error(error);
-  }
+        ); 
 };
 
 const verifyOtp = async (req, res) => {
-  try {
     const { email, otp } = req.body;
     const user = await User.findOne({ email }).select("+otp +otpExpires");
     if (!user) {
@@ -239,14 +222,9 @@ const verifyOtp = async (req, res) => {
 
     user.password = undefined;
     res.status(200).json({ success: true, user });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 const resendOtp = async (req, res) => {
-  try {
     const { email } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
@@ -285,14 +263,9 @@ const resendOtp = async (req, res) => {
 
       .status(200)
       .json({ success: true, message: "kindly check your e-mail!" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 const logoutUser = async (req, res) => {
-  try {
     res.cookie("token", "", {
       httpOnly: true,
       expires: new Date(0),
@@ -300,13 +273,9 @@ const logoutUser = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
     });
     res.status(200).json({ success: true, message: "Logged out successfully" });
-  } catch (error) {
-    console.error(error);
-  }
 };
 
 const editUser = async (req, res) => {
-  try {
     const { id } = req.user;
     const user = await User.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -318,15 +287,9 @@ const editUser = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
     res.status(200).json({ success: true, user });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "Server error", error: error.message });
-  }
 };
 
 const fetchUserById = async (req, res) => {
-  try {
     const { id } = req.params;
     const user = await User.findById(id, { password: 0 }).populate("company");
     if (!user) {
@@ -335,15 +298,9 @@ const fetchUserById = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
     res.status(200).json({ success: true, user });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "Server error", error: error.message });
-  }
 };
 
 const forgotPassword = async (req, res) => {
-  try {
     const { email } = req.body;
     const user = await User.findOne(
       { email },
@@ -381,14 +338,9 @@ const forgotPassword = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: "Password reset email sent" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
 };
 
 const resetPassword = async (req, res) => {
-  try {
     const { forgotPasswordToken, newPassword } = req.body;
     const user = await User.findOne(
       {
@@ -419,14 +371,9 @@ const resetPassword = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: "Password reset successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
 };
 
 const toggleSavedCompany = async (req, res) => {
-  try {
     const { companyId } = req.body;
     const { id } = req.user;
     const user = await User.findById(id).populate("company");
@@ -445,14 +392,9 @@ const toggleSavedCompany = async (req, res) => {
       message: "Company save toggled successfully",
       user,
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
 };
 
 const fetchSavedCompanies = async (req, res) => {
-  try {
     const { id } = req.params;
     let { page } = req.query;
 
@@ -468,7 +410,7 @@ const fetchSavedCompanies = async (req, res) => {
     const user = await User.findById(id).populate({
       path: "savedCompanies",
       model: "Company",
-      populate: "name email phone address gallery",
+      populate: "name email phone address gallery slug",
       limit: 10,
       skip: (page - 1) * 10,
     });
@@ -484,14 +426,9 @@ const fetchSavedCompanies = async (req, res) => {
       page,
       totalPages,
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 const fetchReviewedCompanies = async (req, res) => {
-  try {
     const { id } = req.params;
     let { page } = req.query;
 
@@ -513,10 +450,6 @@ const fetchReviewedCompanies = async (req, res) => {
       page,
       totalPages: Math.ceil(totalReviews.length / 10),
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 module.exports = {

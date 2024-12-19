@@ -1,40 +1,75 @@
-const { getUsers, getAdminStats,  exportCompanies, getCompanies, getReviewsSortedByFlags, toggleSuspendUser, toggleSuspendCompany, getSuspendedUsers, getSuspendedCompanies, loginAdmin, logoutAdmin, handleRequest, getRecentCompany, deleteReview, getRequests, getBanners } = require('../controllers/adminController');
-const { isAdmin } = require('../middlewares');
+const { isAdmin } = require("../middlewares");
+const asyncHandler = require("../utils");
 
-const router = require('express').Router();
+const {
+  loginAdmin,
+  logoutAdmin,
+} = require("../controllers/admin/adminAuthController");
+
+const {
+  handleRequest,
+  getRecentCompany,
+  getRequests,
+  getSuspendedCompanies,
+  toggleSuspendCompany,
+  exportCompanies,
+  getCompanies,
+} = require("../controllers/admin/adminCompanyController");
+
+const {
+  getReviewsSortedByFlags,
+  deleteReview,
+} = require("../controllers/admin/adminReviewController");
+
+const {
+  getAdminStats,
+  getBanners,
+} = require("../controllers/admin/AdminStatsController");
+
+const {
+  getUsers,
+  toggleSuspendUser,
+  getSuspendedUsers,
+} = require("../controllers/admin/adminUserController");
+
+const router = require("express").Router();
 
 //login as admin
-router.post('/login', loginAdmin)
-router.get('/logout', logoutAdmin);
+router.post("/login", asyncHandler(loginAdmin));
+router.get("/logout", asyncHandler(logoutAdmin));
 
 //Get stats
-router.get('/stats', isAdmin, getAdminStats);
+router.get("/stats", isAdmin, asyncHandler(getAdminStats));
 
 //Fetch all users and companies
-router.get('/users', isAdmin, getUsers);
-router.get("/companies", isAdmin, getCompanies);
+router.get("/users", isAdmin, asyncHandler(getUsers));
+router.get("/companies", isAdmin, asyncHandler(getCompanies));
 
 //Export companies to CSV
-router.get("/companies/export", isAdmin, exportCompanies);
+router.get("/companies/export", isAdmin, asyncHandler(exportCompanies));
 
 //Suspend user and companies.
-router.post('/suspend/user', isAdmin, toggleSuspendUser);
-router.post('/suspend/company', isAdmin, toggleSuspendCompany);
+router.post("/suspend/user", isAdmin, asyncHandler(toggleSuspendUser));
+router.post("/suspend/company", isAdmin, asyncHandler(toggleSuspendCompany));
 
 //Get suspended users and companies
-router.get('/suspended/users', isAdmin, getSuspendedUsers);
-router.get('/suspended/companies', isAdmin, getSuspendedCompanies);
+router.get("/suspended/users", isAdmin, asyncHandler(getSuspendedUsers));
+router.get(
+  "/suspended/companies",
+  isAdmin,
+  asyncHandler(getSuspendedCompanies)
+);
 
 //Fetch reviews sorted by flags
-router.get('/reviews', isAdmin, getReviewsSortedByFlags);
-router.delete('/reviews/:reviewId', isAdmin, deleteReview);
+router.get("/reviews", isAdmin, asyncHandler(getReviewsSortedByFlags));
+router.delete("/reviews/:reviewId", isAdmin, asyncHandler(deleteReview));
 
 //Handle requests
-router.post('/requests/handle', isAdmin, handleRequest);
-router.get('/recent-request', isAdmin, getRecentCompany);
-router.get('/requests', isAdmin, getRequests);
+router.post("/requests/handle", isAdmin, asyncHandler(handleRequest));
+router.get("/recent-request", isAdmin, asyncHandler(getRecentCompany));
+router.get("/requests", isAdmin, asyncHandler(getRequests));
 
 //Get Banners with pagination support
-router.get('/banners', isAdmin, getBanners);
+router.get("/banners", isAdmin, asyncHandler(getBanners));
 
 module.exports = router;

@@ -5,7 +5,6 @@ const User = require("../models/userModel");
 
 //Fetch Enquiries of a company with pagination
 const getEnquiries = async (req, res) => {
-  try {
     const { companyId } = req.params;
     let { page } = req.query;
 
@@ -48,14 +47,10 @@ const getEnquiries = async (req, res) => {
       totalEnquiries: totalEnquiries.enquiries.length,
       totalPages: Math.ceil(totalEnquiries / 10),
     });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+ };
 
 //Fetch a single enquiry
 const getSingleEnquiry = async (req, res) => {
-  try {
     const { id } = req.params;
 
     const enquiry = await Enquiry.findById(id).populate({
@@ -70,14 +65,10 @@ const getSingleEnquiry = async (req, res) => {
     }
 
     res.status(200).json({ success: true, enquiry });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Send response to an enquiry
 const sendResponse = async (req, res) => {
-  try {
     const { enquiryId, response } = req.body;
 
     const enquiry = await Enquiry.findById(enquiryId).populate('user', 'name email');
@@ -101,18 +92,14 @@ const sendResponse = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: "Response sent successfully", enquiry });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Send an enquiry
 const sendEnquiry = async (req, res) => {
-  try {
-    const { companyName, message } = req.body;
+    const { slug, message } = req.body;
     const { id } = req.user;
     const user = await User.findById(id);
-    const company = await Company.findOne({ name: companyName });
+    const company = await Company.findOne({ slug });
     if (!company) {
       return res
         .status(404)
@@ -144,18 +131,10 @@ const sendEnquiry = async (req, res) => {
       enquiry,
       user,
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Some Error Occured.",
-      error: error.message,
-    });
-  }
 };
 
 //Mark an enquiry as read
 const markAsRead = async (req, res) => {
-  try {
     const { enquiryId } = req.body;
     const enquiry = await Enquiry.findById(enquiryId);
     if (!enquiry) {
@@ -168,14 +147,10 @@ const markAsRead = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: "Enquiry marked as read" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Delete an enquiry
 const deleteEnquiry = async (req, res) => {
-  try {
     const { enquiryId } = req.body;
     const enquiry = await Enquiry.findById(enquiryId);
     if (!enquiry) {
@@ -200,9 +175,6 @@ const deleteEnquiry = async (req, res) => {
     res
       .status(200)
       .json({ success: true, message: "Enquiry deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 module.exports = {

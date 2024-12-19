@@ -14,11 +14,10 @@ const AdminCategories = () => {
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/categories`
         );
+        const data = await response.json();
         if (!response.ok) {
-          const data = await response.json();
           throw new Error(data.message);
         }
-        const data = await response.json();
         setResults(data);
         setLoading(false);
       } catch (error) {

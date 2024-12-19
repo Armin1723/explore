@@ -113,7 +113,7 @@ const AdminCompanies = () => {
           results.companies.map((company, index) => {
             return (
               <Link
-                to={`/companies/${company.name.split(" ").join("-")}`}
+                to={`/companies/${company?.slug}`}
                 className={`companyCard flex justify-between py-3 border-b border-gray-400 hover:bg-teal-100/20 ${
                   index === 0 && "border-t"
                 }`}

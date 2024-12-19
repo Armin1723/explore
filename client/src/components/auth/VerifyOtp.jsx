@@ -65,8 +65,8 @@ const VerifyOtp = () => {
                 credentials: "include",
             }
             );
-            if (!response.ok) {
             const data = await response.json();
+            if (!response.ok) {
             notifications.update({
                 id,
                 title: "An error occurred",
@@ -77,7 +77,6 @@ const VerifyOtp = () => {
             });
             form.setErrors(data.errors);
             } else {
-            const data = await response.json();
             setOtpExpired(false);
             form.reset();
             notifications.update({
@@ -124,8 +123,8 @@ const VerifyOtp = () => {
           credentials: "include",
         }
       );
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         notifications.update({
           id,
           title: "An error occurred",
@@ -139,8 +138,7 @@ const VerifyOtp = () => {
             return;
         }
         form.setErrors(data.errors);
-      } else {
-        const data = await response.json();      
+      } else {     
         notifications.update({
           id,
           title: "Login successful",

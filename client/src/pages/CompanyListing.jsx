@@ -39,13 +39,13 @@ const CompanyListing = () => {
       dispatch(toggleRedirectFlag());
       navigate("/auth/login");
     }
-    if (user && user.company && user.company.status == "active") {
+    if (user && user.company ) {
       notifications.show({
         title: "Already Listed",
         message: "You already have a listing.",
         color: "red",
       });
-      navigate(`/companies/${user?.company?.name.split(" ").join("-")}`);
+      navigate(`/companies/${user?.company?.slug}`);
     }
     if (user && user.company) {
       if (user.company.gallery && user.company.gallery.length > 0) {
@@ -120,7 +120,7 @@ const CompanyListing = () => {
             <Stepper.Completed className="min-h-[40vh] w-[80vw] md:w-[30vw] flex flex-col items-center justify-start !my-[10vh] bg-white rounded-md">
               Completed, now await request approval or see how your
               <Link
-                to={`/companies/${user?.company?.name.split(" ").join("-")}`}
+                to={`/companies/${user?.company?.slug}`}
                 className="cursor-pointer text-blue-900 font-bold"
               >
                 {" "}

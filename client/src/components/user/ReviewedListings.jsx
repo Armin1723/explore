@@ -24,11 +24,10 @@ const ReviewedListing = ({ user }) => {
             credentials: "include",
           }
         );
+        const data = await response.json();
         if (!response.ok) {
-          const data = await response.json();
           throw new Error(data.message);
         }
-        const data = await response.json();
         setResults((prev) => [...prev, ...data.reviews]);
         setTotalPages(data.totalPages);
       };

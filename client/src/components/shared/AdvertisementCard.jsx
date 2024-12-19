@@ -1,9 +1,7 @@
 import {
   Image,
-  Card,
   Text,
   Group,
-  ScrollAreaAutosize,
   Badge,
   Button,
 } from "@mantine/core";
@@ -19,25 +17,25 @@ const AdvertisementCard = () => {
   const [listing, setListing] = useState(null);
 
   useEffect(() => {
-    const fetchAdvertisement = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/advertisement/`
-        );
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        const data = await response.json();
-        if (!data.company) {
-          setListing(null);
-          return;
-        }
-        setListing(data.company);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchAdvertisement();
+    // const fetchAdvertisement = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       `${import.meta.env.VITE_BACKEND_URL}/api/advertisement/`
+    //     );
+    //     if (!response.ok) {
+    //       throw new Error(response.statusText);
+    //     }
+    //     const data = await response.json();
+    //     if (!data.company) {
+    //       setListing(null);
+    //       return;
+    //     }
+    //     setListing(data.company);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+    // fetchAdvertisement();
   }, []);
 
   return (
@@ -81,7 +79,7 @@ const AdvertisementCard = () => {
       </Carousel>
 
       <Group justify="space-between" mt="lg" px="sm">
-        <Link to={listing && `/companies/${listing.name.split(" ").join("-")}`}>
+        <Link to={listing && `/companies/${listing?.slug}`}>
           <p className="heading !my-0">{listing?.name || "Company Name"}</p>
         </Link>
 

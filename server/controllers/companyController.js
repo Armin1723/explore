@@ -8,7 +8,6 @@ const { sendMail } = require("../helpers");
 
 //Add a company
 const registerCompany = async (req, res) => {
-  try {
     const { name, email, subCategory, category, website, address, number } =
       req.body;
 
@@ -109,14 +108,10 @@ const registerCompany = async (req, res) => {
       password: 0,
     }).populate("company");
     res.status(201).json({ success: true, user: updatedUser, company });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+ };
 
 //Edit a company
 const editCompany = async (req, res, io) => {
-  try {
     const { companyId } = req.params;
 
     const { edit } = req.query;
@@ -288,20 +283,15 @@ const editCompany = async (req, res, io) => {
     );
 
     res.status(200).json({ success: true, company: updatedCompany, user });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Fetch a single company detail by name
 const getCompanyDetails = async (req, res) => {
-  try {
-    let { name } = req.params;
+    let { slug } = req.params;
     const isAdmin = req.query.isAdmin === "true";
-    name = name.split("-").join(" ");
 
     let company = await Company.findOne({
-      name: { $regex: new RegExp(name, "i") },
+      slug
     })
       .populate({
         path: "reviews",
@@ -327,14 +317,10 @@ const getCompanyDetails = async (req, res) => {
     }
 
     res.status(200).json({ success: true, company });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Fetch companies (with option of category search) with pagination
 const getCompanies = async (req, res) => {
-  try {
     let { page, category, subCategory, sort } = req.query;
 
     if (!page) page = 1;
@@ -364,7 +350,7 @@ const getCompanies = async (req, res) => {
 
     const companies = await Company.find(query)
       .sort(sortQuery)
-      .select("name rating address phone createdAt website reviews gallery")
+      .select("name rating address phone createdAt website reviews gallery slug")
       .populate("reviews", "rating")
       .skip((page - 1) * 10)
       .limit(10);
@@ -384,14 +370,10 @@ const getCompanies = async (req, res) => {
       page,
       totalPages: Math.ceil(totalCompanies / 10),
     });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 };
 
 //Fetch companies by subcategory with pagination
 const getCompaniesBySubCategory = async (req, res) => {
-  try {
     let { subCategory } = req.params;
     let { page } = req.query;
 
@@ -417,14 +399,10 @@ const getCompaniesBySubCategory = async (req, res) => {
       subCategory: req.params.subCategory,
       pages: Math.ceil(totalCompanies / 10),
     });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Search companies by substring in name or description
 const searchCompanies = async (req, res) => {
-  try {
     let { page, category, sort, query } = req.query;
 
     if (!page) page = 1;
@@ -448,10 +426,6 @@ const searchCompanies = async (req, res) => {
       }
     }
 
-    // if (!query) {
-    //   return res.status(400).json({ message: "Search query is required" });
-    // }
-
     const companies = await Company.find({
       $and: [
         {
@@ -461,9 +435,6 @@ const searchCompanies = async (req, res) => {
           ],
         },
         { status: "active" },
-        ...(category && category !== "all"
-          ? [{ category: category.toLowerCase() }]
-          : []),
         ...(category && category !== "all"
           ? [{ category: category.toLowerCase() }]
           : []),
@@ -495,28 +466,20 @@ const searchCompanies = async (req, res) => {
       query,
       pages: Math.ceil(totalCompanies / 10),
     });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Trending Companies
 const getTrendingCompanies = async (req, res) => {
-  try {
     const companies = await Company.find({ status: "active" })
-      .select("name description gallery rating logo category")
+      .select("name description gallery rating logo category slug")
       .sort({ rating: -1 })
       .limit(10);
 
     res.status(200).json({ success: true, companies });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Similar Companies
 const getSimilarCompanies = async (req, res) => {
-  try {
     const { category } = req.query;
     if(!category) category = "all";
 
@@ -534,14 +497,10 @@ const getSimilarCompanies = async (req, res) => {
       }
 
     res.status(200).json({ success: true, companies });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Add a review to a company
 const addReview = async (req, res) => {
-  try {
     const { companyName, review } = req.body;
     const { user } = req;
     if (!companyName) {
@@ -616,14 +575,10 @@ const addReview = async (req, res) => {
         message: "Review added successfully",
         company: updatedCompany,
       });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Fetch reviews of a company with pagination
 const getReviews = async (req, res) => {
-  try {
     const { companyName } = req.body;
     let { skip } = req.query;
 
@@ -660,14 +615,10 @@ const getReviews = async (req, res) => {
       totalPages: Math.ceil(totalReviews / 5),
       hasMore: totalReviews > skip + 5,
     });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Fetch a single review by id
 const getReview = async (req, res) => {
-  try {
     const { id } = req.params;
 
     const review = await Review.findById(id).populate("user", "name profilePic");
@@ -677,14 +628,10 @@ const getReview = async (req, res) => {
         .json({ success: false, message: "Review not found" });
     }
     res.status(200).json({ success: true, review });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 //Flag review
 const flagReview = async (req, res) => {
-  try {
     const { reviewId } = req.params;
     const { user } = req;
 
@@ -713,9 +660,6 @@ const flagReview = async (req, res) => {
     await review.save();
 
     res.status(200).json({ success: true, message: "Review flagged" });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 module.exports = {

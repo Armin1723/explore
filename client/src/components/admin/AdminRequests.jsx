@@ -102,7 +102,7 @@ const AdminRequests = ({ refetch, setRefetch }) => {
                   key={index}
                 >
                   <Link
-                    to={`/companies/${company.name.split(" ").join("-")}`}
+                    to={`/companies/${company?.slug}`}
                     className="flex items-center gap-2"
                   >
                     <Avatar src={company?.logo.url} alt={company.name} />

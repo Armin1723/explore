@@ -25,11 +25,10 @@ const SavedListings = ({ user }) => {
             credentials: "include",
           }
         );
+        const data = await response.json();
         if (!response.ok) {
-          const data = await response.json();
           throw new Error(data.message);
         }
-        const data = await response.json();
         setStores((prev) => [...prev, ...data.stores]);
         setTotalPages(data.totalPages);
       } catch (error) {
