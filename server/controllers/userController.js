@@ -7,6 +7,7 @@ const cloudinary = require("../helpers/cloudinaryConfig");
 const crypto = require("crypto");
 const fs = require("fs");
 const Review = require("../models/reviewModel");
+const Company = require("../models/companyModel");
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
@@ -21,7 +22,13 @@ const loginUser = async (req, res) => {
     }
     const user = await User.findOne({ email })
       .select("+password")
-      .populate("company");
+
+      const userCompany = await Company.findOne({ userId : user._id });      
+
+    if(userCompany){
+      user.company = userCompany;
+    }
+
     if (!user) {
       return res
         .status(400)
@@ -258,7 +265,7 @@ const resendOtp = async (req, res) => {
     user.otpExpires = Date.now() + 10 * 60 * 1000; //10 minutes
     await user.save();
     const message = `<p>Hi ${user.name}, Welcome to <strong>Link India</strong>. Your OTP for verificaton is <br/><h1>${user.otp}</h1> <br/>Enter this OTP <a href='${process.env.FRONTEND_URL}/auth/verify?email=${user.email}'>here</a></p>`;
-    sendMail(user.email, message, (subject = "Email Verification"));
+    sendMail(user.email, (subject = "Email Verification"), message);
     res
 
       .status(200)
@@ -291,7 +298,14 @@ const editUser = async (req, res) => {
 
 const fetchUserById = async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(id, { password: 0 }).populate("company");
+    const user = await User.findById(id, { password: 0 });
+
+    const userCompany = await Company.findOne({ userId : user._id });
+
+    if(userCompany){
+      user.company = userCompany;
+    }
+
     if (!user) {
       return res
         .status(404)
@@ -334,7 +348,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     const message = `<p>Hi ${user.name} . Kindly use this link to reset your password. <a href="${process.env.FRONTEND_URL}/auth/reset-password?token=${forgotPasswordToken}">here</a>`;
-    sendMail(user.email, message, (subject = "Password Reset Link"));
+    sendMail(user.email,(subject = "Password Reset Link"), message);
     res
       .status(200)
       .json({ success: true, message: "Password reset email sent" });
@@ -376,7 +390,7 @@ const resetPassword = async (req, res) => {
 const toggleSavedCompany = async (req, res) => {
     const { companyId } = req.body;
     const { id } = req.user;
-    const user = await User.findById(id).populate("company");
+    const user = await User.findById(id);
 
     const savedCompanies = user.savedCompanies;
     if (savedCompanies.includes(companyId)) {
@@ -430,11 +444,7 @@ const fetchSavedCompanies = async (req, res) => {
 
 const fetchReviewedCompanies = async (req, res) => {
     const { id } = req.params;
-    let { page } = req.query;
-
-    if (!page) {
-      page = 1;
-    }
+    let { page = 1 } = req.query;
 
     const userReviews = await Review.find({ user: id })
       .populate("company")

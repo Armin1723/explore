@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const enquirySchema = new mongoose.Schema({
-    company: {
+    companyId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company",
     },
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },

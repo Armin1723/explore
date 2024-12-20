@@ -42,12 +42,6 @@ const userSchema = new mongoose.Schema(
         ref: "Company",
       },
     ],
-    enquiries: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Enquiry",
-      },
-    ],
     isVerified: {
       type: Boolean,
       default: false,

@@ -83,29 +83,17 @@ const companySchema = new mongoose.Schema({
       url: { type: String },
     },
   ],
-  admin: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  reviews: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Review",
-    },
-  ],
   rating: {
     type: Number,
     default: 0,
     min: 0,
     max: 5,
   },
-  enquiries: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Enquiry",
-    },
-  ],
   advertisement: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Advertisement",

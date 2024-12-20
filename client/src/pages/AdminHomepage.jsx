@@ -3,7 +3,6 @@ import AdminNav from "../components/admin/AdminNav";
 import {
   Breadcrumbs,
   Burger,
-  Card,
   Drawer,
   useMantineColorScheme,
 } from "@mantine/core";
@@ -127,8 +126,8 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
           >
             <AdminNavSmall closeDrawer={closeDrawer} />
           </Drawer>
-          {/* Small Nav Ends */}
 
+          {/* Small Nav Ends */}
           <div className="hero flex-1 px-2 flex max-lg:flex-col gap-2 ">
             <div className="right max-lg:w-full w-2/3 flex flex-col">
               <AdminCards />

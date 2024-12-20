@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema({
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: [true, "Please provide a user"],
     },
-    company: {
+    companyId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company",
         required: [true, "Please provide a company"],
