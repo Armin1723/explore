@@ -83,7 +83,7 @@ const Suggestions = () => {
                       >
                         <div className="image-container w-4/5 aspect-[16/10] object-fit rounded-lg overflow-hidden ">
                           <img
-                            src={`suggestions/${subCategory.image}.png`}
+                            src={`suggestions/${subCategory.image}.webp`}
                             loading="lazy"
                             // src="https://picsum.photos/300/300/?suggestion"
                             alt="https://picsum.photos/300/300/?suggestion"

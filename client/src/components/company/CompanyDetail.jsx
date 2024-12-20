@@ -223,7 +223,7 @@ const CompanyDetail = () => {
           property="og:description"
           content={`Link India services and reviews for ${company?.name}.`}
         />
-        <meta property="og:image" content={company?.logo?.url} />
+        <meta property="og:image" content={company?.logo?.url || company?.gallery[0].url} />
         <meta
           property="og:url"
           content={`${

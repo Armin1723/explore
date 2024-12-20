@@ -117,14 +117,15 @@ const sendEnquiry = async (req, res) => {
       company.enquiries = [enquiry._id];
     }
 
-    await company.save();
-
+    
     if (!user.enquiries) {
       user.enquiries = [enquiry._id];
     } else {
       user.enquiries = [...user.enquiries, enquiry._id];
     }
-    await user.save();
+
+    await Promise.all([user.save(), company.save()]);
+
     res.status(200).json({
       success: true,
       message: "Enquiry sent successfully",
@@ -163,13 +164,13 @@ const deleteEnquiry = async (req, res) => {
     company.enquiries = company.enquiries.filter(
       (enq) => enq.toString() !== enquiryId
     );
-    await company.save();
-
+    
     const user = await User.findById(enquiry.user);
     user.enquiries = user.enquiries.filter(
       (enq) => enq.toString() !== enquiryId
     );
-    await user.save();
+
+    await Promise.all([company.save(), user.save()]);
 
     await enquiry.deleteOne();
     res

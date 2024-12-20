@@ -18,13 +18,11 @@ const enquirySchema = new mongoose.Schema({
         enum: ["pending", "responded", "rejected"],
         default: "pending",
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
     response:{
         type: String,
     }
+},{
+    timestamps: true,
 })
 
 const Enquiry = mongoose.model("Enquiry", enquirySchema);    

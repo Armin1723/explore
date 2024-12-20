@@ -2,7 +2,7 @@ const User = require("../../models/userModel");
 
 //Get all users with pagination
 const getUsers = async (req, res) => {
-  let { page } = req.query;
+  let { page, limit = 10 } = req.query;
 
   if (!page) page = 1;
 
@@ -10,8 +10,8 @@ const getUsers = async (req, res) => {
 
   const users = await User.find(query)
     .sort({ createdAt: -1 })
-    .skip((page - 1) * 10)
-    .limit(10);
+    .skip((page - 1) * limit)
+    .limit(limit);
 
   const totalUsers = await User.countDocuments(query);
 

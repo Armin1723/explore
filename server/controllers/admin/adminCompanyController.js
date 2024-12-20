@@ -4,7 +4,7 @@ const { sendMail } = require("../../helpers");
 
 //Get all companies with pagination
 const getCompanies = async (req, res) => {
-    let { page, category, subCategory } = req.query;
+    let { page, category, subCategory, limit = 10 } = req.query;
 
     if (!page) page = 1;
 
@@ -19,8 +19,8 @@ const getCompanies = async (req, res) => {
     }
     const companies = await Company.find(query)
       .sort({ createdAt: -1 })
-      .skip((page - 1) * 10)
-      .limit(10);
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     const totalCompanies = await Company.countDocuments(query);
 
@@ -102,14 +102,14 @@ const toggleSuspendCompany = async (req, res) => {
 
 //Get all suspended companies with pagination
 const getSuspendedCompanies = async (req, res) => {
-    let { page } = req.query;
+    let { page, limit = 10 } = req.query;
 
     if (!page) page = 1;
 
     const companies = await Company.find({ status: "suspended" })
       .sort({ createdAt: -1 })
-      .skip((page - 1) * 10)
-      .limit(10);
+      .skip((page - 1) * limit)
+      .limit(limit);
     res.status(200).json({ companies });
 };
 
@@ -128,14 +128,14 @@ const getRecentCompany = async (req, res) => {
 
 //Get All Requests with pagination
 const getRequests = async (req, res) => {
-    let { page } = req.query;
+    let { page, limit = 10} = req.query;
 
     if (!page) page = 1;
 
     const companies = await Company.find({ status: "pending" })
       .sort({ createdAt: -1 })
-      .skip((page - 1) * 10)
-      .limit(10);
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     const totalRequests = await Company.countDocuments({ status: "pending" });
 
@@ -171,7 +171,7 @@ const handleRequest = async (req, res) => {
       action === "approve"
         ? `Dear ${company.name},\n\nWe are pleased to inform you that your company has been approved and is now active on our platform. You can now access all the features and start engaging with users.\n\nBest regards,\nThe Team`
         : `Dear ${company.name},\n\nWe regret to inform you that your company has been rejected. Please review the submission guidelines and make the necessary changes before resubmitting.\n\nBest regards,\nThe Team`;
-    sendMail(company.email, message, subject);
+    sendMail(company.email, subject, message);
 
     res.status(200).json({ success: true, company });
 };

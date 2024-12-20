@@ -6,67 +6,67 @@ const CategorySection = () => {
   const categoryData = [
     {
       title: "Grocery",
-      image: "grocery.png",
+      image: "grocery.webp",
     },
     {
       title: "Electronics",
-      image: "electronics.png",
+      image: "electronics.webp",
     },
     {
       title: "Books",
-      image: "books.png",
+      image: "books.webp",
     },
     {
       title: "Home",
-      image: "home.png",
+      image: "home.webp",
     },
     {
       title: "Beauty",
-      image: "beauty.png",
+      image: "beauty.webp",
     },
     {
       title: "Fashion",
-      image: "fashion.png",
+      image: "fashion.webp",
     },
     {
       title: "Toys",
-      image: "toys.png",
+      image: "toys.webp",
     },
     {
       title: "Sports",
-      image: "sports.png",
+      image: "sports.webp",
     },
     {
       title: "Automobile",
-      image: "automobile.png",
+      image: "automobile.webp",
     },
     {
       title: "Furniture",
-      image: "furniture.png",
+      image: "furniture.webp",
     },
     {
       title: "Jewellery",
-      image: "jewellery.png",
+      image: "jewellery.webp",
     },
     {
       title: "Travel",
-      image: "travel.png",
+      image: "travel.webp",
     },
     {
       title: "Fitness",
-      image: "fitness.png",
+      image: "fitness.webp",
     },
     {
       title: "Pets",
-      image: "pets.png",
+      image: "pets.webp",
     },
     {
       title: "Health",
-      image: "health.png",
+      image: "health.webp",
     },
     {
       title: 'Kitchen',
-      image: 'kitchen.png'
+      image: 'kitchen.webp'
     }
     
   ];

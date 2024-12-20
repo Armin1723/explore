@@ -25,6 +25,9 @@ const PrivacyPolicy = () => {
           content="Privacy Policy | Link India Portal"
         />
         <meta property="og:type" content="website" />
+        <meta property="og:description" content="Link India Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials."
+        />
+        <meta property="og:image" content="/logo/colored.png" />
         <meta
           property="og:url"
           content={`${import.meta.env.VITE_FRONTEND_URL}/privacy-policy`}

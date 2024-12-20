@@ -1,5 +1,5 @@
 import { Paper, Text, Button, Textarea } from "@mantine/core";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { useForm } from "@mantine/form";
@@ -88,7 +88,7 @@ const EnquiryForm = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center relative overflow-hidden w-screen h-[100dvh]">
+    <div className="flex flex-col items-center justify-center relative overflow-hidden w-screen flex-1">
       <motion.img
         initial={{
           opacity: 0,
@@ -104,7 +104,7 @@ const EnquiryForm = () => {
         }}
         src="/backgrounds/login-bg.svg"
         alt="ok"
-        className="absolute bottom-0 left-0 min-h-[100dvh] w-screen z-[-2] object-cover max-sm:aspect-[1/1.4] "
+        className="absolute bottom-0 left-0 h-full w-screen z-[-2] object-cover max-sm:aspect-[1/1.4] "
       />
       <motion.div
         initial={{

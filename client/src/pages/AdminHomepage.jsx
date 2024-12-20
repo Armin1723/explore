@@ -69,6 +69,8 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:title" content="Admin Panel | Link India Portal" />
         <meta property="og:type" content="website" />
+        <meta property="og:description" content="Admin Panel | Link India Portal" />
+        <meta property="og:image" content="/logo/colored.png" />
         <meta
           property="og:url"
           content={`${import.meta.env.VITE_FRONTEND_URL}/admin`}

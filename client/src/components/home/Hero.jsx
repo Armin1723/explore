@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 const Hero = () => {
   const [curr, setCurr] = useState(0);
   const [images, setImages] = useState([
-    "/headers/banner-1.png",
-    "/headers/banner-2.png",
-    "/headers/banner-3.png",
-    "/headers/banner-4.png",
+    "/headers/banner-1.webp",
+    "/headers/banner-2.webp",
+    "/headers/banner-3.webp",
+    "/headers/banner-4.webp",
   ]);
 
   useEffect(() => {

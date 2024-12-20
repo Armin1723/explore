@@ -53,6 +53,11 @@ const TestimonialPage = () => {
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:title" content="Testimonials | Link India Portal" />
+        <meta
+          property="og:description"
+          content="Link India Portal helps you find the best businesses and services in your city, offering grocery, sports, electronics, fashion, books, and home essentials."
+        />
+        <meta property="og:image" content="/backgrounds/testimonials-bg.webp" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
@@ -66,7 +71,7 @@ const TestimonialPage = () => {
 
         <div className="banner relative w-full overflow-hidden aspect-[16/3] max-sm:aspect-[16/5]">
           <img
-            src="/backgrounds/testimonials-bg.png"
+            src="/backgrounds/testimonials-bg.webp"
             alt="testimonials"
             className="w-full h-full object-cover max-sm:object-cover bg-center center/cover "
           />

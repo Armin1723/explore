@@ -25,6 +25,8 @@ const Terms = () => {
           property="og:title"
           content="Terms and COnditions | Link India Portal"
         />
+        <meta property="og:description" content="Terms and Conditions that govern the working at Link India." />
+        <meta property="og:image" content="/logo/colored.png" />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"

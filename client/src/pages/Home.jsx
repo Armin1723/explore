@@ -49,6 +49,11 @@ const Home = () => {
         />
         <meta property="og:type" content="website" />
         <meta
+          property="og:description"
+          content="Link India Portal helps you find the best local businesses in your area."
+        />
+        <meta property="og:image" content="/logo/colored.png" />
+        <meta
           property="og:url"
           content={`${import.meta.env.VITE_FRONTEND_URL}`}
         />

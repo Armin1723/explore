@@ -27,6 +27,8 @@ const AboutUs = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:title" content="About Us | Link India Portal" />
         <meta property="og:type" content="website" />
+        <meta  property="og:description" content="Link India Portal is a platform that helps you find the best businesses and services in your city. We provide a wide range of services including grocery, sports, electronics, fashion, books, and home essentials." />
+        <meta property="og:image" content="/logo/colored.png" />
         <meta
           property="og:url"
           content={`${import.meta.env.VITE_FRONTEND_URL}/about-us`}
@@ -39,7 +41,7 @@ const AboutUs = () => {
 
         <div className="banner relative w-full overflow-hidden aspect-[16/3] max-sm:aspect-[16/7]">
           <img
-            src="/backgrounds/about-bg.png"
+            src="/backgrounds/about-bg.webp"
             alt="About Us"
             className="w-full h-full object-fit max-sm:object-cover"
           />
@@ -85,7 +87,7 @@ const AboutUs = () => {
         <div className="our-mission-heading-container flex items-start justify-start w-4/5 max-lg:w-[90%] my-6 max-sm:my-4 gap-6">
           <div className="about-us-graphic max-sm:hidden w-2/5 px-8 h-full flex items-center justify-center">
             <img
-              src="/about/graphic-1.png"
+              src="/about/graphic-1.webp"
               alt="About Us"
               className="w-full h-full flex items-center justify-center object-cover"
             />

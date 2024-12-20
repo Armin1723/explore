@@ -34,6 +34,8 @@ const advertisementSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
+},{
+    timestamps: true,
 })
 
 const Advertisement = mongoose.model('Advertisement', advertisementSchema);

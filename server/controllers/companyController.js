@@ -45,9 +45,9 @@ const registerCompany = async (req, res) => {
     if (existingCompany) {
       return res.status(400).json({
         success: false,
-        message: "Company already exists",
+        message: "Company with this name already exists",
         errors: {
-          name: "Company already exists.",
+          name: "Company with this name already exists.",
         },
       });
     }
@@ -484,11 +484,11 @@ const getSimilarCompanies = async (req, res) => {
     if(!category) category = "all";
 
     const companies = await Company.find({ status: "active" , category: category})
-      .select("name description gallery rating")
+      .select("name description gallery rating slug")
       .sort({ rating: -1 })
       .limit(10);
 
-      if(companies.length < 4){
+      if(companies.length < 5){
         const remainingCompanies = await Company.find({ status: "active" , category: { $ne: category}})
         .select("name description gallery rating slug")
         .sort({ rating: -1 })
@@ -524,12 +524,12 @@ const addReview = async (req, res) => {
         .json({ success: false, message: "Company not found" });
     }
 
-    let alreadyReviewed = false;
-    company.reviews.map((rev) => {
-      if (rev.user.toString() === user.id) alreadyReviewed = true;
+    const existingReview = await Review.findOne({
+      user: user.id,
+      company: company._id,
     });
 
-    if (alreadyReviewed) {
+    if (existingReview) {
       return res.status(400).json({
         success: false,
         message: "You have already reviewed this company",
@@ -580,9 +580,7 @@ const addReview = async (req, res) => {
 //Fetch reviews of a company with pagination
 const getReviews = async (req, res) => {
     const { companyName } = req.body;
-    let { skip } = req.query;
-
-    if (!skip) skip = 0;
+    let { skip = 0 } = req.query;
 
     if (!companyName) {
       return res

@@ -110,10 +110,8 @@ const companySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Advertisement",
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+},{
+  timestamps: true,
 });
 
 // Pre-save middleware for generating a slug

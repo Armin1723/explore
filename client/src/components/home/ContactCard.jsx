@@ -24,7 +24,7 @@ const ContactCard = () => {
         </div>
         <div className="graphics relative w-1/2 max-lg:w-1/3 max-lg:my-3 h-full flex items-center justify-center">
           
-          <img src='/cta/cta-5.png' alt="contact" className="object-cover rounded-lg "/>
+          <img src='/cta/cta.webp' alt="contact" className="object-cover rounded-lg "/>
         </div>
       </div>
     </div>

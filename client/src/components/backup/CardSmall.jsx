@@ -13,7 +13,7 @@ const CardSmall = ({ company }) => {
         <img
           src={company?.gallery[0]?.url?.replace(
             "/upload/",
-            "/upload/w_300,h_220/"
+            "/upload/w_400,h_280/"
           )}
           alt={company?.name}
           className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"

@@ -415,7 +415,7 @@ const fetchSavedCompanies = async (req, res) => {
       skip: (page - 1) * 10,
     });
 
-    const totalResults = await User.findById(id).populate("savedCompanies");
+    const totalResults = await User.findById(id).populate("savedCompanies", "_id");
     const totalPages = Math.ceil(totalResults.savedCompanies.length / 10);
 
     const savedCompanies = user.savedCompanies;

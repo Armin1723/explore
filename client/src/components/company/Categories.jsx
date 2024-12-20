@@ -11,14 +11,12 @@ import { Helmet } from "react-helmet-async";
 
 const Categories = () => {
   const [searchParams] = useSearchParams();
-
-  const {category : categoryParam} = useParams();
-
+  const { category: categoryParam } = useParams();
   const pageParam = searchParams.get("page");
   const subCategoryParam = searchParams.get("subCategory");
 
-  const [category, setCategory] = useState(categoryParam || "");
-  const [subCategory, setSubCategory] = useState(subCategoryParam || "");
+  const [category, setCategory] = useState(categoryParam || "all");
+  const [subCategory, setSubCategory] = useState(subCategoryParam || "all");
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(pageParam || 1);
 
@@ -27,15 +25,12 @@ const Categories = () => {
 
   const navigate = useNavigate();
 
-  const reset = () => {
-    setCategory("all");
-    setSubCategory("all");
-    setSort("");
-    navigate("/companies/categories/all");
-    setPage(1);
-  };
-
   const categories = useSelector((state) => state.categories);
+
+  // Sync category state with categoryParam
+  useEffect(() => {
+    setCategory((categoryParam?.charAt(0).toUpperCase() + categoryParam?.slice(1)) || "all");
+  }, [categoryParam]);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -58,7 +53,15 @@ const Categories = () => {
       }
     };
     fetchResults();
-  }, [category, subCategory, sort, page, pageParam]);
+  }, [category, subCategory, sort, page]);
+
+  const reset = () => {
+    setCategory("all");
+    setSubCategory("all");
+    setSort("");
+    navigate("/companies/categories/all");
+    setPage(1);
+  };
 
   return (
     <>
@@ -73,7 +76,10 @@ const Categories = () => {
         <meta name="author" content="Link India Portal" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content={`${category || "All"} results - Link India Portal`}/>
+        <meta
+          property="og:title"
+          content={`${category || "All"} results - Link India Portal`}
+        />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
@@ -108,7 +114,7 @@ const Categories = () => {
           </div>
           <div className="max-sm:w-[150px] w-fit">
             <Select
-              data={getSubCategories(category) || ["all"]}
+              data={getSubCategories(category || categoryParam) || ["All"]}
               value={subCategory || null}
               placeholder={subCategory || "Chose Sub Category"}
               onChange={setSubCategory}
@@ -176,3 +182,4 @@ const Categories = () => {
 };
 
 export default Categories;
+
