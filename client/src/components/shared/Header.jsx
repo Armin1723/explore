@@ -26,33 +26,33 @@ import { FaArrowRight } from "react-icons/fa";
 
 const categoryData = [
   {
-    icon: "/icon/grocery.png",
+    icon: "/icon/grocery.webp",
     title: "Grocery",
     description: "Find a wide range of groceries to shop from.",
   },
   {
-    icon: "/icon/sports.png",
+    icon: "/icon/sports.webp",
     title: "Sports",
     description: "Shop for sports equipment and accessories tailored to you.",
   },
   {
-    icon: "/icon/electronics.png",
+    icon: "/icon/electronics.webp",
     title: "Electronics",
     description: "Discover the latest gadgets and electronic devices.",
   },
   {
-    icon: "/icon/fashion.png",
+    icon: "/icon/fashion.webp",
     title: "Fashion",
     description: "Shop for stylish and trendy clothing for all.",
   },
   {
-    icon: "/icon/books.png",
+    icon: "/icon/books.webp",
     title: "Books",
     description:
       "Browse through a collection of fiction, non-fiction, and more.",
   },
   {
-    icon: "/icon/home.png",
+    icon: "/icon/home.webp",
     title: "Home",
     description: "Find products for all your home essentials and décor.",
   },
