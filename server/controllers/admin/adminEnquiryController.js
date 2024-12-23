@@ -41,7 +41,7 @@ const getSingleEnquiry = async (req, res) => {
 };
 
 const sendResponse = async (req, res) => {
-  const enquiry = await Enquiry.findById(req.params.id);
+  const enquiry = await Enquiry.findById(req.params.id).populate("user", "email name").populate("company", "name");
   if (!enquiry) {
     return res
       .status(404)
@@ -50,14 +50,10 @@ const sendResponse = async (req, res) => {
   enquiry.status = "resolved";
   enquiry.response = req.body.response;
 
-  const userEnquiry = await Enquiry.findOne({ _id: enquiry._id }).populate(
-    "user",
-    "email"
-  );
   sendMail(
-    (to = userEnquiry.user.email),
+    (to = enquiry.user.email),
     (subject = `Re: ${enquiry.message}`),
-    (message = enquiryAdminResponseMailTemplate(userEnquiry.user, enquiry.response))
+    (message = enquiryAdminResponseMailTemplate(enquiry.user, enquiry.response, enquiry.company.name ))
   );
   await enquiry.save();
   res.status(200).json({ success: true, enquiry });

@@ -63,12 +63,12 @@ const forgotPasswordMailTemplate = (user) => {
   `;
 };
 
-const enquiryResponseMailTemplate = (user, response) => {
+const enquiryResponseMailTemplate = (user, response, companyName = '') => {
   return `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
       <h2 style="color: #113c3d;">Hello, ${user.name}!</h2>
       <p>
-        Thank you for contacting <strong>Link India</strong>. We have reviewed your enquiry and here is our response:
+        Thank you for contacting <strong>Link India</strong> regarding <strong>${companyName}. We have reviewed your enquiry and here is our response:
       </p>
       <div style="margin: 20px 0; background-color: #f9f9f9; padding: 15px; border-radius: 5px; border: 1px solid #ddd;">
         <strong>${response}</strong>
@@ -111,8 +111,8 @@ const listingConfirmationMailTemplate = (action, companyName) => {
   `;
 };
 
-const enquiryAdminResponseMailTemplate = (user, response) => {
-  return `Hello <strong>${user.name}</strong>,<br/>We have received your enquiry and here is the response:<br/><strong>${response}</strong><br/>Thank you for contacting us.<br/>Regards,`;
+const enquiryAdminResponseMailTemplate = (user, response, companyName = '') => {
+  return `Hello <strong>${user.name}</strong> regarding <strong>${companyName},<br/>We have received your enquiry and here is the response:<br/><strong>${response}</strong><br/>Thank you for contacting us.<br/>Regards,`;
 };
 
 const enquiryForwardMailTemplate = (company, message) => {

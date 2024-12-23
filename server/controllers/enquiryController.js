@@ -66,7 +66,7 @@ const sendResponse = async (req, res) => {
   const enquiry = await Enquiry.findById(enquiryId).populate(
     "user",
     "name email"
-  );
+  ).populate("company", "name");
   if (!enquiry) {
     return res
       .status(404)
@@ -74,13 +74,13 @@ const sendResponse = async (req, res) => {
   }
 
   enquiry.response = response;
-  enquiry.status = "read";
+  enquiry.status = "resolved";
   await enquiry.save();
 
   sendMail(
     enquiry.user.email,
     "Response to your enquiry",
-    message = enquiryResponseMailTemplate(enquiry.user, response)
+    message = enquiryResponseMailTemplate(enquiry.user, response, enquiry.company.name)
   );
 
   res
