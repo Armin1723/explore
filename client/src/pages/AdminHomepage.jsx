@@ -91,11 +91,10 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
             <div className="content px-4 flex flex-col gap-2 w-full">
               <div className="ribbon-right flex items-center justify-between w-full">
                 <div className="flex items-center gap-1">
-                  <div className="max-lg:flex hidden">
+                  <div className="flex lg:hidden">
                     <Burger
                       opened={drawerOpened}
                       onClick={toggleDrawer}
-                      hiddenFrom="sm"
                     />
                   </div>
                   <p>Dashboard</p>
@@ -145,7 +144,7 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
             </div>
 
             <div
-              className={`recent-listing w-1/3 py-2 pt-3 max-lg:w-full min-h-fit max-h-full max-sm:p-0 my-1 gap-2 rounded-md border border-neutral-500/20 ${
+              className={`recent-listing block md:hidden lg:block w-1/3 py-2 pt-3 max-lg:w-full min-h-fit max-h-full max-sm:p-0 my-1 gap-2 rounded-md border border-neutral-500/20 ${
                 colorScheme === "light" ? "bg-white" : "bg-zinc-800"
               }`}
             >

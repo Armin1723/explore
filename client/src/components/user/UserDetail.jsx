@@ -7,6 +7,7 @@ import CompanyCardSmall from "../company/CompanyCardSmall";
 import SavedListings from "./SavedListings";
 import ReviewedListings from "./ReviewedListings";
 import AdminActions from "./AdminActions";
+import UserResponses from "./UserResponses";
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -63,26 +64,27 @@ const UserDetail = () => {
   return (
     <div className="w-[80%] max-sm:!w-full bg-white h-full pt-[8vh] max-sm:pt-2 border shadow-[0_0_20px_black] shadow-black/20 py-6 px-12 max-lg:px-6 max-sm:px-4">
         <div className="overflow-y-auto max-h-[75vh]">
-        <div className="profile flex justify-start items-start px-4 gap-4 max-sm:gap-2 py-6 w-full bg-secondary my-6 ">
+        <div className="profile flex justify-start items-center px-4 gap-4 max-sm:gap-2 py-6 w-full bg-secondary my-6 ">
           <div className="avatar flex flex-col justify-center h-full">
             <Avatar
-              size={{ base: "lg", sm: "xl" }}
+              size={{ base: "xl", sm: "xl" }}
               src={userData?.profilePic}
-              className="border-2 border-black/40 shadow-xl max-sm:w-12 max-sm:h-12"
+              className="border-2 border-black/40 shadow-xl max-sm:w-20 max-sm:h-20"
             />
           </div>
 
-          <div className="creds flex flex-col justify-start h-full flex-1 max-sm:text-sm ">
-            <div className="top flex gap-2 items-center max-sm:flex-col max-sm:items-start max-sm:gap-0">
-              <p className="heading !my-0">{userData?.name}</p>
+          <div className="creds flex flex-col justify-start h-full flex-1 max-sm:text-sm gap-1">
+            <div className="top flex gap-2 items-center flex-wrap">
+              <p className="heading !my-0 font-semibold">{userData?.name}</p>
 
-              {userData.isActive ? (
+              {userData?.isActive ? (
                 <Badge bg={userData?.role == "admin" ? "green.9" : "blue.9"}>
                   {userData?.role}
                 </Badge>
               ) : (
                 <Badge color="red">Suspended</Badge>
               )}
+              { self && <UserResponses/>}
             </div>
             <p className="text-gray-800 max-sm:text-sm">{userData?.email}</p>
             <p className="text-gray-800 max-sm:text-sm">{userData?.phone}</p>

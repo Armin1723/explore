@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { notifications } from "@mantine/notifications";
 import striptags from "striptags";
+import CompanyCardSmall from "../company/CompanyCardSmall";
 
 const socket = io(import.meta.env.VITE_BACKEND_URL, { withCredentials: true });
 

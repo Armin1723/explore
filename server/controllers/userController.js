@@ -8,7 +8,12 @@ const crypto = require("crypto");
 const fs = require("fs");
 const Review = require("../models/reviewModel");
 const { decodeDescription } = require("../utils");
-const { otpMailTemplate, welcomeMailTemplate, forgotPasswordMailTemplate } = require("../templates/email");
+const {
+  otpMailTemplate,
+  welcomeMailTemplate,
+  forgotPasswordMailTemplate,
+} = require("../templates/email");
+const Enquiry = require("../models/enquiryModel");
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -289,6 +294,52 @@ const fetchUserById = async (req, res) => {
   res.status(200).json({ success: true, user });
 };
 
+// Fetch User Enquiries.
+const fetchUserEnquiries = async (req, res) => {
+  const { id } = req.params;
+
+  const { page = 1, type, limit = 5 } = req.query;
+
+  const query = {
+    user: id,
+  };
+
+  if (type === "all") {
+    query.status = { $ne: "read" };
+  } else {
+    query.status = "resolved";
+  }
+  const userEnquiries = await Enquiry.find(query)
+    .populate("company user")
+    .limit(limit)
+    .skip((page - 1) * limit);
+
+  const totalEnquiries = await Enquiry.countDocuments(query);
+
+  res.status(200).json({
+    success: true,
+    message: "User responses fetched successfully",
+    enquiries: userEnquiries,
+    page,
+    totalPages: Math.ceil(totalEnquiries / limit),
+  });
+};
+
+//Mark Enquiry response as read (delete)
+const markUserResponseAsRead = async (req, res) => {
+  const enquiry = await Enquiry.findById(req.body.enquiryId);
+  if (!enquiry) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Enquiry not found" });
+  }
+  enquiry.status = "read";
+  await enquiry.save();
+  res
+    .status(200)
+    .json({ success: true, message: "Enquiry deleted successfully" });
+};
+
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne(
@@ -453,6 +504,8 @@ module.exports = {
   editUser,
   fetchUserById,
   forgotPassword,
+  fetchUserEnquiries,
+  markUserResponseAsRead,
   resetPassword,
   toggleSavedCompany,
   fetchSavedCompanies,

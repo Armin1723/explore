@@ -17,6 +17,8 @@ const {
   fetchReviewedCompanies,
   resendOtp,
   verifyOtp,
+  fetchUserEnquiries,
+  markUserResponseAsRead,
 } = require("../controllers/userController");
 const { isLoggedIn } = require("../middlewares");
 const { asyncHandler } = require("../utils");
@@ -43,6 +45,10 @@ const userRoutes = (io) => {
     upload.fields([{ name: "profilePic" }]),
     asyncHandler(editUser)
   );
+
+  //Enquiry routes
+  router.get("/:id/enquiries", isLoggedIn, asyncHandler(fetchUserEnquiries));
+  router.post("/enquiries/mark-as-read", isLoggedIn, asyncHandler(markUserResponseAsRead)); 
 
   //Wishlist Routes
   router.post("/toggle-bookmark", isLoggedIn, asyncHandler(toggleSavedCompany));

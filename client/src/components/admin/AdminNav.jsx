@@ -24,7 +24,7 @@ const AdminNav = () => {
         colorScheme == "dark"
           ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900"
           : "bg-secondary text-black"
-      } flex flex-col justify-between items-start sticky top-0 px-4 h-screen max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60`}
+      } flex-col justify-between items-start sticky top-0 px-4 h-screen hidden lg:flex py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60`}
     >
       <div className="nav-top flex gap-4 justify-start items-center mt-2">
         <Logo variant={colorScheme === "light" ? "colored" : "white"} />

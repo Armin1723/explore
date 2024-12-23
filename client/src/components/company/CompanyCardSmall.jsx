@@ -15,7 +15,7 @@ const CompanyCardSmall = ({ company, self = false, promoted = false }) => {
 
   return (
     <div className="min-h-fit max-sm:flex-col w-full max-sm:gap-2 flex items-start justify-start rounded-lg overflow-hidden border border-neutral-500/20 bg-white gap-4 group hover:border-neutral-500/50 transition-all duration-200 ">
-      <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1] lg:min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
+      <div className=" left max-sm:w-full max-sm:aspect-video aspect-[1/1.1] lg:min-h-full w-48 max-w-1/3 overflow-hidden relative border-r border-gray-800 bg-gray-500">
       {promoted && (
         <Badge
           color="gray.3"
@@ -73,7 +73,7 @@ const CompanyCardSmall = ({ company, self = false, promoted = false }) => {
           >
             {company?.rating == 0
               ? company?.rating
-              : company?.rating.toFixed(1)}
+              : company?.rating?.toFixed(1)}
             <FaStar size={12} />
           </p>
           {company?.reviews && (
@@ -97,7 +97,7 @@ const CompanyCardSmall = ({ company, self = false, promoted = false }) => {
             to={`${
               company?.website.includes("https")
                 ? company?.website
-                : `https://${company.website}`
+                : `https://${company?.website}`
             } `}
             target="blank"
             className="website max-sm:text-sm max-sm:m-0 text-blue-800 hover:text-blue-900 transition-all duration-200 "

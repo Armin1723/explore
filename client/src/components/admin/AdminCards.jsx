@@ -36,7 +36,7 @@ const AdminCards = () => {
   return (
     <div className="cards py-2">
       <Carousel
-        slideSize={{ base: "100%", md: "50%", lg: "33.33%" }}
+        slideSize={{ base: "100%", sm:"50%", md: "50%", lg: "33.33%" }}
         slideGap={{ base: "lg", md: "xl", lg: "xl" }}
         withControls={false}
         align="start"

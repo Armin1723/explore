@@ -5,10 +5,8 @@ import { notifications } from "@mantine/notifications";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { setUser } from "../../redux/features/user/userSlice";
 
 const EnquiryForm = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
@@ -74,7 +72,6 @@ const EnquiryForm = () => {
         loading: false,
         autoClose: 2000,
       });
-      dispatch(setUser(data.user));
       navigate(`/companies/${slug}`);
     } catch (error) {
       notifications.update({

@@ -520,7 +520,7 @@ const getSimilarCompanies = async (req, res) => {
     })
       .select("name description gallery rating slug")
       .sort({ rating: -1 })
-      .limit(4 - companies.length);
+      .limit(5 - companies.length);
     companies.push(...remainingCompanies);
   }
 

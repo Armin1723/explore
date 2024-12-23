@@ -1,20 +1,15 @@
 import { Button, Modal, Textarea } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import React, { useRef, useState } from "react";
-import { setUser } from "../../redux/features/user/userSlice";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import AuthModal from "../shared/AuthModal";
 
 const EnquirySmall = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [error, setError] = useState(null);
   const [enquiry, setEnquiry] = useState("");
-
-  const inputRef = useRef(null);
 
   const [opened, { open, close }] = useDisclosure();
 
@@ -74,7 +69,6 @@ const EnquirySmall = () => {
       });
      
       setEnquiry("");
-      dispatch(setUser(data.user));
       navigate(`/companies/${slug}`);
     } catch (error) {
       notifications.update({

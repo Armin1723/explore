@@ -8,6 +8,7 @@ import { IoMdSend } from "react-icons/io";
 
 const EnquiryActionButton = ({ enquiry, setRefetch = () => {} }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [reply, setReply] = useState("");
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -57,7 +58,7 @@ const EnquiryActionButton = ({ enquiry, setRefetch = () => {} }) => {
           },
           credentials: "include",
           body: JSON.stringify({
-            response: "Response to the enquiry",
+            response: reply,
           }),
         }
       );
@@ -207,7 +208,7 @@ const EnquiryActionButton = ({ enquiry, setRefetch = () => {} }) => {
                 Close
               </button>
             </div>
-            {/* Modal Content for Editing */}
+            {/* Modal Content for Response */}
             <div className="enquiry flex flex-col gap-2">
               <div className="flex flex-col gap-2">
                 <label htmlFor="message" className="text-sm font-semibold">
@@ -229,6 +230,8 @@ const EnquiryActionButton = ({ enquiry, setRefetch = () => {} }) => {
                 <textarea
                   id="message"
                   name="message"
+                  value={reply}
+                  onChange={(e) => setReply(e.target.value)}
                   className="input outline-none p-2 rounded-md border border-neutral-400"
                   placeholder="Type your response here..."
                 />
