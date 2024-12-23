@@ -5,7 +5,7 @@ const {
   removeBanner,
 } = require("../controllers/advertisementController");
 const { isLoggedIn, isAdmin } = require("../middlewares");
-const asyncHandler = require("../utils");
+const { asyncHandler } = require("../utils");
 
 const router = require("express").Router();
 

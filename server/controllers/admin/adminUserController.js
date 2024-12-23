@@ -1,4 +1,5 @@
 const User = require("../../models/userModel");
+const { decodeDescription } = require("../../utils");
 
 //Get all users with pagination
 const getUsers = async (req, res) => {
@@ -35,6 +36,7 @@ const toggleSuspendUser = async (req, res) => {
   user.isActive = !user.isActive;
   await user.save();
   message = user.isActive ? "User activated" : "User deactivated";
+  user.company = decodeDescription(user.company);
   res.status(200).json({ message, user });
 };
 

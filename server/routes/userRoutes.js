@@ -19,7 +19,7 @@ const {
   verifyOtp,
 } = require("../controllers/userController");
 const { isLoggedIn } = require("../middlewares");
-const asyncHandler = require("../utils");
+const { asyncHandler } = require("../utils");
 
 const userRoutes = (io) => {
   //Auth Routes

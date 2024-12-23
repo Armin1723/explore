@@ -45,13 +45,13 @@ const AdminUsers = () => {
         </div>
       )}
 
-      <div className="users-container min-h-[50px] max-h-[600px overflow-y-auto flex flex-col">
+      <div className="users-container min-h-[50px] overflow-y-auto flex flex-col">
         {results &&
           results?.users.map((user, index) => {
             return (
               <Link
                 to={`/users/${user?._id}`}
-                className={`userCard flex justify-between py-3 border-b border-gray-400 hover:bg-teal-100/20 ${
+                className={`userCard flex justify-between py-3 px-2 border-b border-gray-400/40 hover:bg-teal-100/20 ${
                   index === 0 && "border-t"
                 }`}
                 key={index}

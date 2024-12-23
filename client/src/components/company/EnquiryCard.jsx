@@ -148,7 +148,7 @@ const EnquiryCard = ({ enquiry, setRefetch }) => {
             </p>
           </div>
         </Link>
-        <div className="actions flex items-center gap-2 max-sm:pl-4 max-sm:gap-4 ">
+        <div className="actions flex items-center gap-2 max-sm:pl-4 max-sm:gap-4 text-white">
           <button className="px-2 py-1 text-sm bg-gradient-to-br from-blue-700/60 to-blue-800 hover:bg-gradient-to-r flex items-center rounded-md border border-black/30" onClick={markAsRead}>
             <TiTick className="text-xl"/> <span className="max-sm:hidde">Mark Read</span>
           </button>

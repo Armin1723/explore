@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const enquirySchema = new mongoose.Schema({
-    companyId: {
+    company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Company",
     },
-    userId: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
@@ -13,9 +13,13 @@ const enquirySchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a message"],
     },
+    isForwarded : {
+        type: Boolean,
+        default: false,
+    },
     status: {
         type: String,
-        enum: ["pending", "responded", "rejected"],
+        enum: ["pending", "resolved", "read"],
         default: "pending",
     },
     response:{

@@ -3,7 +3,7 @@ const {
   createCategory,
 } = require("../controllers/categoryController");
 const { isAdmin } = require("../middlewares");
-const asyncHandler = require("../utils");
+const { asyncHandler } = require("../utils");
 
 const router = require("express").Router();
 

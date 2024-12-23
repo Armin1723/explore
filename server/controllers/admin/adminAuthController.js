@@ -1,6 +1,7 @@
 const User = require("../../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { decodeDescription } = require("../../utils");
 
 //Login as admin
 const loginAdmin = async (req, res) => {
@@ -14,9 +15,10 @@ const loginAdmin = async (req, res) => {
       },
     });
   }
-  const user = await User.findOne({ email })
+  let user = await User.findOne({ email })
     .select("+password")
     .populate("company");
+
   if (!user) {
     return res.status(400).json({
       success: false,
@@ -26,7 +28,7 @@ const loginAdmin = async (req, res) => {
       },
     });
   }
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = bcrypt.compare(password, user.password);
   if (!isMatch) {
     return res.status(400).json({
       success: false,
@@ -46,6 +48,10 @@ const loginAdmin = async (req, res) => {
       .status(400)
       .json({ success: false, message: "You don't have admin priveleges." });
   }
+
+  if(user.company){
+    user.company = decodeDescription(user.company); 
+  }
   const token = jwt.sign(
     {
       id: user._id,
@@ -60,6 +66,7 @@ const loginAdmin = async (req, res) => {
     sameSite: "None",
   });
   user.password = undefined;
+  user.company = decodeDescription(user.company);
   res.status(200).json({ success: true, user });
 };
 

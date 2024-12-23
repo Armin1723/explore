@@ -34,9 +34,9 @@ const AdminCards = () => {
   }, []);
 
   return (
-    <div className="cards  py-4">
+    <div className="cards py-2">
       <Carousel
-        slideSize={{ base: "100%", md: "50%", lg: "33%" }}
+        slideSize={{ base: "100%", md: "50%", lg: "33.33%" }}
         slideGap={{ base: "lg", md: "xl", lg: "xl" }}
         withControls={false}
         align="start"
@@ -46,7 +46,7 @@ const AdminCards = () => {
             <Carousel.Slide key={index}>
               <div
                 className={`rounded-xl ${
-                  colorScheme === "dark" ? "bg-zinc-800 border-gray-600" : "bg-transparent"
+                  colorScheme === "dark" ? "bg-zinc-800 border-gray-600" : "bg-white"
                 } flex flex-col gap-2 px-4 py-2 border-b-8 border border-b-primary `}
               >
                 <Group justify="space-between">

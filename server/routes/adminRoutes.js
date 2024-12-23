@@ -1,5 +1,5 @@
 const { isAdmin } = require("../middlewares");
-const asyncHandler = require("../utils");
+const { asyncHandler } = require("../utils");
 
 const {
   loginAdmin,
@@ -31,6 +31,7 @@ const {
   toggleSuspendUser,
   getSuspendedUsers,
 } = require("../controllers/admin/adminUserController");
+const { getEnquiries, getSingleEnquiry, sendResponse, forwardResponseToCompany } = require("../controllers/admin/adminEnquiryController");
 
 const router = require("express").Router();
 
@@ -68,6 +69,12 @@ router.delete("/reviews/:reviewId", isAdmin, asyncHandler(deleteReview));
 router.post("/requests/handle", isAdmin, asyncHandler(handleRequest));
 router.get("/recent-request", isAdmin, asyncHandler(getRecentCompany));
 router.get("/requests", isAdmin, asyncHandler(getRequests));
+
+//Handle Enquiries
+router.get("/enquiries", isAdmin, asyncHandler(getEnquiries));
+router.get("/enquiries/:id", isAdmin, asyncHandler(getSingleEnquiry));
+router.post("/enquiries/:id", isAdmin, asyncHandler(sendResponse));
+router.get("/enquiries/:id/forward", isAdmin, asyncHandler(forwardResponseToCompany));
 
 //Get Banners with pagination support
 router.get("/banners", isAdmin, asyncHandler(getBanners));

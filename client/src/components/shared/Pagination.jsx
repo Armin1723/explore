@@ -1,39 +1,6 @@
-// import React from "react";
-
-// const Pagination = ({ totalPages = 10, page, setPage= ()=>{} }) => {
-
-//   const handleNavigation = (direction) => {
-//     const newPage = direction === "prev" ? page - 1 : page + 1;
-//     setPage(newPage);
-//   }
-
-//   return (
-//     <div className="pagination w-full items-center flex flex-row justify-center pt-4 gap-4">
-//       <button
-//         className="rounded-lg px-2 py-1 border border-teal-600 auth-button disabled:hover:before:h-0 disabled:hover:shadow-none disabled:hover:text-current disabled:cursor-not-allowed disabled:opacity-50"
-//         onClick={() => handleNavigation('prev')}
-//         disabled={page == 1}
-//       >
-//         Prev
-//       </button>
-//       <p className="px-4 mx-1 border-r border-l border-slate-900">{page}</p>
-//       <button
-//         className="rounded-lg px-2 py-1 border border-teal-600 auth-button disabled:hover:before:h-0 disabled:hover:shadow-none disabled:hover:text-current disabled:cursor-not-allowed disabled:opacity-50"
-//         onClick={() => handleNavigation('next')}
-//         disabled={page === totalPages}
-//       >
-//         Next
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default Pagination;
-
-
 import React from "react";
 
-const Pagination = ({ page= 1, setPage=()=>{}, totalPages = 10 }) => {
+const Pagination = ({ page = 1, setPage = () => {}, totalPages = 10 }) => {
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       setPage(newPage);
@@ -90,7 +57,7 @@ const Pagination = ({ page= 1, setPage=()=>{}, totalPages = 10 }) => {
       <button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        className="px-3 py-1 rounded bg-gray-200 text-gray-700 hover:bg-primary/60 disabled:opacity-50"
+        className="px-3 py-1 rounded bg-gray-200/50 text-gray-700 hover:bg-primary/60 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-gray-200/30"
       >
         &lt;
       </button>
@@ -98,7 +65,7 @@ const Pagination = ({ page= 1, setPage=()=>{}, totalPages = 10 }) => {
       <button
         onClick={() => handlePageChange(page + 1)}
         disabled={page === totalPages}
-        className="px-3 py-1 rounded bg-gray-200 text-gray-700 hover:bg-primary/60 disabled:opacity-50"
+        className="px-3 py-1 rounded bg-gray-200/50 text-gray-700 hover:bg-primary/60 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-gray-200/30"
       >
         &gt;
       </button>

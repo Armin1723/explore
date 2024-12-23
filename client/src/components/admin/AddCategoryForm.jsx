@@ -136,7 +136,7 @@ import { useNavigate } from "react-router-dom";
                   </Chip>
                 ))}
               </Group>
-              <Button type="submit" color='brand.5'>
+              <Button type="submit" variant="outline" color="brand.3">
                 Add Category
               </Button>
             </div>

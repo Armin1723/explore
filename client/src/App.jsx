@@ -2,9 +2,9 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollRestoration from "./components/utility/ScrollRestoration";
 
-import AdminBanners from "./components/admin/AdminBanners";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import AdminEnquiries from "./components/admin/AdminEnquiries";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const AdminCategories = React.lazy(() =>
@@ -112,6 +112,7 @@ const App = () => {
             <Route path="" element={<AdminUsers />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="companies" element={<AdminCompanies />} />
+            <Route path='enquiries' element={<AdminEnquiries />} />
             <Route path="reviews" element={<AdminReviews />} />
             <Route path="companies/:category" element={<AdminCompanies />} />
             <Route
@@ -122,7 +123,6 @@ const App = () => {
             />
             <Route path="categories" element={<AdminCategories />} />
             <Route path="categories/add" element={<AddCategoryForm />} />
-            <Route path="banners" element={<AdminBanners />} />
           </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />

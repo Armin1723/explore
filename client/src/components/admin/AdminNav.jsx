@@ -1,15 +1,15 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { IoIosTrendingUp } from "react-icons/io";
 import { CiReceipt, CiUser } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
-import { Avatar, ScrollArea, useMantineColorScheme } from "@mantine/core";
+import { ScrollArea, useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { NavLink } from "@mantine/core";
 import { FaChevronRight } from "react-icons/fa";
 import { MdCategory, MdPendingActions } from "react-icons/md";
-import { IoImageSharp } from "react-icons/io5";
+import { IoChatbubbleEllipses } from "react-icons/io5";
 import Logo from "../shared/Logo";
+import NavUser from "./NavUser";
 
 const AdminNav = () => {
   const user = useSelector((state) => state.user);
@@ -23,14 +23,11 @@ const AdminNav = () => {
       className={`${
         colorScheme == "dark"
           ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900"
-          : "bg-white text-black"
-      } flex flex-col justify-between items-start sticky top-0 px-4 max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60`}
+          : "bg-secondary text-black"
+      } flex flex-col justify-between items-start sticky top-0 px-4 h-screen max-sm:hidden py-4 min-w-[15vw] shadow-[0_1px_30px_gray] shadow-gray-500/60`}
     >
-      <div
-        className="nav-top flex gap-4 justify-start items-center mt-2"
-      >
-        
-        <Logo variant={colorScheme === 'light' ? 'colored' : 'white'}/>
+      <div className="nav-top flex gap-4 justify-start items-center mt-2">
+        <Logo variant={colorScheme === "light" ? "colored" : "white"} />
       </div>
       <div className="divider my-2 border border-neutral-500/50 w-full" />
 
@@ -62,9 +59,12 @@ const AdminNav = () => {
           rightSection={<FaChevronRight />}
         >
           <ScrollArea
-        offsetScrollbars
-        scrollbarSize={6}
-        scrollHideDelay={500} h={400} className="w-full">
+            offsetScrollbars
+            scrollbarSize={6}
+            scrollHideDelay={500}
+            h={400}
+            className="w-full"
+          >
             <NavLink
               component={Link}
               to={`/admin/companies/all`}
@@ -89,6 +89,13 @@ const AdminNav = () => {
         </NavLink>
         <NavLink
           component={Link}
+          to="/admin/enquiries"
+          label="Enquiries"
+          leftSection={<IoChatbubbleEllipses className="text-2xl" />}
+          active={location.pathname.includes("/admin/enquiries")}
+        />
+        <NavLink
+          component={Link}
           to="/admin/reviews"
           label="Reviews"
           leftSection={<CiReceipt className="text-2xl" />}
@@ -108,28 +115,9 @@ const AdminNav = () => {
           leftSection={<MdCategory className="text-2xl" />}
           active={location.pathname.includes("/admin/categories")}
         />
-        <NavLink
-          component={Link}
-          to="/admin/banners"
-          label="Banners"
-          leftSection={<IoImageSharp className="text-2xl" />}
-          active={location.pathname.includes("/admin/banners")}
-        />
       </div>
 
-      <div className="nav-bottom">
-        <Link
-          to={`/users/${user?._id}`}
-          className="flex items-center gap-4 hover:text-teal-400 transition-all duration-300"
-        >
-          <Avatar
-            src={user?.profilePic}
-            alt={user?.name}
-            className="hover:blue-700"
-          />
-          <p className="max-lg:text-sm">Profile</p>
-        </Link>
-      </div>
+      <NavUser user={user} />
     </div>
   );
 };

@@ -2,12 +2,13 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CiReceipt, CiUser } from "react-icons/ci";
 import { CiViewList } from "react-icons/ci";
-import { Avatar, ScrollArea, useMantineColorScheme } from "@mantine/core";
+import { ScrollArea, useMantineColorScheme } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { NavLink } from "@mantine/core";
 import { FaChevronRight } from "react-icons/fa";
 import { MdCategory, MdPendingActions } from "react-icons/md";
-import { IoImageSharp } from "react-icons/io5";
+import { IoChatbubbleEllipses } from "react-icons/io5";
+import NavUser from "./NavUser";
 
 const AdminNavSmall = ({ closeDrawer }) => {
   const user = useSelector((state) => state.user);
@@ -19,7 +20,7 @@ const AdminNavSmall = ({ closeDrawer }) => {
     <div
       className={` ${
         colorScheme == "dark"
-          ? "bg-zinc-900 text-white shadow-[0_0_25px_gray] shadow-gray-900"
+          ? "bg-transparent text-white shadow-[0_0_25px_gray] shadow-gray-900"
           : "bg-white text-black"
       } flex flex-col justify-between items-start h-[85vh]`}
     >
@@ -84,6 +85,13 @@ const AdminNavSmall = ({ closeDrawer }) => {
             })}
           </ScrollArea>
         </NavLink>
+        <NavLink
+          component={Link}
+          to="/admin/enquiries"
+          label="Enquiries"
+          leftSection={<IoChatbubbleEllipses className="text-2xl" />}
+          active={location.pathname.includes("/admin/enquiries")}
+        />
 
         <NavLink
           component={Link}
@@ -109,29 +117,9 @@ const AdminNavSmall = ({ closeDrawer }) => {
           leftSection={<MdCategory className="text-2xl" />}
           active={location.pathname.includes("/admin/categories")}
         />
-        <NavLink
-          component={Link}
-          to="/admin/banners"
-          label="Banners"
-          onClick={closeDrawer}
-          leftSection={<IoImageSharp className="text-2xl" />}
-          active={location.pathname.includes("/admin/banners")}
-        />
       </div>
 
-      <div className="nav-bottom py-6">
-        <Link
-          to={`/users/${user?._id}`}
-          className="flex items-center gap-4 hover:text-teal-400 transition-all duration-300"
-        >
-          <Avatar
-            src={user?.profilePic}
-            alt={user?.name}
-            className="hover:blue-700"
-          />
-          <p className="max-lg:text-sm">Profile</p>
-        </Link>
-      </div>
+      <NavUser user={user} />
     </div>
   );
 };

@@ -23,6 +23,7 @@ import SearchBar from "./SearchBar";
 import SearchBarSmall from "./SearchBarSmall";
 import Logo from "./Logo";
 import { FaArrowRight } from "react-icons/fa";
+import NavUser from "../admin/NavUser";
 
 const categoryData = [
   {
@@ -83,7 +84,7 @@ export const Header = () => {
   const links = categoryData.map((item) => (
     <Link
       to={`/companies/categories/${item.title.toLowerCase()}`}
-      className="!text-sm"
+      className="!text-sm "
       key={item.title}
     >
       <div className="w-[100%] px-2 max-sm:hover:bg-none py-2 rounded-lg hover:bg-[#000088]/75 group flex items-center justify-start gap-2 font-['poppins'] ">
@@ -91,7 +92,7 @@ export const Header = () => {
           <img style={{ width: rem(22), height: rem(22) }} src={item.icon} />
         </ThemeIcon>
         <div>
-          <div className="text-sm font-['poppins'] font-[400] max-sm:text-sm group-hover:text-secondary transition-colors duration-150">
+          <div className="font-['poppins'] font-[400] text-gray-700 group-hover:text-secondary transition-colors duration-150">
             {item.title}
           </div>
           <div className="text-sm max-sm:text-xs font-light group-hover:text-white/70 transition-colors duration-150">
@@ -179,14 +180,7 @@ export const Header = () => {
               </HoverCard.Dropdown>
             </HoverCard>
 
-            <Link
-              to="/companies/add"
-              className="link text-sm max-lg:text-xs transition-all duration-200 "
-            >
-              Listing
-            </Link>
-
-            <Link
+            {/* <Link
               to={`${user && user?.name ? "/companies/advertise" : "/"}`}
               className={`link text-sm max-lg:text-xs transition-all duration-200   ${
                 (!user || !user.name) && "text-gray-700/30 cursor-not-allowed"
@@ -198,19 +192,36 @@ export const Header = () => {
               }}
             >
               Advertise
-            </Link>
+            </Link> */}
           </div>
 
           <div className="flex gap-2 items-center justify-end">
             <SearchBarSmall />
+            {user && user?.name && user.company ? (
+              <div className="lg:flex hidden text-sm items-center">
+                <Link to={`/companies/${user?.company?.slug}`}>Listing</Link>
+              </div>
+            ) : (
+              <Link
+                to="/companies/add"
+                className="md:flex hidden button group items-center gap-2 border-accent bg-accent/85 hover:bg-accent border  transition-all text-white duration-500 ease-in rounded-md hover:-translate-y-0.5 px-3 py-1.5 text-sm"
+              >
+                <p>Get Started</p>
+                <span className="overflow-hidden transition-all duration-500 ease-in">
+                  <FaArrowRight />
+                </span>
+              </Link>
+            )}
             {user && user?.name ? (
               <div className="md:flex hidden">
                 <UserProfile />
               </div>
             ) : (
-              <Link to='/auth' className="md:flex hidden button group items-center gap-2 bg-accent/85 hover:bg-accent border  transition-all text-white duration-500 ease-in rounded-md hover:-translate-y-1 px-3 py-1">
-                <p>Get Started</p>
-                <span className="overflow-hidden transition-all duration-500 ease-in"><FaArrowRight /></span>
+              <Link
+                to="/auth"
+                className="md:flex hidden button group items-center gap-2 border border-brand/85 hover:bg-brand/10 transition-all text-brand duration-500 ease-in rounded-md hover:-translate-y-0.5 px-3 py-1.5 text-sm"
+              >
+                Login
               </Link>
             )}
           </div>
@@ -233,7 +244,7 @@ export const Header = () => {
         zIndex={100}
         className=""
       >
-        <div className="links text-sm gap-4 overflow-y-auto px-4 flex h-[80dvh] flex-col justify-start">
+        <div className="links text-sm gap-4 overflow-y-auto px-2 py-3 flex h-[74vh] flex-col justify-start">
           <Link to="/" className="font-['poppins'] " onClick={closeDrawer}>
             Home
           </Link>
@@ -246,33 +257,41 @@ export const Header = () => {
               />
             </Center>
           </div>
-          <Collapse in={linksOpened}>{links}</Collapse>
-          <Link
-            to="/companies/add"
-            className="font-['poppins']"
-            onClick={closeDrawer}
-          >
-            Add Company
-          </Link>
-          <Link
-            to={`${user && user?.name && "/companies/advertise"}`}
-            className={` font-['poppins']  transition-colors duration-200 ${
-              (!user || !user.name) && "text-gray-700 cursor-not-allowed"
-            }`}
-            onClick={closeDrawer}
-          >
-            Advertise
-          </Link>
+          <Collapse in={linksOpened} onClick={closeDrawer}>{links}</Collapse>
+          {user && user?.name && user.company && (
+            <Link
+              to={`/companies/${user?.company?.slug}`}
+              className="font-['poppins'] "
+              onClick={closeDrawer}
+            >
+              My Listing
+            </Link>
+          )}
         </div>
 
-        <div className="flex gap-1 items-center">
-          {user && user?.name ? (
-            <UserProfile expanded />
+        <div className="flex flex-col gap-2 justify-end" onClick={closeDrawer}>
+        
+          {!user ||
+            (!user.company && (
+              <Link
+                to="/cmpanies/add"
+                className="flex button group items-center gap-2 bg-accent/85 hover:bg-accent transition-all !text-white duration-300 rounded-md hover:-translate-y-1 px-3 py-1.5"
+              >
+                <p>Get Started</p>
+                <span className="overflow-hidden transition-all duration-500 ease-in ">
+                  <FaArrowRight />
+                </span>
+              </Link>
+            ))}
+            {user && user?.name ? (
+            <NavUser user={user} />
           ) : (
-            <Link to='/auth' className="flex button group items-center gap-2 bg-accent/85 hover:bg-accent transition-all !text-white duration-300 rounded-md hover:-translate-y-1 px-3 py-1">
-            <p>Get Started</p>
-            <span className="overflow-hidden transition-all duration-500 ease-in "><FaArrowRight /></span>
-          </Link>
+            <Link
+              to="/auth"
+              className="flex button group items-center gap-2 border border-brand/55 hover:bg-brand/10 transition-all text-brand duration-500 ease-in rounded-md hover:-translate-y-0.5 px-3 py-1.5 text-sm"
+            >
+              <p>Login / Signup</p>
+            </Link>
           )}
         </div>
       </Drawer>

@@ -2,180 +2,145 @@ const { sendMail } = require("../helpers");
 const Company = require("../models/companyModel");
 const Enquiry = require("../models/enquiryModel");
 const User = require("../models/userModel");
+const { enquiryResponseMailTemplate } = require("../templates/email");
 
 //Fetch Enquiries of a company with pagination
 const getEnquiries = async (req, res) => {
-    const { companyId } = req.params;
-    let { page } = req.query;
+  const { companyId } = req.params;
+  let { page = 1, status = "pending" } = req.query;
 
-    if (!page) page = 1;
+  const company = await Company.findOne({ _id: companyId }).populate("name");
+  if (!company) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Company not found" });
+  }
 
-    const company = await Company.findOne(
-      { _id: companyId },
-      { enquiries: 1 }
-    ).populate({
-      path: "enquiries",
-      match: { status: "pending" },
-      populate: {
-        path: "user",
-        select: "name profilePic",
-      },
-      options:{
-        limit: 10,
-        skip: (page - 1) * 10,
-        sort: { createdAt: -1 },
-      }
-    });
+  const query = { company: companyId, isForwarded: true, status };
 
-    if (!company) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Company not found" });
-    }
+  if (status) {
+    query.status = status;
+  }
 
-    const totalEnquiries = await Company.findOne({
-      _id: companyId,
-    }).populate({
-      path: "enquiries",
-      match: { status: "pending" },
-    });
+  const enquiries = await Enquiry.find(
+    query).populate("user", "name profiePic").sort({ createdAt: -1 }).limit(10).skip((page - 1) * 10);
+    
 
-    res.status(200).json({
-      success: true,
-      enquiries: company.enquiries,
-      page,
-      totalEnquiries: totalEnquiries.enquiries.length,
-      totalPages: Math.ceil(totalEnquiries / 10),
-    });
- };
+  const totalEnquiries = await Enquiry.countDocuments({
+    company: companyId,
+    status: "pending",
+    isForwarded: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    enquiries,
+    page,
+    totalEnquiries,
+    totalPages: Math.ceil(totalEnquiries / 10),
+  });
+};
 
 //Fetch a single enquiry
 const getSingleEnquiry = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const enquiry = await Enquiry.findById(id).populate({
-      path: "user",
-      select: "name profilePic",
-    });
+  const enquiry = await Enquiry.findById(id).populate({
+    path: "user",
+    select: "name profilePic",
+  });
 
-    if (!enquiry) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Enquiry not found" });
-    }
+  if (!enquiry) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Enquiry not found" });
+  }
 
-    res.status(200).json({ success: true, enquiry });
+  res.status(200).json({ success: true, enquiry });
 };
 
 //Send response to an enquiry
 const sendResponse = async (req, res) => {
-    const { enquiryId, response } = req.body;
+  const { enquiryId, response } = req.body;
 
-    const enquiry = await Enquiry.findById(enquiryId).populate('user', 'name email');
-    if (!enquiry) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Enquiry not found" });
-    }
+  const enquiry = await Enquiry.findById(enquiryId).populate(
+    "user",
+    "name email"
+  );
+  if (!enquiry) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Enquiry not found" });
+  }
 
-    enquiry.response = response;
-    enquiry.status = "responded";
-    await enquiry.save();
+  enquiry.response = response;
+  enquiry.status = "read";
+  await enquiry.save();
 
+  sendMail(
+    enquiry.user.email,
+    "Response to your enquiry",
+    message = enquiryResponseMailTemplate(enquiry.user, response)
+  );
 
-    sendMail(
-      enquiry.user.email,
-      "Response to your enquiry",
-      `Hello <strong>${enquiry.user.name}</strong>,<br/>We have received your enquiry and here is the response:<br/><strong>${response}</strong><br/>Thank you for contacting us.<br/>Regards,`,
-    );
-
-    res
-      .status(200)
-      .json({ success: true, message: "Response sent successfully", enquiry });
+  res
+    .status(200)
+    .json({ success: true, message: "Response sent successfully", enquiry });
 };
 
 //Send an enquiry
 const sendEnquiry = async (req, res) => {
-    const { slug, message } = req.body;
-    const { id } = req.user;
-    const user = await User.findById(id);
-    const company = await Company.findOne({ slug });
-    if (!company) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Company not found" });
-    }
-    const enquiry = await Enquiry.create({
-      company: company._id,
-      user: id,
-      message,
-    });
+  const { slug, message } = req.body;
+  const { id } = req.user;
+  const user = await User.findById(id);
+  const company = await Company.findOne({ slug });
+  if (!company) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Company not found" });
+  }
+  const enquiry = await Enquiry.create({
+    company: company._id,
+    user: id,
+    message,
+  });
 
-    if (company.enquiries) {
-      company.enquiries = [...company.enquiries, enquiry._id];
-    } else {
-      company.enquiries = [enquiry._id];
-    }
-
-    
-    if (!user.enquiries) {
-      user.enquiries = [enquiry._id];
-    } else {
-      user.enquiries = [...user.enquiries, enquiry._id];
-    }
-
-    await Promise.all([user.save(), company.save()]);
-
-    res.status(200).json({
-      success: true,
-      message: "Enquiry sent successfully",
-      enquiry,
-      user,
-    });
+  res.status(200).json({
+    success: true,
+    message: "Enquiry sent successfully",
+    enquiry,
+    user,
+  });
 };
 
 //Mark an enquiry as read
 const markAsRead = async (req, res) => {
-    const { enquiryId } = req.body;
-    const enquiry = await Enquiry.findById(enquiryId);
-    if (!enquiry) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Enquiry not found" });
-    }
-    enquiry.status = "responded";
-    await enquiry.save();
-    res
-      .status(200)
-      .json({ success: true, message: "Enquiry marked as read" });
+  const { enquiryId } = req.body;
+  const enquiry = await Enquiry.findById(enquiryId);
+  if (!enquiry) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Enquiry not found" });
+  }
+  enquiry.status = "read";
+  await enquiry.save();
+  res.status(200).json({ success: true, message: "Enquiry marked as read" });
 };
 
 //Delete an enquiry
 const deleteEnquiry = async (req, res) => {
-    const { enquiryId } = req.body;
-    const enquiry = await Enquiry.findById(enquiryId);
-    if (!enquiry) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Enquiry not found" });
-    }
+  const { enquiryId } = req.body;
+  const enquiry = await Enquiry.findById(enquiryId);
+  if (!enquiry) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Enquiry not found" });
+  }
 
-    const company = await Company.findById(enquiry.company);
-    company.enquiries = company.enquiries.filter(
-      (enq) => enq.toString() !== enquiryId
-    );
-    
-    const user = await User.findById(enquiry.user);
-    user.enquiries = user.enquiries.filter(
-      (enq) => enq.toString() !== enquiryId
-    );
-
-    await Promise.all([company.save(), user.save()]);
-
-    await enquiry.deleteOne();
-    res
-      .status(200)
-      .json({ success: true, message: "Enquiry deleted successfully" });
+  await enquiry.deleteOne();
+  res
+    .status(200)
+    .json({ success: true, message: "Enquiry deleted successfully" });
 };
 
 module.exports = {

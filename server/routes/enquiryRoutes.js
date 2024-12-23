@@ -1,7 +1,14 @@
 const express = require("express");
 const { isLoggedIn } = require("../middlewares");
-const { getEnquiries, getSingleEnquiry, sendResponse, sendEnquiry, markAsRead, deleteEnquiry } = require("../controllers/enquiryController");
-const asyncHandler = require("../utils");
+const {
+  getEnquiries,
+  getSingleEnquiry,
+  sendResponse,
+  sendEnquiry,
+  markAsRead,
+  deleteEnquiry,
+} = require("../controllers/enquiryController");
+const { asyncHandler } = require("../utils");
 const router = express.Router();
 
 //Middleware
@@ -16,6 +23,6 @@ router.post("/mark-read", asyncHandler(markAsRead));
 router.post("/delete", asyncHandler(deleteEnquiry));
 
 //Send Enquiries
-router.post('/send',asyncHandler(sendEnquiry));
+router.post("/send", asyncHandler(sendEnquiry));
 
 module.exports = router;

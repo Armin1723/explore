@@ -32,6 +32,17 @@ const GalleryForm = ({ nextStep }) => {
   });
 
   const handleDrop = (acceptedFiles) => {
+    const oversizedFile = acceptedFiles.find((file) => file.size > 5 * 1024 * 1024);
+
+  if (oversizedFile) {
+    notifications.show({
+      title: "Error",
+      message: `One or more files are too large. Maximum allowed size is 5MB.`,
+      color: "red",
+    });
+    return; // Prevent adding the oversized file
+  }
+
     if (acceptedFiles.length + files.length > 5) {
       notifications.show({
         title: "Error",
@@ -118,7 +129,6 @@ return (
             <Dropzone
                 onDrop={(files) => handleDrop(files)}
                 onReject={(files) => console.log("rejected files", files)}
-                maxSize={5 * 1024 ** 2}
                 accept={IMAGE_MIME_TYPE}
                 className="flex flex-col items-center justify-center gap-4 w-full md:p-10 border-2 border-dashed border-gray-300 rounded-lg"
             >

@@ -96,7 +96,7 @@ const AdminRequests = ({ refetch, setRefetch }) => {
             results.companies.map((company, index) => {
               return (
                 <div
-                  className={`userCard flex justify-between py-3 px-2 border-b border-gray-400 hover:bg-teal-100/20 ${
+                  className={`userCard flex justify-between py-3 px-2 border-b border-gray-400/40 hover:bg-teal-100/20 ${
                     index === 0 && "border-t"
                   }`}
                   key={index}

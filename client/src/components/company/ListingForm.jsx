@@ -6,7 +6,6 @@ import {
   FileInput,
   NumberInput,
   Select,
-  TagsInput,
   Textarea,
   TextInput,
 } from "@mantine/core";

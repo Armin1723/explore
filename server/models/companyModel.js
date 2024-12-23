@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const { encode, decode } = require("entities");
 
 const companySchema = new mongoose.Schema({
   name: {
@@ -83,7 +84,7 @@ const companySchema = new mongoose.Schema({
       url: { type: String },
     },
   ],
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -106,6 +107,17 @@ const companySchema = new mongoose.Schema({
 companySchema.pre("save", function (next) {
   if (!this.isModified("name")) return next();
   this.slug = slugify(this.name, { lower: true, strict: true });
+  next();
+});
+
+// Function to check if a string is already encoded
+const isEncoded = (str) => str !== decode(str); 
+
+// Pre-save hook to encode the description
+companySchema.pre("save", function (next) {
+  if (this.description && !isEncoded(this.description)) {
+    this.description = encode(this.description);
+  }
   next();
 });
 

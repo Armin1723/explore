@@ -1,12 +1,14 @@
 const { Parser } = require("json2csv");
 const Company = require("../../models/companyModel");
+const Review = require("../../models/reviewModel");
+const Enquiry = require("../../models/enquiryModel");
 const { sendMail } = require("../../helpers");
+const { decodeDescription } = require("../../utils");
+const { listingConfirmationMailTemplate } = require("../../templates/email");
 
 //Get all companies with pagination
 const getCompanies = async (req, res) => {
-    let { page, category, subCategory, limit = 10 } = req.query;
-
-    if (!page) page = 1;
+    let { page = 1, category, subCategory, limit = 10 } = req.query;
 
     let query = { status: "active" };
 
@@ -23,6 +25,10 @@ const getCompanies = async (req, res) => {
       .limit(limit);
 
     const totalCompanies = await Company.countDocuments(query);
+
+    companies.forEach((company)=>{
+      company = decodeDescription(company);
+    })
 
     res.status(200).json({
       success: true,
@@ -63,7 +69,7 @@ const exportCompanies = async (req, res) => {
       "website",
       "category",
       "subCategory",
-      "admin",
+      "user",
       "createdAt",
     ];
     const opts = { fields };
@@ -80,11 +86,7 @@ const exportCompanies = async (req, res) => {
 // Suspend a company
 const toggleSuspendCompany = async (req, res) => {
     const { companyId } = req.body;
-    const company = await Company.findById(companyId).populate({
-      path: "reviews",
-      populate: { path: "user" },
-      limit: 5,
-    });
+    let company = await Company.findById(companyId)
 
     if (!company) {
       return res.status(404).json({ message: "Company not found" });
@@ -92,6 +94,19 @@ const toggleSuspendCompany = async (req, res) => {
 
     company.status = company.status === "active" ? "suspended" : "active";
     await company.save();
+
+    company = decodeDescription(company);
+    company.toObject();
+
+    const companyReviews = await Review.find({ company: companyId }).limit(5).sort({ createdAt: -1 });
+    if (companyReviews.length > 0) {
+      company.reviews = companyReviews;
+    }
+
+    const companyEnquiries = await Enquiry.find({ company: companyId }, {select: "status _id"}).limit(5).sort({ createdAt: -1 });
+    if (companyEnquiries.length > 0) {
+      company.enquiries = companyEnquiries;
+    }
 
     const message =
       company.status === "active"
@@ -115,7 +130,7 @@ const getSuspendedCompanies = async (req, res) => {
 
 //Get recent company
 const getRecentCompany = async (req, res) => {
-    const company = await Company.findOne({ status: "pending" }).sort({
+    let company = await Company.findOne({ status: "pending" }).sort({
       createdAt: -1,
     });
     if (!company) {
@@ -123,6 +138,7 @@ const getRecentCompany = async (req, res) => {
         .status(200)
         .json({ success: true, message: "No pending company found" });
     }
+    company = decodeDescription(company);
     res.status(200).json({ success: true, company });
 };
 
@@ -156,21 +172,14 @@ const handleRequest = async (req, res) => {
     if (!company) {
       return res.status(404).json({ message: "Company not found" });
     }
-    if (action === "approve") {
-      company.status = "active";
-    }
-    if (action === "reject") {
-      company.status = "suspended";
-    }
+    company.status = action === "approve" ? "active" : "suspended";
     await company.save();
 
     //send mail to company
     const subject =
       action === "approve" ? "Company approved" : "Company rejected";
-    const message =
-      action === "approve"
-        ? `Dear ${company.name},\n\nWe are pleased to inform you that your company has been approved and is now active on our platform. You can now access all the features and start engaging with users.\n\nBest regards,\nThe Team`
-        : `Dear ${company.name},\n\nWe regret to inform you that your company has been rejected. Please review the submission guidelines and make the necessary changes before resubmitting.\n\nBest regards,\nThe Team`;
+    const message = listingConfirmationMailTemplate(action, company.name);
+      
     sendMail(company.email, subject, message);
 
     res.status(200).json({ success: true, company });

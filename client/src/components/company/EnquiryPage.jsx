@@ -35,31 +35,31 @@ const EnquiryPage = () => {
   }, [user, refetch]);
 
   useEffect(() => {
-    // const fetchEnquiries = async () => {
-    //   try {
-    //     setLoading(true);
-    //     setResults([]);
-    //     const response = await fetch(
-    //       `${import.meta.env.VITE_BACKEND_URL}/api/enquiries/${
-    //         user?.company?._id
-    //       }?page=${page}`,
-    //       {
-    //         credentials: "include",
-    //       }
-    //     );
-    //     const data = await response.json();
-    //     if (!response.ok) {
-    //       throw new Error(data.message);
-    //     }
-    //     setResults(data);
-    //     setLoading(false);
-    //   } catch (error) {
-    //     setLoading(false);
-    //     console.error(error.message);
-    //   }
-    // };
+    const fetchEnquiries = async () => {
+      try {
+        setLoading(true);
+        setResults([]);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/enquiries/${
+            user?.company?._id
+          }?page=${page}`,
+          {
+            credentials: "include",
+          }
+        );
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+        setResults(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error(error.message);
+      }
+    };
 
-    // fetchEnquiries();
+    fetchEnquiries();
   }, [refetch, page]);
 
   return (

@@ -7,9 +7,9 @@ import { FaEllipsisV } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const CompanyReview = ({ company, setCompany, isAdmin }) => {
+const CompanyReviews = ({ company, setCompany, isAdmin }) => {
   const [hasMore, setHasMore] = React.useState(
-    company?.reviews?.length < 5 ? false : true
+    company?.reviews?.length > 5 ? true : false
   );
   const [loading, setLoading] = React.useState(false);
   const user = useSelector((state) => state.user);
@@ -125,11 +125,11 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
         <Paper
           key={index}
           withBorder
-          className="p-4 mb-4 shadow-sm rounded-lg w-full"
+          className="p-4 mb-4 shadow-sm rounded-lg w-full flex flex-col"
         >
-          <Group position="apart" justify="space-between">
+          <Group position="apart" justify="space-between" className="flex w-full flex-wrap">
             <Link to={`/users/${review?.user?._id}`} className="flex gap-2 items-center">
-              <Avatar src={review?.user?.profilePic} alt={review?.user?.name} />
+              <Avatar src={review?.user?.profilePic} alt={review?.user?.name} size={30}/>
               <div>
                 <Title order={5}>{review?.user?.name}</Title>
                 <Rating value={review?.rating} readOnly size="sm" />
@@ -170,7 +170,7 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
       {hasMore && (
         <button
           onClick={fetchMoreReviews}
-          className="bg-primary text-white px-4 rounded-lg w-36 hover:bg-primary/90 transition-all duration-200"
+          className="bg-brand/70 text-white px-3 rounded-lg w-36 hover:bg-brand/90 transition-all duration-200"
         >
           {loading ? (
             <span class="dots">
@@ -184,11 +184,11 @@ const CompanyReview = ({ company, setCompany, isAdmin }) => {
         </button>
       )}
 
-      {company?.reviews?.length === 0 && (
+      {!company.reviews && (
         <p className="">No reviews found</p>
       )}
     </div>
   );
 };
 
-export default CompanyReview;
+export default CompanyReviews;

@@ -68,7 +68,10 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:title" content="Admin Panel | Link India Portal" />
         <meta property="og:type" content="website" />
-        <meta property="og:description" content="Admin Panel | Link India Portal" />
+        <meta
+          property="og:description"
+          content="Admin Panel | Link India Portal"
+        />
         <meta property="og:image" content="/logo/colored.png" />
         <meta
           property="og:url"
@@ -78,12 +81,12 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
 
       {/* Content */}
       <div
-        className={`flex h-[100dvh] overflow-y-auto w-full ${
-          colorScheme === "light" && "bg-teal-100/20"
+        className={`flex h-[100dvh] overflow-auto w-full ${
+          colorScheme === "light" && "bg-secondary"
         }`}
       >
         <AdminNav />
-        <div className="flex-1 flex flex-col p-4 ">
+        <div className="flex-1 flex flex-col p-4 overflow-y-hidden ">
           <div className="top-ribbon flex justify-between items-center py-2 w-full rounded-md bg-gray-400/20">
             <div className="content px-4 flex flex-col gap-2 w-full">
               <div className="ribbon-right flex items-center justify-between w-full">
@@ -111,36 +114,45 @@ const AdminHomepage = ({ refetch, setRefetch }) => {
               </div>
             </div>
           </div>
-          <p className="heading !my-2 !font-medium capitalize">
-            Welcome {user?.name}{" "}
-            <span className="max-sm:hidden">to the Admin Dashboard.</span>
-          </p>
+          <div className="welcome my-2 flex items-center gap-1">
+            <p className="heading !my-2 !font-medium capitalize">
+              Welcome{" "}
+              <span className="bg-clip-text text-transparent bg-gradient-to-br from-brand to-violet-600 font-bold">
+                {user?.name}
+              </span>{" "}
+              <span className="max-sm:hidden">to the Admin Dashboard.</span>
+            </p>
 
-          {/* Small Nav For sm devices */}
-          <Drawer
-            opened={drawerOpened}
-            onClose={closeDrawer}
-            size="80%"
-            title={<Logo variant={colorScheme === 'light' ? 'colored' : 'white'}/>}
-            zIndex={9999}
-          >
-            <AdminNavSmall closeDrawer={closeDrawer} />
-          </Drawer>
+            {/* Small Nav For sm devices */}
+            <Drawer
+              opened={drawerOpened}
+              onClose={closeDrawer}
+              size="80%"
+              title={
+                <Logo variant={colorScheme === "light" ? "colored" : "white"} />
+              }
+              zIndex={9999}
+            >
+              <AdminNavSmall closeDrawer={closeDrawer} />
+            </Drawer>
+            {/* Small Nav Ends */}
+          </div>
 
-          {/* Small Nav Ends */}
-          <div className="hero flex-1 px-2 flex max-lg:flex-col gap-2 ">
-            <div className="right max-lg:w-full w-2/3 flex flex-col">
+          <div className="hero flex-1 px-2 flex max-lg:flex-col gap-3 overflow-y-auto">
+            <div className="right max-lg:w-full w-2/3 gap-2 flex flex-col min-h-fit max-h-full overflow-y-auto">
               <AdminCards />
               <Outlet />
             </div>
 
-            <div className="recent-listing w-1/3 p-2 pt-4 max-lg:w-full min-h-fit max-h-[80vh max-sm:p-0">
-              <div
-                className="!max-h-full flex flex-col justify-start"
-              >
-                <p className="text-2xl py-2 tracking wider">Recent Listing</p>
-                <RecentListing refetch={refetch} setRefetch={setRefetch} />
-              </div>
+            <div
+              className={`recent-listing w-1/3 py-2 pt-3 max-lg:w-full min-h-fit max-h-full max-sm:p-0 my-1 gap-2 rounded-md border border-neutral-500/20 ${
+                colorScheme === "light" ? "bg-white" : "bg-zinc-800"
+              }`}
+            >
+              <p className="text-xl my-4 tracking wider pl-4 border-l-4 mx-3 border-primary">
+                Recent Listing
+              </p>
+              <RecentListing refetch={refetch} setRefetch={setRefetch} />
             </div>
           </div>
         </div>

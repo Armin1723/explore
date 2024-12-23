@@ -1,5 +1,5 @@
 const { getTestimonials, addTestimonial } = require('../controllers/testimonialController');
-const asyncHandler = require('../utils');
+const {asyncHandler} = require('../utils');
 
 const router = require('express').Router();
 

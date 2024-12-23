@@ -73,12 +73,10 @@ const AdminCompanies = () => {
   }, [refetch, category, subCategory, page]);
 
   return (
-    <Card className="flex flex-col flex-1" withBorder>
-      <div className="w-full my-4 flex justify-between items-center flex-wrap gap-2">
-        <div className="flex items-center gap-2 w-full text-xl tracking-wide space-y-3">
-          <p className="!my-0 border-l-4 pl-4 border-primary">
-            Companies
-          </p>
+    <Card className="flex flex-col flex-1 max-h-full !overflow-y-auto" withBorder>
+      <div className="w-full my-4 max-lg:my-2 flex justify-between items-center max-lg:flex-wrap gap-y-2">
+        <div className="flex items-center gap-2 w-full text-xl tracking-wide ">
+          <p className="!my-0 border-l-4 pl-4 border-primary">Companies</p>
           <Select
             data={["All", ...Object.values(categories).map((cat) => cat.name)]}
             value={category}
@@ -107,43 +105,45 @@ const AdminCompanies = () => {
         </div>
       )}
 
-      <div className="users-container min-h-[100px] max-h-[600px] overflow-y-auto flex flex-col">
-        {results &&
-          results.companies.length > 0 &&
-          results.companies.map((company, index) => {
-            return (
-              <Link
-                to={`/companies/${company?.slug}`}
-                className={`companyCard flex justify-between py-3 border-b border-gray-400 hover:bg-teal-100/20 ${
-                  index === 0 && "border-t"
-                }`}
-                key={index}
-              >
-                <div className="flex items-center gap-8 max-sm:gap-4 pr-2">
-                  <Avatar
-                    src={company?.logo?.url}
-                    alt={company?.name}
-                    className="border border-black"
-                  />
-                  <p className="capitalize font-semibold">{company?.name}</p>
-                  <Badge
-                    className="max-sm:scale-75"
-                    color={company?.status == "active" ? "green" : "red"}
-                    variant="filled"
-                  >
-                    {" "}
-                    {company?.status == "active" ? "Live" : "Suspended"}{" "}
-                  </Badge>
-                </div>
-                <div className="flex items-center">
-                  <p>
-                    <span className="max-sm:hidden">Registered: </span>
-                    {new Date(company?.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
+      <div className="h-[300px] overflow-y-auto">
+        <div className="company-container min-h-[100px] overflow-y-auto flex flex-col">
+          {results &&
+            results.companies.length > 0 &&
+            results.companies.map((company, index) => {
+              return (
+                <Link
+                  to={`/companies/${company?.slug}`}
+                  className={`companyCard flex justify-between py-3 px-2 border-b border-gray-400/40 hover:bg-teal-100/20 ${
+                    index === 0 && "border-t"
+                  }`}
+                  key={index}
+                >
+                  <div className="flex items-center gap-8 max-sm:gap-4 pr-2">
+                    <Avatar
+                      src={company?.logo?.url}
+                      alt={company?.name}
+                      className="border border-black"
+                    />
+                    <p className="capitalize font-semibold">{company?.name}</p>
+                    <Badge
+                      className="max-sm:scale-75"
+                      color={company?.status == "active" ? "green" : "red"}
+                      variant="filled"
+                    >
+                      {" "}
+                      {company?.status == "active" ? "Live" : "Suspended"}{" "}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center">
+                    <p>
+                      <span className="max-sm:hidden">Registered: </span>
+                      {new Date(company?.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+        </div>
       </div>
 
       {results && results.companies.length === 0 ? (

@@ -79,15 +79,13 @@ const AdminReviews = () => {
               return (
                 <div
                   key={index}
-                  className={`userCard flex flex-col py-3 px-2 border-b border-gray-400 hover:bg-teal-100/20 ${
+                  className={`userCard flex flex-col py-3 px-2 border-b border-gray-400/40 hover:bg-teal-100/20 ${
                     index === 0 && "border-t"
                   }`}
                 >
                   <div className="flex justify-between items-center capitalize py-2 text-lg max-sm:text-sm px-2 rounded-md my-2 w-full">
                     <Link
-                      to={`/companies/${review.company.name
-                        .split(" ")
-                        .join("-")}?reviewId=${review._id}`}
+                      to={`/companies/${review.company.slug}?reviewId=${review._id}`}
                     >
                       <span className="font-semibold">Review:</span>{" "}
                       {review.comment.split(" ").slice(0, 10).join(" ")}

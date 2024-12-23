@@ -1,4 +1,4 @@
-import { Card, Pill } from "@mantine/core";
+import { Card, Pill, useMantineColorScheme } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -7,6 +7,10 @@ const AdminCategories = () => {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const {colorScheme} = useMantineColorScheme({
+    keepTransitions: true,
+  })
+ 
   useEffect(() => {
     setLoading(true);
     const fetchCategories = async () => {
@@ -37,8 +41,8 @@ const AdminCategories = () => {
   }
 
   return (
-    <div className="flex flex-col flex-1" withBorder>
-        <div className="heading w-full border-l-4 border-primary my-4 flex items-center justify-start gap-2">
+    <div className={`flex flex-col flex-1 ${colorScheme === 'dark' ? 'bg-zinc-800' : 'bg-white'} rounded-md border border-neutral-500/20`} >
+        <div className="heading w-full border-l-4 border-primary my-4 mx-2 flex items-center justify-start gap-2">
           <p className=" pl-6 text-xl tracking-wide">All Categories</p>
           <Link
             to="/admin/categories/add"
@@ -53,7 +57,7 @@ const AdminCategories = () => {
             return (
               <div
                 key={index}
-                className={`categoryCard flex justify-between p-3 border-b border-gray-400 hover:bg-teal-100/20 ${
+                className={`categoryCard flex justify-between p-3 border-b border-gray-400/40 hover:bg-teal-100/20 ${
                   index === 0 && "border-t"
                 }`}
               >

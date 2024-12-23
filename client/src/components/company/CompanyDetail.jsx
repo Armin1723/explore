@@ -41,6 +41,7 @@ import { useDisclosure } from "@mantine/hooks";
 import AuthModal from "../shared/AuthModal";
 import { Helmet } from "react-helmet-async";
 import striptags from "striptags";
+import CompanyCardSmall from "./CompanyCardSmall";
 
 const CompanyDetail = () => {
   let { slug } = useParams();
@@ -52,7 +53,7 @@ const CompanyDetail = () => {
 
   const navigate = useNavigate();
 
-  const isSelf = company?.admin?._id === user?._id || false;
+  const isSelf = company?.user?._id === user?._id || false;
   const isAdmin = user && user?.role === "admin";
 
   const [review, setReview] = React.useState({ rating: 0, comment: "" });
@@ -193,7 +194,11 @@ const CompanyDetail = () => {
         message: data.message,
         color: "teal",
       });
-      setCompany(JSON.parse(JSON.stringify(data.company)));
+      setCompany((prev) => ({
+        ...prev,
+        rating: data.rating,
+        reviews: data.reviews,
+        }));
       setReview({ rating: 0, comment: "" });
     } catch (error) {
       notifications.show({
@@ -279,13 +284,13 @@ const CompanyDetail = () => {
         </div>
 
         <div className="company-detail-container flex flex-col w-full px-12 max-lg:px-8 max-sm:px-2">
-          <div className="title flex flex-wrap items-center justify-between mt-6">
-            <div className="title-left flex items-center flex-wrap gap-4">
+          <div className="title flex flex-wrap items-center justify-between gap-2 mt-6 max-sm:mt-3">
+            <div className="title-left flex items-center flex-shrink gap-4 max-w-full">
               <Avatar
                 src={company?.logo.url}
                 alt={company?.name}
-                size="xl"
-                className="border-2 border-black/70"
+                size={50}
+                className="border-2 border-black/70 aspect-square"
               />
               <div className="heading !my-2 font-medium">{company?.name}</div>
               {company?.status === "pending" && (
@@ -373,7 +378,7 @@ const CompanyDetail = () => {
             </div>
           </div>
 
-          <div className="tabs w-full max-sm:text-xs flex ">
+          <div className="tabs w-full max-sm:text-xs flex flex-wrap">
             {["contact", "description", "reviews", "similars"].map(
               (item, idx) => (
                 <div
@@ -512,7 +517,7 @@ const CompanyDetail = () => {
             </div>
 
             <div className="right w-1/3 flex flex-col max-lg:w-full px-4 max-sm:px-0 gap-4">
-              <AdvertisementCard />
+              <AdvertisementCard slug={slug}/>
               {isSelf ? (
                 <Link
                   to="enquiries"
