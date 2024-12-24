@@ -10,32 +10,11 @@ import { useSelector } from "react-redux";
 import { FaArrowUp } from "react-icons/fa";
 import { useWindowScroll } from "@mantine/hooks";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
-import { generateFCMToken, messaging } from "./notifications/firebase";
-import { onMessage } from "firebase/messaging";
 
 const Wrapper = () => {
   const theme = useSelector((state) => state.theme);
 
   const [scroll, scrollTo] = useWindowScroll();
-
-  useEffect(() => {
-    const tokenGenerateWrapper = async () =>{
-      const token = await generateFCMToken();
-      if(token) localStorage.setItem("fcm_token", token); 
-    };
-    tokenGenerateWrapper();
-    
-    onMessage(messaging, (payload) => {
-      const image = <img src={payload.notification.image || '/favicon/android-chrome-192x192.png'} alt="notification" className="object-cover"/>;
-      notifications.show({
-        title: payload.notification.title,
-        message: payload.notification.body,
-        icon: image,
-        color: "teal",
-      });
-    });
-  },[]);
 
   return (
     <MantineProvider

@@ -162,12 +162,6 @@ const AuthModal = ({ close }) => {
     const profilePic = document.querySelector('input[type="file"]').files[0];
     formData.append("profilePic", profilePic);
 
-    // Append FCM Token if exists
-    const fcmToken = localStorage.getItem("fcm_token");
-    if (fcmToken) {
-      formData.append("fcmToken", fcmToken);
-    }
-
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/user/register`,

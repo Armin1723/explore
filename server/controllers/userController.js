@@ -82,7 +82,7 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { name, email, password, phone, fcmToken } = req.body;
+  const { name, email, password, phone } = req.body;
 
   if (!name || !email || !password || !phone) {
     return res.status(400).json({
@@ -114,7 +114,6 @@ const registerUser = async (req, res) => {
     email,
     phone,
     password: hashedPassword,
-    fcmToken,
   };
 
   // Handling ProfilePic Upload to cloudinary

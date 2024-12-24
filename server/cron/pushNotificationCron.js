@@ -4,7 +4,6 @@ const cron = require("node-cron");
 const User = require("../models/userModel");
 const { sendMail } = require("../helpers");
 const Review = require("../models/reviewModel");
-const { sendNotification } = require("../services/notificationService");
 const { weeklyMailCronTemplate } = require("../templates/email");
 
 const weeklyPushNotificationCron = async () => {
@@ -21,13 +20,8 @@ const weeklyPushNotificationCron = async () => {
       //Send email to user
       sendMail(user?.email, "Reminder to List Your Company", message);
 
-      // Send Push Notification to user
-      if (user.fcmToken) {
-          const title = `List Your Company ${user?.name.split(' ')[0]}`; 
-          const body = "Don't miss out on the opportunity to grow your business. List your company on our platform now!";
-        
-        await sendNotification(user?.fcmToken, title, body);
-      }
+      // TODO: integrate Push Notification to user
+      
     });
   } catch (error) {
     console.error(
